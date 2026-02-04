@@ -1,0 +1,377 @@
+- leccionId: Leccion_Saludos
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Hola
+      - Adiós
+      - Bienvenida
+      - Perdón
+      - De nada
+    uchumataqu:
+      - Iksnuchay
+      - Tanschay  
+      - Taku
+      - Amchuki
+      - Xorchay
+
+- leccionId: Leccion_Presentaciones
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Nombre
+      - Persona
+      - Amigo
+      - Identidad
+      - Vecino
+    uchumataqu:
+      - Satschay    # Verbo: Correr
+      - Khutinchay  # Verbo: Sentir calor
+      - Xorchay     # Verbo: Relampaguear
+      - Pischa
+      - Chuñri paku
+
+- leccionId: Leccion_Preguntas
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Cómo
+      - Cuál
+      - Quiénes
+      - Verdad
+      - Quizás
+    uchumataqu:
+      - Jaxchay     # Verbo: Lavar
+      - Sakichay    # Verbo: Sentir frío
+      - Iksnuchay   # Verbo: Tener miedo
+      - Minana
+      - Ira
+
+- leccionId: Leccion_Familia
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Primo
+      - Sobrina
+      - Nieto
+      - Suegro
+      - Cuñado
+    uchumataqu:
+      - Cheqallachay # Verbo: Remar
+      - Waxichay     # Verbo: Hervir
+      - Sakichay     # Verbo: Sentir frío
+      - Qetsi
+      - Taku
+
+- leccionId: Leccion_Cuerpo
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Nariz
+      - Garganta
+      - Hombro
+      - Cintura
+      - Estómago
+    uchumataqu:
+      - Uchuchay    # Verbo: Cansarse
+      - Nonschay    # Verbo: Escuchar
+      - Qanschay    # Verbo: Guardar
+      - Taxchuku
+      - Masota
+
+- leccionId: Leccion_Sensaciones
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Alegría
+      - Tristeza
+      - Enojo
+      - Sorpresa
+      - Enfermo
+    uchumataqu:
+      - Thaxchay    # Verbo: Dormir
+      - Chirschay   # Verbo: Mirar
+      - Qharschay   # Verbo: Tocar
+      - Arusha
+      - Taxe
+
+- leccionId: Leccion_Acciones
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Bailar
+      - Cantar
+      - Escribir
+      - Leer
+      - Nadar
+    uchumataqu:
+      - Khutinchay   # Verbo: Sentir calor
+      - Qernichay    # Verbo: Sacar pez
+      - Amaruskchay  # Verbo: Cerrar
+      - Phisqoña
+      - Pischa
+
+- leccionId: Leccion_Objetos
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Armario
+      - Televisión
+      - Espejo
+      - Lámpara
+      - Cortina
+    uchumataqu:
+      - Khitschay   # Verbo: Abrir
+      - Uqachay     # Verbo: Llevar
+      - Sakichay    # Verbo: Sentir frío
+      - Qhasi
+      - Uchumik
+
+- leccionId: Leccion_Actividades
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Limpiar
+      - Ordenar
+      - Comprar
+      - Vender
+      - Buscar
+    uchumataqu:
+      - Sitsnachay   # Verbo: Pararse
+      - Iksnuchay    # Verbo: Tener miedo
+      - Ti wiyanichay
+      - Makchi
+      - Jasiks
+
+- leccionId: Leccion_Cocina
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Azúcar
+      - Taza
+      - Tenedor
+      - Aceite
+      - Harina
+    uchumataqu:
+      - Lasnuchay    # Verbo: Saltar
+      - Ti wiyanichay
+      - Wapinichay
+      - Chusi
+      - Sana
+
+- leccionId: Leccion_Vestimenta
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Bufanda
+      - Guantes
+      - Chaqueta
+      - Gorra
+      - Falda
+    uchumataqu:
+      - Oqlanschay   # Verbo: Caminar
+      - Uqachay      # Verbo: Llevar
+      - Xorchay      # Verbo: Relampaguear
+      - Uchumik
+      - Chhiri
+
+- leccionId: Leccion_Domesticos
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Gallo
+      - Caballo
+      - Cabra
+      - Toro
+      - Pájaro
+    uchumataqu:
+      - Jaxchay      # Verbo: Lavar
+      - T'ukuchay    # Verbo: Tener hambre
+      - Qharschay    # Verbo: Tocar
+      - Chimay
+      - Amchuki
+
+- leccionId: Leccion_Silvestres
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Puma
+      - Oso
+      - Venado
+      - Mariposa
+      - Hormiga
+    uchumataqu:
+      - Oqlanschay   # Verbo: Caminar
+      - Sitsnachay   # Verbo: Pararse
+      - Wiljñichay   # Verbo: Cocinar
+      - Chhulurasa
+      - Choq
+
+- leccionId: Leccion_Acuaticos
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Sapo
+      - Tortuga
+      - Cangrejo
+      - Garza
+      - Cisne
+    uchumataqu:
+      - Chanuchay    # Verbo: Saludar
+      - Lasnuchay    # Verbo: Saltar
+      - T'ukuchay    # Verbo: Tener hambre
+      - Jutki
+      - Acha
+
+- leccionId: Leccion_Elementos
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Montaña
+      - Piedra
+      - Tierra
+      - Fuego
+      - Pasto
+    uchumataqu:
+      - Chanuchay      # Verbo: Saludar
+      - Tanschay       # Verbo: Pescar
+      - Lanksachuchay  # Verbo: Tejer red
+      - Kurtsi
+      - Ninaka
+
+- leccionId: Leccion_Clima
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Nieve
+      - Trueno
+      - Granizo
+      - Tormenta
+      - Humedad
+    uchumataqu:
+      - Nonschay      # Verbo: Escuchar
+      - Thuñi kischay
+      - Achicha
+      - Thuñi
+      - Ti wiyanichay
+
+- leccionId: Leccion_Orientacion
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Delante
+      - Cerca
+      - Lejos
+      - Izquierda
+      - Derecha
+    uchumataqu:
+      - Oqlanschay     # Verbo: Caminar
+      - Khitschay      # Verbo: Abrir
+      - Sinapuxchay    # Verbo: Respirar
+      - Qhocha
+      - Phana
+
+- leccionId: Leccion_Navegacion
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Muelle
+      - Orilla
+      - Ola
+      - Corriente
+      - Timón
+    uchumataqu:
+      - Uqachay       # Verbo: Llevar
+      - Thaxchay      # Verbo: Dormir
+      - Khutinchay    # Verbo: Sentir calor
+      - Ninaka
+      - Qawi
+
+- leccionId: Leccion_Caza
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Trampa
+      - Anzuelo
+      - Carnada
+      - Arco
+      - Presa
+    uchumataqu:
+      - T'ukuchay     # Verbo: Tener hambre
+      - Nonschay      # Verbo: Escuchar
+      - Chiskichay    # Verbo: Hablar
+      - Julsnay       # Verbo: Sentarse
+      - Salskama
+
+- leccionId: Leccion_Colores
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Rosado
+      - Gris
+      - Marrón
+      - Dorado
+      - Plateado
+    uchumataqu:
+      - Iksnuchay     # Verbo: Tener miedo
+      - T'ukuchay     # Verbo: Tener hambre
+      - Wiljñichay    # Verbo: Cocinar
+      - Achasi
+      - Taxa
+
+- leccionId: Leccion_Numeros
+  actividades:
+    - SeleccionSimple
+    - EmparejamientoPalabras
+  distractores:
+    espanol:
+      - Once
+      - Cero
+      - Veinte
+      - Cien
+      - Mitad
+    uchumataqu:
+      - Satschay      # Verbo: Correr
+      - Uqachay       # Verbo: Llevar
+      - Chiskichay    # Verbo: Hablar
+      - Chhulurasa
+      - Urkhu

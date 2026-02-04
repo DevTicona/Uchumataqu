@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Prefabs
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Prefabs
+  m_GUID: 411293df7f1b1824789075fafe27cfcd
+  m_SerializeEntries:
+  - m_GUID: 47529659ba265184d84fe921c0eb5f79
+    m_Address: prefab_actividad_emparejamiento
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - actividades
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 623fd97315fccf04987ed2dafb1b91ac
+    m_Address: prefab_boton
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - leccion_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d86eb827f86fb74cb9920221baae66f
+    m_Address: prefab_isla_leccion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5aea51b2f30e9b409e6bd4012ca9369
+    m_Address: prefab_word_card
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - leccion_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f52b27e2cc2143248a96da761641f713
+    m_Address: prefab_actividad_seleccion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - actividades
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 30c16aa3f6c5c784694e0dbfc06d3dec, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 05e34c6883f639b4eb4eab4deae67a2f, type: 2}
+    - {fileID: 11400000, guid: dc1729edec5625a499e33d751ce85248, type: 2}

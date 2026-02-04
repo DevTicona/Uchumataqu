@@ -1,0 +1,16 @@
+{
+  "actividades": [
+    {
+      "idActividad": "SeleccionSimple",
+      "titulo": "Actividad Selección Simple"
+    },
+    {
+      "idActividad": "EmparejamientoPalabras",
+      "titulo": "Actividad Emparejamiento de Palabras"
+    },
+    {
+      "idActividad": "CompletarTexto",
+      "titulo": "Actividad de Completar palabras"
+    }
+  ]
+}

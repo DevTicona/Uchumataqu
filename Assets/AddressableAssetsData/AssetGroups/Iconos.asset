@@ -1,0 +1,179 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Iconos
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Iconos
+  m_GUID: 9c27037842ce93b419506ad48a539f9e
+  m_SerializeEntries:
+  - m_GUID: 0e34c6600a4388a40b412abc9ecdc5d0
+    m_Address: icono_preguntas
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d92c031e6daf8c4fbef697b61bf23b6
+    m_Address: icono_bloqueado
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22992486d493a4d4aacd3180ea7d4dd3
+    m_Address: icono_acciones
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ba2a893a0246684998a87c7e545d42f
+    m_Address: icono_clima
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c2d489e89a5428408a92ed47f01f188
+    m_Address: icono_colores
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 413aa567eb13ff0419f50f887de88c97
+    m_Address: icono_numeros
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 471396506259b9c4f98ba3ed83fe2d21
+    m_Address: icono_sensaciones
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48dea61eea324204199cdc9d50db908f
+    m_Address: icono_tiempo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d08b9245b4c89a46953b099222c07a9
+    m_Address: icono_completado
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59301b9894ccd6d42b0a5631a935c5be
+    m_Address: icono_elementos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a83f5e1e0dd32a49ba20ac133dcef66
+    m_Address: icono_vestimenta
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c87ffa5cbb2fe44888425624fcc4b8d
+    m_Address: icono_saludos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 761c5eb9a65a3d249bf600a30da170f5
+    m_Address: icono_familia
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76d8e9eaebf0a0e4c886c685f4f3847e
+    m_Address: icono_presentaciones
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 770274949a56cb34c8e9b7dec3bc9923
+    m_Address: icono_objetos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87926876ce5079a4f8ff64cb16dce6c9
+    m_Address: icono_cuerpo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8af5ca3c850c2294bbf0c3479c825395
+    m_Address: icono_actividades
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a684585d224adb94994ddf83300a5c67
+    m_Address: icono_caza
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acfbc0abf6e866d49a831f09768ce92c
+    m_Address: icono_enprogreso
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0e02a1c3f76f1844b2ec6574900ce6d
+    m_Address: icono_domesticos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b538be1cc05201843a1ea1eae0652eea
+    m_Address: icono_acuaticos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c17a82b1439e56d44ad8e16ce8a65057
+    m_Address: icono_orientacion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbe348d95a5f9984d810aabce0486bf3
+    m_Address: icono_silvestres
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce5e21d21a813d1419bc582e6aa84a8f
+    m_Address: icono_navegacion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3a896c5318eccc48aba4dc3611730aa
+    m_Address: icono_cocina
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d69a38dd46c919f489aac913017cbc7a
+    m_Address: icono_alimentos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - menu_lecciones
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 30c16aa3f6c5c784694e0dbfc06d3dec, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 28c4424388a2fd747b0c457b116cc5e7, type: 2}
+    - {fileID: 11400000, guid: 7f68cd2c4f1ba144b82dd027ab086282, type: 2}

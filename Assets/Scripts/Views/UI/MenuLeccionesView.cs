@@ -145,8 +145,8 @@ namespace Assets.Scripts.Views.UI
             );
             islasPorId[leccion.id] = isla;
 
-            if (!string.IsNullOrEmpty(leccion.icono))
-                CargarIcono(leccion.icono, isla);
+            if (!string.IsNullOrEmpty(leccion.id))
+                CargarIcono(leccion.id, isla);
         }
 
         public IslaLeccionView ObtenerIsla(string id) =>
@@ -186,7 +186,7 @@ namespace Assets.Scripts.Views.UI
 
         private void CargarIcono(string key, IslaLeccionView isla)
         {
-            MenuLeccionesService.CargarIcono(
+            LeccionesService.CargarIconoLeccion(
                 key,
                 sprite => isla.ActualizarIcono(sprite),
                 onError: () =>
@@ -199,6 +199,7 @@ namespace Assets.Scripts.Views.UI
         private void OnDestroy()
         {
             MenuLeccionesService.LimpiarRecursos();
+            LeccionesService.LimpiarRecursosIconos();
         }
     }
 }

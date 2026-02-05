@@ -64,6 +64,7 @@ namespace Assets.Scripts.Presenters
             practicaPresenter.AlFinalizarPractica -= OnPracticaFinalizada;
             actividadesPresenter.AlFinalizarActividades -= OnActividadesFinalizadas;
             LeccionBaseService.LimpiarRecursos();
+            LeccionesService.LimpiarRecursosIconos();
         }
 
         // ======================
@@ -84,8 +85,8 @@ namespace Assets.Scripts.Presenters
                 // Configurar header
                 ConfigurarHeader(leccion);
 
-                // Ícono (string Addressable → Sprite)
-                CargarIcono(leccion.icono);
+                // Ícono (usando ID de lección → Sprite)
+                CargarIcono(leccion.id);
             });
         }
 
@@ -104,7 +105,7 @@ namespace Assets.Scripts.Presenters
 
         private void CargarIcono(string idIcono)
         {
-            LeccionBaseService.CargarIconoLeccion(
+            LeccionesService.CargarIconoLeccion(
                 idIcono,
                 sprite =>
                 {
@@ -113,7 +114,7 @@ namespace Assets.Scripts.Presenters
                 },
                 onError: () =>
                 {
-                    Debug.LogError($"[LeccionBasePresenter] No se pudo cargar el ícono: {idIcono}");
+                    Debug.LogWarning($"[LeccionBasePresenter] No se pudo cargar el ícono: {idIcono}");
                 }
             );
         }

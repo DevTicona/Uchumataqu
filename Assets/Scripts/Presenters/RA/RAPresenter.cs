@@ -1,23 +1,56 @@
 using UnityEngine;
-using Assets.Scripts.Services.RA;
+using UnityEngine.SceneManagement;
+using Assets.Scripts.Core;
+using Assets.Scripts.Views.UI;
 
 namespace Assets.Scripts.Presenters.RA
 {
     /// <summary>
-    /// Presenter de la actividad RA.
+    /// Presenter de la escena de Realidad Aumentada.
+    /// Maneja la navegación hacia atrás al menú principal.
     /// </summary>
-    public class RAPresenter
+    public class RAPresenter : MonoBehaviour
     {
-        private readonly RAService raService;
+        [Header("UI")]
+        [SerializeField] private HeaderView headerView;
 
-        public RAPresenter()
+        [Header("Navegación")]
+        [SerializeField] private NavigationBackHandler backHandler;
+
+        private void Start()
         {
-            raService = new RAService();
+            if (headerView == null)
+            {
+                Debug.LogError("[RAPresenter] HeaderView no asignado en el Inspector.");
+                enabled = false;
+                return;
+            }
+
+            ConfigurarHeader();
+            ConfigurarBackHandler();
         }
 
-        public void ColocarPersonaje(Vector3 posicion, Quaternion rotacion)
+        // -------------------------------------------------
+        // CONFIGURACIÓN
+        // -------------------------------------------------
+
+        private void ConfigurarHeader()
         {
-            raService.InstanciarPersonajeBase(posicion, rotacion);
+            headerView.BindBotonAtras(VolverAlMenuPrincipal);
+            headerView.SetTitulo("Realidad Aumentada");
+            headerView.SetSubtitulo("Explora en AR");
+            headerView.OcultarIcono();
+        }
+
+        private void ConfigurarBackHandler()
+        {
+            if (backHandler != null)
+                backHandler.Configurar(VolverAlMenuPrincipal);
+        }
+
+        private void VolverAlMenuPrincipal()
+        {
+            SceneManager.LoadScene("MenuPrincipal");
         }
     }
 }

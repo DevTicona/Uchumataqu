@@ -154,7 +154,7 @@ MonoBehaviour:
     - menu_lecciones
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ce5e21d21a813d1419bc582e6aa84a8f
-    m_Address: icono_navegacion
+    m_Address: icono_navegacion_caza_pesca
     m_ReadOnly: 0
     m_SerializedLabels:
     - menu_lecciones

@@ -1,7 +1,7 @@
 {
   "buildFiles": [
-    "D:\\unity\\Uchumataqu\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
-    "D:\\unity\\Uchumataqu\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
+    "D:\\unity\\Uchumataqu\\Library\\PramData\\AndroidApplicationController\\Cache\\com.devticona.uchumataqu\\gradle-project\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
+    "D:\\unity\\Uchumataqu\\Library\\PramData\\AndroidApplicationController\\Cache\\com.devticona.uchumataqu\\gradle-project\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
   ],
   "cleanCommandsComponents": [
     [
@@ -21,7 +21,7 @@
     "game::@d02bb112ea9f9c2ed29f": {
       "artifactName": "game",
       "abi": "arm64-v8a",
-      "output": "D:\\unity\\Uchumataqu\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\5q6k5s3e\\obj\\arm64-v8a\\libgame.so",
+      "output": "D:\\unity\\Uchumataqu\\Library\\PramData\\AndroidApplicationController\\Cache\\com.devticona.uchumataqu\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\5q6k5s3e\\obj\\arm64-v8a\\libgame.so",
       "runtimeFiles": []
     }
   }

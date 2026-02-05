@@ -6,7 +6,6 @@ namespace Assets.Scripts.Models
         public string id;
         public string uchumataqu;
         public string espanol;
-        public string audio;
         public string leccion;
     }
 }

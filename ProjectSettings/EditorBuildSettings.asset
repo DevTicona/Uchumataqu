@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LeccionBase.unity
     guid: d119cc05d978ab949988873f6e36554e
   - enabled: 1
-    path: Assets/Scenes/ActividadRA.unity
+    path: Assets/Scenes/RealidadAumentada.unity
     guid: 02ddc6046171de54b938df8f33430129
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 1916bc6add0bd1c468594bdb049c68c6, type: 2}

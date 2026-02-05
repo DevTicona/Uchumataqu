@@ -38,7 +38,7 @@ namespace Assets.Scripts.Utils
     {
         private static readonly IDeserializer deserializer =
             new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .WithNamingConvention(UnderscoredNamingConvention.Instance)
                 .WithTypeConverter(new TipoActividadYamlConverter())
                 .Build();
 

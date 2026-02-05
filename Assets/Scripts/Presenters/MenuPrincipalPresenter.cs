@@ -57,7 +57,7 @@ namespace Assets.Scripts.Presenters
 
         private void IrARealidadAumentada()
         {
-            SceneManager.LoadScene("ActividadRA");
+            SceneManager.LoadScene("RealidadAumentada");
         }
 
         // -------------------------------------------------

@@ -79,5 +79,70 @@ namespace Assets.Scripts.Services
                 callback?.Invoke(leccion);
             });
         }
+
+        // ===============================
+        // Carga de iconos de lecciones
+        // ===============================
+        
+        private const string PREFIJO_ICONO = "icono_";
+        private static readonly List<UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<UnityEngine.Sprite>> handlesIconos = new();
+        private static readonly Dictionary<string, UnityEngine.Sprite> cacheIconos = new();
+
+        /// <summary>
+        /// Carga un ícono de lección de forma asincrónica usando el ID de la lección.
+        /// Utiliza caché para evitar cargas duplicadas.
+        /// </summary>
+        public static void CargarIconoLeccion(
+            string idLeccion,
+            System.Action<UnityEngine.Sprite> onSuccess,
+            System.Action onError = null
+        )
+        {
+            if (string.IsNullOrEmpty(idLeccion))
+            {
+                onSuccess?.Invoke(null);
+                return;
+            }
+
+            if (cacheIconos.TryGetValue(idLeccion, out var sprite))
+            {
+                onSuccess?.Invoke(sprite);
+                return;
+            }
+
+            string addressableKey = PREFIJO_ICONO + idLeccion;
+
+            var handle = Addressables.LoadAssetAsync<UnityEngine.Sprite>(addressableKey);
+            handlesIconos.Add(handle);
+
+            handle.Completed += h =>
+            {
+                if (h.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+                {
+                    cacheIconos[idLeccion] = h.Result;
+                    onSuccess?.Invoke(h.Result);
+                }
+                else
+                {
+                    Debug.LogWarning(
+                        $"[LeccionesService] Icono no encontrado en Addressables: {addressableKey}"
+                    );
+                    onError?.Invoke();
+                }
+            };
+        }
+
+        /// <summary>
+        /// Libera los recursos de iconos cargados.
+        /// </summary>
+        public static void LimpiarRecursosIconos()
+        {
+            foreach (var h in handlesIconos)
+                if (h.IsValid())
+                    Addressables.Release(h);
+
+            handlesIconos.Clear();
+            cacheIconos.Clear();
+        }
     }
 }

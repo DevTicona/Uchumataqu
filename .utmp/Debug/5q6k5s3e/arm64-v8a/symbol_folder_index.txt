@@ -1,1 +1,1 @@
-D:\unity\Uchumataqu\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\Debug\5q6k5s3e\obj\arm64-v8a
+D:\unity\Uchumataqu\Library\PramData\AndroidApplicationController\Cache\com.devticona.uchumataqu\gradle-project\unityLibrary\build\intermediates\cxx\Debug\5q6k5s3e\obj\arm64-v8a

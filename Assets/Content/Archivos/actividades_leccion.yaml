@@ -1,4 +1,4 @@
-- leccionId: Leccion_Saludos
+- leccion_id: saludos
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -16,7 +16,7 @@
       - Amchuki
       - Xorchay
 
-- leccionId: Leccion_Presentaciones
+- leccion_id: presentaciones
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -34,7 +34,7 @@
       - Pischa
       - Chuñri paku
 
-- leccionId: Leccion_Preguntas
+- leccion_id: preguntas
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -52,7 +52,7 @@
       - Minana
       - Ira
 
-- leccionId: Leccion_Familia
+- leccion_id: familia
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -70,7 +70,7 @@
       - Qetsi
       - Taku
 
-- leccionId: Leccion_Cuerpo
+- leccion_id: cuerpo
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -88,7 +88,7 @@
       - Taxchuku
       - Masota
 
-- leccionId: Leccion_Sensaciones
+- leccion_id: sensaciones
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -106,7 +106,7 @@
       - Arusha
       - Taxe
 
-- leccionId: Leccion_Acciones
+- leccion_id: acciones
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -124,7 +124,7 @@
       - Phisqoña
       - Pischa
 
-- leccionId: Leccion_Objetos
+- leccion_id: objetos
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -142,7 +142,7 @@
       - Qhasi
       - Uchumik
 
-- leccionId: Leccion_Actividades
+- leccion_id: actividades
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -160,7 +160,7 @@
       - Makchi
       - Jasiks
 
-- leccionId: Leccion_Cocina
+- leccion_id: cocina
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -178,7 +178,7 @@
       - Chusi
       - Sana
 
-- leccionId: Leccion_Vestimenta
+- leccion_id: vestimenta
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -196,7 +196,7 @@
       - Uchumik
       - Chhiri
 
-- leccionId: Leccion_Domesticos
+- leccion_id: domesticos
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -214,7 +214,7 @@
       - Chimay
       - Amchuki
 
-- leccionId: Leccion_Silvestres
+- leccion_id: silvestres
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -232,7 +232,7 @@
       - Chhulurasa
       - Choq
 
-- leccionId: Leccion_Acuaticos
+- leccion_id: acuaticos
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -250,7 +250,7 @@
       - Jutki
       - Acha
 
-- leccionId: Leccion_Elementos
+- leccion_id: elementos
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -268,7 +268,7 @@
       - Kurtsi
       - Ninaka
 
-- leccionId: Leccion_Clima
+- leccion_id: clima
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -286,7 +286,7 @@
       - Thuñi
       - Ti wiyanichay
 
-- leccionId: Leccion_Orientacion
+- leccion_id: orientacion
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -304,7 +304,7 @@
       - Qhocha
       - Phana
 
-- leccionId: Leccion_Navegacion
+- leccion_id: navegacion_caza_pesca
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -315,32 +315,24 @@
       - Ola
       - Corriente
       - Timón
-    uchumataqu:
-      - Uqachay       # Verbo: Llevar
-      - Thaxchay      # Verbo: Dormir
-      - Khutinchay    # Verbo: Sentir calor
-      - Ninaka
-      - Qawi
-
-- leccionId: Leccion_Caza
-  actividades:
-    - SeleccionSimple
-    - EmparejamientoPalabras
-  distractores:
-    espanol:
       - Trampa
       - Anzuelo
       - Carnada
       - Arco
       - Presa
     uchumataqu:
+      - Uqachay       # Verbo: Llevar
+      - Thaxchay      # Verbo: Dormir
+      - Khutinchay    # Verbo: Sentir calor
       - T'ukuchay     # Verbo: Tener hambre
       - Nonschay      # Verbo: Escuchar
       - Chiskichay    # Verbo: Hablar
       - Julsnay       # Verbo: Sentarse
+      - Ninaka
+      - Qawi
       - Salskama
 
-- leccionId: Leccion_Colores
+- leccion_id: colores
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras
@@ -358,7 +350,7 @@
       - Achasi
       - Taxa
 
-- leccionId: Leccion_Numeros
+- leccion_id: numeros
   actividades:
     - SeleccionSimple
     - EmparejamientoPalabras

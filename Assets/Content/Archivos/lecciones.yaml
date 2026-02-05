@@ -1,125 +1,99 @@
-- id: Leccion_Saludos
-  titulo: Saludos
-  descripcion: Aprende vocabulario de saludos en idioma Uchumataqu.
-  icono: saludos
+- id: saludos
+  titulo: Saludos y Despedidas
+  tipo_ra: ra_comunicacion
   orden: 1
 
-- id: Leccion_Presentaciones
-  titulo: Presentaciones
-  descripcion: Aprende vocabulario de presentaciones en idioma Uchumataqu.
-  icono: presentaciones
+- id: presentaciones
+  titulo: Presentación Personal
+  tipo_ra: ra_comunicacion
   orden: 2
 
-- id: Leccion_Preguntas
-  titulo: Preguntas Básicas
-  descripcion: Aprende vocabulario de preguntas básicas en idioma Uchumataqu.
-  icono: preguntas
+- id: preguntas
+  titulo: Preguntas y Respuestas
+  tipo_ra: ra_comunicacion
   orden: 3
 
-- id: Leccion_Familia
-  titulo: Familia
-  descripcion: Aprende vocabulario de familia en idioma Uchumataqu.
-  icono: familia
+- id: familia
+  titulo: Miembros de la Familia
+  tipo_ra: ra_comunicacion
   orden: 4
 
-- id: Leccion_Cuerpo
-  titulo: Partes del Cuerpo
-  descripcion: Aprende vocabulario de partes del cuerpo en idioma Uchumataqu.
-  icono: cuerpo
+- id: cuerpo
+  titulo: Partes del Cuerpo Humano
+  tipo_ra: ra_seres_vivos
   orden: 5
 
-- id: Leccion_Sensaciones
-  titulo: Sensaciones
-  descripcion: Aprende vocabulario de sensaciones en idioma Uchumataqu.
-  icono: sensaciones
+- id: sensaciones
+  titulo: Sensaciones Corporales
+  tipo_ra: ra_movimiento
   orden: 6
 
-- id: Leccion_Acciones
+- id: acciones
   titulo: Acciones Corporales
-  descripcion: Aprende vocabulario de acciones corporales en idioma Uchumataqu.
-  icono: acciones
+  tipo_ra: ra_movimiento
   orden: 7
 
-- id: Leccion_Objetos
+- id: objetos
   titulo: Objetos del Hogar
-  descripcion: Aprende vocabulario de objetos del hogar en idioma Uchumataqu.
-  icono: objetos
+  tipo_ra: ra_objetos
   orden: 8
 
-- id: Leccion_Actividades
+- id: actividades
   titulo: Actividades Cotidianas
-  descripcion: Aprende vocabulario de actividades cotidianas en idioma Uchumataqu.
-  icono: actividades
+  tipo_ra: ra_movimiento
   orden: 9
 
-- id: Leccion_Cocina
-  titulo: Cocina
-  descripcion: Aprende vocabulario de cocina en idioma Uchumataqu.
-  icono: cocina
+- id: cocina
+  titulo: Vocabulario Culinario
+  tipo_ra: ra_objetos
   orden: 10
 
-- id: Leccion_Vestimenta
-  titulo: Vestimenta
-  descripcion: Aprende vocabulario de vestimenta en idioma Uchumataqu.
-  icono: vestimenta
+- id: vestimenta
+  titulo: Ropa y Vestimenta
+  tipo_ra: ra_objetos
   orden: 11
 
-- id: Leccion_Domesticos
+- id: domesticos
   titulo: Animales Domésticos
-  descripcion: Aprende vocabulario de animales domésticos en idioma Uchumataqu.
-  icono: domesticos
+  tipo_ra: ra_seres_vivos
   orden: 12
 
-- id: Leccion_Silvestres
+- id: silvestres
   titulo: Animales Silvestres
-  descripcion: Aprende vocabulario de animales silvestres en idioma Uchumataqu.
-  icono: silvestres
+  tipo_ra: ra_seres_vivos
   orden: 13
 
-- id: Leccion_Acuaticos
+- id: acuaticos
   titulo: Animales Acuáticos
-  descripcion: Aprende vocabulario de animales acuáticos en idioma Uchumataqu.
-  icono: acuaticos
+  tipo_ra: ra_seres_vivos
   orden: 14
 
-- id: Leccion_Elementos
+- id: elementos
   titulo: Elementos Naturales
-  descripcion: Aprende vocabulario de elementos naturales en idioma Uchumataqu.
-  icono: elementos
+  tipo_ra: ra_entorno
   orden: 15
 
-- id: Leccion_Clima
-  titulo: Clima
-  descripcion: Aprende vocabulario de clima en idioma Uchumataqu.
-  icono: clima
+- id: clima
+  titulo: Fenómenos Climáticos
+  tipo_ra: ra_entorno
   orden: 16
 
-- id: Leccion_Orientacion
+- id: orientacion
   titulo: Orientación Espacial
-  descripcion: Aprende vocabulario de orientación espacial en idioma Uchumataqu.
-  icono: orientacion
+  tipo_ra: ra_entorno
   orden: 17
 
-- id: Leccion_Navegacion
-  titulo: Navegación en el Río
-  descripcion: Aprende vocabulario de navegación en el río en idioma Uchumataqu.
-  icono: navegacion
+- id: navegacion_caza_pesca
+  titulo: Navegación, Caza y Pesca
+  tipo_ra: ra_objetos
   orden: 18
 
-- id: Leccion_Caza
-  titulo: Caza y Pesca
-  descripcion: Aprende vocabulario de caza y pesca en idioma Uchumataqu.
-  icono: caza
+- id: colores
+  titulo: Colores y Tonalidades
+  tipo_ra: sin_ra
   orden: 19
 
-- id: Leccion_Colores
-  titulo: Colores
-  descripcion: Aprende vocabulario de colores en idioma Uchumataqu.
-  icono: colores
-  orden: 20
-
-- id: Leccion_Numeros
+- id: numeros
   titulo: Números y Conteo
-  descripcion: Aprende vocabulario de números y conteo en idioma Uchumataqu.
-  icono: numeros
-  orden: 21
+  tipo_ra: sin_ra
+  orden: 20

@@ -1,4 +1,4 @@
-# Install script for directory: D:/unity/Uchumataqu/Library/PramData/AndroidApplicationController/Cache/com.devticona.uchumataqu/gradle-project/unityLibrary/src/main/cpp
+# Install script for directory: D:/unity/Uchumataqu/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

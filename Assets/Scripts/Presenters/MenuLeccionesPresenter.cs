@@ -17,6 +17,7 @@ namespace Assets.Scripts.Presenters
         [Header("Views")]
         [SerializeField] private MenuLeccionesView menuView;
         [SerializeField] private HeaderView headerView;
+        [SerializeField] private SeleccionModuloView seleccionModuloView;
 
         [Header("Sistema")]
         [SerializeField] private NavigationBackHandler backHandler;
@@ -27,9 +28,12 @@ namespace Assets.Scripts.Presenters
         private List<EstadoLeccionMapa> estadosMapa;
         private IslaLeccionView islaActual;
 
+        // Leccion temporal para selección de módulo
+        private LeccionData leccionSeleccionada;
+
         private void Start()
         {
-            if (menuView == null || headerView == null)
+            if (menuView == null || headerView == null || seleccionModuloView == null)
             {
                 Debug.LogError("[MenuLeccionesPresenter] Views no asignadas.");
                 enabled = false;
@@ -38,6 +42,7 @@ namespace Assets.Scripts.Presenters
 
             ConfigurarHeader();
             ConfigurarBackHandler();
+            SuscribirseEventosSeleccion();
 
             // 🔑 Flujo correcto:
             // 1. Cargar prefab
@@ -50,6 +55,7 @@ namespace Assets.Scripts.Presenters
         {
             // 🧹 Liberar Addressables
             MenuLeccionesService.LimpiarRecursos();
+            DesuscribirseEventosSeleccion();
         }
 
         // -------------------------------------------------
@@ -68,6 +74,26 @@ namespace Assets.Scripts.Presenters
         {
             if (backHandler != null)
                 backHandler.Configurar(VolverAlMenuPrincipal);
+        }
+
+        private void SuscribirseEventosSeleccion()
+        {
+            if (seleccionModuloView == null)
+                return;
+
+            seleccionModuloView.OnSeleccionarRA += OnSeleccionarRA;
+            seleccionModuloView.OnSeleccionarDos2D += OnSeleccionarDos2D;
+            seleccionModuloView.OnCancelar += OnCancelarSeleccion;
+        }
+
+        private void DesuscribirseEventosSeleccion()
+        {
+            if (seleccionModuloView == null)
+                return;
+
+            seleccionModuloView.OnSeleccionarRA -= OnSeleccionarRA;
+            seleccionModuloView.OnSeleccionarDos2D -= OnSeleccionarDos2D;
+            seleccionModuloView.OnCancelar -= OnCancelarSeleccion;
         }
 
         private void VolverAlMenuPrincipal()
@@ -223,10 +249,36 @@ namespace Assets.Scripts.Presenters
             if (leccion == null)
                 return;
 
-            PlayerPrefs.SetString("LECCION_ACTUAL", leccion.id);
+            leccionSeleccionada = leccion;
+            seleccionModuloView.MostrarDialogo(leccion.titulo);
+        }
+
+        private void OnSeleccionarRA()
+        {
+            if (leccionSeleccionada == null)
+                return;
+
+            PlayerPrefs.SetString("LECCION_ACTUAL", leccionSeleccionada.id);
+            PlayerPrefs.Save();
+
+            SceneManager.LoadScene("RealidadAumentada");
+        }
+
+        private void OnSeleccionarDos2D()
+        {
+            if (leccionSeleccionada == null)
+                return;
+
+            PlayerPrefs.SetString("LECCION_ACTUAL", leccionSeleccionada.id);
             PlayerPrefs.Save();
 
             SceneManager.LoadScene("LeccionBase");
+        }
+
+        private void OnCancelarSeleccion()
+        {
+            leccionSeleccionada = null;
+            // Opcionalmente mostrar algún feedback
         }
 
         public void RefrescarBalsa()

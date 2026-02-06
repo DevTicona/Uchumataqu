@@ -1,2 +1,2 @@
-D:\unity\Uchumataqu\Library\PramData\AndroidApplicationController\Cache\com.devticona.uchumataqu\gradle-project\unityLibrary\src\main\cpp\CMakeLists.txt
-D:\unity\Uchumataqu\Library\PramData\AndroidApplicationController\Cache\com.devticona.uchumataqu\gradle-project\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
+D:\unity\Uchumataqu\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+D:\unity\Uchumataqu\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

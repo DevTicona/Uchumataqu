@@ -1,0 +1,19 @@
+# Configuración automática de finales de línea
+* text=auto
+
+# Archivos de código C# (forzar normalización)
+*.cs text diff=csharp
+
+# Archivos de Unity que deben tratarse como texto/metadatos
+*.meta text
+*.prefab text
+*.mat text
+*.anim text
+*.controller text
+
+# Archivos que deben tratarse como binarios para evitar corrupción
+*.unity binary
+*.asset binary
+*.physicMaterial binary
+*.guiskin binary
+*.fontsettings binary

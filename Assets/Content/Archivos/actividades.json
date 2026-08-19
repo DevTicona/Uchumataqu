@@ -1,16 +1,389 @@
 {
-  "actividades": [
+  "items": [
+
     {
-      "idActividad": "SeleccionSimple",
-      "titulo": "Actividad Selección Simple"
+      "id": "pln_palabra",
+      "nombre": "Escucha y repite esta palabra",
+      "tipo": "estructural",
+      "fase": "exposicion",
+      "categoria": "palabras",
+      "requierePLN": true,
+
+      "instrucciones": [
+        "Escucha el modelo.",
+        "Presiona grabar.",
+        "Pronuncia la palabra."
+      ],
+      "recordatorios": [
+        "Habla claro.",
+        "Imita el ritmo."
+      ],
+      "feedback": [
+        "Verde: correcto.",
+        "Amarillo: casi.",
+        "Rojo: intenta otra vez."
+      ]
     },
+
     {
-      "idActividad": "EmparejamientoPalabras",
-      "titulo": "Actividad Emparejamiento de Palabras"
+      "id": "seleccion_traduccion",
+      "nombre": "Selección de Traducción",
+      "tipo": "pedagogica",
+      "fase": "bloque",
+      "categoria": "palabras",
+
+      "instrucciones": [
+        "Lee la palabra en Uchumataqu.",
+        "Selecciona su significado correcto.",
+        "Confirma tu respuesta."
+      ],
+      "recordatorios": [
+        "Recuerda las palabras vistas.",
+        "Descarta opciones incorrectas."
+      ],
+      "feedback": [
+        "Se mostrará si es correcto.",
+        "Podrás intentar nuevamente."
+      ]
     },
+
     {
-      "idActividad": "CompletarTexto",
-      "titulo": "Actividad de Completar palabras"
+      "id": "seleccion_audio",
+      "nombre": "Selección de Audio",
+      "tipo": "pedagogica",
+      "fase": "bloque",
+      "categoria": "palabras",
+      "requiereAudio": true,
+
+      "instrucciones": [
+        "Escucha el audio.",
+        "Selecciona la palabra correcta.",
+        "Confirma tu respuesta."
+      ],
+      "recordatorios": [
+        "Puedes repetir el audio.",
+        "Fíjate en el inicio y final del sonido."
+      ],
+      "feedback": [
+        "Se indicará si es correcto.",
+        "Se mostrará la respuesta correcta si fallas."
+      ]
+    },
+
+    {
+      "id": "emparejamiento_audio_palabra",
+      "nombre": "Emparejamiento Audio-Palabra",
+      "tipo": "pedagogica",
+      "fase": "bloque",
+      "categoria": "palabras",
+      "requiereAudio": true,
+
+      "instrucciones": [
+        "Escucha los audios.",
+        "Relaciona cada audio con su palabra.",
+        "Completa todos los pares."
+      ],
+      "recordatorios": [
+        "Escucha varias veces.",
+        "Empieza por los más fáciles."
+      ],
+      "feedback": [
+        "Se marcarán los aciertos.",
+        "Podrás corregir errores."
+      ]
+    },
+
+    {
+      "id": "emparejamiento_traduccion",
+      "nombre": "Emparejamiento de Traducción",
+      "tipo": "pedagogica",
+      "fase": "bloque",
+      "categoria": "palabras",
+
+      "instrucciones": [
+        "Observa ambas columnas.",
+        "Relaciona cada palabra con su traducción.",
+        "Completa todos los pares."
+      ],
+      "recordatorios": [
+        "Empieza por los que recuerdes.",
+        "Revisa antes de finalizar."
+      ],
+      "feedback": [
+        "Se marcarán los aciertos.",
+        "Podrás corregir errores."
+      ]
+    },
+
+    {
+      "id": "ordenar_oracion",
+      "nombre": "Ordenar Oración",
+      "tipo": "pedagogica",
+      "fase": "produccion",
+      "categoria": "oraciones",
+
+      "instrucciones": [
+        "Observa las palabras.",
+        "Ordénalas correctamente.",
+        "Confirma la oración."
+      ],
+      "recordatorios": [
+        "Usa el orden SOV.",
+        "El verbo va al final."
+      ],
+      "feedback": [
+        "Se indicará si es correcto.",
+        "Podrás reordenar."
+      ]
+    },
+
+    {
+      "id": "traduccion_constructiva",
+      "nombre": "Traducción Constructiva",
+      "tipo": "pedagogica",
+      "fase": "produccion",
+      "categoria": "oraciones",
+
+      "instrucciones": [
+        "Lee la oración en español.",
+        "Selecciona palabras.",
+        "Construye la oración."
+      ],
+      "recordatorios": [
+        "Respeta el orden SOV.",
+        "Revisa antes de confirmar."
+      ],
+      "feedback": [
+        "Se indicará si es correcto.",
+        "Podrás intentar nuevamente."
+      ]
+    },
+
+    {
+      "id": "pln_oracion",
+      "nombre": "Pronunciación de Oración",
+      "tipo": "pedagogica",
+      "fase": "produccion",
+      "categoria": "oraciones",
+      "requierePLN": true,
+
+      "instrucciones": [
+        "Escucha el modelo.",
+        "Presiona grabar.",
+        "Pronuncia la oración."
+      ],
+      "recordatorios": [
+        "Habla claro.",
+        "Imita el ritmo."
+      ],
+      "feedback": [
+        "Verde: correcto.",
+        "Amarillo: casi.",
+        "Rojo: intenta otra vez."
+      ]
+    },
+
+    {
+      "id": "completar_espacio",
+      "nombre": "Completar Espacio",
+      "tipo": "pedagogica",
+      "fase": "produccion",
+      "categoria": "oraciones",
+
+      "instrucciones": [
+        "Lee la oración.",
+        "Selecciona la palabra faltante.",
+        "Confirma."
+      ],
+      "recordatorios": [
+        "Mira el contexto.",
+        "Descarta opciones incorrectas."
+      ],
+      "feedback": [
+        "Se indicará si es correcto.",
+        "Podrás reintentar."
+      ]
+    },
+
+    {
+      "id": "dictado",
+      "nombre": "Dictado",
+      "tipo": "pedagogica",
+      "fase": "produccion",
+      "categoria": "oraciones",
+      "requiereAudio": true,
+
+      "instrucciones": [
+        "Escucha el audio.",
+        "Escribe o construye la oración.",
+        "Envía tu respuesta."
+      ],
+      "recordatorios": [
+        "Escucha varias veces.",
+        "Presta atención a cada sonido."
+      ],
+      "feedback": [
+        "Se comparará con la respuesta correcta.",
+        "Podrás corregir."
+      ]
+    },
+
+    {
+      "id": "traduccion_inversa",
+      "nombre": "Traducción Inversa",
+      "tipo": "pedagogica",
+      "fase": "produccion",
+      "categoria": "oraciones",
+
+      "instrucciones": [
+        "Lee la oración en español.",
+        "Construye la traducción.",
+        "Confirma."
+      ],
+      "recordatorios": [
+        "Usa SOV.",
+        "Revisa el orden."
+      ],
+      "feedback": [
+        "Se indicará si es correcto.",
+        "Podrás intentar nuevamente."
+      ]
+    },
+
+    {
+      "id": "saludo_ra",
+      "nombre": "El Encuentro",
+      "tipo": "pedagogica",
+      "fase": "tema",
+      "categoria": "ra",
+      "requierePLN": true,
+
+      "instrucciones": [
+        "Escucha el saludo.",
+        "Presiona grabar.",
+        "Respóndelo."
+      ],
+      "recordatorios": [
+        "Incluye tu nombre.",
+        "Habla claro."
+      ],
+      "feedback": [
+        "Se validará tu respuesta.",
+        "Podrás repetir."
+      ]
+    },
+
+    {
+      "id": "familia_ra",
+      "nombre": "El Muro de la Familia",
+      "tipo": "pedagogica",
+      "fase": "tema",
+      "categoria": "ra",
+      "requierePLN": true,
+
+      "instrucciones": [
+        "Selecciona un objeto.",
+        "Di la frase correcta.",
+        "Confirma."
+      ],
+      "recordatorios": [
+        "Usa -s para posesión.",
+        "El poseedor va antes."
+      ],
+      "feedback": [
+        "Se validará la frase.",
+        "Podrás reintentar."
+      ]
+    },
+
+    {
+      "id": "hogar_ra",
+      "nombre": "Construyendo mi Hogar",
+      "tipo": "pedagogica",
+      "fase": "tema",
+      "categoria": "ra",
+      "requierePLN": true,
+
+      "instrucciones": [
+        "Ubica el objeto.",
+        "Descríbelo.",
+        "Confirma."
+      ],
+      "recordatorios": [
+        "Adjetivo antes del sustantivo.",
+        "Usa demostrativos."
+      ],
+      "feedback": [
+        "Se validará la descripción.",
+        "Podrás corregir."
+      ]
+    },
+
+    {
+      "id": "cocina_ra",
+      "nombre": "El Fogón de Irohito",
+      "tipo": "pedagogica",
+      "fase": "tema",
+      "categoria": "ra",
+      "requierePLN": true,
+
+      "instrucciones": [
+        "Selecciona ingredientes.",
+        "Di la acción.",
+        "Agrégalos."
+      ],
+      "recordatorios": [
+        "Usa -naka para plural."
+      ],
+      "feedback": [
+        "Se validará la acción.",
+        "Podrás repetir."
+      ]
+    },
+
+    {
+      "id": "animales_ra",
+      "nombre": "Guardianes del Altiplano",
+      "tipo": "pedagogica",
+      "fase": "tema",
+      "categoria": "ra",
+      "requierePLN": true,
+
+      "instrucciones": [
+        "Observa el animal.",
+        "Descríbelo.",
+        "Confirma."
+      ],
+      "recordatorios": [
+        "Usa -pini para intensidad."
+      ],
+      "feedback": [
+        "Se validará la frase.",
+        "Podrás reintentar."
+      ]
+    },
+
+    {
+      "id": "navegacion_ra",
+      "nombre": "La Travesía del Wampu",
+      "tipo": "pedagogica",
+      "fase": "tema",
+      "categoria": "ra",
+      "requierePLN": true,
+
+      "instrucciones": [
+        "Da comandos de voz.",
+        "Controla la dirección.",
+        "Continúa navegando."
+      ],
+      "recordatorios": [
+        "Habla claro y continuo."
+      ],
+      "feedback": [
+        "El movimiento responde a tu voz.",
+        "Puedes corregir comandos."
+      ]
     }
+
   ]
 }

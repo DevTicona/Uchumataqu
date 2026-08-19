@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478937c5de90e6b4abd15c39af4cd2e1, type: 3}
+  m_Name: AppConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.AppConfig
+  enableDebugLogs: 1
+  enableVerboseLogs: 0
+  defaultMasterVolume: 1
+  defaultWordVolume: 1
+  defaultSFXVolume: 0.8
+  defaultMusicVolume: 0.5
+  fadeInDuration: 0.5
+  cardAnimDuration: 0.3
+  buttonScaleDuration: 0.2
+  minReviewsToMaster: 3
+  enableProgressiveUnlock: 0
+  enableARDebugPlane: 1
+  arPlacementDistance: 1.5

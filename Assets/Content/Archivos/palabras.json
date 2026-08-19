@@ -1,196 +1,1134 @@
-[
-  {"id": "ti_wiyanichay", "uchumataqu": "Ti wiyanichay", "espanol": "Buenas noches", "leccion": "saludos"},
-  {"id": "thuni_kischay", "uchumataqu": "Thuñi kischay", "espanol": "Buenas tardes", "leccion": "saludos"},
-  {"id": "wiyantam", "uchumataqu": "Wiyantam", "espanol": "Buenos días", "leccion": "saludos"},
-  {"id": "wapinichay", "uchumataqu": "Wapinichay", "espanol": "Gracias", "leccion": "saludos"},
-  {"id": "salskama", "uchumataqu": "Salskama", "espanol": "Hasta luego", "leccion": "saludos"},
-  {"id": "wilk", "uchumataqu": "Wilk", "espanol": "Yo", "leccion": "presentaciones"},
-  {"id": "am", "uchumataqu": "Am", "espanol": "Tú", "leccion": "presentaciones"},
-  {"id": "ni", "uchumataqu": "Ni", "espanol": "Él o ella", "leccion": "presentaciones"},
-  {"id": "uchumik", "uchumataqu": "Uchumik", "espanol": "Nosotros excluyente", "leccion": "presentaciones"},
-  {"id": "wisnakti", "uchumataqu": "Wisnakti", "espanol": "Nosotros incluyente", "leccion": "presentaciones"},
-  {"id": "amchuki", "uchumataqu": "Amchuki", "espanol": "Ustedes", "leccion": "presentaciones"},
-  {"id": "ninaka", "uchumataqu": "Ninaka", "espanol": "Ellos o ellas", "leccion": "presentaciones"},
-  {"id": "chhuluki", "uchumataqu": "Chhuluki", "espanol": "¿Qué es?", "leccion": "preguntas"},
-  {"id": "chhulurasa", "uchumataqu": "Chhulurasa", "espanol": "¿Cuándo?", "leccion": "preguntas"},
-  {"id": "jasiks", "uchumataqu": "Jasiks", "espanol": "¿Dónde?", "leccion": "preguntas"},
-  {"id": "chhultaki", "uchumataqu": "Chhultaki", "espanol": "¿Para qué?", "leccion": "preguntas"},
-  {"id": "chhullayku", "uchumataqu": "Chhullayku", "espanol": "¿Por qué?", "leccion": "preguntas"},
-  {"id": "qhasum", "uchumataqu": "Qhasum", "espanol": "¿Cuánto?", "leccion": "preguntas"},
-  {"id": "jakistani", "uchumataqu": "Jakistani", "espanol": "¿Con quien?", "leccion": "preguntas"},
-  {"id": "amthu", "uchumataqu": "Amthü", "espanol": "¿Y tú?", "leccion": "preguntas"},
-  {"id": "apichu", "uchumataqu": "Apichu", "espanol": "Abuela", "leccion": "familia"},
-  {"id": "achicha", "uchumataqu": "Achicha", "espanol": "Abuelo", "leccion": "familia"},
-  {"id": "atalu", "uchumataqu": "Atalu", "espanol": "Mamá", "leccion": "familia"},
-  {"id": "apa", "uchumataqu": "Apa", "espanol": "Papá", "leccion": "familia"},
-  {"id": "luksuwa", "uchumataqu": "Luksuwa", "espanol": "Hijo mayor", "leccion": "familia"},
-  {"id": "thukunsuwa", "uchumataqu": "Thukunsuwa", "espanol": "Hija", "leccion": "familia"},
-  {"id": "kayu", "uchumataqu": "K'ayu", "espanol": "Hermana", "leccion": "familia"},
-  {"id": "chichala", "uchumataqu": "Chichala", "espanol": "Hermano", "leccion": "familia"},
-  {"id": "malaqo", "uchumataqu": "Malaqo", "espanol": "Tía", "leccion": "familia"},
-  {"id": "tulula", "uchumataqu": "Tulula", "espanol": "Tío", "leccion": "familia"},
-  {"id": "acha", "uchumataqu": "Acha", "espanol": "Cabeza", "leccion": "cuerpo"},
-  {"id": "chhukhi", "uchumataqu": "Chhukhi", "espanol": "Ojo", "leccion": "cuerpo"},
-  {"id": "khuni", "uchumataqu": "Khuñi", "espanol": "Oreja", "leccion": "cuerpo"},
-  {"id": "ata", "uchumataqu": "Ata", "espanol": "Boca", "leccion": "cuerpo"},
-  {"id": "qhara", "uchumataqu": "Qhara", "espanol": "Mano", "leccion": "cuerpo"},
-  {"id": "chhaqhara", "uchumataqu": "Chhaqhara", "espanol": "Brazo", "leccion": "cuerpo"},
-  {"id": "qhocha", "uchumataqu": "Qhocha", "espanol": "Pie", "leccion": "cuerpo"},
-  {"id": "taxe", "uchumataqu": "Taxe", "espanol": "Espalda", "leccion": "cuerpo"},
-  {"id": "minana", "uchumataqu": "Minana", "espanol": "Dedo", "leccion": "cuerpo"},
-  {"id": "tusi", "uchumataqu": "Tüsi", "espanol": "Corazón", "leccion": "cuerpo"},
-  {"id": "chhera", "uchumataqu": "Chhera", "espanol": "Cabello", "leccion": "cuerpo"},
-  {"id": "lasi", "uchumataqu": "lasi", "espanol": "Lengua", "leccion": "cuerpo"},
-  {"id": "owe", "uchumataqu": "Owe", "espanol": "Rodilla", "leccion": "cuerpo"},
-  {"id": "sakichay", "uchumataqu": "Sakichay", "espanol": "Sentir frío", "leccion": "sensaciones"},
-  {"id": "khutinchay", "uchumataqu": "Khutinchay", "espanol": "Sentir calor", "leccion": "sensaciones"},
-  {"id": "kana", "uchumataqu": "Käna", "espanol": "Dolor", "leccion": "sensaciones"},
-  {"id": "oya", "uchumataqu": "Oya", "espanol": "Sueño", "leccion": "sensaciones"},
-  {"id": "tuku", "uchumataqu": "T'uku", "espanol": "Hambre", "leccion": "sensaciones"},
-  {"id": "tukuchay", "uchumataqu": "T'ukuchay", "espanol": "Tener hambre", "leccion": "sensaciones"},
-  {"id": "qhasisku", "uchumataqu": "Qhasisku", "espanol": "Tener sed", "leccion": "sensaciones"},
-  {"id": "uchuchay", "uchumataqu": "Uchuchay", "espanol": "Cansarse", "leccion": "sensaciones"},
-  {"id": "iksnuchay", "uchumataqu": "Iksnuchay", "espanol": "Tener miedo", "leccion": "sensaciones"},
-  {"id": "oqlanschay", "uchumataqu": "Oqlanschay", "espanol": "Caminar", "leccion": "acciones"},
-  {"id": "satschay", "uchumataqu": "Satschay", "espanol": "Correr", "leccion": "acciones"},
-  {"id": "chanuchay", "uchumataqu": "Chanuchay", "espanol": "Saludar", "leccion": "acciones"},
-  {"id": "chirschay", "uchumataqu": "Chirschay", "espanol": "Mirar", "leccion": "acciones"},
-  {"id": "thaxchay", "uchumataqu": "Thaxchay", "espanol": "Dormir", "leccion": "acciones"},
-  {"id": "chiskichay", "uchumataqu": "Chiskichay", "espanol": "Hablar", "leccion": "acciones"},
-  {"id": "nonschay", "uchumataqu": "Nonschay", "espanol": "Escuchar", "leccion": "acciones"},
-  {"id": "lasnuchay", "uchumataqu": "Lasnuchay", "espanol": "Saltar", "leccion": "acciones"},
-  {"id": "maxenachay", "uchumataqu": "Maxenachay", "espanol": "Despertarse", "leccion": "acciones"},
-  {"id": "julsnay", "uchumataqu": "Julsnay", "espanol": "Sentarse", "leccion": "acciones"},
-  {"id": "sitsnachay", "uchumataqu": "Sitsnachay", "espanol": "Pararse", "leccion": "acciones"},
-  {"id": "qunakasi", "uchumataqu": "Quñakasi", "espanol": "Agacharse", "leccion": "acciones"},
-  {"id": "qharschay", "uchumataqu": "Qharschay", "espanol": "Tocar", "leccion": "acciones"},
-  {"id": "sinapuxchay", "uchumataqu": "Sinapuxchay", "espanol": "Respirar", "leccion": "acciones"},
-  {"id": "sana", "uchumataqu": "Sana", "espanol": "Puerta", "leccion": "objetos"},
-  {"id": "pheta", "uchumataqu": "Pheta", "espanol": "Ventana", "leccion": "objetos"},
-  {"id": "chimay", "uchumataqu": "Chimay", "espanol": "Mesa", "leccion": "objetos"},
-  {"id": "chusi", "uchumataqu": "Chusi", "espanol": "Cama", "leccion": "objetos"},
-  {"id": "chhiqha", "uchumataqu": "Chhiqha", "espanol": "Escoba", "leccion": "objetos"},
-  {"id": "achasi", "uchumataqu": "Achasi", "espanol": "Almohada", "leccion": "objetos"},
-  {"id": "julsni", "uchumataqu": "Julsni", "espanol": "Silla", "leccion": "objetos"},
-  {"id": "khitschay", "uchumataqu": "Khitschay", "espanol": "Abrir", "leccion": "actividades"},
-  {"id": "amaruskchay", "uchumataqu": "Amaruskchay", "espanol": "Cerrar", "leccion": "actividades"},
-  {"id": "wiljñichay", "uchumataqu": "Wiljñichay", "espanol": "Cocinar", "leccion": "actividades"},
-  {"id": "jaxchay", "uchumataqu": "Jaxchay", "espanol": "Lavar", "leccion": "actividades"},
-  {"id": "waxichay", "uchumataqu": "Waxichay", "espanol": "Hervir", "leccion": "actividades"},
-  {"id": "qanschay", "uchumataqu": "Qanschay", "espanol": "Guardar", "leccion": "actividades"},
-  {"id": "chukichay", "uchumataqu": "Chukichay", "espanol": "Traer", "leccion": "actividades"},
-  {"id": "pexuschay", "uchumataqu": "Pexuschay", "espanol": "Barrer", "leccion": "actividades"},
-  {"id": "kitsnuchay", "uchumataqu": "Kitsnuchay", "espanol": "Servir", "leccion": "actividades"},
-  {"id": "uqachay", "uchumataqu": "Uqachay", "espanol": "Llevar", "leccion": "actividades"},
-  {"id": "chiwliks", "uchumataqu": "Chiwliks", "espanol": "Leche", "leccion": "cocina"},
-  {"id": "jilli", "uchumataqu": "Jilli", "espanol": "Carne", "leccion": "cocina"},
-  {"id": "arusha", "uchumataqu": "Arusha", "espanol": "Arroz", "leccion": "cocina"},
-  {"id": "qhasi", "uchumataqu": "Qhasi", "espanol": "Agua", "leccion": "cocina"},
-  {"id": "yiku", "uchumataqu": "Yiku", "espanol": "Sal", "leccion": "cocina"},
-  {"id": "xawariski", "uchumataqu": "Xawariski", "espanol": "Pan", "leccion": "cocina"},
-  {"id": "sini", "uchumataqu": "Siñi", "espanol": "Huevo", "leccion": "cocina"},
-  {"id": "chiwe", "uchumataqu": "Chiwe", "espanol": "Queso", "leccion": "cocina"},
-  {"id": "photsi", "uchumataqu": "Photsi", "espanol": "Cuchillo", "leccion": "cocina"},
-  {"id": "maska", "uchumataqu": "Mäska", "espanol": "Olla", "leccion": "cocina"},
-  {"id": "khirchula", "uchumataqu": "Khirchula", "espanol": "Cuchara", "leccion": "cocina"},
-  {"id": "chuwa", "uchumataqu": "Chuwa", "espanol": "Plato", "leccion": "cocina"},
-  {"id": "esqhara", "uchumataqu": "Esqhara", "espanol": "Sombrero", "leccion": "vestimenta"},
-  {"id": "ira", "uchumataqu": "Ira", "espanol": "Poncho uru", "leccion": "vestimenta"},
-  {"id": "aymilla", "uchumataqu": "Aymilla", "espanol": "Camisa", "leccion": "vestimenta"},
-  {"id": "chhata", "uchumataqu": "Chhata", "espanol": "Abarca", "leccion": "vestimenta"},
-  {"id": "makchi", "uchumataqu": "Makchi", "espanol": "Pantalón", "leccion": "vestimenta"},
-  {"id": "chheqhoni", "uchumataqu": "Chheqhoñi", "espanol": "Liwi", "leccion": "vestimenta"},
-  {"id": "urkhu", "uchumataqu": "Urkhu", "espanol": "Vestido uru", "leccion": "vestimenta"},
-  {"id": "chhasi", "uchumataqu": "Chhasi", "espanol": "Faja", "leccion": "vestimenta"},
-  {"id": "maxsi", "uchumataqu": "Maxsi", "espanol": "Zapato", "leccion": "vestimenta"},
-  {"id": "karpinisa", "uchumataqu": "Karpinisa", "espanol": "Medias", "leccion": "vestimenta"},
-  {"id": "paku", "uchumataqu": "Päku", "espanol": "Perro", "leccion": "domesticos"},
-  {"id": "masota", "uchumataqu": "Masota", "espanol": "Gato", "leccion": "domesticos"},
-  {"id": "wallpa", "uchumataqu": "Wallpa", "espanol": "Gallina", "leccion": "domesticos"},
-  {"id": "waka", "uchumataqu": "Waka", "espanol": "Vaca", "leccion": "domesticos"},
-  {"id": "khuchhi", "uchumataqu": "Khuchhi", "espanol": "Chancho", "leccion": "domesticos"},
-  {"id": "murchula", "uchumataqu": "Murchula", "espanol": "Burro", "leccion": "domesticos"},
-  {"id": "uni", "uchumataqu": "Uñi", "espanol": "Conejo", "leccion": "domesticos"},
-  {"id": "xala", "uchumataqu": "Xala", "espanol": "Llama", "leccion": "domesticos"},
-  {"id": "iwisa", "uchumataqu": "Iwisa", "espanol": "Oveja", "leccion": "domesticos"},
-  {"id": "xalwari", "uchumataqu": "Xalwari", "espanol": "Vicuña", "leccion": "silvestres"},
-  {"id": "qetsi", "uchumataqu": "Qetsi", "espanol": "Zorro", "leccion": "silvestres"},
-  {"id": "chunri_paku", "uchumataqu": "Chuñri paku", "espanol": "Zorrino", "leccion": "silvestres"},
-  {"id": "phisqona", "uchumataqu": "Phisqoña", "espanol": "Lagarto", "leccion": "silvestres"},
-  {"id": "qawi", "uchumataqu": "Qawi", "espanol": "Cóndor", "leccion": "silvestres"},
-  {"id": "chhikacha", "uchumataqu": "Chhikacha", "espanol": "Rana", "leccion": "silvestres"},
-  {"id": "kurtsi", "uchumataqu": "Kurtsi", "espanol": "Ratón", "leccion": "silvestres"},
-  {"id": "shaxara", "uchumataqu": "Shaxara", "espanol": "Víbora", "leccion": "silvestres"},
-  {"id": "paka", "uchumataqu": "Paka", "espanol": "Águila mora", "leccion": "silvestres"},
-  {"id": "parina", "uchumataqu": "Parina", "espanol": "Flamenco", "leccion": "acuaticos"},
-  {"id": "qala", "uchumataqu": "Qala", "espanol": "Gaviota", "leccion": "acuaticos"},
-  {"id": "wesla", "uchumataqu": "Wesla", "espanol": "Chhoqha", "leccion": "acuaticos"},
-  {"id": "soqna", "uchumataqu": "Soqna", "espanol": "Pato", "leccion": "acuaticos"},
-  {"id": "qalpu", "uchumataqu": "Qälpu", "espanol": "Tikitiki", "leccion": "acuaticos"},
-  {"id": "chisawa", "uchumataqu": "Chisawa", "espanol": "Miji", "leccion": "acuaticos"},
-  {"id": "chiw_qeri", "uchumataqu": "Chiw qeri", "espanol": "Pejerrey", "leccion": "acuaticos"},
-  {"id": "kurwina", "uchumataqu": "Kurwina", "espanol": "Trucha", "leccion": "acuaticos"},
-  {"id": "qeri", "uchumataqu": "Qeri", "espanol": "Pez", "leccion": "acuaticos"},
-  {"id": "chaxana", "uchumataqu": "Ch'axana", "espanol": "Pez amarillo", "leccion": "acuaticos"},
-  {"id": "yis", "uchumataqu": "Yis", "espanol": "Luna", "leccion": "elementos"},
-  {"id": "thuni", "uchumataqu": "Thuñi", "espanol": "Sol", "leccion": "elementos"},
-  {"id": "qhula", "uchumataqu": "Qhula", "espanol": "Estrella", "leccion": "elementos"},
-  {"id": "wiwi", "uchumataqu": "Wiwi", "espanol": "Río", "leccion": "elementos"},
-  {"id": "qot", "uchumataqu": "Qot", "espanol": "Lago", "leccion": "elementos"},
-  {"id": "juwa", "uchumataqu": "Juwa", "espanol": "Totora", "leccion": "elementos"},
-  {"id": "qoq", "uchumataqu": "Qoq", "espanol": "Árbol", "leccion": "elementos"},
-  {"id": "oksachu", "uchumataqu": "Oksachu", "espanol": "Flor", "leccion": "elementos"},
-  {"id": "chisni", "uchumataqu": "Chisñi", "espanol": "Lluvia", "leccion": "clima"},
-  {"id": "jipu", "uchumataqu": "Jipu", "espanol": "Viento", "leccion": "clima"},
-  {"id": "chhiri", "uchumataqu": "Chhiri", "espanol": "Nube", "leccion": "elementos"},
-  {"id": "clim_nube", "uchumataqu": "Chhiri", "espanol": "Nube", "leccion": "clima"},
-  {"id": "pischa", "uchumataqu": "Pischa", "espanol": "Neblina", "leccion": "clima"},
-  {"id": "khuti", "uchumataqu": "Khuti", "espanol": "Calor", "leccion": "clima"},
-  {"id": "xorchay", "uchumataqu": "Xorchay", "espanol": "Relámpago", "leccion": "clima"},
-  {"id": "uw", "uchumataqu": "Uw", "espanol": "Hielo", "leccion": "clima"},
-  {"id": "tomxe", "uchumataqu": "Tomxe", "espanol": "Día", "leccion": "clima"},
-  {"id": "wiyanichay", "uchumataqu": "Wiyanichay", "espanol": "Noche", "leccion": "clima"},
-  {"id": "tuncharku", "uchumataqu": "Tuncharku", "espanol": "Este", "leccion": "orientacion"},
-  {"id": "taxacharku", "uchumataqu": "Taxacharku", "espanol": "Oeste", "leccion": "orientacion"},
-  {"id": "chiyacharku", "uchumataqu": "Chiyacharku", "espanol": "Norte", "leccion": "orientacion"},
-  {"id": "janacharku", "uchumataqu": "Janacharku", "espanol": "Sur", "leccion": "orientacion"},
-  {"id": "tiksi", "uchumataqu": "Tiksi", "espanol": "Aquí", "leccion": "orientacion"},
-  {"id": "niniksi", "uchumataqu": "Niniksi", "espanol": "Allá", "leccion": "orientacion"},
-  {"id": "chiktani", "uchumataqu": "Chiktani", "espanol": "Arriba", "leccion": "orientacion"},
-  {"id": "warucharku", "uchumataqu": "Warucharku", "espanol": "Abajo", "leccion": "orientacion"},
-  {"id": "taxa", "uchumataqu": "Taxa", "espanol": "Atrás", "leccion": "orientacion"},
-  {"id": "thosa", "uchumataqu": "Thosa", "espanol": "Balsa", "leccion": "navegacion_caza_pesca"},
-  {"id": "cheqals", "uchumataqu": "Cheqals", "espanol": "Remo", "leccion": "navegacion_caza_pesca"},
-  {"id": "qesana", "uchumataqu": "Q'esana", "espanol": "Velo de la balsa", "leccion": "navegacion_caza_pesca"},
-  {"id": "taku", "uchumataqu": "Taku", "espanol": "Ancla", "leccion": "navegacion_caza_pesca"},
-  {"id": "ocha", "uchumataqu": "Ocha", "espanol": "Bote", "leccion": "navegacion_caza_pesca"},
-  {"id": "llika", "uchumataqu": "Llika", "espanol": "Red de caza grande", "leccion": "navegacion_caza_pesca"},
-  {"id": "qana", "uchumataqu": "Qäna", "espanol": "Red de pesca", "leccion": "navegacion_caza_pesca"},
-  {"id": "llipi", "uchumataqu": "Llipi", "espanol": "Red de caza mediana", "leccion": "navegacion_caza_pesca"},
-  {"id": "qernichay", "uchumataqu": "Qernichay", "espanol": "Sacar pez de la red", "leccion": "navegacion_caza_pesca"},
-  {"id": "cheqallachay", "uchumataqu": "Cheqallachay", "espanol": "Remar", "leccion": "navegacion_caza_pesca"},
-  {"id": "pitsha", "uchumataqu": "Pitsha", "espanol": "Flecha de madera", "leccion": "navegacion_caza_pesca"},
-  {"id": "lanksachuchay", "uchumataqu": "Lanksachuchay", "espanol": "Tejer red", "leccion": "navegacion_caza_pesca"},
-  {"id": "phiri", "uchumataqu": "Phiri", "espanol": "Maja", "leccion": "navegacion_caza_pesca"},
-  {"id": "tandina", "uchumataqu": "Tandïna", "espanol": "Pescador", "leccion": "navegacion_caza_pesca"},
-  {"id": "tanschay", "uchumataqu": "Tanschay", "espanol": "Pescar", "leccion": "navegacion_caza_pesca"},
-  {"id": "phana", "uchumataqu": "Phana", "espanol": "Rojo", "leccion": "colores"},
-  {"id": "saxoni", "uchumataqu": "Saxoni", "espanol": "Azul", "leccion": "colores"},
-  {"id": "jutki", "uchumataqu": "Jutki", "espanol": "Amarillo", "leccion": "colores"},
-  {"id": "ech", "uchumataqu": "Ech", "espanol": "Verde", "leccion": "colores"},
-  {"id": "jutpha", "uchumataqu": "Jutpha", "espanol": "Anaranjado", "leccion": "colores"},
-  {"id": "choq", "uchumataqu": "Choq", "espanol": "Negro", "leccion": "colores"},
-  {"id": "chiw", "uchumataqu": "Chiw", "espanol": "Blanco", "leccion": "colores"},
-  {"id": "saxchiw", "uchumataqu": "Saxchiw", "espanol": "Celeste", "leccion": "colores"},
-  {"id": "llintuphana", "uchumataqu": "Llintuphana", "espanol": "Violeta", "leccion": "colores"},
-  {"id": "chhi", "uchumataqu": "Chhi", "espanol": "Uno", "leccion": "numeros"},
-  {"id": "peske", "uchumataqu": "Peske", "espanol": "Dos", "leccion": "numeros"},
-  {"id": "chhep", "uchumataqu": "Chhep", "espanol": "Tres", "leccion": "numeros"},
-  {"id": "paxpiku", "uchumataqu": "Paxpiku", "espanol": "Cuatro", "leccion": "numeros"},
-  {"id": "taxsnuku", "uchumataqu": "Taxsnuku", "espanol": "Cinco", "leccion": "numeros"},
-  {"id": "taxchuku", "uchumataqu": "Taxchuku", "espanol": "Seis", "leccion": "numeros"},
-  {"id": "tuwqo", "uchumataqu": "Tüwqo", "espanol": "Siete", "leccion": "numeros"},
-  {"id": "qonqo", "uchumataqu": "Qonqo", "espanol": "Ocho", "leccion": "numeros"},
-  {"id": "sanqo", "uchumataqu": "Sanqo", "espanol": "Nueve", "leccion": "numeros"},
-  {"id": "qhalu", "uchumataqu": "Qhalu", "espanol": "Diez", "leccion": "numeros"}
-]
+{
+  "items": [
+    {
+      "id": "wiyantam",
+      "uch": "Wiyantam",
+      "es": "Buenos días"
+    },
+    {
+      "id": "thuni_seschay",
+      "uch": "Thuñi seschay",
+      "es": "Buenas tardes"
+    },
+    {
+      "id": "ti_wiyanichay",
+      "uch": "Tï wiyanichay",
+      "es": "Buenas noches"
+    },
+    {
+      "id": "uwapinichay",
+      "uch": "Uwapinichay",
+      "es": "Gracias"
+    },
+    {
+      "id": "salskama",
+      "uch": "Salskama",
+      "es": "Hasta luego"
+    },
+    {
+      "id": "shila",
+      "uch": "Shila",
+      "es": "Sí"
+    },
+    {
+      "id": "ana",
+      "uch": "Ana",
+      "es": "No"
+    },
+    {
+      "id": "chhuniqasi",
+      "uch": "Chhuñiqasi",
+      "es": "Estoy bien"
+    },
+    {
+      "id": "chhuniqasichay",
+      "uch": "Chhuñiqasichay",
+      "es": "¿Estas bien?"
+    },
+    {
+      "id": "anachhuni",
+      "uch": "Anachhuñi",
+      "es": "No estoy bien"
+    },
+    {
+      "id": "wilk",
+      "uch": "Wilk",
+      "es": "Yo"
+    },
+    {
+      "id": "wilk_tho",
+      "uch": "Wilk thö",
+      "es": "Yo soy"
+    },
+    {
+      "id": "thu",
+      "uch": "Thü",
+      "es": "Nombre"
+    },
+    {
+      "id": "chhuni_pichuchay",
+      "uch": "Chhuñi pichuchay",
+      "es": "Bienvenido"
+    },
+    {
+      "id": "jakilta",
+      "uch": "Jakilta",
+      "es": "¿Cuál?"
+    },
+    {
+      "id": "chhuljama",
+      "uch": "Chhuljama",
+      "es": "¿Cómo?"
+    },
+    {
+      "id": "jasiktam",
+      "uch": "Jasiktam",
+      "es": "¿De dónde?"
+    },
+    {
+      "id": "ni",
+      "uch": "Nï",
+      "es": "Él o Ella"
+    },
+    {
+      "id": "ninaka",
+      "uch": "Nïnaka",
+      "es": "Ellos o Ellas"
+    },
+    {
+      "id": "amchuki",
+      "uch": "Amchuki",
+      "es": "Ustedes"
+    },
+    {
+      "id": "wisnakti",
+      "uch": "Wisnakti",
+      "es": "Nosotros (incluyente)"
+    },
+    {
+      "id": "uchumik",
+      "uch": "Uchumik",
+      "es": "Nosotros (excluyente)"
+    },
+    {
+      "id": "chhullayku",
+      "uch": "Chhullayku",
+      "es": "¿Por qué?"
+    },
+    {
+      "id": "chhulurasa",
+      "uch": "Chhulurasa",
+      "es": "¿Cuándo?"
+    },
+    {
+      "id": "apay",
+      "uch": "Apay",
+      "es": "Papá"
+    },
+    {
+      "id": "sisni",
+      "uch": "Sisñi",
+      "es": "Curandero"
+    },
+    {
+      "id": "ataluy",
+      "uch": "Ataluy",
+      "es": "Mamá"
+    },
+    {
+      "id": "chichalay",
+      "uch": "Chichalay",
+      "es": "Hermano"
+    },
+    {
+      "id": "kayuy",
+      "uch": "K'ayuy",
+      "es": "Hermana"
+    },
+    {
+      "id": "achichay",
+      "uch": "Achichay",
+      "es": "Abuelo"
+    },
+    {
+      "id": "apichuy",
+      "uch": "Apichuy",
+      "es": "Abuela"
+    },
+    {
+      "id": "tololay",
+      "uch": "Tololay",
+      "es": "Tío"
+    },
+    {
+      "id": "malaqoy",
+      "uch": "Malaqoy",
+      "es": "Tía"
+    },
+    {
+      "id": "oqlaychay",
+      "uch": "Oqlaychay",
+      "es": "Caminar"
+    },
+    {
+      "id": "satschay",
+      "uch": "Satschay",
+      "es": "Correr"
+    },
+    {
+      "id": "lasnuchay",
+      "uch": "Lasnuchay",
+      "es": "Saltar"
+    },
+    {
+      "id": "chirsnachay",
+      "uch": "Chirsnachay",
+      "es": "Ver"
+    },
+    {
+      "id": "nonschay",
+      "uch": "Nonschay",
+      "es": "Escuchar"
+    },
+    {
+      "id": "julsnay",
+      "uch": "Julsnay",
+      "es": "Sentarse"
+    },
+    {
+      "id": "thaxchay",
+      "uch": "Thaxchay",
+      "es": "Dormir"
+    },
+    {
+      "id": "sana",
+      "uch": "Säna",
+      "es": "Puerta"
+    },
+    {
+      "id": "pheta",
+      "uch": "Pheta",
+      "es": "Ventana"
+    },
+    {
+      "id": "achasi",
+      "uch": "Achasi",
+      "es": "Almohada"
+    },
+    {
+      "id": "chusi",
+      "uch": "Chusi",
+      "es": "Cama"
+    },
+    {
+      "id": "chers",
+      "uch": "Chers",
+      "es": "Espejo"
+    },
+    {
+      "id": "chimay",
+      "uch": "Chimay",
+      "es": "Mesa"
+    },
+    {
+      "id": "julsni",
+      "uch": "Julsni",
+      "es": "Silla"
+    },
+    {
+      "id": "chhiqha",
+      "uch": "Chhiqha",
+      "es": "Escoba"
+    },
+    {
+      "id": "chhaxrana",
+      "uch": "Chhaxraña",
+      "es": "Peine"
+    },
+    {
+      "id": "kuwarerno",
+      "uch": "Kuwarerno",
+      "es": "Cuaderno"
+    },
+    {
+      "id": "chhikhits",
+      "uch": "Chhikhits",
+      "es": "Lápiz"
+    },
+    {
+      "id": "kuskuts",
+      "uch": "Kuskuts",
+      "es": "Mochila"
+    },
+    {
+      "id": "teskana",
+      "uch": "Teskana",
+      "es": "Goma"
+    },
+    {
+      "id": "papila",
+      "uch": "Papila",
+      "es": "Papel"
+    },
+    {
+      "id": "khitschay",
+      "uch": "Khitschay",
+      "es": "Abrir"
+    },
+    {
+      "id": "amaruskchay",
+      "uch": "Amaruskchay",
+      "es": "Cerrar"
+    },
+    {
+      "id": "taxsnakichay",
+      "uch": "Taxsnakichay",
+      "es": "Cocinar"
+    },
+    {
+      "id": "jaxchay",
+      "uch": "Jaxchay",
+      "es": "Lavar"
+    },
+    {
+      "id": "piwachay",
+      "uch": "Piwachay",
+      "es": "Limpiar"
+    },
+    {
+      "id": "chukichay",
+      "uch": "Chukichay",
+      "es": "Traer"
+    },
+    {
+      "id": "chiwliks",
+      "uch": "Chiwliks",
+      "es": "Leche"
+    },
+    {
+      "id": "jilli",
+      "uch": "Jilli",
+      "es": "Carne"
+    },
+    {
+      "id": "sini",
+      "uch": "Siñi",
+      "es": "Huevo"
+    },
+    {
+      "id": "chiwkis",
+      "uch": "Chiwkis",
+      "es": "Queso"
+    },
+    {
+      "id": "kula",
+      "uch": "Kula",
+      "es": "Quinua"
+    },
+    {
+      "id": "xawariski",
+      "uch": "Xawariski",
+      "es": "Pan"
+    },
+    {
+      "id": "qhasi",
+      "uch": "Qhasi",
+      "es": "Agua"
+    },
+    {
+      "id": "yiku",
+      "uch": "Yiku",
+      "es": "Sal"
+    },
+    {
+      "id": "tapa",
+      "uch": "Tapa",
+      "es": "Ají"
+    },
+    {
+      "id": "arusha",
+      "uch": "Arusha",
+      "es": "Arroz"
+    },
+    {
+      "id": "potsi",
+      "uch": "Potsi",
+      "es": "Cuchillo"
+    },
+    {
+      "id": "maska",
+      "uch": "Mäska",
+      "es": "Olla"
+    },
+    {
+      "id": "khirchula",
+      "uch": "Khirchula",
+      "es": "Cuchara"
+    },
+    {
+      "id": "chuwa",
+      "uch": "Chuwa",
+      "es": "Plato"
+    },
+    {
+      "id": "khera",
+      "uch": "Khera",
+      "es": "Cucharón"
+    },
+    {
+      "id": "lusi",
+      "uch": "Lusi",
+      "es": "Cántaro"
+    },
+    {
+      "id": "qeru",
+      "uch": "qeru",
+      "es": "Vaso"
+    },
+    {
+      "id": "xalsmasi",
+      "uch": "Xalsmäsi",
+      "es": "Batán"
+    },
+    {
+      "id": "paku",
+      "uch": "Päku",
+      "es": "Perro"
+    },
+    {
+      "id": "masota",
+      "uch": "Masota",
+      "es": "Gato"
+    },
+    {
+      "id": "wallpa",
+      "uch": "Wallpa",
+      "es": "Gallina"
+    },
+    {
+      "id": "wakha",
+      "uch": "Wakha",
+      "es": "Vaca"
+    },
+    {
+      "id": "qerwakha",
+      "uch": "Qerwakha",
+      "es": "Toro"
+    },
+    {
+      "id": "murchula",
+      "uch": "Murchula",
+      "es": "Burro"
+    },
+    {
+      "id": "uni",
+      "uch": "Uñi",
+      "es": "Conejo"
+    },
+    {
+      "id": "xala",
+      "uch": "Xala",
+      "es": "Llama"
+    },
+    {
+      "id": "iwisa",
+      "uch": "Iwisa",
+      "es": "Oveja"
+    },
+    {
+      "id": "khuchhi",
+      "uch": "Khuchhi",
+      "es": "Chancho"
+    },
+    {
+      "id": "xalwari",
+      "uch": "Xalwari",
+      "es": "Vicuña"
+    },
+    {
+      "id": "qetsi",
+      "uch": "Qetsi",
+      "es": "Zorro"
+    },
+    {
+      "id": "chunipaku",
+      "uch": "Chuñipaku",
+      "es": "Zorrino"
+    },
+    {
+      "id": "phisqona",
+      "uch": "Phisqoña",
+      "es": "Lagarto"
+    },
+    {
+      "id": "qawi",
+      "uch": "Qawi",
+      "es": "Cóndor"
+    },
+    {
+      "id": "parina",
+      "uch": "Parina",
+      "es": "Flamenco"
+    },
+    {
+      "id": "qala",
+      "uch": "Qala",
+      "es": "Gaviota"
+    },
+    {
+      "id": "wesla",
+      "uch": "Wësla",
+      "es": "Chhoqha"
+    },
+    {
+      "id": "soqna",
+      "uch": "Soqna",
+      "es": "Pato"
+    },
+    {
+      "id": "qalpu",
+      "uch": "Qälpu",
+      "es": "Tikitiki"
+    },
+    {
+      "id": "chisawa",
+      "uch": "Chisawa",
+      "es": "Miji"
+    },
+    {
+      "id": "chiwqeri",
+      "uch": "Chiwqeri",
+      "es": "Pejerrey"
+    },
+    {
+      "id": "kurwina",
+      "uch": "Kurwina",
+      "es": "Trucha"
+    },
+    {
+      "id": "qeri",
+      "uch": "Qeri",
+      "es": "Pez"
+    },
+    {
+      "id": "chaxana",
+      "uch": "Ch'axana",
+      "es": "Pez amarillo"
+    },
+    {
+      "id": "yis",
+      "uch": "Yïs",
+      "es": "Luna"
+    },
+    {
+      "id": "thuni",
+      "uch": "Thuñi",
+      "es": "Sol"
+    },
+    {
+      "id": "qola",
+      "uch": "Qola",
+      "es": "Estrella"
+    },
+    {
+      "id": "chhiri",
+      "uch": "Chhiri",
+      "es": "Nube"
+    },
+    {
+      "id": "juwa",
+      "uch": "Juwa",
+      "es": "Totora"
+    },
+    {
+      "id": "qanawi",
+      "uch": "Qañawi",
+      "es": "Cañawa"
+    },
+    {
+      "id": "phiki",
+      "uch": "Phiki",
+      "es": "Paja brava"
+    },
+    {
+      "id": "qoq",
+      "uch": "Qoq",
+      "es": "Árbol"
+    },
+    {
+      "id": "qeschhala",
+      "uch": "Qeschhäla",
+      "es": "Sembradío de papa"
+    },
+    {
+      "id": "chisni",
+      "uch": "Chisñi",
+      "es": "Lluvia"
+    },
+    {
+      "id": "jipu",
+      "uch": "Jipu",
+      "es": "Viento"
+    },
+    {
+      "id": "tuncharku",
+      "uch": "Tuncharku",
+      "es": "Este"
+    },
+    {
+      "id": "taxacharku",
+      "uch": "Taxacharku",
+      "es": "Oeste"
+    },
+    {
+      "id": "chiyacharku",
+      "uch": "Chiyacharku",
+      "es": "Norte"
+    },
+    {
+      "id": "xanacharku",
+      "uch": "xanacharku",
+      "es": "Sur"
+    },
+    {
+      "id": "thosa",
+      "uch": "Thosa",
+      "es": "Balsa"
+    },
+    {
+      "id": "qachina",
+      "uch": "Qachina",
+      "es": "Velo de la balsa"
+    },
+    {
+      "id": "ochapara",
+      "uch": "Ochapara",
+      "es": "Bote de madera"
+    },
+    {
+      "id": "eskhara",
+      "uch": "Eskhara",
+      "es": "Sombrero"
+    },
+    {
+      "id": "ira",
+      "uch": "Ira",
+      "es": "Poncho uru"
+    },
+    {
+      "id": "aymilla",
+      "uch": "Aymilla",
+      "es": "Camisa"
+    },
+    {
+      "id": "chhata",
+      "uch": "Chhata",
+      "es": "Abarca"
+    },
+    {
+      "id": "makchi",
+      "uch": "Makchi",
+      "es": "Pantalón"
+    },
+    {
+      "id": "chheqhoni",
+      "uch": "Chheqhoñi",
+      "es": "Liwi"
+    },
+    {
+      "id": "urkhu",
+      "uch": "Urkhu",
+      "es": "Vestido uru"
+    },
+    {
+      "id": "chhasi",
+      "uch": "Chhasi",
+      "es": "Faja"
+    },
+    {
+      "id": "maxsi",
+      "uch": "Maxsi",
+      "es": "Zapato"
+    },
+    {
+      "id": "karpinisa",
+      "uch": "Karpinisa",
+      "es": "Medias"
+    },
+    {
+      "id": "titomxe",
+      "uch": "Tïtomxe",
+      "es": "Hoy día"
+    },
+    {
+      "id": "saxoni",
+      "uch": "Saxoni",
+      "es": "Azul"
+    },
+    {
+      "id": "echs",
+      "uch": "Echs",
+      "es": "Verde"
+    },
+    {
+      "id": "choq",
+      "uch": "Choq",
+      "es": "Negro"
+    },
+    {
+      "id": "chiw",
+      "uch": "Chiw",
+      "es": "Blanco"
+    },
+    {
+      "id": "peske",
+      "uch": "Peske",
+      "es": "Dos"
+    },
+    {
+      "id": "chhep",
+      "uch": "Chhep",
+      "es": "Tres"
+    },
+    {
+      "id": "taxsnuku",
+      "uch": "Taxsnuku",
+      "es": "Cinco"
+    },
+    {
+      "id": "tuwqo",
+      "uch": "Tüwqo",
+      "es": "Siete"
+    },
+    {
+      "id": "qonqo",
+      "uch": "Qonqo",
+      "es": "Ocho"
+    },
+    {
+      "id": "sanqo",
+      "uch": "Sanqo",
+      "es": "Nueve"
+    },
+    {
+      "id": "yachiri",
+      "uch": "Yachiri",
+      "es": "Carpintero"
+    },
+    {
+      "id": "qhathu",
+      "uch": "Qhathu",
+      "es": "Mercado"
+    },
+    {
+      "id": "watha",
+      "uch": "Watha",
+      "es": "Pueblo"
+    },
+    {
+      "id": "qhoya",
+      "uch": "Qhoya",
+      "es": "Casa"
+    },
+    {
+      "id": "tanschay",
+      "uch": "Tanschay",
+      "es": "Pescar"
+    },
+    {
+      "id": "tuchay",
+      "uch": "Tuchay",
+      "es": "Vender"
+    },
+    {
+      "id": "qhoychay",
+      "uch": "Qhoychay",
+      "es": "Construir o Fabricar"
+    },
+    {
+      "id": "qhawschay",
+      "uch": "Qhawschay",
+      "es": "Comprar"
+    },
+    {
+      "id": "achuchay",
+      "uch": "Achuchay",
+      "es": "Cultivar"
+    },
+    {
+      "id": "chherchher",
+      "uch": "Chherchher",
+      "es": "Bonito"
+    },
+    {
+      "id": "kusikasi",
+      "uch": "K'usikasi",
+      "es": "Contento"
+    },
+    {
+      "id": "lowalowa",
+      "uch": "Lowalowa",
+      "es": "Rápido"
+    },
+    {
+      "id": "uchs",
+      "uch": "Uchs",
+      "es": "Pequeño"
+    },
+    {
+      "id": "chhaq",
+      "uch": "Chhaq",
+      "es": "Grande"
+    },
+    {
+      "id": "parentina",
+      "uch": "Parentiña",
+      "es": "Familia"
+    },
+    {
+      "id": "siluchay",
+      "uch": "Siluchay",
+      "es": "Residir o Vivir"
+    },
+    {
+      "id": "suwa",
+      "uch": "Suwa",
+      "es": "Niño"
+    },
+    {
+      "id": "ulanchay",
+      "uch": "Ulanchay",
+      "es": "Salir"
+    },
+    {
+      "id": "yoqa",
+      "uch": "Yoqa",
+      "es": "Suelo"
+    },
+    {
+      "id": "taki",
+      "uch": "Taki",
+      "es": "Ese o Esa"
+    },
+    {
+      "id": "chay",
+      "uch": "Chay",
+      "es": "Estar (Clítico Declarativo)"
+    },
+    {
+      "id": "irohito_urus",
+      "uch": "Irohito Urus",
+      "es": "Irohito Urus"
+    },
+    {
+      "id": "oqschay",
+      "uch": "Oqschay",
+      "es": "Ir"
+    },
+    {
+      "id": "palitak",
+      "uch": "Palitak",
+      "es": "Amigo"
+    },
+    {
+      "id": "pichuchay",
+      "uch": "Pichuchay",
+      "es": "Venir"
+    },
+    {
+      "id": "pini",
+      "uch": "Pini",
+      "es": "Muy (Intensificador)"
+    },
+    {
+      "id": "sitsni",
+      "uch": "Sitsñi",
+      "es": "Profesor"
+    },
+    {
+      "id": "wakpacha",
+      "uch": "Wakpacha",
+      "es": "Todos"
+    },
+    {
+      "id": "ti",
+      "uch": "Tï",
+      "es": "Ese o Aquí (Para lugar)"
+    },
+    {
+      "id": "selschay",
+      "uch": "Selschay",
+      "es": "Existir o Hay"
+    },
+    {
+      "id": "pakschay",
+      "uch": "Pakschay",
+      "es": "Crecer"
+    },
+    {
+      "id": "siqetschay",
+      "uch": "Siqetschay",
+      "es": "Escribir"
+    },
+    {
+      "id": "untu",
+      "uch": "Untu",
+      "es": "Fuerte"
+    },
+    {
+      "id": "wistakchay",
+      "uch": "Wistakchay",
+      "es": "Tener"
+    },
+    {
+      "id": "wiyanichay",
+      "uch": "Wiyanichay",
+      "es": "Noche"
+    },
+    {
+      "id": "axtal",
+      "uch": "Axtal",
+      "es": "Lejos"
+    },
+    {
+      "id": "chhaqway",
+      "uch": "Chhaqway",
+      "es": "Alto"
+    },
+    {
+      "id": "puschay",
+      "uch": "P'uschay",
+      "es": "Estar enfermo"
+    },
+    {
+      "id": "wiwi",
+      "uch": "Wiwi",
+      "es": "Río"
+    },
+    {
+      "id": "cheqallachay",
+      "uch": "Cheqallachay",
+      "es": "Remar"
+    },
+    {
+      "id": "tanachay",
+      "uch": "Tanachay",
+      "es": "Atrapar"
+    },
+    {
+      "id": "likschay",
+      "uch": "Likschay",
+      "es": "Beber"
+    },
+    {
+      "id": "chhurpikchay",
+      "uch": "Chhurpikchay",
+      "es": "Brillar"
+    },
+    {
+      "id": "qhorskchay",
+      "uch": "Qhorskchay",
+      "es": "Buscar"
+    },
+    {
+      "id": "thikuchay",
+      "uch": "Thikuchay",
+      "es": "Caerse"
+    },
+    {
+      "id": "potschay",
+      "uch": "Potschay",
+      "es": "Cortar"
+    },
+    {
+      "id": "uyuwichay",
+      "uch": "Uyuwichay",
+      "es": "Criar"
+    },
+    {
+      "id": "chatschay",
+      "uch": "Ch'atschay",
+      "es": "Ladrar"
+    },
+    {
+      "id": "qotni",
+      "uch": "Qotñi",
+      "es": "Caliente"
+    },
+    {
+      "id": "usa",
+      "uch": "Usa",
+      "es": "Cerro"
+    },
+    {
+      "id": "qhasumpek",
+      "uch": "Qhasumpek",
+      "es": "¿Cuánto?"
+    },
+    {
+      "id": "lloqa",
+      "uch": "Lloqa",
+      "es": "Orilla"
+    },
+    {
+      "id": "anapini",
+      "uch": "anapini",
+      "es": "Nunca"
+    },
+    {
+      "id": "chhiqets",
+      "uch": "Chhiqets",
+      "es": "Ropa"
+    },
+    {
+      "id": "chhuk",
+      "uch": "Chhuk",
+      "es": "Sucio"
+    },
+    {
+      "id": "wiyani",
+      "uch": "Wiyani",
+      "es": "En la mañana"
+    },
+    {
+      "id": "warirachay",
+      "uch": "Warirachay",
+      "es": "Usar o Utilizar"
+    },
+    {
+      "id": "serx",
+      "uch": "Serx",
+      "es": "Viejo"
+    },
+    {
+      "id": "walchay",
+      "uch": "Walchay",
+      "es": "Costar o Valer"
+    },
+    {
+      "id": "lulschay",
+      "uch": "lulschay",
+      "es": "Comer"
+    },
+    {
+      "id": "jilaynacha",
+      "uch": "Jilaynacha",
+      "es": "Demasiado"
+    },
+    {
+      "id": "layschay",
+      "uch": "Layschay",
+      "es": "Volar"
+    },
+    {
+      "id": "anachhulu",
+      "uch": "Anachhulu",
+      "es": "Ninguno"
+    },
+    {
+      "id": "tiku",
+      "uch": "Tiku ",
+      "es": "Cielo"
+    },
+    {
+      "id": "xurcha",
+      "uch": "Xurcha",
+      "es": "Color"
+    },
+    {
+      "id": "qerjina",
+      "uch": "Qerjiña",
+      "es": "Wallake"
+    },
+    {
+      "id": "chalachay",
+      "uch": "Chälachay",
+      "es": "Sembrar"
+    },
+    {
+      "id": "naka",
+      "uch": "naka",
+      "es": "Pluralizador"
+    },
+    {
+      "id": "chhi",
+      "uch": "Chhi",
+      "es": "Uno"
+    },
+    {
+      "id": "paxpiku",
+      "uch": "Paxpiku",
+      "es": "Cuatro"
+    },
+    {
+      "id": "taxchuku",
+      "uch": "Taxchuku",
+      "es": "Seis"
+    },
+    {
+      "id": "wist",
+      "uch": "Wist",
+      "es": "Mi"
+    },
+    {
+      "id": "am",
+      "uch": "Am",
+      "es": "Tú"
+    },
+    {
+      "id": "nis",
+      "uch": "Nis",
+      "es": "Su (de él/ella)"
+    },
+    {
+      "id": "uchums",
+      "uch": "Uchums",
+      "es": "Nuestro (Exclusivo)"
+    },
+    {
+      "id": "wisnaks",
+      "uch": "Wisnaks",
+      "es": "Nuestro (Inclusivo)"
+    },
+    {
+      "id": "ew",
+      "uch": "Ew",
+      "es": "Nuevo"
+    },
+    {
+      "id": "purchay",
+      "uch": "Purchay",
+      "es": "Poder"
+    },
+    {
+      "id": "tichu",
+      "uch": "Tichu",
+      "es": "Este (para cosas)"
+    },
+    {
+      "id": "tila",
+      "uch": "Tila",
+      "es": "Esta"
+    },
+    {
+      "id": "qhasumpek",
+      "uch": "Qhasumpek",
+      "es": "¿Cuanto?"
+    },
+    {
+      "id": "waki",
+      "uch": "Wakï",
+      "es": "Guaqui"
+    },
+    {
+      "id": "qhalu",
+      "uch": "Qhalu",
+      "es": "Diez"
+    },
+    {
+      "id": "sitsnizoni",
+      "uch": "Sitsnizoñi",
+      "es": "Sabio"
+    }
+  ]
+}

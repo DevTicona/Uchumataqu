@@ -37,3 +37,7 @@ Thumbs.db
 # Ignorar depuración de Burst y carpetas de recuperación
 *BurstDebugInformation_DoNotShip/
 Assets/_Recovery/
+
+# Documentación interna local
+[Dd]ocs/
+*.slnx

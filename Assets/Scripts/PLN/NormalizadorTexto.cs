@@ -13,8 +13,10 @@ namespace Assets.Scripts.PLN
         {
             if (string.IsNullOrWhiteSpace(texto)) return string.Empty;
             texto = texto.Trim().ToLowerInvariant();
+            // Remover signos de puntuación comunes preservando caracteres de palabras y espacios
+            texto = Regex.Replace(texto, @"[¡!¿?,.;:()""«»\-—]", " ");
             texto = Regex.Replace(texto, @"\s+", " ");
-            return texto;
+            return texto.Trim();
         }
     }
 }

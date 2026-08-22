@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Assets.Scripts.Core.Services;
 using Assets.Scripts.Data.Corpus;
+using Assets.Scripts.Utils;
 
 namespace Assets.Scripts.Persistencia
 {
@@ -27,7 +29,26 @@ namespace Assets.Scripts.Persistencia
         private static List<LeccionCompiladaData> _leccionesOrdenadas;
         private static List<EscenarioRAData> _escenariosList;
 
-        public static bool EstaInicializado => _palabrasDict != null && _leccionesDict != null;
+        public static bool EstaInicializado => _palabrasDict != null && _leccionesDict != null && _palabrasDict.Count > 0;
+
+        public static bool Inicializar()
+        {
+            if (EstaInicializado) return true;
+
+            try
+            {
+                ProcesarPalabrasJson(LeerJsonDirecto("palabras.json"));
+                ProcesarOracionesJson(LeerJsonDirecto("oraciones.json"));
+                ProcesarLeccionesJson(LeerJsonDirecto("lecciones_compiladas.json"));
+                ProcesarEscenariosJson(LeerJsonDirecto("escenarios_ra.json"));
+                return true;
+            }
+            catch (Exception ex)
+            {
+                JsonUtilityHelper.LogError($"[CorpusRepository] Error inicializando corpus directo: {ex.Message}");
+                return false;
+            }
+        }
 
         public static async Task<bool> InicializarAsync()
         {
@@ -35,7 +56,6 @@ namespace Assets.Scripts.Persistencia
 
             try
             {
-                // Cargar en paralelo los 4 archivos JSON de Content/Data
                 var taskPalabras = CargarPalabrasAsync();
                 var taskOraciones = CargarOracionesAsync();
                 var taskLecciones = CargarLeccionesCompiladasAsync();
@@ -46,15 +66,59 @@ namespace Assets.Scripts.Persistencia
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[CorpusRepository] Error inicializando corpus: {ex.Message}");
+                JsonUtilityHelper.LogError($"[CorpusRepository] Error inicializando corpus async: {ex.Message}");
                 return false;
             }
+        }
+
+        private static string LeerJsonDirecto(string fileName)
+        {
+            // Intentar primero con Application.dataPath si está disponible
+            try
+            {
+                var path = Path.Combine(Application.dataPath, "Content", "Data", fileName);
+                if (File.Exists(path)) return File.ReadAllText(path);
+            }
+            catch { }
+
+            string[] possiblePaths = new string[]
+            {
+                Path.Combine("Assets", "Content", "Data", fileName),
+                Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Content", "Data", fileName),
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "..", "Assets", "Content", "Data", fileName),
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Assets", "Content", "Data", fileName),
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Content", "Data", fileName)
+            };
+
+            foreach (var p in possiblePaths)
+            {
+                try
+                {
+                    if (File.Exists(p)) return File.ReadAllText(Path.GetFullPath(p));
+                }
+                catch { }
+            }
+
+            // Intentar StreamingAssets
+            try
+            {
+                var pathStreaming = Path.Combine(Application.streamingAssetsPath, "Data", fileName);
+                if (File.Exists(pathStreaming)) return File.ReadAllText(pathStreaming);
+            }
+            catch { }
+
+            throw new FileNotFoundException($"[CorpusRepository] No se encontró el recurso '{fileName}'.");
         }
 
         private static async Task CargarPalabrasAsync()
         {
             var json = await CargarJsonTextoAsync(KEY_PALABRAS, "palabras.json");
-            var wrapper = JsonUtility.FromJson<PalabrasWrapperData>(json);
+            ProcesarPalabrasJson(json);
+        }
+
+        private static void ProcesarPalabrasJson(string json)
+        {
+            var wrapper = JsonUtilityHelper.FromJson<PalabrasWrapperData>(json);
             _palabrasDict = new Dictionary<string, PalabraData>();
             _formasDict = new Dictionary<string, FormaData>();
 
@@ -77,7 +141,12 @@ namespace Assets.Scripts.Persistencia
         private static async Task CargarOracionesAsync()
         {
             var json = await CargarJsonTextoAsync(KEY_ORACIONES, "oraciones.json");
-            var wrapper = JsonUtility.FromJson<OracionesWrapperData>(json);
+            ProcesarOracionesJson(json);
+        }
+
+        private static void ProcesarOracionesJson(string json)
+        {
+            var wrapper = JsonUtilityHelper.FromJson<OracionesWrapperData>(json);
             _oracionesDict = new Dictionary<string, OracionData>();
 
             if (wrapper?.oraciones != null)
@@ -92,7 +161,12 @@ namespace Assets.Scripts.Persistencia
         private static async Task CargarLeccionesCompiladasAsync()
         {
             var json = await CargarJsonTextoAsync(KEY_LECCIONES, "lecciones_compiladas.json");
-            var wrapper = JsonUtility.FromJson<LeccionesCompiladasWrapperData>(json);
+            ProcesarLeccionesJson(json);
+        }
+
+        private static void ProcesarLeccionesJson(string json)
+        {
+            var wrapper = JsonUtilityHelper.FromJson<LeccionesCompiladasWrapperData>(json);
             _leccionesDict = new Dictionary<string, LeccionCompiladaData>();
             _leccionesOrdenadas = new List<LeccionCompiladaData>();
 
@@ -109,7 +183,12 @@ namespace Assets.Scripts.Persistencia
         private static async Task CargarEscenariosRAAsync()
         {
             var json = await CargarJsonTextoAsync(KEY_ESCENARIOS_RA, "escenarios_ra.json");
-            var wrapper = JsonUtility.FromJson<EscenariosRAWrapperData>(json);
+            ProcesarEscenariosJson(json);
+        }
+
+        private static void ProcesarEscenariosJson(string json)
+        {
+            var wrapper = JsonUtilityHelper.FromJson<EscenariosRAWrapperData>(json);
             _escenariosDict = new Dictionary<string, EscenarioRAData>();
             _escenariosList = new List<EscenarioRAData>();
 
@@ -127,21 +206,22 @@ namespace Assets.Scripts.Persistencia
         {
             try
             {
+                string directo = LeerJsonDirecto(fallbackFileName);
+                if (!string.IsNullOrEmpty(directo)) return directo;
+            }
+            catch { }
+
+            try
+            {
                 var textAsset = await AddressablesService.CargarAssetAsync<TextAsset>(addressableKey);
                 if (textAsset != null) return textAsset.text;
             }
             catch
             {
-                // Fallback directo a StreamingAssets o Content/Data en Editor
+                // Fallback directo
             }
 
-            var path = System.IO.Path.Combine(Application.dataPath, "Content", "Data", fallbackFileName);
-            if (System.IO.File.Exists(path))
-            {
-                return System.IO.File.ReadAllText(path);
-            }
-
-            throw new System.IO.FileNotFoundException($"[CorpusRepository] No se encontró el recurso '{fallbackFileName}'.");
+            throw new FileNotFoundException($"[CorpusRepository] No se encontró el recurso '{fallbackFileName}'.");
         }
 
         // =========================================
@@ -197,6 +277,8 @@ namespace Assets.Scripts.Persistencia
             return res;
         }
 
+        public static List<OracionData> ObtenerTodasLasOraciones() => _oracionesDict?.Values.ToList() ?? new List<OracionData>();
+
         // =========================================
         // CONSULTAS DE LECCIONES
         // =========================================
@@ -222,6 +304,16 @@ namespace Assets.Scripts.Persistencia
         }
 
         public static List<EscenarioRAData> ObtenerTodosLosEscenariosRA() => _escenariosList ?? new List<EscenarioRAData>();
+
+        // Aliases de conveniencia
+        public static PalabraData ObtenerPalabraPorId(string id) => ObtenerPalabra(id);
+        public static List<PalabraData> ObtenerTodasPalabras() => ObtenerTodasLasPalabras();
+        public static OracionData ObtenerOracionPorId(string id) => ObtenerOracion(id);
+        public static List<OracionData> ObtenerTodasOraciones() => ObtenerTodasLasOraciones();
+        public static LeccionCompiladaData ObtenerLeccionPorId(string id) => ObtenerLeccion(id);
+        public static List<LeccionCompiladaData> ObtenerTodasLecciones() => ObtenerTodasLasLecciones();
+        public static EscenarioRAData ObtenerEscenarioRaPorId(string id) => ObtenerEscenarioRA(id);
+        public static List<EscenarioRAData> ObtenerTodosEscenariosRa() => ObtenerTodosLosEscenariosRA();
 
         public static void LimpiarCache()
         {

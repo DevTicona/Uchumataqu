@@ -11,7 +11,20 @@ namespace Assets.Scripts.Persistencia
     /// </summary>
     public static class PerfilRepository
     {
-        private static string RutaArchivo => Path.Combine(Application.persistentDataPath, "PerfilUsuario.json");
+        private static string RutaArchivo
+        {
+            get
+            {
+                try
+                {
+                    return Path.Combine(Application.persistentDataPath, "PerfilUsuario.json");
+                }
+                catch
+                {
+                    return Path.Combine(Path.GetTempPath(), "PerfilUsuario.json");
+                }
+            }
+        }
 
         private static PerfilUsuario _perfilCache;
 
@@ -28,6 +41,8 @@ namespace Assets.Scripts.Persistencia
             return _perfilCache;
         }
 
+        public static PerfilUsuario CargarPerfil() => ObtenerPerfil();
+
         private static PerfilUsuario Cargar()
         {
             try
@@ -35,13 +50,13 @@ namespace Assets.Scripts.Persistencia
                 if (File.Exists(RutaArchivo))
                 {
                     string json = File.ReadAllText(RutaArchivo);
-                    var perfil = JsonUtility.FromJson<PerfilUsuario>(json);
+                    var perfil = Assets.Scripts.Utils.JsonUtilityHelper.FromJson<PerfilUsuario>(json);
                     if (perfil != null) return perfil;
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[PerfilRepository] Error cargando perfil: {ex.Message}");
+                Assets.Scripts.Utils.JsonUtilityHelper.LogError($"[PerfilRepository] Error cargando perfil: {ex.Message}");
             }
 
             return new PerfilUsuario();
@@ -53,12 +68,12 @@ namespace Assets.Scripts.Persistencia
 
             try
             {
-                string json = JsonUtility.ToJson(_perfilCache, prettyPrint: true);
+                string json = Assets.Scripts.Utils.JsonUtilityHelper.ToJson(_perfilCache, prettyPrint: true);
                 File.WriteAllText(RutaArchivo, json);
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[PerfilRepository] Error guardando perfil: {ex.Message}");
+                Assets.Scripts.Utils.JsonUtilityHelper.LogError($"[PerfilRepository] Error guardando perfil: {ex.Message}");
             }
         }
 

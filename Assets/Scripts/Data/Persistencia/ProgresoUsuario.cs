@@ -34,6 +34,12 @@ namespace Assets.Scripts.Data.Persistencia
         public List<ProgresoEscenarioRAData> escenarios_ra = new List<ProgresoEscenarioRAData>();
 
         // Métodos de consulta rápidos
+        public int TotalLeccionesCompletadas => lecciones?.Count(l => l.estado == "completada") ?? 0;
+        public int TotalEscenariosVisitados => escenarios_ra?.Count(e => e.visitado) ?? 0;
+
+        public List<string> ObtenerIdsLeccionesCompletadas() =>
+            lecciones?.Where(l => l.estado == "completada").Select(l => l.leccion_id).ToList() ?? new List<string>();
+
         public bool LeccionCompletada(string leccionId)
         {
             if (string.IsNullOrEmpty(leccionId)) return false;

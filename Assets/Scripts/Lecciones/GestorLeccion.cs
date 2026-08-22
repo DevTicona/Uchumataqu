@@ -35,7 +35,7 @@ namespace Assets.Scripts.Lecciones
             LeccionActual = CorpusRepository.ObtenerLeccion(leccionId);
             if (LeccionActual == null || LeccionActual.pasos == null || LeccionActual.pasos.Count == 0)
             {
-                Debug.LogError($"[GestorLeccion] No se encontraron pasos compilados para la lección '{leccionId}'.");
+                Assets.Scripts.Utils.JsonUtilityHelper.LogError($"[GestorLeccion] No se encontraron pasos compilados para la lección '{leccionId}'.");
                 return false;
             }
 
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Lecciones
 
         public void RegistrarResultadoPaso(bool aprobado)
         {
-            if (PasoActual != null && !PasoActual.opcional && PasoActual.tipo != "presentacion_familia")
+            if (PasoActual != null)
             {
                 if (aprobado) Aciertos++;
                 else Errores++;

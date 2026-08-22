@@ -11,7 +11,20 @@ namespace Assets.Scripts.Persistencia
     /// </summary>
     public static class ProgresoRepository
     {
-        private static string RutaArchivo => Path.Combine(Application.persistentDataPath, "ProgresoUsuario.json");
+        private static string RutaArchivo
+        {
+            get
+            {
+                try
+                {
+                    return Path.Combine(Application.persistentDataPath, "ProgresoUsuario.json");
+                }
+                catch
+                {
+                    return Path.Combine(Path.GetTempPath(), "ProgresoUsuario.json");
+                }
+            }
+        }
 
         private static ProgresoUsuario _progresoCache;
 
@@ -22,6 +35,8 @@ namespace Assets.Scripts.Persistencia
             return _progresoCache;
         }
 
+        public static ProgresoUsuario CargarProgreso() => ObtenerProgreso();
+
         private static ProgresoUsuario Cargar()
         {
             try
@@ -29,13 +44,13 @@ namespace Assets.Scripts.Persistencia
                 if (File.Exists(RutaArchivo))
                 {
                     string json = File.ReadAllText(RutaArchivo);
-                    var progreso = JsonUtility.FromJson<ProgresoUsuario>(json);
+                    var progreso = Assets.Scripts.Utils.JsonUtilityHelper.FromJson<ProgresoUsuario>(json);
                     if (progreso != null) return progreso;
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[ProgresoRepository] Error cargando progreso: {ex.Message}");
+                Assets.Scripts.Utils.JsonUtilityHelper.LogError($"[ProgresoRepository] Error cargando progreso: {ex.Message}");
             }
 
             return new ProgresoUsuario();
@@ -47,12 +62,12 @@ namespace Assets.Scripts.Persistencia
 
             try
             {
-                string json = JsonUtility.ToJson(_progresoCache, prettyPrint: true);
+                string json = Assets.Scripts.Utils.JsonUtilityHelper.ToJson(_progresoCache, prettyPrint: true);
                 File.WriteAllText(RutaArchivo, json);
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[ProgresoRepository] Error guardando progreso: {ex.Message}");
+                Assets.Scripts.Utils.JsonUtilityHelper.LogError($"[ProgresoRepository] Error guardando progreso: {ex.Message}");
             }
         }
 
@@ -95,11 +110,16 @@ namespace Assets.Scripts.Persistencia
             Guardar();
         }
 
+        public static void GuardarLeccionCompletada(string leccionId, int aciertos, int errores, int totalActividades)
+        {
+            CompletarLeccion(leccionId, aciertos, errores, totalActividades);
+        }
+
         public static void ReiniciarProgreso()
         {
             _progresoCache = new ProgresoUsuario();
             Guardar();
-            Debug.Log("[ProgresoRepository] Progreso reiniciado.");
+            Assets.Scripts.Utils.JsonUtilityHelper.LogInfo("[ProgresoRepository] Progreso reiniciado.");
         }
     }
 }

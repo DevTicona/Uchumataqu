@@ -22,9 +22,9 @@ namespace Assets.Scripts.UI.RealidadAumentada
 
         private void Start()
         {
-            if (view == null) view = FindFirstObjectByType<RealidadAumentadaView>();
-            if (gestorRA == null) gestorRA = FindFirstObjectByType<GestorEscenaRA>();
-            if (backHandler == null) backHandler = FindFirstObjectByType<NavigationBackHandler>();
+            if (view == null) view = FindAnyObjectByType<RealidadAumentadaView>();
+            if (gestorRA == null) gestorRA = FindAnyObjectByType<GestorEscenaRA>();
+            if (backHandler == null) backHandler = FindAnyObjectByType<NavigationBackHandler>();
 
             if (backHandler != null)
                 backHandler.Configurar(VolverAlMapa);

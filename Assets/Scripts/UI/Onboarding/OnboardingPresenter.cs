@@ -17,7 +17,7 @@ namespace Assets.Scripts.UI.Onboarding
 
         private void Start()
         {
-            if (view == null) view = FindFirstObjectByType<OnboardingView>();
+            if (view == null) view = FindAnyObjectByType<OnboardingView>();
 
             if (view != null)
             {

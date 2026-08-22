@@ -22,8 +22,8 @@ namespace Assets.Scripts.UI.LeccionBase
 
         private void Start()
         {
-            if (view == null) view = FindFirstObjectByType<LeccionBaseView>();
-            if (backHandler == null) backHandler = FindFirstObjectByType<NavigationBackHandler>();
+            if (view == null) view = FindAnyObjectByType<LeccionBaseView>();
+            if (backHandler == null) backHandler = FindAnyObjectByType<NavigationBackHandler>();
 
             if (backHandler != null)
             {

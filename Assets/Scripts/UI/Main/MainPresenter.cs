@@ -19,7 +19,7 @@ namespace Assets.Scripts.UI.Main
 
         private void Start()
         {
-            if (view == null) view = FindFirstObjectByType<MainView>();
+            if (view == null) view = FindAnyObjectByType<MainView>();
 
             if (view != null && view.BottomNav != null)
             {
@@ -51,7 +51,7 @@ namespace Assets.Scripts.UI.Main
 
         private void ConfigurarBackHandler()
         {
-            if (backHandler == null) backHandler = FindFirstObjectByType<NavigationBackHandler>();
+            if (backHandler == null) backHandler = FindAnyObjectByType<NavigationBackHandler>();
 
             if (backHandler != null)
             {

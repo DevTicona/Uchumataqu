@@ -1,0 +1,19 @@
+using System;
+
+namespace Assets.Scripts.PLN
+{
+    /// <summary>
+    /// Contrato de salida único para todas las evaluaciones (texto, voz, orden).
+    /// Especificado en Docs/Specifications/01-modulo-pln-texto.md (Sección 3).
+    /// </summary>
+    [Serializable]
+    public class ResultadoEvaluacion
+    {
+        public bool aprobado;
+        public float porcentajeSimilitud;
+        public string colorSemaforo; // "verde" (>=85%) | "amarillo" (60-84%) | "rojo" (<60%)
+        public string textoEsperado;
+        public string textoIngresado;
+        public string origenEntrada; // "texto" | "voz" | "orden_oracion" | "morfologia" | "seleccion"
+    }
+}

@@ -24,11 +24,31 @@ namespace Assets.Scripts.Editor.Tests
         }
 
         [Test]
+        public void NormalizadorTexto_ConservaGrafiasPropiasYVocalesLargas()
+        {
+            // Conserva apóstrofe y grafías propias del uchumataqu
+            string original = "ch'amaka k'ata";
+            string normalizado = NormalizadorTexto.Normalizar(original);
+            Assert.AreEqual("ch'amaka k'ata", normalizado);
+
+            // Cadena vacía
+            Assert.AreEqual("", NormalizadorTexto.Normalizar(""));
+            Assert.AreEqual("", NormalizadorTexto.Normalizar("   "));
+        }
+
+        [Test]
         public void Levenshtein_CalculaDistanciaCorrectamente()
         {
             Assert.AreEqual(0, MotorEvaluacion.DistanciaLevenshtein("chhaq", "chhaq"));
             Assert.AreEqual(1, MotorEvaluacion.DistanciaLevenshtein("chhaq", "chaq"));
             Assert.AreEqual(2, MotorEvaluacion.DistanciaLevenshtein("chhaq", "chhok"));
+            Assert.AreEqual(0, MotorEvaluacion.DistanciaLevenshtein("", ""));
+            Assert.AreEqual(4, MotorEvaluacion.DistanciaLevenshtein("test", ""));
+            // Simetría
+            Assert.AreEqual(
+                MotorEvaluacion.DistanciaLevenshtein("viru", "chaki"),
+                MotorEvaluacion.DistanciaLevenshtein("chaki", "viru")
+            );
         }
 
         [Test]
@@ -57,7 +77,7 @@ namespace Assets.Scripts.Editor.Tests
             Assert.IsTrue(resCasiAlto.aprobado);
             Assert.AreEqual("verde", resCasiAlto.colorSemaforo);
 
-            // Similitud media (60% a 84%) -> Aprobado bajo criterio pedagógico suave (amarillo)
+            // Similitud media (60% a 84%) -> Aprobado suave (amarillo)
             var resCasi = MotorEvaluacion.EvaluarTexto("chhaq", "chhok");
             Assert.IsTrue(resCasi.aprobado);
             Assert.AreEqual("amarillo", resCasi.colorSemaforo);
@@ -74,13 +94,20 @@ namespace Assets.Scripts.Editor.Tests
             List<string> tokensCorrectos = new List<string> { "viru", "chaki", "khesay" };
             List<string> tokensEsperados = new List<string> { "viru", "chaki", "khesay" };
 
+            // Mismo número y orden -> true
             Assert.IsTrue(ValidadorOrden.ValidarOrden(tokensCorrectos, tokensEsperados));
 
+            // Distinto orden -> false
             List<string> tokensDesordenados = new List<string> { "khesay", "viru", "chaki" };
             Assert.IsFalse(ValidadorOrden.ValidarOrden(tokensDesordenados, tokensEsperados));
 
+            // Token faltante -> false
             List<string> tokensIncompletos = new List<string> { "viru", "chaki" };
             Assert.IsFalse(ValidadorOrden.ValidarOrden(tokensIncompletos, tokensEsperados));
+
+            // Token extra -> false
+            List<string> tokensExtra = new List<string> { "viru", "chaki", "khesay", "mas" };
+            Assert.IsFalse(ValidadorOrden.ValidarOrden(tokensExtra, tokensEsperados));
 
             var resultadoEval = ValidadorOrden.EvaluarOrdenOracion("Viru chaki khesay", tokensCorrectos);
             Assert.IsTrue(resultadoEval.aprobado);

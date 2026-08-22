@@ -44,47 +44,52 @@ namespace Assets.Scripts.Editor.Tests
             // Inicialmente ningún escenario está desbloqueado
             Assert.IsFalse(ProgresoRepository.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
 
-            // Completar lecciones L01 a L06 requeridas para el primer escenario RA
-            for (int i = 1; i <= 6; i++)
+            // Completar lecciones L01 a L06 requeridas para el primer escenario RA (Sección 13: RA 1 -> L01-L06)
+            for (int i = 1; i <= 5; i++)
             {
                 ProgresoRepository.GuardarLeccionCompletada($"L{i:D2}", 10, 10, 100);
             }
+            // Con 5 lecciones aún no debe desbloquearse
+            Assert.IsFalse(ProgresoRepository.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
 
-            var progreso = ProgresoRepository.CargarProgreso();
-            Assert.AreEqual(6, progreso.TotalLeccionesCompletadas);
-
-            // Ahora el escenario 1 debe estar desbloqueado
+            // Al completar la 6ta lección se desbloquea
+            ProgresoRepository.GuardarLeccionCompletada("L06", 10, 10, 100);
             Assert.IsTrue(ProgresoRepository.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
-            // El escenario 2 aún no debe estar desbloqueado
+
+            // El escenario 2 (L07-L11) aún no debe estar desbloqueado
             Assert.IsFalse(ProgresoRepository.EstaEscenarioDesbloqueado("ra_familia_vestimenta"));
+
+            // Completar L07 a L11 para desbloquear RA 2
+            for (int i = 7; i <= 11; i++)
+            {
+                ProgresoRepository.GuardarLeccionCompletada($"L{i:D2}", 10, 10, 100);
+            }
+            Assert.IsTrue(ProgresoRepository.EstaEscenarioDesbloqueado("ra_familia_vestimenta"));
         }
 
         [Test]
-        public void GestorLeccion_EjecutaFlujoCompleto()
+        public void GestorLeccion_FinalizaSinPrecisionMinimaNiASR()
         {
+            // Especificación Sección 11 y 23:
+            // "Una lección queda completada cuando el usuario recorrió todos los pasos obligatorios,
+            // independientemente de que la precisión sea baja (ej. 40%) o de que no se haya realizado ASR."
             GestorLeccion gestor = new GestorLeccion();
             bool iniciada = gestor.IniciarLeccion("L01");
             Assert.IsTrue(iniciada, "Debe ser posible iniciar la lección L01.");
 
-            Assert.AreEqual("L01", gestor.LeccionActual.id);
-            Assert.AreEqual(0, gestor.IndicePasoActual);
-            Assert.IsTrue(gestor.TotalPasos > 0);
+            // Simular respuestas incorrectas (precisión baja)
+            gestor.RegistrarResultadoPaso(false);
 
-            // Simular respuesta correcta
-            gestor.RegistrarResultadoPaso(true);
-            Assert.AreEqual(1, gestor.Aciertos);
-            Assert.AreEqual(0, gestor.Errores);
-
-            // Simular avance hasta finalizar
             while (gestor.AvanzarSiguientePaso())
             {
-                gestor.RegistrarResultadoPaso(true);
+                gestor.RegistrarResultadoPaso(false);
             }
 
+            // Finalizar tras recorrer todos los pasos
             gestor.FinalizarYGuardar();
 
             var progreso = ProgresoRepository.CargarProgreso();
-            Assert.IsTrue(progreso.LeccionCompletada("L01"), "L01 debe figurar en las lecciones completadas.");
+            Assert.IsTrue(progreso.LeccionCompletada("L01"), "L01 debe marcarse completada aunque la precisión sea baja.");
         }
     }
 }

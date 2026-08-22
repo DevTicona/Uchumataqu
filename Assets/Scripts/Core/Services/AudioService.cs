@@ -71,9 +71,25 @@ namespace Assets.Scripts.Core.Services
             await ReproducirPorKeyAsync(AudioAddress.Palabra(palabraId));
         }
 
+        public void ReproducirPalabra(string palabraId)
+        {
+            _ = ReproducirPalabraAsync(palabraId);
+        }
+
         public async Task ReproducirOracionAsync(string oracionId)
         {
             await ReproducirPorKeyAsync(AudioAddress.Oracion(oracionId));
+        }
+
+        public void ReproducirOracion(string oracionId)
+        {
+            _ = ReproducirOracionAsync(oracionId);
+        }
+
+        public void ReproducirEfecto(string nombreEfecto)
+        {
+            // Efectos de interfaz básicos sin bloquear
+            _ = ReproducirPorKeyAsync($"sfx_{nombreEfecto}");
         }
 
         public void Detener()

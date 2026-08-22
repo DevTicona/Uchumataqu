@@ -6,17 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MenuPrincipal.unity
-    guid: 7b98d3a64cee6294e85266da8b9f46e4
+    path: Assets/Scenes/00_Bootstrap.unity
+    guid: 62af3271e6250874cb66937a796788cc
   - enabled: 1
-    path: Assets/Scenes/MenuLecciones.unity
-    guid: 7bbc465327b15724f94478ad24ddf4c9
+    path: Assets/Scenes/01_Onboarding.unity
+    guid: 62925d4f3c24cea4284ba19c6efd5931
   - enabled: 1
-    path: Assets/Scenes/LeccionBase.unity
-    guid: d119cc05d978ab949988873f6e36554e
+    path: Assets/Scenes/02_Main.unity
+    guid: 36786ed72fa728741a02e67f9ad954f9
   - enabled: 1
-    path: Assets/Scenes/RealidadAumentada.unity
-    guid: 02ddc6046171de54b938df8f33430129
+    path: Assets/Scenes/03_LeccionBase.unity
+    guid: 7a57e143c51de7942a6d6a9ecac1b2e3
+  - enabled: 1
+    path: Assets/Scenes/04_RealidadAumentada.unity
+    guid: 119a0560eace56840a9b0a8611462989
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 1916bc6add0bd1c468594bdb049c68c6, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: ead988bbf6e973b4c9b3e7d1945bf0d4, type: 2}

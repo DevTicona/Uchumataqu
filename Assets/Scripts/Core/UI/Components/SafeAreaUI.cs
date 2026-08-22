@@ -48,6 +48,8 @@ namespace Assets.Scripts.Core.UI.Components
 
             rectTransform.anchorMin = anchorMin;
             rectTransform.anchorMax = anchorMax;
+            rectTransform.offsetMin = Vector2.zero;
+            rectTransform.offsetMax = Vector2.zero;
         }
     }
 }

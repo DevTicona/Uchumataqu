@@ -117,12 +117,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - img_islas
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 91bc4f2338f243d43867b8e0d8151316
-    m_Address: hogar_ra
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - img_islas
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9293fd9d74cc81f4186bbb932627d3da
     m_Address: L6
     m_ReadOnly: 0

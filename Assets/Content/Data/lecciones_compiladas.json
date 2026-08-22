@@ -1,0 +1,7638 @@
+{
+  "version": 1,
+  "metricas_distractores": {
+    "palabras": {
+      "P1": 575,
+      "P2": 145,
+      "P3": 21,
+      "P4": 40
+    },
+    "formas": {
+      "P1": 100,
+      "P2": 3,
+      "P3": 2,
+      "P4": 3
+    },
+    "oraciones": {
+      "P1": 142,
+      "P2": 1,
+      "P3": 1,
+      "P4": 0
+    }
+  },
+  "lecciones": [
+    {
+      "id": "L01",
+      "titulo": "Saludos Básicos",
+      "orden": 1,
+      "familias_nuevas": [
+        "palitak",
+        "sitsni",
+        "thuni_seschay",
+        "ti_wiyanichay",
+        "wakpacha",
+        "wiyantam"
+      ],
+      "familias_repaso": [],
+      "oraciones_ids": [
+        "O_001",
+        "O_002",
+        "O_003"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "palitak",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "palitak",
+          "opciones_ids": [
+            "palitak",
+            "sitsni",
+            "tupsincha",
+            "wakpacha"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "palitaknaka",
+          "raiz_id": "palitak",
+          "opciones_ids": [
+            "palitak",
+            "qecha",
+            "sitsni",
+            "wakpacha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "sitsni",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "sitsni",
+          "opciones_ids": [
+            "kuli",
+            "palitak",
+            "sitsni",
+            "wakpacha"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "sitsninakachay",
+          "raiz_id": "sitsni",
+          "opciones_ids": [
+            "chhaxrananaka",
+            "karpinisanaka",
+            "sitsninakachay",
+            "usachay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "thuni_seschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "thuni_seschay",
+          "opciones_ids": [
+            "salskama",
+            "thuni_seschay",
+            "ti_wiyanichay",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "palitak",
+            "sitsni",
+            "thuni_seschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ti_wiyanichay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "ti_wiyanichay",
+          "opciones_ids": [
+            "salskama",
+            "thuni_seschay",
+            "ti_wiyanichay",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wakpacha",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "wakpacha",
+          "opciones_ids": [
+            "kana",
+            "palitak",
+            "sitsni",
+            "wakpacha"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "palitak",
+            "sitsni",
+            "ti_wiyanichay",
+            "wakpacha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wiyantam",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "wiyantam",
+          "opciones_ids": [
+            "iwaltaki",
+            "thuni_seschay",
+            "ti_wiyanichay",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_001"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_001",
+          "opciones_oraciones_ids": [
+            "O_001",
+            "O_002",
+            "O_003",
+            "O_121"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_002",
+          "palabra_oculta_id": "wakpacha",
+          "opciones_ids": [
+            "palitak",
+            "sitsni",
+            "tusi",
+            "wakpacha"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_002"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_003"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_003"
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "palitak",
+            "thuni_seschay",
+            "ti_wiyanichay",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "palitak",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L02",
+      "titulo": "Presentación Personal",
+      "orden": 2,
+      "familias_nuevas": [
+        "am",
+        "jakilta",
+        "lorenzo",
+        "ni",
+        "thu",
+        "wilk_tho",
+        "wist"
+      ],
+      "familias_repaso": [
+        "palitak"
+      ],
+      "oraciones_ids": [
+        "O_004",
+        "O_005",
+        "O_006",
+        "O_007"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "am",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "am",
+          "opciones_ids": [
+            "am",
+            "amchuki",
+            "ni",
+            "ti"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "jakilta",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "jakilta",
+          "opciones_ids": [
+            "jakilta",
+            "qhasumpek"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "am",
+            "jakilta",
+            "palitak"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "lorenzo",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "lorenzo",
+          "opciones_ids": [
+            "irohito_urus",
+            "juana",
+            "lorenzo",
+            "urus"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ni",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "ni",
+          "opciones_ids": [
+            "am",
+            "ni",
+            "tuncharku",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "ni",
+          "formas_ids": [
+            "ninaka"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "am",
+            "jakilta",
+            "lorenzo",
+            "ni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "thu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "thu",
+          "opciones_ids": [
+            "palitak",
+            "thu",
+            "wakpacha",
+            "wilk_tho"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wilk_tho",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "wilk_tho",
+          "opciones_ids": [
+            "palitak",
+            "sitsni",
+            "thu",
+            "wilk_tho"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "am",
+            "jakilta",
+            "lorenzo",
+            "wilk_tho"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wist",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "wist",
+          "opciones_ids": [
+            "nis",
+            "uchums",
+            "wisnaks",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_004",
+          "opciones_oraciones_ids": [
+            "O_004",
+            "O_005",
+            "O_006",
+            "O_007"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_004",
+          "palabra_oculta_id": "lorenzo",
+          "opciones_ids": [
+            "irohito_urus",
+            "juana",
+            "lorenzo",
+            "urus"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_005"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_005"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_006"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_006",
+          "opciones_oraciones_ids": [
+            "O_004",
+            "O_005",
+            "O_006",
+            "O_007"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_007",
+          "palabra_oculta_id": "wist",
+          "opciones_ids": [
+            "nis",
+            "uchums",
+            "wisnaks",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_007"
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "jakilta",
+            "lorenzo",
+            "ni",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "am",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L03",
+      "titulo": "Cortesía y Bienestar",
+      "orden": 3,
+      "familias_nuevas": [
+        "amthu",
+        "chhuljama",
+        "chhuniqasi",
+        "iwaltaki",
+        "pedro",
+        "uwapinichay",
+        "wilk"
+      ],
+      "familias_repaso": [],
+      "oraciones_ids": [
+        "O_008",
+        "O_009",
+        "O_010"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "amthu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "amthu",
+          "opciones_ids": [
+            "amthu",
+            "iwaltaki",
+            "uwapinichay",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhuljama",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chhuljama",
+          "opciones_ids": [
+            "chhuljama",
+            "chhullayku",
+            "chhulurasa",
+            "jasiktam"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "chhuljama",
+          "formas_ids": [
+            "chhuljamachay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhuniqasi",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chhuniqasi",
+          "opciones_ids": [
+            "chhuniqasi",
+            "palitak",
+            "sitsni",
+            "wilk_tho"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "chhuniqasi",
+          "formas_ids": [
+            "chhuniqasichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "amthu",
+            "chhuljama",
+            "chhuniqasi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "iwaltaki",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "iwaltaki",
+          "opciones_ids": [
+            "amthu",
+            "iwaltaki",
+            "ti_wiyanichay",
+            "uwapinichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "pedro",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "pedro",
+          "opciones_ids": [
+            "irohito_urus",
+            "lorenzo",
+            "pedro",
+            "urus"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "amthu",
+            "chhuljama",
+            "iwaltaki",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "uwapinichay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "uwapinichay",
+          "opciones_ids": [
+            "amthu",
+            "iwaltaki",
+            "uwapinichay",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wilk",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "wilk",
+          "opciones_ids": [
+            "am",
+            "amchuki",
+            "ni",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "amthu",
+            "chhuljama",
+            "chhuniqasi",
+            "iwaltaki"
+          ]
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_008"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_008"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_009",
+          "opciones_oraciones_ids": [
+            "O_007",
+            "O_008",
+            "O_009",
+            "O_010"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_009",
+          "palabra_oculta_id": "uwapinichay",
+          "opciones_ids": [
+            "amthu",
+            "iwaltaki",
+            "thuni_seschay",
+            "uwapinichay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_010"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_010"
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhuniqasi",
+            "iwaltaki",
+            "pedro",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "amthu",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L04",
+      "titulo": "Respuestas de Bienestar",
+      "orden": 4,
+      "familias_nuevas": [
+        "ana",
+        "anachhuni",
+        "shila"
+      ],
+      "familias_repaso": [
+        "chhuniqasi",
+        "palitak",
+        "uwapinichay",
+        "wilk"
+      ],
+      "oraciones_ids": [
+        "O_011",
+        "O_012",
+        "O_013",
+        "O_014"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ana",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "ana",
+          "opciones_ids": [
+            "ana",
+            "shila"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "anapini",
+          "raiz_id": "ana",
+          "opciones_ids": [
+            "ana",
+            "shila"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "anachhuni",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "anachhuni",
+          "opciones_ids": [
+            "anachhuni",
+            "chhuniqasi",
+            "palitak",
+            "wilk_tho"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "anachhuni",
+            "chhuniqasi",
+            "palitak",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "shila",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "shila",
+          "opciones_ids": [
+            "ana",
+            "shila"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhuniqasi",
+            "palitak",
+            "uwapinichay",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_011"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_011",
+          "opciones_oraciones_ids": [
+            "O_011",
+            "O_012",
+            "O_013",
+            "O_014"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_012",
+          "palabra_oculta_id": "chhuniqasi",
+          "opciones_ids": [
+            "anachhuni",
+            "chhuniqasi",
+            "palitak",
+            "thu"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_012"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_013"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_013"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_014",
+          "opciones_oraciones_ids": [
+            "O_011",
+            "O_012",
+            "O_013",
+            "O_014"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_014",
+          "palabra_oculta_id": "uwapinichay",
+          "opciones_ids": [
+            "amthu",
+            "iwaltaki",
+            "uwapinichay",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "shila",
+            "uwapinichay",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "ana",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L05",
+      "titulo": "Procedencia y Despedida",
+      "orden": 5,
+      "familias_nuevas": [
+        "chhuni_pichuchay",
+        "irohito_urus",
+        "jasiktam",
+        "pichuchay",
+        "salskama",
+        "ti",
+        "waki",
+        "watha"
+      ],
+      "familias_repaso": [
+        "pedro",
+        "wilk"
+      ],
+      "oraciones_ids": [
+        "O_015",
+        "O_016",
+        "O_017",
+        "O_018",
+        "O_019"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhuni_pichuchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chhuni_pichuchay",
+          "opciones_ids": [
+            "chhuni_pichuchay",
+            "iwaltaki",
+            "salskama",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "irohito_urus",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "irohito_urus",
+          "opciones_ids": [
+            "irohito_urus",
+            "lorenzo",
+            "pedro",
+            "urus"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhuni_pichuchay",
+            "irohito_urus",
+            "pedro",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "jasiktam",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "jasiktam",
+          "opciones_ids": [
+            "chhuljama",
+            "chhullayku",
+            "chhulurasa",
+            "jasiktam"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "pichuchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "pichuchay",
+          "opciones_ids": [
+            "pichuchay",
+            "shatachay",
+            "sischay",
+            "tuqschay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "jasiktam",
+            "pedro",
+            "pichuchay",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "salskama",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "salskama",
+          "opciones_ids": [
+            "chhuni_pichuchay",
+            "iwaltaki",
+            "salskama",
+            "wiyantam"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ti",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "ti",
+          "opciones_ids": [
+            "am",
+            "ni",
+            "ti",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "jasiktam",
+            "pichuchay",
+            "salskama",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "waki",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "waki",
+          "opciones_ids": [
+            "anachhuni",
+            "waki",
+            "wakpacha",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "watha",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "watha",
+          "opciones_ids": [
+            "anachhuni",
+            "waki",
+            "wakpacha",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "jasiktam",
+            "pedro",
+            "ti",
+            "waki"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_015"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_015"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_016"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_016",
+          "opciones_oraciones_ids": [
+            "O_016",
+            "O_017",
+            "O_018",
+            "O_019"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_017",
+          "palabra_oculta_id": "wilk",
+          "opciones_ids": [
+            "am",
+            "ni",
+            "ti",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_017"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_018"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_018"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_019",
+          "opciones_oraciones_ids": [
+            "O_016",
+            "O_017",
+            "O_018",
+            "O_019"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_019",
+          "palabra_oculta_id": "pedro",
+          "opciones_ids": [
+            "irohito_urus",
+            "lorenzo",
+            "pedro",
+            "urus"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhuni_pichuchay",
+            "irohito_urus",
+            "jasiktam",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chhuni_pichuchay",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L06",
+      "titulo": "Pronombres y Plurales",
+      "orden": 6,
+      "familias_nuevas": [
+        "amchuki",
+        "oqschay",
+        "uchumik",
+        "wisnakti"
+      ],
+      "familias_repaso": [
+        "ana",
+        "chhuni_pichuchay",
+        "ni",
+        "palitak",
+        "sitsni",
+        "watha"
+      ],
+      "oraciones_ids": [
+        "O_020",
+        "O_021",
+        "O_022",
+        "O_023"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "amchuki",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "amchuki",
+          "opciones_ids": [
+            "amchuki",
+            "ni",
+            "uchumik",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "oqschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "oqschay",
+          "opciones_ids": [
+            "oqschay",
+            "pichuchay",
+            "sischay",
+            "sisuchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "amchuki",
+            "ana",
+            "chhuni_pichuchay",
+            "palitak"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "uchumik",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "uchumik",
+          "opciones_ids": [
+            "amchuki",
+            "ni",
+            "uchumik",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wisnakti",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "wisnakti",
+          "opciones_ids": [
+            "amchuki",
+            "ni",
+            "uchumik",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ana",
+            "chhuni_pichuchay",
+            "palitak",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "chhuni_pichuchay",
+            "ni",
+            "palitak"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_020"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_020"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_021"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_021",
+          "opciones_oraciones_ids": [
+            "O_020",
+            "O_021",
+            "O_022",
+            "O_023"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_022",
+          "palabra_oculta_id": "palitaknaka",
+          "opciones_ids": [
+            "chhuniqasichay",
+            "palitaknaka",
+            "sitsninaka",
+            "sitsninakachay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_022"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_023"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_023"
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhuni_pichuchay",
+            "ni",
+            "palitak",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "amchuki",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L07",
+      "titulo": "El Núcleo Familiar",
+      "orden": 7,
+      "familias_nuevas": [
+        "apay",
+        "ataluy",
+        "chichalay",
+        "kayuy",
+        "kusikasi",
+        "nis",
+        "yachiri"
+      ],
+      "familias_repaso": [
+        "am",
+        "ni",
+        "palitak",
+        "wist"
+      ],
+      "oraciones_ids": [
+        "O_024",
+        "O_025",
+        "O_026",
+        "O_027"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "apay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "apay",
+          "opciones_ids": [
+            "apay",
+            "chichalay",
+            "kayuy",
+            "palitak"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ataluy",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "ataluy",
+          "opciones_ids": [
+            "apay",
+            "ataluy",
+            "kayuy",
+            "yachiri"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "ataluychay",
+          "raiz_id": "ataluy",
+          "opciones_ids": [
+            "ataluychay",
+            "chhuniqasichay",
+            "palitaknaka",
+            "sitsninaka"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "am",
+            "ataluy",
+            "ni",
+            "palitak"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chichalay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chichalay",
+          "opciones_ids": [
+            "apay",
+            "chichalay",
+            "palitak",
+            "yachiri"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "kayuy",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "kayuy",
+          "opciones_ids": [
+            "ataluy",
+            "chichalay",
+            "kayuy",
+            "yachiri"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "ataluy",
+            "kayuy",
+            "palitak",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "kusikasi",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "kusikasi",
+          "opciones_ids": [
+            "chuwicha",
+            "kullku",
+            "kusikasi",
+            "tapha"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "kusikasichay",
+          "raiz_id": "kusikasi",
+          "opciones_ids": [
+            "chhaqwaypini",
+            "chherchherpinichay",
+            "kusikasichay",
+            "saxonichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "nis",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "nis",
+          "opciones_ids": [
+            "nis",
+            "uchums",
+            "wisnaks",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chichalay",
+            "kayuy",
+            "nis",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "yachiri",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "yachiri",
+          "opciones_ids": [
+            "ataluy",
+            "kayuy",
+            "palitak",
+            "yachiri"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "yachirichay",
+          "raiz_id": "yachiri",
+          "opciones_ids": [
+            "palitakchay",
+            "palitaknaka",
+            "sitsninaka",
+            "yachirichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "am",
+            "ni",
+            "palitak",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_024",
+          "opciones_oraciones_ids": [
+            "O_024",
+            "O_025",
+            "O_026",
+            "O_027"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_024",
+          "palabra_oculta_id": "ataluychay",
+          "opciones_ids": [
+            "ataluychay",
+            "chhuniqasichay",
+            "palitaknaka",
+            "sitsninakachay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_025"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_025"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_026"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_026",
+          "opciones_oraciones_ids": [
+            "O_024",
+            "O_025",
+            "O_026",
+            "O_027"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_027",
+          "palabra_oculta_id": "am",
+          "opciones_ids": [
+            "am",
+            "ni",
+            "ti",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_027"
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ataluy",
+            "chichalay",
+            "kusikasi",
+            "palitak"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "apay",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L08",
+      "titulo": "Vestimenta Originaria 1",
+      "orden": 8,
+      "familias_nuevas": [
+        "aymilla",
+        "chhaq",
+        "chhata",
+        "chheqhoni",
+        "chhi",
+        "eskhara",
+        "ira",
+        "qhawschay",
+        "uchs",
+        "wistakchay"
+      ],
+      "familias_repaso": [
+        "am",
+        "ataluy",
+        "nis",
+        "pedro",
+        "wist"
+      ],
+      "oraciones_ids": [
+        "O_028",
+        "O_029",
+        "O_030",
+        "O_031",
+        "O_032"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "aymilla",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "aymilla",
+          "opciones_ids": [
+            "ataluy",
+            "aymilla",
+            "chheqhoni",
+            "eskhara"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhaq",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chhaq",
+          "opciones_ids": [
+            "chhaq",
+            "kullku",
+            "kusikasi",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "chhaq",
+          "formas_ids": [
+            "chhaqchay",
+            "chhaqpinichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ataluy",
+            "aymilla",
+            "nis",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhata",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "chhata",
+          "opciones_ids": [
+            "ataluy",
+            "aymilla",
+            "chhata",
+            "eskhara"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "chhatanaka",
+          "raiz_id": "chhata",
+          "opciones_ids": [
+            "ataluy",
+            "chhata",
+            "chheqhoni",
+            "eskhara"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chheqhoni",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chheqhoni",
+          "opciones_ids": [
+            "ataluy",
+            "chheqhoni",
+            "eskhara",
+            "ira"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ataluy",
+            "chheqhoni",
+            "nis",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chhi",
+          "opciones_ids": [
+            "chhi",
+            "paxpiku",
+            "qhalu",
+            "taxsnuku"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "eskhara",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "eskhara",
+          "opciones_ids": [
+            "ataluy",
+            "chhata",
+            "eskhara",
+            "ira"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "aymilla",
+            "chhaq",
+            "chhi",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ira",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "ira",
+          "opciones_ids": [
+            "ataluy",
+            "aymilla",
+            "chhata",
+            "ira"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qhawschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "qhawschay",
+          "opciones_ids": [
+            "oqschay",
+            "pichuchay",
+            "qhawschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "aymilla",
+            "chhi",
+            "eskhara",
+            "ira"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "uchs",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "uchs",
+          "opciones_ids": [
+            "chhaq",
+            "kusikasi",
+            "tapha",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "uchspinichay",
+          "raiz_id": "uchs",
+          "opciones_ids": [
+            "chhaqchay",
+            "chhaqpinichay",
+            "kusikasichay",
+            "uchspinichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wistakchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "wistakchay",
+          "opciones_ids": [
+            "oqschay",
+            "pichuchay",
+            "qhawschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhaq",
+            "chheqhoni",
+            "ira",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "am",
+            "ataluy",
+            "nis",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_028"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_028"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_029",
+          "opciones_oraciones_ids": [
+            "O_028",
+            "O_029",
+            "O_030",
+            "O_032"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_029",
+          "palabra_oculta_id": "wist",
+          "opciones_ids": [
+            "nis",
+            "uchums",
+            "wisnaks",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_030"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_030"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_031"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_031",
+          "opciones_oraciones_ids": [
+            "O_028",
+            "O_030",
+            "O_031",
+            "O_032"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_032",
+          "palabra_oculta_id": "am",
+          "opciones_ids": [
+            "am",
+            "ni",
+            "uchumik",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_032"
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chheqhoni",
+            "chhi",
+            "pedro",
+            "qhawschay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "aymilla",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L09",
+      "titulo": "Acciones Cotidianas",
+      "orden": 9,
+      "familias_nuevas": [
+        "axtal",
+        "chirsnachay",
+        "lasnuchay",
+        "lowalowa",
+        "nonschay",
+        "oqlaychay",
+        "purchay",
+        "satschay"
+      ],
+      "familias_repaso": [
+        "ana",
+        "chichalay",
+        "lorenzo",
+        "ni",
+        "shila",
+        "sitsni",
+        "watha",
+        "wilk",
+        "wisnakti",
+        "wist"
+      ],
+      "oraciones_ids": [
+        "O_033",
+        "O_034",
+        "O_035",
+        "O_036",
+        "O_037"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "axtal",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "axtal",
+          "opciones_ids": [
+            "axtal",
+            "chhaq",
+            "kusikasi",
+            "lowalowa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chirsnachay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chirsnachay",
+          "opciones_ids": [
+            "chirsnachay",
+            "lasnuchay",
+            "oqlaychay",
+            "purchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ana",
+            "lorenzo",
+            "ni",
+            "shila"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "lasnuchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "lasnuchay",
+          "opciones_ids": [
+            "lasnuchay",
+            "nonschay",
+            "oqlaychay",
+            "satschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "lowalowa",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "lowalowa",
+          "opciones_ids": [
+            "axtal",
+            "chhaq",
+            "kusikasi",
+            "lowalowa"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "lowalowapini",
+          "raiz_id": "lowalowa",
+          "opciones_ids": [
+            "chhaqpinichay",
+            "kusikasichay",
+            "lowalowapini",
+            "uchspinichay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "lowalowa",
+            "ni",
+            "shila",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "nonschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "nonschay",
+          "opciones_ids": [
+            "nonschay",
+            "oqlaychay",
+            "purchay",
+            "satschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "oqlaychay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "oqlaychay",
+          "opciones_ids": [
+            "chirsnachay",
+            "nonschay",
+            "oqlaychay",
+            "satschay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chichalay",
+            "lorenzo",
+            "wilk",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "purchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "purchay",
+          "opciones_ids": [
+            "chirsnachay",
+            "oqlaychay",
+            "purchay",
+            "satschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "satschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "satschay",
+          "opciones_ids": [
+            "chirsnachay",
+            "lasnuchay",
+            "nonschay",
+            "satschay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chichalay",
+            "chirsnachay",
+            "satschay",
+            "shila"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "chichalay",
+            "lorenzo",
+            "ni"
+          ]
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_033"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_033"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_034",
+          "opciones_oraciones_ids": [
+            "O_033",
+            "O_034",
+            "O_035",
+            "O_037"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_034",
+          "palabra_oculta_id": "chichalay",
+          "opciones_ids": [
+            "ataluy",
+            "chichalay",
+            "sitsni",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_035"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_035"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_036"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_036",
+          "opciones_oraciones_ids": [
+            "O_034",
+            "O_035",
+            "O_036",
+            "O_037"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_037",
+          "palabra_oculta_id": "ni",
+          "opciones_ids": [
+            "am",
+            "ni",
+            "wilk",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_037"
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "ana",
+            "axtal",
+            "lasnuchay",
+            "satschay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "axtal",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L10",
+      "titulo": "Familia Extendida",
+      "orden": 10,
+      "familias_nuevas": [
+        "achichay",
+        "apichuy",
+        "chhuni",
+        "malaqoy",
+        "puschay",
+        "sisni",
+        "sitsnizoni",
+        "tololay",
+        "uchums",
+        "wisnaks"
+      ],
+      "familias_repaso": [
+        "nis"
+      ],
+      "oraciones_ids": [
+        "O_038",
+        "O_039",
+        "O_040",
+        "O_041"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "achichay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "achichay",
+          "opciones_ids": [
+            "achichay",
+            "apichuy",
+            "sisni",
+            "tololay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "apichuy",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "apichuy",
+          "opciones_ids": [
+            "apichuy",
+            "chhuni",
+            "sisni",
+            "tololay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "achichay",
+            "apichuy",
+            "nis"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhuni",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chhuni",
+          "opciones_ids": [
+            "chhuni",
+            "malaqoy",
+            "sisni",
+            "tololay"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "chhunipinichay",
+          "raiz_id": "chhuni",
+          "opciones_ids": [
+            "chhatanaka",
+            "chhunipinichay",
+            "sitsninakachay",
+            "yachirichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "malaqoy",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "malaqoy",
+          "opciones_ids": [
+            "achichay",
+            "malaqoy",
+            "sisni",
+            "tololay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "achichay",
+            "apichuy",
+            "chhuni",
+            "malaqoy"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "puschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "puschay",
+          "opciones_ids": [
+            "lasnuchay",
+            "purchay",
+            "puschay",
+            "qhawschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "sisni",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "sisni",
+          "opciones_ids": [
+            "apichuy",
+            "chhuni",
+            "sisni",
+            "sitsnizoni"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "sisni",
+          "formas_ids": [
+            "sisnichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "achichay",
+            "apichuy",
+            "chhuni",
+            "puschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "sitsnizoni",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "sitsnizoni",
+          "opciones_ids": [
+            "achichay",
+            "apichuy",
+            "sisni",
+            "sitsnizoni"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "sitsnizonipinichay",
+          "raiz_id": "sitsnizoni",
+          "opciones_ids": [
+            "apichuy",
+            "chhuni",
+            "sisni",
+            "sitsnizoni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tololay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "tololay",
+          "opciones_ids": [
+            "achichay",
+            "malaqoy",
+            "sitsnizoni",
+            "tololay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhuni",
+            "malaqoy",
+            "puschay",
+            "tololay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "uchums",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "uchums",
+          "opciones_ids": [
+            "nis",
+            "uchums",
+            "wisnaks",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wisnaks",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "wisnaks",
+          "opciones_ids": [
+            "nis",
+            "uchums",
+            "wisnaks",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhuni",
+            "sisni",
+            "tololay",
+            "uchums"
+          ]
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_038"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_038"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_039",
+          "opciones_oraciones_ids": [
+            "O_038",
+            "O_039",
+            "O_040",
+            "O_041"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_039",
+          "palabra_oculta_id": "achichay",
+          "opciones_ids": [
+            "achichay",
+            "apichuy",
+            "sitsnizoni",
+            "tololay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_040"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_040"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_041"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_041",
+          "opciones_oraciones_ids": [
+            "O_038",
+            "O_039",
+            "O_040",
+            "O_041"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "nis",
+            "sitsnizoni",
+            "tololay",
+            "wisnaks"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "achichay",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L11",
+      "titulo": "Vestimenta Originaria 2",
+      "orden": 11,
+      "familias_nuevas": [
+        "chhasi",
+        "chhuk",
+        "ew",
+        "makchi",
+        "maria",
+        "maxsi",
+        "peske",
+        "taki",
+        "urkhu"
+      ],
+      "familias_repaso": [
+        "am",
+        "nis",
+        "qhawschay"
+      ],
+      "oraciones_ids": [
+        "O_042",
+        "O_043",
+        "O_044",
+        "O_045"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhasi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chhasi",
+          "opciones_ids": [
+            "chhaq",
+            "chhasi",
+            "chhuk",
+            "ew"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhuk",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chhuk",
+          "opciones_ids": [
+            "chhasi",
+            "chhuk",
+            "ew",
+            "kusikasi"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "chhukchay",
+          "raiz_id": "chhuk",
+          "opciones_ids": [
+            "chhaqpinichay",
+            "chhukchay",
+            "lowalowapini",
+            "uchspinichay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "am",
+            "chhuk",
+            "nis",
+            "qhawschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ew",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "ew",
+          "opciones_ids": [
+            "axtal",
+            "chhasi",
+            "chhuk",
+            "ew"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "ewchay",
+          "raiz_id": "ew",
+          "opciones_ids": [
+            "chhaqchay",
+            "ewchay",
+            "lowalowapini",
+            "uchspinichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "makchi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "makchi",
+          "opciones_ids": [
+            "chhata",
+            "makchi",
+            "maxsi",
+            "urkhu"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhuk",
+            "ew",
+            "nis",
+            "qhawschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "maria",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "maria",
+          "opciones_ids": [
+            "irohito_urus",
+            "lorenzo",
+            "maria",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "maxsi",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "maxsi",
+          "opciones_ids": [
+            "chheqhoni",
+            "makchi",
+            "maxsi",
+            "urkhu"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "maxsinaka",
+          "raiz_id": "maxsi",
+          "opciones_ids": [
+            "chhuniqasichay",
+            "maxsinaka",
+            "palitaknaka",
+            "sitsninaka"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhasi",
+            "chhuk",
+            "makchi",
+            "maria"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "peske",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "peske",
+          "opciones_ids": [
+            "chhep",
+            "chhi",
+            "peske",
+            "sanqo"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "taki",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "taki",
+          "opciones_ids": [
+            "taki",
+            "tichu",
+            "tila"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhuk",
+            "maxsi",
+            "nis",
+            "peske"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "urkhu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "urkhu",
+          "opciones_ids": [
+            "chhuniqasi",
+            "makchi",
+            "maxsi",
+            "urkhu"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "am",
+            "nis",
+            "qhawschay"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_042",
+          "palabra_oculta_id": "taki",
+          "opciones_ids": [
+            "taki",
+            "tichu",
+            "tila"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_042"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_043"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_043"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_044",
+          "opciones_oraciones_ids": [
+            "O_042",
+            "O_043",
+            "O_044",
+            "O_045"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_044",
+          "palabra_oculta_id": "ewchay",
+          "opciones_ids": [
+            "chhaqpinichay",
+            "ewchay",
+            "lowalowapini",
+            "uchspinichay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_045"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_045"
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "maria",
+            "qhawschay",
+            "taki",
+            "urkhu"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chhasi",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L12",
+      "titulo": "Objetos del Hogar 1",
+      "orden": 12,
+      "familias_nuevas": [
+        "chhep",
+        "chusi",
+        "echs",
+        "pheta",
+        "qhoya",
+        "sana",
+        "thaxchay",
+        "tila",
+        "xorcha"
+      ],
+      "familias_repaso": [
+        "chhaq",
+        "ni",
+        "wist",
+        "wistakchay"
+      ],
+      "oraciones_ids": [
+        "O_046",
+        "O_047",
+        "O_048",
+        "O_049"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhep",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chhep",
+          "opciones_ids": [
+            "chhep",
+            "chhi",
+            "paxpiku",
+            "peske"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chusi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "chusi",
+          "opciones_ids": [
+            "chusi",
+            "pheta",
+            "qhoya",
+            "xorcha"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhaq",
+            "chhep",
+            "chusi",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "echs",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "echs",
+          "opciones_ids": [
+            "chhaq",
+            "chhasi",
+            "echs",
+            "lowalowa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "pheta",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "pheta",
+          "opciones_ids": [
+            "chusi",
+            "pheta",
+            "qhoya",
+            "xorcha"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "pheta",
+          "formas_ids": [
+            "phetanaka"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhep",
+            "echs",
+            "pheta",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qhoya",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "qhoya",
+          "opciones_ids": [
+            "chusi",
+            "pheta",
+            "qhoya",
+            "xorcha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "sana",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "sana",
+          "opciones_ids": [
+            "pheta",
+            "qhoya",
+            "sana",
+            "xorcha"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhaq",
+            "echs",
+            "wist",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "thaxchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "thaxchay",
+          "opciones_ids": [
+            "oqschay",
+            "satschay",
+            "thaxchay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tila",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "tila",
+          "opciones_ids": [
+            "taki",
+            "tichu",
+            "tila"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhaq",
+            "pheta",
+            "qhoya",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "xorcha",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "xorcha",
+          "opciones_ids": [
+            "chusi",
+            "pheta",
+            "qhoya",
+            "xorcha"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "xorchachay",
+          "raiz_id": "xorcha",
+          "opciones_ids": [
+            "chusi",
+            "pheta",
+            "qhoya",
+            "xorcha"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhaq",
+            "ni",
+            "wist",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_046"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_046",
+          "opciones_oraciones_ids": [
+            "O_046",
+            "O_047",
+            "O_048",
+            "O_049"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_047",
+          "palabra_oculta_id": "xorchachay",
+          "opciones_ids": [
+            "ataluychay",
+            "chhunipinichay",
+            "maxsinaka",
+            "xorchachay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_047"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_048"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_048"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_049",
+          "opciones_oraciones_ids": [
+            "O_046",
+            "O_047",
+            "O_048",
+            "O_049"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_049",
+          "palabra_oculta_id": "chusi",
+          "opciones_ids": [
+            "chusi",
+            "qhoya",
+            "sana",
+            "xorcha"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhep",
+            "echs",
+            "pheta",
+            "qhoya"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chhep",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L13",
+      "titulo": "Actividades del Hogar",
+      "orden": 13,
+      "familias_nuevas": [
+        "amaruskchay",
+        "chheqets",
+        "chhulurasa",
+        "jaxchay",
+        "khitschay",
+        "piwachay",
+        "taxsnakichay",
+        "wiyani"
+      ],
+      "familias_repaso": [
+        "am",
+        "ana",
+        "ataluy",
+        "pheta",
+        "purchay",
+        "sana",
+        "wilk",
+        "wist"
+      ],
+      "oraciones_ids": [
+        "O_050",
+        "O_051",
+        "O_052",
+        "O_053",
+        "O_054"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "amaruskchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "amaruskchay",
+          "opciones_ids": [
+            "amaruskchay",
+            "jaxchay",
+            "khitschay",
+            "purchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chheqets",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chheqets",
+          "opciones_ids": [
+            "ataluy",
+            "chheqets",
+            "pheta",
+            "sana"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "amaruskchay",
+            "ataluy",
+            "sana",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhulurasa",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chhulurasa",
+          "opciones_ids": [
+            "chhuljama",
+            "chhullayku",
+            "chhulurasa",
+            "jasiktam"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "jaxchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "jaxchay",
+          "opciones_ids": [
+            "amaruskchay",
+            "jaxchay",
+            "piwachay",
+            "taxsnakichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "amaruskchay",
+            "ana",
+            "ataluy",
+            "pheta"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "khitschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "khitschay",
+          "opciones_ids": [
+            "amaruskchay",
+            "jaxchay",
+            "khitschay",
+            "taxsnakichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "piwachay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "piwachay",
+          "opciones_ids": [
+            "amaruskchay",
+            "jaxchay",
+            "piwachay",
+            "purchay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "am",
+            "jaxchay",
+            "pheta",
+            "piwachay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "taxsnakichay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "taxsnakichay",
+          "opciones_ids": [
+            "amaruskchay",
+            "jaxchay",
+            "piwachay",
+            "taxsnakichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wiyani",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "wiyani",
+          "opciones_ids": [
+            "ataluy",
+            "pheta",
+            "sana",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "wiyanichay",
+          "raiz_id": "wiyani",
+          "opciones_ids": [
+            "chhuniqasichay",
+            "palitaknaka",
+            "sisnichay",
+            "wiyanichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhulurasa",
+            "khitschay",
+            "sana",
+            "taxsnakichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "am",
+            "ana",
+            "ataluy",
+            "pheta"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_050"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_050"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_051"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_051",
+          "opciones_oraciones_ids": [
+            "O_051",
+            "O_052",
+            "O_053",
+            "O_054"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_052",
+          "palabra_oculta_id": "sana",
+          "opciones_ids": [
+            "ataluy",
+            "chheqets",
+            "sana",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_052"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_053"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_053"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_054",
+          "opciones_oraciones_ids": [
+            "O_050",
+            "O_051",
+            "O_053",
+            "O_054"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_054",
+          "palabra_oculta_id": "jaxchay",
+          "opciones_ids": [
+            "jaxchay",
+            "piwachay",
+            "purchay",
+            "taxsnakichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "am",
+            "ana",
+            "jaxchay",
+            "piwachay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "amaruskchay",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L14",
+      "titulo": "Objetos del Hogar 2",
+      "orden": 14,
+      "familias_nuevas": [
+        "achasi",
+        "chhiqha",
+        "chimay",
+        "julsnay",
+        "julsni",
+        "paxpiku",
+        "selschay"
+      ],
+      "familias_repaso": [
+        "apay",
+        "chhaq",
+        "chhep",
+        "lorenzo",
+        "pedro",
+        "piwachay",
+        "tila",
+        "wisnaks",
+        "wistakchay"
+      ],
+      "oraciones_ids": [
+        "O_055",
+        "O_056",
+        "O_057",
+        "O_058"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "achasi",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "achasi",
+          "opciones_ids": [
+            "achasi",
+            "apay",
+            "julsnay",
+            "julsni"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "achasinaka",
+          "raiz_id": "achasi",
+          "opciones_ids": [
+            "achasinaka",
+            "ataluychay",
+            "palitakchay",
+            "sisnichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhiqha",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chhiqha",
+          "opciones_ids": [
+            "chhiqha",
+            "chimay",
+            "julsnay",
+            "julsni"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "chhiqhanaka",
+          "raiz_id": "chhiqha",
+          "opciones_ids": [
+            "chhatanaka",
+            "chhiqhanaka",
+            "chhunipinichay",
+            "yachirichay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "achasi",
+            "chhep",
+            "pedro",
+            "tila"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chimay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chimay",
+          "opciones_ids": [
+            "achasi",
+            "chimay",
+            "julsnay",
+            "julsni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "julsnay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "julsnay",
+          "opciones_ids": [
+            "achasi",
+            "apay",
+            "julsnay",
+            "julsni"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhaq",
+            "chhep",
+            "julsnay",
+            "wisnaks"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "julsni",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "julsni",
+          "opciones_ids": [
+            "chhiqha",
+            "chimay",
+            "julsnay",
+            "julsni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "paxpiku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "paxpiku",
+          "opciones_ids": [
+            "chhep",
+            "chhi",
+            "paxpiku",
+            "peske"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "achasi",
+            "chhiqha",
+            "chimay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "selschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "selschay",
+          "opciones_ids": [
+            "oqschay",
+            "piwachay",
+            "selschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "apay",
+            "chhaq",
+            "chhep",
+            "lorenzo"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_055"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_055"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_056"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_056",
+          "opciones_oraciones_ids": [
+            "O_055",
+            "O_056",
+            "O_057",
+            "O_058"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_057",
+          "palabra_oculta_id": "paxpiku",
+          "opciones_ids": [
+            "chhep",
+            "chhi",
+            "paxpiku",
+            "peske"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_057"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_058"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_058"
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "achasi",
+            "chimay",
+            "julsni",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "achasi",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L15",
+      "titulo": "Objetos Escolares",
+      "orden": 15,
+      "familias_nuevas": [
+        "chhikhits",
+        "kuskuts",
+        "kuwarerno",
+        "papila",
+        "saxoni",
+        "siqetschay",
+        "taxchuku",
+        "taxsnuku"
+      ],
+      "familias_repaso": [
+        "am",
+        "sitsni",
+        "taki",
+        "wilk",
+        "wistakchay"
+      ],
+      "oraciones_ids": [
+        "O_059",
+        "O_060",
+        "O_061",
+        "O_062"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhikhits",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chhikhits",
+          "opciones_ids": [
+            "chhikhits",
+            "kuskuts",
+            "kuwarerno",
+            "papila"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "chhikhits",
+          "formas_ids": [
+            "chhikhitsnaka"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "kuskuts",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "kuskuts",
+          "opciones_ids": [
+            "chhikhits",
+            "kuskuts",
+            "kuwarerno",
+            "papila"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhikhits",
+            "kuskuts",
+            "sitsni",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "kuwarerno",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "kuwarerno",
+          "opciones_ids": [
+            "chhikhits",
+            "kuskuts",
+            "kuwarerno",
+            "sitsni"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "kuwarernonaka",
+          "raiz_id": "kuwarerno",
+          "opciones_ids": [
+            "chhikhits",
+            "kuskuts",
+            "kuwarerno",
+            "papila"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "papila",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "papila",
+          "opciones_ids": [
+            "kuskuts",
+            "kuwarerno",
+            "papila",
+            "sitsni"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "kuwarerno",
+            "papila",
+            "wilk",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "saxoni",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "saxoni",
+          "opciones_ids": [
+            "axtal",
+            "chhaq",
+            "echs",
+            "saxoni"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "saxonichay",
+          "raiz_id": "saxoni",
+          "opciones_ids": [
+            "chhaqchay",
+            "lowalowapini",
+            "saxonichay",
+            "uchspinichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "siqetschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "siqetschay",
+          "opciones_ids": [
+            "amaruskchay",
+            "chirsnachay",
+            "siqetschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "kuskuts",
+            "papila",
+            "siqetschay",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "taxchuku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "taxchuku",
+          "opciones_ids": [
+            "chhep",
+            "peske",
+            "taxchuku",
+            "taxsnuku"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "taxsnuku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "taxsnuku",
+          "opciones_ids": [
+            "paxpiku",
+            "peske",
+            "taxchuku",
+            "taxsnuku"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhikhits",
+            "saxoni",
+            "sitsni",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "am",
+            "sitsni",
+            "taki",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_059",
+          "opciones_oraciones_ids": [
+            "O_059",
+            "O_060",
+            "O_061",
+            "O_062"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_059",
+          "palabra_oculta_id": "taxsnuku",
+          "opciones_ids": [
+            "chhep",
+            "peske",
+            "taxchuku",
+            "taxsnuku"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_060"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_060"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_061"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_061",
+          "opciones_oraciones_ids": [
+            "O_059",
+            "O_060",
+            "O_061",
+            "O_062"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_062",
+          "palabra_oculta_id": "saxonichay",
+          "opciones_ids": [
+            "ewchay",
+            "kusikasichay",
+            "lowalowapini",
+            "saxonichay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_062"
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "am",
+            "chhikhits",
+            "kuskuts",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chhikhits",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L16",
+      "titulo": "Utensilios de Cocina 1",
+      "orden": 16,
+      "familias_nuevas": [
+        "chuwa",
+        "khirchula",
+        "maska",
+        "potschay",
+        "potsi",
+        "tuwqo"
+      ],
+      "familias_repaso": [
+        "chhuk",
+        "maria",
+        "ni",
+        "pedro",
+        "qhawschay",
+        "taki",
+        "taxchuku",
+        "wistakchay"
+      ],
+      "oraciones_ids": [
+        "O_063",
+        "O_064",
+        "O_065",
+        "O_066"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chuwa",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chuwa",
+          "opciones_ids": [
+            "chuwa",
+            "khirchula",
+            "maska",
+            "potsi"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "chuwanaka",
+          "raiz_id": "chuwa",
+          "opciones_ids": [
+            "achasinaka",
+            "chhunipinichay",
+            "chuwanaka",
+            "sitsninakachay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "khirchula",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "khirchula",
+          "opciones_ids": [
+            "chuwa",
+            "khirchula",
+            "maska",
+            "potsi"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "khirchulanaka",
+          "raiz_id": "khirchula",
+          "opciones_ids": [
+            "chhatanaka",
+            "khirchulanaka",
+            "sitsninaka",
+            "sitsnizonipinichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "khirchula",
+            "ni",
+            "pedro",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "maska",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "maska",
+          "opciones_ids": [
+            "chuwa",
+            "khirchula",
+            "maska",
+            "potsi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "potschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "potschay",
+          "opciones_ids": [
+            "oqlaychay",
+            "potschay",
+            "qhawschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhuk",
+            "pedro",
+            "potschay",
+            "taki"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "potsi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "potsi",
+          "opciones_ids": [
+            "chuwa",
+            "khirchula",
+            "maska",
+            "potsi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tuwqo",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "tuwqo",
+          "opciones_ids": [
+            "chhep",
+            "peske",
+            "taxchuku",
+            "tuwqo"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "maria",
+            "potschay",
+            "tuwqo",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhuk",
+            "maria",
+            "ni",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_063"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_063"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_064",
+          "opciones_oraciones_ids": [
+            "O_063",
+            "O_064",
+            "O_065",
+            "O_066"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_064",
+          "palabra_oculta_id": "qhawschay",
+          "opciones_ids": [
+            "oqlaychay",
+            "potschay",
+            "qhawschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_065"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_065"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_066"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_066",
+          "opciones_oraciones_ids": [
+            "O_063",
+            "O_064",
+            "O_065",
+            "O_066"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "khirchula",
+            "potschay",
+            "qhawschay",
+            "taxchuku"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chuwa",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L17",
+      "titulo": "Alimentos Tradicionales",
+      "orden": 17,
+      "familias_nuevas": [
+        "chalachay",
+        "chiwkis",
+        "chiwliks",
+        "jilli",
+        "kula",
+        "likschay",
+        "sini",
+        "suwa",
+        "tuchay"
+      ],
+      "familias_repaso": [
+        "jaxchay",
+        "lorenzo",
+        "malaqoy",
+        "ni",
+        "selschay",
+        "tuwqo",
+        "uchumik",
+        "wist"
+      ],
+      "oraciones_ids": [
+        "O_067",
+        "O_068",
+        "O_069",
+        "O_070",
+        "O_071"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chalachay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chalachay",
+          "opciones_ids": [
+            "chalachay",
+            "jaxchay",
+            "likschay",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chiwkis",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chiwkis",
+          "opciones_ids": [
+            "chiwkis",
+            "chiwliks",
+            "malaqoy",
+            "sini"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "chiwkis",
+          "formas_ids": [
+            "chiwkisnaka"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chalachay",
+            "selschay",
+            "tuwqo",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chiwliks",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chiwliks",
+          "opciones_ids": [
+            "chiwkis",
+            "chiwliks",
+            "malaqoy",
+            "sini"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "jilli",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "jilli",
+          "opciones_ids": [
+            "chiwkis",
+            "chiwliks",
+            "jilli",
+            "kula"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chiwkis",
+            "jilli",
+            "lorenzo",
+            "ni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "kula",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "kula",
+          "opciones_ids": [
+            "chiwliks",
+            "kula",
+            "sini",
+            "suwa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "likschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "likschay",
+          "opciones_ids": [
+            "jaxchay",
+            "likschay",
+            "selschay",
+            "tuchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chiwkis",
+            "jilli",
+            "ni",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "sini",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "sini",
+          "opciones_ids": [
+            "chiwliks",
+            "jilli",
+            "kula",
+            "sini"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "sininaka",
+          "raiz_id": "sini",
+          "opciones_ids": [
+            "chiwkis",
+            "chiwliks",
+            "sini",
+            "suwa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "suwa",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "suwa",
+          "opciones_ids": [
+            "chiwliks",
+            "jilli",
+            "kula",
+            "suwa"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "jaxchay",
+            "kula",
+            "malaqoy",
+            "tuwqo"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tuchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "tuchay",
+          "opciones_ids": [
+            "chalachay",
+            "jaxchay",
+            "selschay",
+            "tuchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "jaxchay",
+            "lorenzo",
+            "malaqoy",
+            "ni"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_067",
+          "palabra_oculta_id": "likschay",
+          "opciones_ids": [
+            "chalachay",
+            "jaxchay",
+            "likschay",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_067"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_068"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_068"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_069",
+          "opciones_oraciones_ids": [
+            "O_067",
+            "O_069",
+            "O_070",
+            "O_071"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_069",
+          "palabra_oculta_id": "lorenzo",
+          "opciones_ids": [
+            "irohito_urus",
+            "lorenzo",
+            "maria",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_070"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_070"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_071"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_071",
+          "opciones_oraciones_ids": [
+            "O_067",
+            "O_068",
+            "O_070",
+            "O_071"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chiwliks",
+            "jilli",
+            "selschay",
+            "tuchay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chalachay",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L18",
+      "titulo": "Utensilios de Cocina 2",
+      "orden": 18,
+      "familias_nuevas": [
+        "chherchher",
+        "khera",
+        "lusi",
+        "qeru",
+        "serx",
+        "tichu",
+        "warirachay",
+        "xalsmasi"
+      ],
+      "familias_repaso": [
+        "ana",
+        "chiwliks",
+        "likschay",
+        "ni",
+        "suwa",
+        "taki",
+        "wisnakti"
+      ],
+      "oraciones_ids": [
+        "O_072",
+        "O_073",
+        "O_074",
+        "O_075"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chherchher",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chherchher",
+          "opciones_ids": [
+            "chhaq",
+            "chherchher",
+            "chhuk",
+            "serx"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "chherchherpinichay",
+          "raiz_id": "chherchher",
+          "opciones_ids": [
+            "chhaqchay",
+            "chhaqpinichay",
+            "chherchherpinichay",
+            "ewchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "khera",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "khera",
+          "opciones_ids": [
+            "khera",
+            "qeru",
+            "warirachay",
+            "xalsmasi"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "khera",
+            "ni",
+            "suwa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "lusi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "lusi",
+          "opciones_ids": [
+            "chiwliks",
+            "khera",
+            "lusi",
+            "xalsmasi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qeru",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "qeru",
+          "opciones_ids": [
+            "chiwliks",
+            "khera",
+            "qeru",
+            "xalsmasi"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chiwliks",
+            "likschay",
+            "ni",
+            "qeru"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "serx",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "serx",
+          "opciones_ids": [
+            "chhaq",
+            "chherchher",
+            "serx",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "serxchay",
+          "raiz_id": "serx",
+          "opciones_ids": [
+            "chhaqpinichay",
+            "ewchay",
+            "kusikasichay",
+            "serxchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tichu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "tichu",
+          "opciones_ids": [
+            "taki",
+            "tichu",
+            "tila"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "likschay",
+            "qeru",
+            "serx",
+            "taki"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "warirachay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "warirachay",
+          "opciones_ids": [
+            "khera",
+            "lusi",
+            "suwa",
+            "warirachay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "xalsmasi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "xalsmasi",
+          "opciones_ids": [
+            "chiwliks",
+            "lusi",
+            "suwa",
+            "xalsmasi"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "lusi",
+            "ni",
+            "warirachay",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "chiwliks",
+            "likschay",
+            "ni"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_072",
+          "palabra_oculta_id": "qeru",
+          "opciones_ids": [
+            "qeru",
+            "suwa",
+            "warirachay",
+            "xalsmasi"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_072"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_073"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_073"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_074",
+          "opciones_oraciones_ids": [
+            "O_072",
+            "O_073",
+            "O_074",
+            "O_075"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_074",
+          "palabra_oculta_id": "tichu",
+          "opciones_ids": [
+            "taki",
+            "tichu",
+            "tila"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_075"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_075"
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "chherchher",
+            "chiwliks",
+            "qeru"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chherchher",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L19",
+      "titulo": "Alimentos de la Región",
+      "orden": 19,
+      "familias_nuevas": [
+        "arusha",
+        "chukichay",
+        "juana",
+        "lulschay",
+        "parentina",
+        "qhasi",
+        "qotni",
+        "tapa",
+        "xawariski",
+        "yiku"
+      ],
+      "familias_repaso": [
+        "am",
+        "amchuki",
+        "ana",
+        "jilli",
+        "lusi",
+        "maria",
+        "taxsnakichay",
+        "tuchay"
+      ],
+      "oraciones_ids": [
+        "O_076",
+        "O_077",
+        "O_078",
+        "O_079",
+        "O_080"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "arusha",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "arusha",
+          "opciones_ids": [
+            "arusha",
+            "jilli",
+            "parentina",
+            "yiku"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chukichay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chukichay",
+          "opciones_ids": [
+            "chukichay",
+            "lulschay",
+            "taxsnakichay",
+            "tuchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ana",
+            "arusha",
+            "jilli",
+            "maria"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "juana",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "juana",
+          "opciones_ids": [
+            "irohito_urus",
+            "juana",
+            "lorenzo",
+            "maria"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "lulschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "lulschay",
+          "opciones_ids": [
+            "chukichay",
+            "lulschay",
+            "taxsnakichay",
+            "tuchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "am",
+            "ana",
+            "chukichay",
+            "jilli"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "parentina",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "parentina",
+          "opciones_ids": [
+            "jilli",
+            "parentina",
+            "qhasi",
+            "yiku"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qhasi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "qhasi",
+          "opciones_ids": [
+            "jilli",
+            "qhasi",
+            "tapa",
+            "xawariski"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chukichay",
+            "lulschay",
+            "parentina",
+            "tuchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qotni",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "qotni",
+          "opciones_ids": [
+            "axtal",
+            "chhasi",
+            "kusikasi",
+            "qotni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tapa",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "tapa",
+          "opciones_ids": [
+            "arusha",
+            "lusi",
+            "tapa",
+            "yiku"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "amchuki",
+            "ana",
+            "parentina",
+            "qhasi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "xawariski",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "xawariski",
+          "opciones_ids": [
+            "arusha",
+            "qhasi",
+            "xawariski",
+            "yiku"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "yiku",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "yiku",
+          "opciones_ids": [
+            "jilli",
+            "qhasi",
+            "tapa",
+            "yiku"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "yikupinichay",
+          "raiz_id": "yiku",
+          "opciones_ids": [
+            "chuwanaka",
+            "sitsninakachay",
+            "xorchachay",
+            "yikupinichay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "lusi",
+            "qhasi",
+            "qotni",
+            "tuchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "am",
+            "amchuki",
+            "ana",
+            "jilli"
+          ]
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_076"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_076",
+          "opciones_oraciones_ids": [
+            "O_076",
+            "O_077",
+            "O_079",
+            "O_080"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_077",
+          "palabra_oculta_id": "tapa",
+          "opciones_ids": [
+            "arusha",
+            "parentina",
+            "qhasi",
+            "tapa"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_077"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_078"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_078"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_079",
+          "opciones_oraciones_ids": [
+            "O_076",
+            "O_077",
+            "O_078",
+            "O_079"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_079",
+          "palabra_oculta_id": "am",
+          "opciones_ids": [
+            "am",
+            "amchuki",
+            "ni",
+            "uchumik"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_080"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_080"
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "amchuki",
+            "arusha",
+            "chukichay",
+            "lulschay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "arusha",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L20",
+      "titulo": "Animales Domésticos",
+      "orden": 20,
+      "familias_nuevas": [
+        "chatschay",
+        "khuchhi",
+        "masota",
+        "paku",
+        "qonqo",
+        "sanqo",
+        "uni",
+        "uyuwichay",
+        "wallpa"
+      ],
+      "familias_repaso": [
+        "chherchher",
+        "juana",
+        "lorenzo",
+        "maria",
+        "ni",
+        "taki",
+        "uchs",
+        "wistakchay"
+      ],
+      "oraciones_ids": [
+        "O_081",
+        "O_082",
+        "O_083",
+        "O_084",
+        "O_085"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chatschay",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "chatschay",
+          "opciones_ids": [
+            "chatschay",
+            "potschay",
+            "uyuwichay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "chatschay",
+          "formas_ids": [
+            "chatschaypini"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "khuchhi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "khuchhi",
+          "opciones_ids": [
+            "khuchhi",
+            "masota",
+            "paku",
+            "uni"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chherchher",
+            "lorenzo",
+            "maria",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "masota",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "masota",
+          "opciones_ids": [
+            "masota",
+            "paku",
+            "uni",
+            "wallpa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "paku",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "paku",
+          "opciones_ids": [
+            "masota",
+            "paku",
+            "uni",
+            "wallpa"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "pakunaka",
+          "raiz_id": "paku",
+          "opciones_ids": [
+            "khuchhi",
+            "paku",
+            "uni",
+            "wallpa"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "juana",
+            "khuchhi",
+            "lorenzo",
+            "ni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qonqo",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "qonqo",
+          "opciones_ids": [
+            "chhep",
+            "peske",
+            "qonqo",
+            "sanqo"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "sanqo",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "sanqo",
+          "opciones_ids": [
+            "chhi",
+            "peske",
+            "qonqo",
+            "sanqo"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chherchher",
+            "ni",
+            "qonqo",
+            "sanqo"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "uni",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "uni",
+          "opciones_ids": [
+            "masota",
+            "paku",
+            "uni",
+            "wallpa"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "uninaka",
+          "raiz_id": "uni",
+          "opciones_ids": [
+            "maxsinaka",
+            "sitsnizonipinichay",
+            "uninaka",
+            "yachirichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "uyuwichay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "uyuwichay",
+          "opciones_ids": [
+            "amaruskchay",
+            "chatschay",
+            "uyuwichay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "juana",
+            "ni",
+            "uchs",
+            "uyuwichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wallpa",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "wallpa",
+          "opciones_ids": [
+            "khuchhi",
+            "masota",
+            "uni",
+            "wallpa"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "wallpanaka",
+          "raiz_id": "wallpa",
+          "opciones_ids": [
+            "achasinaka",
+            "palitaknaka",
+            "wallpanaka",
+            "yachirichay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chherchher",
+            "juana",
+            "lorenzo",
+            "maria"
+          ]
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_081"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_081",
+          "opciones_oraciones_ids": [
+            "O_081",
+            "O_083",
+            "O_084",
+            "O_085"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_082",
+          "palabra_oculta_id": "maria",
+          "opciones_ids": [
+            "juana",
+            "lorenzo",
+            "maria",
+            "pedro"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_082"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_083"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_083"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_084",
+          "opciones_oraciones_ids": [
+            "O_081",
+            "O_082",
+            "O_084",
+            "O_085"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_084",
+          "palabra_oculta_id": "uyuwichay",
+          "opciones_ids": [
+            "chatschay",
+            "selschay",
+            "uyuwichay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_085"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_085"
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "juana",
+            "masota",
+            "paku",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chatschay",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L21",
+      "titulo": "Ganadería y Crianza",
+      "orden": 21,
+      "familias_nuevas": [
+        "chiw",
+        "choq",
+        "iwisa",
+        "jilaynacha",
+        "murchula",
+        "qerwakha",
+        "wakha",
+        "xala"
+      ],
+      "familias_repaso": [
+        "achichay",
+        "apichuy",
+        "lulschay",
+        "maria",
+        "ni",
+        "qonqo",
+        "sanqo",
+        "taki",
+        "tuchay",
+        "uchs",
+        "wist",
+        "wistakchay"
+      ],
+      "oraciones_ids": [
+        "O_086",
+        "O_087",
+        "O_088",
+        "O_089",
+        "O_090"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chiw",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chiw",
+          "opciones_ids": [
+            "chiw",
+            "choq",
+            "jilaynacha",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "choq",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "choq",
+          "opciones_ids": [
+            "chiw",
+            "choq",
+            "jilaynacha",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "maria",
+            "qonqo",
+            "sanqo",
+            "tuchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "iwisa",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "iwisa",
+          "opciones_ids": [
+            "iwisa",
+            "murchula",
+            "qerwakha",
+            "xala"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "iwisanaka",
+          "raiz_id": "iwisa",
+          "opciones_ids": [
+            "ataluychay",
+            "iwisanaka",
+            "phetanaka",
+            "yachirichay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "jilaynacha",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "jilaynacha",
+          "opciones_ids": [
+            "chiw",
+            "choq",
+            "jilaynacha",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "apichuy",
+            "iwisa",
+            "tuchay",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "murchula",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "murchula",
+          "opciones_ids": [
+            "achichay",
+            "murchula",
+            "qerwakha",
+            "wakha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qerwakha",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "qerwakha",
+          "opciones_ids": [
+            "apichuy",
+            "murchula",
+            "qerwakha",
+            "wakha"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "iwisa",
+            "lulschay",
+            "qonqo",
+            "taki"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wakha",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "wakha",
+          "opciones_ids": [
+            "achichay",
+            "iwisa",
+            "wakha",
+            "xala"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "wakha",
+          "formas_ids": [
+            "wakhanaka"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "xala",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "xala",
+          "opciones_ids": [
+            "apichuy",
+            "murchula",
+            "wakha",
+            "xala"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "xalanaka",
+          "raiz_id": "xala",
+          "opciones_ids": [
+            "iwisa",
+            "qerwakha",
+            "wakha",
+            "xala"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "iwisa",
+            "lulschay",
+            "uchs",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "achichay",
+            "apichuy",
+            "lulschay",
+            "maria"
+          ]
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_086"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_086",
+          "opciones_oraciones_ids": [
+            "O_086",
+            "O_087",
+            "O_088",
+            "O_090"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_087",
+          "palabra_oculta_id": "sanqo",
+          "opciones_ids": [
+            "chhi",
+            "paxpiku",
+            "qonqo",
+            "sanqo"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_087"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_088"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_088"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_089",
+          "opciones_oraciones_ids": [
+            "O_086",
+            "O_087",
+            "O_089",
+            "O_090"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_089",
+          "palabra_oculta_id": "xalanaka",
+          "opciones_ids": [
+            "chhikhitsnaka",
+            "kuwarernonaka",
+            "sitsninaka",
+            "xalanaka"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_090"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_090"
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chiw",
+            "tuchay",
+            "uchs",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chiw",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L22",
+      "titulo": "Fauna Silvestre",
+      "orden": 22,
+      "familias_nuevas": [
+        "chunipaku",
+        "phesqona",
+        "qetsi",
+        "ulanchay",
+        "xalwari"
+      ],
+      "familias_repaso": [
+        "ana",
+        "axtal",
+        "chirsnachay",
+        "lowalowa",
+        "satschay",
+        "taki",
+        "wilk",
+        "wiyani"
+      ],
+      "oraciones_ids": [
+        "O_091",
+        "O_092",
+        "O_093",
+        "O_094"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chunipaku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chunipaku",
+          "opciones_ids": [
+            "chunipaku",
+            "phesqona",
+            "qetsi",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "phesqona",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "phesqona",
+          "opciones_ids": [
+            "chunipaku",
+            "phesqona",
+            "qetsi",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "axtal",
+            "chirsnachay",
+            "lowalowa",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qetsi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "qetsi",
+          "opciones_ids": [
+            "chunipaku",
+            "phesqona",
+            "qetsi",
+            "xalwari"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ulanchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "ulanchay",
+          "opciones_ids": [
+            "chirsnachay",
+            "satschay",
+            "ulanchay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ana",
+            "axtal",
+            "chirsnachay",
+            "lowalowa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "xalwari",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "xalwari",
+          "opciones_ids": [
+            "chunipaku",
+            "phesqona",
+            "qetsi",
+            "xalwari"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "axtal",
+            "chirsnachay",
+            "lowalowa"
+          ]
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_091"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_091",
+          "opciones_oraciones_ids": [
+            "O_091",
+            "O_092",
+            "O_093",
+            "O_094"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_092",
+          "palabra_oculta_id": "ulanchay",
+          "opciones_ids": [
+            "chirsnachay",
+            "qhawschay",
+            "satschay",
+            "ulanchay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_092"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_093"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_093"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_094",
+          "opciones_oraciones_ids": [
+            "O_091",
+            "O_092",
+            "O_093",
+            "O_094"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_094",
+          "palabra_oculta_id": "axtal",
+          "opciones_ids": [
+            "axtal",
+            "ew",
+            "jilaynacha",
+            "lowalowa"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chunipaku",
+            "lowalowa",
+            "phesqona",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chunipaku",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L23",
+      "titulo": "Aves del Ecosistema",
+      "orden": 23,
+      "familias_nuevas": [
+        "chhaqway",
+        "layschay",
+        "lloqa",
+        "parina",
+        "qala",
+        "qhorskchay",
+        "soqna",
+        "tanachay",
+        "wesla",
+        "wiwi"
+      ],
+      "familias_repaso": [
+        "oqlaychay",
+        "pedro",
+        "sini",
+        "taki",
+        "wisnakti"
+      ],
+      "oraciones_ids": [
+        "O_095",
+        "O_096",
+        "O_097",
+        "O_098"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhaqway",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chhaqway",
+          "opciones_ids": [
+            "chhaqway",
+            "chhuk",
+            "ew",
+            "uchs"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "chhaqwaypini",
+          "raiz_id": "chhaqway",
+          "opciones_ids": [
+            "chhaqwaypini",
+            "chhukchay",
+            "ewchay",
+            "lowalowapini"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "layschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "layschay",
+          "opciones_ids": [
+            "layschay",
+            "oqlaychay",
+            "qhorskchay",
+            "tanachay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chhaqway",
+            "pedro",
+            "sini",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "lloqa",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "lloqa",
+          "opciones_ids": [
+            "lloqa",
+            "parina",
+            "qala",
+            "soqna"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "parina",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "parina",
+          "opciones_ids": [
+            "parina",
+            "qala",
+            "soqna",
+            "wesla"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhaqway",
+            "layschay",
+            "oqlaychay",
+            "parina"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qala",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "qala",
+          "opciones_ids": [
+            "parina",
+            "qala",
+            "wesla",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qhorskchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "qhorskchay",
+          "opciones_ids": [
+            "layschay",
+            "oqlaychay",
+            "qhorskchay",
+            "tanachay"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "layschay",
+            "lloqa",
+            "pedro",
+            "qhorskchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "soqna",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "soqna",
+          "opciones_ids": [
+            "parina",
+            "sini",
+            "soqna",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tanachay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "tanachay",
+          "opciones_ids": [
+            "layschay",
+            "oqlaychay",
+            "qhorskchay",
+            "tanachay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhaqway",
+            "lloqa",
+            "parina",
+            "sini"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wesla",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "wesla",
+          "opciones_ids": [
+            "lloqa",
+            "qala",
+            "sini",
+            "wesla"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "weslanaka",
+          "raiz_id": "wesla",
+          "opciones_ids": [
+            "kuwarernonaka",
+            "palitaknaka",
+            "wakhanaka",
+            "weslanaka"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "wiwi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "wiwi",
+          "opciones_ids": [
+            "parina",
+            "sini",
+            "wesla",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "oqlaychay",
+            "qala",
+            "sini",
+            "taki"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "oqlaychay",
+            "pedro",
+            "sini",
+            "taki"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_095"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_095"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_096"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_096",
+          "opciones_oraciones_ids": [
+            "O_095",
+            "O_096",
+            "O_097",
+            "O_098"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_097",
+          "palabra_oculta_id": "qhorskchay",
+          "opciones_ids": [
+            "layschay",
+            "oqlaychay",
+            "qhorskchay",
+            "tanachay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_097"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_098"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_098"
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhaqway",
+            "parina",
+            "qhorskchay",
+            "wisnakti"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chhaqway",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L24",
+      "titulo": "Especies Acuáticas",
+      "orden": 24,
+      "familias_nuevas": [
+        "chaxana",
+        "chisawa",
+        "chiwqeri",
+        "kurwina",
+        "qeri",
+        "qerjina",
+        "qhalu",
+        "qhathu",
+        "tanschay"
+      ],
+      "familias_repaso": [
+        "apay",
+        "ataluy",
+        "juana",
+        "lorenzo",
+        "taki",
+        "taxsnakichay",
+        "tuchay",
+        "uchs",
+        "watha",
+        "wist",
+        "wiwi"
+      ],
+      "oraciones_ids": [
+        "O_099",
+        "O_100",
+        "O_101",
+        "O_102",
+        "O_103"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chaxana",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "chaxana",
+          "opciones_ids": [
+            "chaxana",
+            "chiwqeri",
+            "qerjina",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chisawa",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chisawa",
+          "opciones_ids": [
+            "chaxana",
+            "chisawa",
+            "qerjina",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "apay",
+            "chisawa",
+            "tuchay",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chiwqeri",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chiwqeri",
+          "opciones_ids": [
+            "ataluy",
+            "chaxana",
+            "chiwqeri",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "kurwina",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "kurwina",
+          "opciones_ids": [
+            "chaxana",
+            "chisawa",
+            "kurwina",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "kurwinanaka",
+          "raiz_id": "kurwina",
+          "opciones_ids": [
+            "ataluychay",
+            "kurwinanaka",
+            "wakhanaka",
+            "weslanaka"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chisawa",
+            "lorenzo",
+            "taki",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qeri",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "qeri",
+          "opciones_ids": [
+            "ataluy",
+            "chaxana",
+            "qeri",
+            "qhathu"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qerjina",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "qerjina",
+          "opciones_ids": [
+            "chisawa",
+            "kurwina",
+            "qerjina",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "chaxana",
+            "qeri",
+            "watha",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qhalu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "qhalu",
+          "opciones_ids": [
+            "qhalu",
+            "qonqo",
+            "sanqo",
+            "tuwqo"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qhathu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "qhathu",
+          "opciones_ids": [
+            "apay",
+            "qerjina",
+            "qhathu",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ataluy",
+            "chisawa",
+            "taki",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tanschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "tanschay",
+          "opciones_ids": [
+            "tanschay",
+            "taxsnakichay",
+            "tuchay",
+            "ulanchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "apay",
+            "ataluy",
+            "juana",
+            "lorenzo"
+          ]
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_099",
+          "opciones_oraciones_ids": [
+            "O_099",
+            "O_100",
+            "O_101",
+            "O_102"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_099",
+          "palabra_oculta_id": "taki",
+          "opciones_ids": [
+            "taki",
+            "tichu",
+            "tila"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_100"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_100"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_101"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_101",
+          "opciones_oraciones_ids": [
+            "O_099",
+            "O_100",
+            "O_101",
+            "O_103"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_102",
+          "palabra_oculta_id": "wist",
+          "opciones_ids": [
+            "nis",
+            "uchums",
+            "wisnaks",
+            "wist"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_102"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_103"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_103"
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chisawa",
+            "taki",
+            "wist",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "chaxana",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L25",
+      "titulo": "Flora del Altiplano",
+      "orden": 25,
+      "familias_nuevas": [
+        "achuchay",
+        "chhullayku",
+        "juwa",
+        "pakschay",
+        "phiki",
+        "qanawi",
+        "qeschhala",
+        "qoq",
+        "yoqa"
+      ],
+      "familias_repaso": [
+        "ana",
+        "malaqoy",
+        "ni",
+        "oqschay",
+        "selschay",
+        "wist",
+        "wiwi"
+      ],
+      "oraciones_ids": [
+        "O_104",
+        "O_105",
+        "O_106",
+        "O_107",
+        "O_108"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "achuchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "achuchay",
+          "opciones_ids": [
+            "achuchay",
+            "oqschay",
+            "pakschay",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhullayku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "chhullayku",
+          "opciones_ids": [
+            "chhuljama",
+            "chhullayku",
+            "chhulurasa",
+            "jasiktam"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "achuchay",
+            "chhullayku",
+            "malaqoy",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "juwa",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "juwa",
+          "opciones_ids": [
+            "juwa",
+            "qanawi",
+            "qeschhala",
+            "yoqa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "pakschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "pakschay",
+          "opciones_ids": [
+            "achuchay",
+            "oqschay",
+            "pakschay",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhullayku",
+            "ni",
+            "pakschay",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "phiki",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "phiki",
+          "opciones_ids": [
+            "phiki",
+            "qeschhala",
+            "qoq",
+            "yoqa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qanawi",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "qanawi",
+          "opciones_ids": [
+            "juwa",
+            "malaqoy",
+            "phiki",
+            "qanawi"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ana",
+            "malaqoy",
+            "pakschay",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qeschhala",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "qeschhala",
+          "opciones_ids": [
+            "phiki",
+            "qeschhala",
+            "wiwi",
+            "yoqa"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qoq",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "qoq",
+          "opciones_ids": [
+            "juwa",
+            "malaqoy",
+            "qoq",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "familia_completa",
+          "raiz_id": "qoq",
+          "formas_ids": [
+            "qoqnaka"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "ni",
+            "oqschay",
+            "qeschhala",
+            "qoq"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "yoqa",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "yoqa",
+          "opciones_ids": [
+            "phiki",
+            "qanawi",
+            "qoq",
+            "yoqa"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "malaqoy",
+            "ni",
+            "oqschay"
+          ]
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_104",
+          "opciones_oraciones_ids": [
+            "O_104",
+            "O_106",
+            "O_107",
+            "O_108"
+          ]
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_104"
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_105"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_105"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_106"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_106",
+          "opciones_oraciones_ids": [
+            "O_104",
+            "O_106",
+            "O_107",
+            "O_108"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_107",
+          "palabra_oculta_id": "malaqoy",
+          "opciones_ids": [
+            "malaqoy",
+            "qanawi",
+            "qoq",
+            "yoqa"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_107"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_108"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_108"
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "ana",
+            "phiki",
+            "qeschhala",
+            "wiwi"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "achuchay",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L26",
+      "titulo": "Elementos de la Naturaleza",
+      "orden": 26,
+      "familias_nuevas": [
+        "anachhulu",
+        "chhiri",
+        "chhurpikchay",
+        "chisni",
+        "qola",
+        "thuni",
+        "tiku",
+        "titomxe",
+        "yis"
+      ],
+      "familias_repaso": [
+        "ana",
+        "chirsnachay",
+        "selschay",
+        "wilk",
+        "wiyani"
+      ],
+      "oraciones_ids": [
+        "O_109",
+        "O_110",
+        "O_111",
+        "O_112",
+        "O_113"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "anachhulu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "anachhulu",
+          "opciones_ids": [
+            "anachhulu",
+            "chisni",
+            "qola",
+            "thuni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhiri",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "chhiri",
+          "opciones_ids": [
+            "chhiri",
+            "chisni",
+            "thuni",
+            "yis"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "ana",
+            "selschay",
+            "wilk",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chhurpikchay",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "chhurpikchay",
+          "opciones_ids": [
+            "chhurpikchay",
+            "chirsnachay",
+            "selschay",
+            "tanschay"
+          ]
+        },
+        {
+          "tipo": "forma_a_raiz",
+          "forma_id": "chhurpikchaypini",
+          "raiz_id": "chhurpikchay",
+          "opciones_ids": [
+            "chhurpikchay",
+            "chirsnachay",
+            "khitschay",
+            "selschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chisni",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "chisni",
+          "opciones_ids": [
+            "anachhulu",
+            "chhiri",
+            "chisni",
+            "tiku"
+          ]
+        },
+        {
+          "tipo": "forma_a_es",
+          "forma_id": "chisnipinichay",
+          "raiz_id": "chisni",
+          "opciones_ids": [
+            "chhiqhanaka",
+            "chisnipinichay",
+            "chuwanaka",
+            "qoqnaka"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhiri",
+            "chhurpikchay",
+            "wilk",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qola",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "qola",
+          "opciones_ids": [
+            "anachhulu",
+            "chisni",
+            "qola",
+            "thuni"
+          ]
+        },
+        {
+          "tipo": "es_a_forma",
+          "forma_id": "qolanakapini",
+          "raiz_id": "qola",
+          "opciones_ids": [
+            "kurwinanaka",
+            "kuwarernonaka",
+            "maxsinaka",
+            "qolanakapini"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "thuni",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "thuni",
+          "opciones_ids": [
+            "qola",
+            "thuni",
+            "titomxe",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chisni",
+            "qola",
+            "selschay",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tiku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "tiku",
+          "opciones_ids": [
+            "chisni",
+            "qola",
+            "tiku",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "titomxe",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "titomxe",
+          "opciones_ids": [
+            "chhiri",
+            "chisni",
+            "thuni",
+            "titomxe"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "ana",
+            "chhurpikchay",
+            "thuni",
+            "wiyani"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "yis",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "yis",
+          "opciones_ids": [
+            "chhiri",
+            "thuni",
+            "wiyani",
+            "yis"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "ana",
+            "chirsnachay",
+            "selschay",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_109",
+          "opciones_oraciones_ids": [
+            "O_109",
+            "O_111",
+            "O_112",
+            "O_113"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_109",
+          "palabra_oculta_id": "thuni",
+          "opciones_ids": [
+            "thuni",
+            "tiku",
+            "titomxe",
+            "yis"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_110"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_110"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_111"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_111",
+          "opciones_oraciones_ids": [
+            "O_110",
+            "O_111",
+            "O_112",
+            "O_113"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_112",
+          "palabra_oculta_id": "chisnipinichay",
+          "opciones_ids": [
+            "chhunipinichay",
+            "chisnipinichay",
+            "phetanaka",
+            "xorchachay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_112"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_113"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_113"
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "chhurpikchay",
+            "chisni",
+            "qola",
+            "thuni"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "anachhulu",
+          "opcional": true
+        }
+      ]
+    },
+    {
+      "id": "L27",
+      "titulo": "Orientación y Navegación",
+      "orden": 27,
+      "familias_nuevas": [
+        "cheqallachay",
+        "chiyacharku",
+        "jipu",
+        "ochapara",
+        "phawschay",
+        "qachina",
+        "taxacharku",
+        "tekschay",
+        "thikuchay",
+        "thosa",
+        "tuncharku",
+        "untu",
+        "xanacharku"
+      ],
+      "familias_repaso": [
+        "achichay",
+        "am",
+        "chhaq",
+        "lorenzo",
+        "pichuchay",
+        "thuni",
+        "watha",
+        "wist",
+        "wistakchay"
+      ],
+      "oraciones_ids": [
+        "O_114",
+        "O_115",
+        "O_116",
+        "O_117",
+        "O_118",
+        "O_119",
+        "O_120"
+      ],
+      "pasos": [
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "cheqallachay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "cheqallachay",
+          "opciones_ids": [
+            "cheqallachay",
+            "phawschay",
+            "tekschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "chiyacharku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "chiyacharku",
+          "opciones_ids": [
+            "achichay",
+            "chiyacharku",
+            "taxacharku",
+            "xanacharku"
+          ]
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "am",
+            "chiyacharku",
+            "thuni",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "jipu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "jipu",
+          "opciones_ids": [
+            "chiyacharku",
+            "jipu",
+            "qachina",
+            "thikuchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "ochapara",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "ochapara",
+          "opciones_ids": [
+            "achichay",
+            "chiyacharku",
+            "ochapara",
+            "thosa"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "am",
+            "chiyacharku",
+            "pichuchay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "phawschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "phawschay",
+          "opciones_ids": [
+            "cheqallachay",
+            "phawschay",
+            "tekschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "qachina",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "qachina",
+          "opciones_ids": [
+            "qachina",
+            "taxacharku",
+            "thosa",
+            "thuni"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "achichay",
+            "phawschay",
+            "qachina",
+            "thuni"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "taxacharku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "taxacharku",
+          "opciones_ids": [
+            "ochapara",
+            "qachina",
+            "taxacharku",
+            "xanacharku"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tekschay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "tekschay",
+          "opciones_ids": [
+            "cheqallachay",
+            "phawschay",
+            "pichuchay",
+            "tekschay"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "cheqallachay",
+            "ochapara",
+            "pichuchay",
+            "tekschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "thikuchay",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "thikuchay",
+          "opciones_ids": [
+            "chiyacharku",
+            "ochapara",
+            "taxacharku",
+            "thikuchay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "thosa",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "uch_a_es",
+          "objetivo_id": "thosa",
+          "opciones_ids": [
+            "chiyacharku",
+            "taxacharku",
+            "thosa",
+            "xanacharku"
+          ]
+        },
+        {
+          "tipo": "memoria_uch_es",
+          "items_ids": [
+            "achichay",
+            "chiyacharku",
+            "ochapara",
+            "tekschay"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "tuncharku",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "es_a_uch",
+          "objetivo_id": "tuncharku",
+          "opciones_ids": [
+            "am",
+            "tuncharku",
+            "uchumik",
+            "wilk"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "untu",
+          "tiene_formas": false
+        },
+        {
+          "tipo": "audio_a_uch",
+          "objetivo_id": "untu",
+          "opciones_ids": [
+            "chhaq",
+            "echs",
+            "uchs",
+            "untu"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "jipu",
+            "lorenzo",
+            "taxacharku",
+            "watha"
+          ]
+        },
+        {
+          "tipo": "presentacion_familia",
+          "objetivo_id": "xanacharku",
+          "tiene_formas": true
+        },
+        {
+          "tipo": "audio_a_es",
+          "objetivo_id": "xanacharku",
+          "opciones_ids": [
+            "achichay",
+            "jipu",
+            "thosa",
+            "xanacharku"
+          ]
+        },
+        {
+          "tipo": "audio_a_forma",
+          "forma_id": "xanacharkuchay",
+          "raiz_id": "xanacharku",
+          "opciones_ids": [
+            "chhikhitsnaka",
+            "palitaknaka",
+            "sitsninaka",
+            "xanacharkuchay"
+          ]
+        },
+        {
+          "tipo": "emparejar_uch_es",
+          "items_ids": [
+            "achichay",
+            "am",
+            "chhaq",
+            "lorenzo"
+          ]
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_114",
+          "opciones_oraciones_ids": [
+            "O_114",
+            "O_118",
+            "O_119",
+            "O_120"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_114",
+          "palabra_oculta_id": "tekschay",
+          "opciones_ids": [
+            "cheqallachay",
+            "pichuchay",
+            "tekschay",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_115"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_115"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_116"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_116",
+          "opciones_oraciones_ids": [
+            "O_114",
+            "O_115",
+            "O_116",
+            "O_120"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_117",
+          "palabra_oculta_id": "xanacharkuchay",
+          "opciones_ids": [
+            "iwisanaka",
+            "kurwinanaka",
+            "qoqnaka",
+            "xanacharkuchay"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_117"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_118"
+        },
+        {
+          "tipo": "ordenar_oracion",
+          "oracion_id": "O_118"
+        },
+        {
+          "tipo": "audio_a_es_oracion",
+          "oracion_id": "O_119",
+          "opciones_oraciones_ids": [
+            "O_115",
+            "O_116",
+            "O_117",
+            "O_119"
+          ]
+        },
+        {
+          "tipo": "completar_oracion",
+          "oracion_id": "O_119",
+          "palabra_oculta_id": "qachina",
+          "opciones_ids": [
+            "jipu",
+            "qachina",
+            "taxacharku",
+            "thuni"
+          ]
+        },
+        {
+          "tipo": "dictado_word_bank",
+          "oracion_id": "O_120"
+        },
+        {
+          "tipo": "traduccion_constructiva",
+          "oracion_id": "O_120"
+        },
+        {
+          "tipo": "emparejar_audio_uch",
+          "items_ids": [
+            "chhaq",
+            "lorenzo",
+            "wist",
+            "wistakchay"
+          ]
+        },
+        {
+          "tipo": "escucha_y_repite_asr",
+          "objetivo_id": "cheqallachay",
+          "opcional": true
+        }
+      ]
+    }
+  ]
+}

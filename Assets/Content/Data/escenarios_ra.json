@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "escenarios": [
+    {
+      "id": "ra_encuentro_comunicacion",
+      "titulo": "Encuentro y comunicación",
+      "lecciones_asociadas": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05",
+        "L06"
+      ],
+      "objetos": [],
+      "avatar_requerido": false
+    },
+    {
+      "id": "ra_familia_vestimenta",
+      "titulo": "Familia y vestimenta",
+      "lecciones_asociadas": [
+        "L07",
+        "L08",
+        "L09",
+        "L10",
+        "L11"
+      ],
+      "objetos": [],
+      "avatar_requerido": false
+    },
+    {
+      "id": "ra_casa_objetos",
+      "titulo": "Casa y objetos cotidianos",
+      "lecciones_asociadas": [
+        "L12",
+        "L13",
+        "L14",
+        "L15"
+      ],
+      "objetos": [],
+      "avatar_requerido": false
+    },
+    {
+      "id": "ra_cocina_alimentos",
+      "titulo": "Cocina y alimentos",
+      "lecciones_asociadas": [
+        "L16",
+        "L17",
+        "L18",
+        "L19"
+      ],
+      "objetos": [],
+      "avatar_requerido": false
+    },
+    {
+      "id": "ra_animales_ecosistema",
+      "titulo": "Animales y ecosistema",
+      "lecciones_asociadas": [
+        "L20",
+        "L21",
+        "L22",
+        "L23",
+        "L24"
+      ],
+      "objetos": [],
+      "avatar_requerido": false
+    },
+    {
+      "id": "ra_naturaleza_orientacion",
+      "titulo": "Naturaleza y orientación",
+      "lecciones_asociadas": [
+        "L25",
+        "L26",
+        "L27"
+      ],
+      "objetos": [],
+      "avatar_requerido": false
+    }
+  ]
+}

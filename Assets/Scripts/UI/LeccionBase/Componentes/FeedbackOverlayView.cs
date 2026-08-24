@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Assets.Scripts.Core.Services;
 
 namespace Assets.Scripts.UI.LeccionBase.Componentes
 {
@@ -25,16 +24,48 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
 
         public event Action OnContinuarFeedbackClicked;
 
+        private void CrearControlesRuntime()
+        {
+            var layout = gameObject.GetComponent<VerticalLayoutGroup>() ?? gameObject.AddComponent<VerticalLayoutGroup>();
+            layout.spacing = 10f;
+            layout.padding = new RectOffset(16, 16, 16, 16);
+            fondoFeedback = gameObject.GetComponent<Image>() ?? gameObject.AddComponent<Image>();
+            txtTitulo = CrearTexto("Titulo", 30f);
+            txtMensajeDetalle = CrearTexto("Detalle", 23f);
+            btnContinuar = CrearBoton("Continuar");
+        }
+
         private void Awake()
         {
+            if (btnContinuar == null) CrearControlesRuntime();
             if (btnContinuar != null)
                 btnContinuar.onClick.AddListener(() => OnContinuarFeedbackClicked?.Invoke());
+        }
+
+        private TMP_Text CrearTexto(string nombre, float tamano)
+        {
+            var go = new GameObject(nombre, typeof(RectTransform), typeof(TextMeshProUGUI), typeof(LayoutElement));
+            go.transform.SetParent(transform, false);
+            var texto = go.GetComponent<TextMeshProUGUI>();
+            texto.fontSize = tamano;
+            texto.alignment = TextAlignmentOptions.Center;
+            go.GetComponent<LayoutElement>().preferredHeight = tamano * 1.8f;
+            return texto;
+        }
+
+        private Button CrearBoton(string etiqueta)
+        {
+            var go = new GameObject("BtnContinuar", typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
+            go.transform.SetParent(transform, false);
+            go.GetComponent<LayoutElement>().preferredHeight = 60f;
+            TMP_Text texto = CrearTexto(etiqueta, 24f);
+            texto.transform.SetParent(go.transform, false);
+            return go.GetComponent<Button>();
         }
 
         public void MostrarCorrecto(string detalle = null)
         {
             ConfigurarVisual(colorCorrecto, "✓ ¡Correcto!", detalle ?? "¡Muy bien!");
-            AudioService.Instance?.ReproducirEfecto("correcto");
             gameObject.SetActive(true);
         }
 
@@ -45,7 +76,6 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
                 : detalle;
 
             ConfigurarVisual(colorCasi, "⚡ Casi", msg);
-            AudioService.Instance?.ReproducirEfecto("casi");
             gameObject.SetActive(true);
         }
 
@@ -56,7 +86,6 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
                 : $"Respuesta correcta:\n<b>{respuestaCorrecta}</b>";
 
             ConfigurarVisual(colorIncorrecto, "✕ Respuesta incorrecta", msg);
-            AudioService.Instance?.ReproducirEfecto("incorrecto");
             gameObject.SetActive(true);
         }
 

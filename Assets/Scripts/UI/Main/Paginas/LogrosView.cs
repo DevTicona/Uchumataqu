@@ -3,18 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Assets.Scripts.Persistencia;
+using Assets.Scripts.UI.Main;
 
 namespace Assets.Scripts.UI.Main.Paginas
 {
-    public class LogroItem
-    {
-        public string Id { get; set; }
-        public string Titulo { get; set; }
-        public string Descripcion { get; set; }
-        public bool Desbloqueado { get; set; }
-    }
-
     /// <summary>
     /// Vista de la pestaña de Logros en 02_Main.
     /// Especificado en Docs/UI/08-perfil-logros-ajustes-acerca.md §3.
@@ -30,26 +22,17 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         private void OnEnable()
         {
-            RefrescarLogros();
+            OnSolicitarActualizacion?.Invoke();
         }
 
-        public void RefrescarLogros()
+        public event Action OnSolicitarActualizacion;
+
+        public void Mostrar(IReadOnlyList<LogroPresentacionData> logros)
         {
-            var progreso = ProgresoRepository.CargarProgreso();
-            int completadas = progreso != null ? progreso.TotalLeccionesCompletadas : 0;
-            int raDesbloqueados = progreso != null ? progreso.TotalEscenariosVisitados : 0;
+            if (logros == null) return;
 
-            List<LogroItem> logros = new List<LogroItem>
-            {
-                new LogroItem { Id = "l1", Titulo = "Primer Paso", Descripcion = "Completa tu primera lección de Uchumataqu.", Desbloqueado = completadas >= 1 },
-                new LogroItem { Id = "l5", Titulo = "Caminante del Lago", Descripcion = "Completa 5 lecciones del currículo.", Desbloqueado = completadas >= 5 },
-                new LogroItem { Id = "l10", Titulo = "Guardián de la Palabra", Descripcion = "Completa 10 lecciones consecutivas.", Desbloqueado = completadas >= 10 },
-                new LogroItem { Id = "ra1", Titulo = "Visión Aumentada", Descripcion = "Desbloquea tu primer escenario de Realidad Aumentada.", Desbloqueado = raDesbloqueados >= 1 },
-                new LogroItem { Id = "ra3", Titulo = "Explorador Uru", Descripcion = "Desbloquea 3 escenarios de Realidad Aumentada.", Desbloqueado = raDesbloqueados >= 3 },
-                new LogroItem { Id = "l27", Titulo = "Heredero de la Lengua", Descripcion = "Completa las 27 lecciones oficiales del corpus.", Desbloqueado = completadas >= 27 }
-            };
-
-            int desbloqueados = logros.FindAll(l => l.Desbloqueado).Count;
+            int desbloqueados = 0;
+            foreach (var logro in logros) if (logro.Desbloqueado) desbloqueados++;
             if (txtTotalLogros != null)
             {
                 txtTotalLogros.text = $"{desbloqueados} / {logros.Count} logros conseguidos";
@@ -69,7 +52,7 @@ namespace Assets.Scripts.UI.Main.Paginas
             }
         }
 
-        private void CrearElementoLogro(LogroItem logro)
+        private void CrearElementoLogro(LogroPresentacionData logro)
         {
             GameObject item = (prefabLogroItem != null)
                 ? Instantiate(prefabLogroItem, contenedorLogros)

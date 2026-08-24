@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.UI.Onboarding
 {
@@ -25,6 +26,7 @@ namespace Assets.Scripts.UI.Onboarding
         public event Action OnAtrasClick;
 
         private string _avatarSeleccionado = "avatar_01";
+        private readonly List<Button> _botonesAvatar = new List<Button>();
 
         private void Awake()
         {
@@ -33,6 +35,17 @@ namespace Assets.Scripts.UI.Onboarding
 
             if (botonAtras != null)
                 botonAtras.onClick.AddListener(() => OnAtrasClick?.Invoke());
+
+            if (pasoAvatar != null)
+            {
+                _botonesAvatar.AddRange(pasoAvatar.GetComponentsInChildren<Button>(true));
+                _botonesAvatar.Sort((a, b) => string.CompareOrdinal(a.name, b.name));
+                for (int i = 0; i < _botonesAvatar.Count; i++)
+                {
+                    int indice = i;
+                    _botonesAvatar[i].onClick.AddListener(() => SeleccionarAvatar($"avatar_{indice + 1:D2}"));
+                }
+            }
         }
 
         public void MostrarPaso(int paso)
@@ -55,6 +68,12 @@ namespace Assets.Scripts.UI.Onboarding
         public void SeleccionarAvatar(string avatarId)
         {
             _avatarSeleccionado = avatarId;
+            for (int i = 0; i < _botonesAvatar.Count; i++)
+            {
+                var imagen = _botonesAvatar[i].GetComponent<Image>();
+                if (imagen != null)
+                    imagen.color = avatarId == $"avatar_{i + 1:D2}" ? new Color(0.92f, 0.76f, 0.35f) : Color.white;
+            }
         }
     }
 }

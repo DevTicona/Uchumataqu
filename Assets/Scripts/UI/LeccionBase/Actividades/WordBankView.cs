@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Assets.Scripts.Core.Services;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
@@ -35,13 +34,36 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private List<string> _tokensSeleccionados = new List<string>();
         private List<GameObject> _fichasActivas = new List<GameObject>();
 
+        public void InicializarRuntime()
+        {
+            Transform root = transform;
+            txtInstruccion = RuntimeActividadUIFactory.CrearTexto(root, "Instruccion", 25f);
+            txtPromptEs = RuntimeActividadUIFactory.CrearTexto(root, "Prompt", 30f);
+            btnAudioPrompt = RuntimeActividadUIFactory.CrearBoton(root, "BtnAudio", "Escuchar oración");
+            contenedorDestino = RuntimeActividadUIFactory.CrearSubcontenedor(root, "Respuesta");
+            contenedorOrigen = RuntimeActividadUIFactory.CrearSubcontenedor(root, "Banco");
+            btnComprobar = RuntimeActividadUIFactory.CrearBoton(root, "BtnComprobar", "Comprobar");
+            RegistrarListeners();
+        }
+
         private void Awake()
         {
+            RegistrarListeners();
+        }
+
+        private void RegistrarListeners()
+        {
             if (btnAudioPrompt != null)
+            {
+                btnAudioPrompt.onClick.RemoveAllListeners();
                 btnAudioPrompt.onClick.AddListener(() => OnAudioPromptClicked?.Invoke());
+            }
 
             if (btnComprobar != null)
+            {
+                btnComprobar.onClick.RemoveAllListeners();
                 btnComprobar.onClick.AddListener(ConfirmarRespuesta);
+            }
         }
 
         public void Configurar(string tipo, string promptEs, List<string> tokensDisponibles, string oracionAudioId = null)
@@ -65,13 +87,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 btnAudioPrompt.gameObject.SetActive(esDictado || !string.IsNullOrEmpty(oracionAudioId));
             }
 
-            if (esDictado && !string.IsNullOrEmpty(oracionAudioId))
-            {
-                AudioService.Instance?.ReproducirOracion(oracionAudioId);
-            }
-
             // Instanciar fichas en el contenedor de origen (Banco)
-            if (contenedorOrigen != null && prefabFichaToken != null)
+            if (contenedorOrigen != null)
             {
                 foreach (var token in tokensDisponibles)
                 {
@@ -82,7 +99,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private void CrearFicha(string textoToken, Transform padre, bool enDestino)
         {
-            GameObject ficha = Instantiate(prefabFichaToken, padre);
+            GameObject ficha = prefabFichaToken != null
+                ? Instantiate(prefabFichaToken, padre)
+                : RuntimeActividadUIFactory.CrearBoton(padre, $"Ficha_{textoToken}", textoToken).gameObject;
             _fichasActivas.Add(ficha);
 
             TMP_Text txt = ficha.GetComponentInChildren<TMP_Text>();
@@ -102,14 +121,12 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 // Mover al contenedor de destino (armar oración)
                 ficha.transform.SetParent(contenedorDestino, false);
                 _tokensSeleccionados.Add(textoToken);
-                AudioService.Instance?.ReproducirEfecto("tap_token");
             }
             else
             {
                 // Devolver al banco
                 ficha.transform.SetParent(contenedorOrigen, false);
                 _tokensSeleccionados.Remove(textoToken);
-                AudioService.Instance?.ReproducirEfecto("tap_token_return");
             }
 
             if (btnComprobar != null)

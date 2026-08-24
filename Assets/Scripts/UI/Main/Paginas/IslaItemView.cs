@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Assets.Scripts.Core.Services;
 
 namespace Assets.Scripts.UI.Main.Paginas
 {
@@ -102,8 +101,6 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         private void OnIslaClicked()
         {
-            AudioService.Instance?.ReproducirEfecto("click_boton");
-
             if (EsHitoRA)
             {
                 OnHitoRaSeleccionado?.Invoke(EscenarioRaId);

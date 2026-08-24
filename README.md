@@ -1,715 +1,80 @@
-## Objetivo del Proyecto
+# Uchumataqu
 
-Desarrollar una aplicación móvil educativa offline en Unity que permita el aprendizaje del idioma Uchumataqu mediante lecciones interactivas, integrando reconocimiento de voz (PLN) y experiencias de realidad aumentada (RA).
+Aplicación móvil educativa offline desarrollada en Unity para el aprendizaje progresivo del idioma Uchumataqu mediante 27 lecciones, práctica oral opcional y seis experiencias de Realidad Aumentada.
 
-La aplicación está orientada a:
-- Facilitar el aprendizaje progresivo del idioma
-- Incrementar la participación de usuarios mediante interacción activa
-- Funcionar completamente sin conexión a internet
-- Apoyar la revitalización cultural del idioma Uchumataqu
+## Fuentes de verdad
 
-El sistema combina:
-- Contenido estructurado (JSON)
-- Actividades interactivas
-- Evaluación de pronunciación
-- Visualización inmersiva con RA
+Cuando dos documentos difieran, se aplica este orden:
 
-El enfoque principal es educativo, interactivo y accesible en contextos con conectividad limitada.
+1. Los JSON compilados de `Assets/Content/Data/` definen IDs, contenido y tipos de pasos.
+2. `Docs/Specifications/04-flujo-leccion-app.md` define la secuencia pedagógica continua, sin bloques A/B.
+3. `Docs/Specifications/03-modulo-ra.md`, `03-1-diseno-escenarios-ra.md` y `escenarios_ra.json` definen los hitos RA.
+4. `Docs/Specifications/08-patron-arquitectonico-mvp.md` define dependencias y responsabilidades de código.
+5. `Docs/Specifications/07-cronograma-implementacion.md` organiza el trabajo, pero no redefine contratos técnicos.
 
-## Flujo de la Aplicación (Detallado y Determinístico)
+## Arquitectura
 
-El flujo de cada lección está basado en una progresión estricta por bloques de palabras.
+El proyecto utiliza MVP (Model–View–Presenter) con Services/Gestores, Repositories y Motores puros.
 
-### Regla Fundamental
-
-- Cada lección contiene entre 1 y N palabras
-- SI una lección tiene más de 4 palabras:
-  → DEBE dividirse en bloques de máximo 4 palabras
-- Cada bloque se procesa de forma independiente (Exposición + Actividades)
-- El usuario NO puede avanzar al siguiente bloque sin completar el actual
-
----
-
-## Estructura General del Flujo
-
-```
-Tema
- ├── Lección 1 → Bloques (máx 4 palabras c/u) → Producción → Progreso
- ├── Lección 2 → Bloques → Producción → Progreso
- ├── ...
- └── Isla RA del Tema (se desbloquea al completar TODAS las lecciones del tema)
-          → Interacción RA → Progreso del Tema
+```text
+View -> Presenter -> Service/Gestor -> Repository
+                     |
+                     +-> Motor
 ```
 
----
+- View: presentación e interacción; recibe datos y emite eventos.
+- Presenter: coordina la View y los casos de uso.
+- Service/Gestor: concentra lógica de aplicación reutilizable.
+- Repository: centraliza lectura y escritura de datos.
+- Motor: implementa algoritmos determinísticos reutilizables.
 
-## 1. Inicio de Lección
+Las reglas completas están en [08-patron-arquitectonico-mvp.md](Docs/Specifications/08-patron-arquitectonico-mvp.md).
 
-- El usuario selecciona una lección desde el mapa de islas
-- Se cargan datos desde JSON
-- Se divide automáticamente en bloques de hasta 4 palabras
+## Escenas oficiales
 
-Ejemplo:
-- 3 palabras → 1 bloque
-- 6 palabras → 2 bloques (4 + 2)
-- 8 palabras → 2 bloques (4 + 4)
+1. `00_Bootstrap`
+2. `01_Onboarding`
+3. `02_Main`
+4. `03_LeccionBase`
+5. `04_RealidadAumentada`
 
----
+No se crea una escena por lección ni por escenario RA.
 
-## 2. Procesamiento por Bloques
+## Flujo pedagógico
 
-PARA CADA BLOQUE:
+Cada lección consume su secuencia de `pasos` desde `lecciones_compiladas.json`. No existen bloques A/B ni agrupaciones rígidas de cuatro palabras. Presentaciones, actividades léxicas, actividades de oración y práctica oral opcional forman una secuencia continua.
 
----
+Una lección se completa al recorrer todos sus pasos obligatorios. La precisión se registra como desempeño, pero no bloquea la finalización ni el desbloqueo de RA. La práctica ASR es opcional y no bloqueante.
 
-### 2.1 Fase de Exposición (OBLIGATORIA)
-Ejecutar actividad pln_palabra (prefab)
-Para cada palabra del bloque:
+## Hitos de Realidad Aumentada
 
-1. Mostrar:
-   - Palabra en Uchumataqu
-   - Traducción en español
-
-2. Reproducir audio automáticamente
-
-3. Permitir repetir audio
-
-4. Evaluación de pronunciación (PLN) OBLIGATORIA:
-   - Usuario presiona micrófono
-   - Debe repetir la palabra
-   - El sistema evalúa similitud
-
-5. Validación:
-   - Si pronunciación es aceptable → continuar
-   - Si falla → repetir hasta lograrlo
-
-⚠️ REGLA:
-El usuario NO puede avanzar sin completar la pronunciación de TODAS las palabras del bloque
-
----
-
-### 2.2 Fase de Anclaje (Actividades del Bloque)
-
-Después de completar todas las palabras del bloque:
-
-Se ejecutan EXACTAMENTE 3 actividades:
-
-1. Selección de Traducción (OBLIGATORIA)
-2. Selección de Audio (OBLIGATORIA)
-3. Actividad Aleatoria (1 de estas):
-   - Emparejamiento audio-palabra
-   - Emparejamiento traducción
-
-⚠️ REGLA:
-- Todas las actividades usan SOLO palabras del bloque actual
-- El usuario debe completar las 3 actividades para continuar
-
----
-
-### 2.3 Transición de Bloque
-
-- Si hay más bloques:
-  → continuar con el siguiente bloque
-- Si es el último bloque:
-  → avanzar a fase de Producción
-
----
-
-## 3. Fase de Producción (Oraciones)
-
-Se evalúa comprensión global de la lección:
-
-- El sistema selecciona 3 actividades aleatorias de una bolsa:
-
-Opciones:
-- Ordenar oración
-- Traducción constructiva (word bank)
-- Traducción inversa
-- Dictado
-- Completar espacio
-- Pronunciación de oración completa (PLN)
-
-⚠️ REGLAS:
-- Las oraciones deben usar contenido de la lección
-- El usuario debe completar todas las actividades
-
----
-
-## 4. Finalización de Lección y Progreso
-
-- Se guarda progreso localmente (offline)
-- Se desbloquea la siguiente lección del tema
-- No se requiere conexión a internet
-
----
-
-## 5. Isla de Realidad Aumentada (por Tema)
-
-La RA **no forma parte del flujo interno de una lección**. Es una **isla especial** que aparece en el mapa después de todas las lecciones de un tema.
-
-### Regla de desbloqueo
-
-> La isla RA de un tema se desbloquea **únicamente** cuando el usuario ha completado (`Completada`) **todas las lecciones normales** de ese tema.
-
-### Estructura en el mapa
-
-```
-[Isla L1] → [Isla L2] → [Isla L3] → ... → [Isla RA del Tema]
-```
-
-### Flujo de la Isla RA
-
-- Se activa la experiencia AR correspondiente al tema (`ra_id` en `TemaItemData`)
-- Se muestran objetos/personajes 3D en el entorno
-- El usuario interactúa mediante voz (PLN)
-- El sistema evalúa frases completas con reglas específicas del tema (estructura SOV, sufijos, etc.)
-
-⚠️ REGLA:
-El usuario debe completar la interacción RA para marcar el tema como finalizado.
-
-### Relación Tema ↔ Isla RA
-
-| Campo | Descripción |
-|---|---|
-| `TemaItemData.ra_id` | ID de la actividad RA en `actividades.json` |
-| `EstadoLeccion` | Mismo enum que lecciones normales: `Bloqueada / EnProgreso / Completada` |
-| Posición en mapa | Siempre después de la última lección del tema |
-
----
-
-## Reglas Globales del Sistema
-
-- NO saltar fases dentro de una lección
-- NO mezclar palabras entre bloques
-- NO permitir avanzar sin completar validaciones
-- SIEMPRE usar bloques de máximo 4 palabras
-- TODA pronunciación es obligatoria en fase de exposición
-- TODAS las actividades deben completarse
-- La isla RA NUNCA se desbloquea antes de completar todas las lecciones del tema
-
----
-
-## Resumen del Flujo
-
-```
-Lección
-→ División en bloques (≤4 palabras)
-→ [Bloque 1: Exposición → Actividades]
-→ [Bloque 2: Exposición → Actividades]
-→ ...
-→ Producción (oraciones)
-→ Guardado de progreso de lección
-
-[Al completar todas las lecciones del tema]
-→ Se desbloquea Isla RA del Tema
-→ Interacción RA
-→ Guardado de progreso del tema
-```
-
----
-
-## Arquitectura del Proyecto
-
-El proyecto usa **MVP (Model-View-Presenter) + Feature Modules**.
-
-### Capas
-
-| Capa | Responsabilidad |
-|---|---|
-| **Model** | Clases `[Serializable]` puras. Mapean JSON. Sin lógica. |
-| **View** | `MonoBehaviour`. Solo muestra datos y emite eventos de UI. Sin lógica de negocio. |
-| **Presenter** | `MonoBehaviour`. Orquesta la comunicación entre Services y Views. |
-| **Service** | Clases `static`. Lógica de negocio, carga de datos, caché. |
-
-### Cómo interactúan
-
-```
-Presenter
-  ├── llama → Service (async/await)
-  ├── recibe → Model (datos puros)
-  └── llama → View (para actualizar UI)
-
-View
-  ├── expone métodos públicos (SetTitulo, CrearIsla, LimpiarBotones)
-  └── invoca callbacks (Action<T>) hacia el Presenter
-
-Service
-  ├── consume → AddressablesService (carga JSON, prefabs, sprites)
-  ├── mantiene caché interna (campo static privado)
-  └── expone métodos async → devuelve Models
-```
-
-**Ejemplo real:** `MenuLeccionesPresenter` → llama `LeccionesService.ObtenerLeccionesAsync()` → que llama `AddressablesService.CargarAssetAsync<TextAsset>("json_lecciones")` → deserializa JSON con `JsonUtility.FromJson<LeccionesWrapperData>()` → devuelve `List<LeccionItemData>` (ordenado por `.orden`) → el Presenter construye `EstadoLeccionMapa` y llama a `MenuLeccionesView.CrearIsla()`.
-
----
-
-## Estructura de Carpetas Real
-
-```
-Assets/Scripts/
-├── Core/                                # Código compartido entre todas las Features
-│   ├── AppConfig.cs                     # ScriptableObject con config global (volumen, AR, debug)
-│   ├── Models/                          # (vacío) — los models viven en Features/Lecciones/Models/
-│   ├── Services/
-│   │   └── AddressablesService.cs       # Servicio centralizado para toda carga asíncrona de assets
-│   ├── Sistema/
-│   │   ├── AppInitializer.cs            # Inicializa Addressables → AppConfig → UITheme → orientación → permisos
-│   │   ├── AndroidMicrophonePermission.cs
-│   │   ├── GestorOrientacionPantalla.cs # ConfigurarInicial() / EstablecerVertical() / EstablecerHorizontal()
-│   │   └── NavigationBackHandler.cs
-│   └── UI/
-│       ├── Theme/
-│       │   ├── UITheme.cs               # ScriptableObject con colores y fuentes del tema
-│       │   └── UIThemeManager.cs        # Carga tema via AddressablesService; dispara event OnThemeChanged
-│       ├── Components/
-│       │   ├── ThemedButton.cs          # Botón themed: aplica solo si Theme != null; fuerza SetAllDirty()
-│       │   ├── ThemedText.cs            # Texto themed: suscripción controlada; aplica ForceMeshUpdate()
-│       │   └── SafeAreaUI.cs            # Ajuste automático de UI al área segura del dispositivo
-│       └── Views/
-│           └── HeaderView.cs            # Header compartido: título, subtítulo, botón atrás, icono opcional
-│
-├── Features/
-│   ├── Actividades/                     # (vacío, reservado para sistema global de actividades)
-│   │
-│   ├── Lecciones/                       # Feature principal con lecciones completas
-│   │   ├── Models/
-│   │   │   ├── TemaItemData.cs          # { id, nombre, orden, ra_id }
-│   │   │   ├── LeccionItemData.cs       # { id, id_tema, nombre, orden, palabras_base[], oraciones_ids[] }
-│   │   │   ├── PalabraItemData.cs       # { id, uch, es }
-│   │   │   ├── OracionItemData.cs       # { id, estructura[], es }
-│   │   │   ├── ActividadCatalogoItemData.cs  # { id, nombre, instrucciones[], recordatorios[], feedback[], requiereAudio, requierePLN }
-│   │   │   ├── IslaMapaData.cs          # { id, nombre, tipo (leccion|ra), id_tema, orden, estado }
-│   │   │   ├── EstadoLeccion.cs         # enum: Bloqueada | EnProgreso | Completada
-│   │   │   └── JsonWrappers.cs          # PalabrasWrapperData, OracionesWrapperData, LeccionesWrapperData, TemasWrapperData, ActividadesWrapperData
-│   │   ├── Services/
-│   │   │   ├── LeccionesService.cs      # → List<LeccionItemData> (deserializa lecciones.json, ordena por .orden)
-│   │   │   ├── TemasService.cs          # → List<TemaItemData> (deserializa temas.json, ordena por .orden)
-│   │   │   ├── PalabrasService.cs       # → List<PalabraItemData> (via LeccionesService + VocabularioService)
-│   │   │   ├── VocabularioService.cs    # → List<PalabraItemData> (deserializa palabras.json, caché)
-│   │   │   ├── OracionesService.cs      # → List<OracionItemData> (deserializa oraciones.json)
-│   │   │   ├── MenuLeccionesService.cs  # Prefab isla, dict sprites islas, iconos de estado (3 en paralelo); genera lista de IslaMapaData combinando lecciones + isla RA por tema
-│   │   │   └── ActividadesCatalogoService.cs  # → List<ActividadCatalogoItemData> (deserializa actividades.json, filtra por fase y categoría)
-│   │   ├── Presenters/
-│   │   │   └── MenuLeccionesPresenter.cs  # Orquesta carga, estado de islas (lecciones + RA) y navegación
-│   │   ├── Views/
-│   │   │   ├── MenuLeccionesView.cs     # Mapa de islas con posicionamiento sinusoidal manual
-│   │   │   ├── IslaLeccionView.cs       # Isla individual: estado visual (bloqueado/progreso/completado); soporta tipo leccion y tipo RA
-│   │   │   └── BotonView.cs             # Botón dinámico configurable con texto y color
-│   │   └── Actividades/                 # Sub-módulo de actividades dentro de Lecciones
-│   │       ├── Base/                    # (vacío, reservado para clase base de actividades)
-│   │       ├── Factories/               # (vacío, reservado para factory de actividades)
-│   │       ├── Models/                  # (vacío, reservado)
-│   │       ├── Presenters/              # (vacío, reservado)
-│   │       ├── Services/                # (vacío, reservado)
-│   │       ├── Tipos/                   # (vacío, reservado para tipos de actividad)
-│   │       └── Views/                   # (vacío, reservado)
-│   │
-│   ├── MenuPrincipal/
-│   │   ├── Presenters/
-│   │   │   └── MenuPrincipalPresenter.cs
-│   │   └── Views/
-│   │       └── MenuPrincipalView.cs
-│   │
-│   ├── ProgresoUsuario/
-│   │   ├── Models/                      # (vacío, reservado)
-│   │   ├── Presenters/                  # (vacío, reservado)
-│   │   ├── Services/
-│   │   │   └── ProgresoService.cs       # Persistencia local via PlayerPrefs
-│   │   └── Views/                       # (vacío, reservado)
-│   │
-│   ├── RealidadAumentada/               # (estructura creada, implementación pendiente)
-│   │   ├── Models/
-│   │   ├── Presenters/
-│   │   ├── Services/
-│   │   └── Views/
-│   │
-│   ├── Pronunciacion/                   # (vacío, reservado para PLN)
-│   │
-│   └── Voz/                             # (estructura creada, implementación pendiente)
-│       ├── Models/
-│       ├── Presenters/
-│       └── Views/
-│
-├── Debug/                               # (vacío, reservado para herramientas de debug)
-│
-└── Utils/
-    └── JsonUtilityHelper.cs             # Wrapper genérico para deserializar arrays JSON raíz
-```
-
-
----
-
-## Flujo de Datos
-
-### Carga desde JSON
-
-`JsonUtility` de Unity **no soporta arrays raíz**. Se usa una estrategia consistente:
-
-**Todos los JSONs tienen estructura { "items": [...] }:**
-```json
-// palabras.json, oraciones.json, lecciones.json, temas.json, actividades.json
-{
-  "items": [
-    { ... },
-    { ... }
-  ]
-}
-```
-
-**Patrón de deserialización:**
-```csharp
-var wrapper = JsonUtility.FromJson<NombreWrapperData>(asset.text);
-var datos = wrapper?.items ?? new List<TipoItemData>();
-```
-
-> ⚠️ **No se usa** `JsonUtilityHelper.FromJsonList<T>` en producción. Solo existe en `Utils/` como utilidad de soporte legacy.
-
-### Cadena completa de datos — Mapa de Islas
-
-```
-TemasService.ObtenerTemasAsync()          → List<TemaItemData>
-LeccionesService.ObtenerLeccionesAsync()  → List<LeccionItemData>
-ProgresoService                           → Dict<id, EstadoLeccion>
-
-MenuLeccionesService.ConstruirIslasMapa()
-  → Por cada tema:
-      1. Añadir islas de lecciones (tipo: "leccion")
-      2. Añadir isla RA al final (tipo: "ra", id = tema.ra_id)
-         → Estado: Bloqueada si alguna lección del tema no está Completada
-  → List<IslaMapaData> ordenada
-
-MenuLeccionesPresenter → MenuLeccionesView.CrearIsla()
-```
-
-### Cadena completa de datos — Lecciones
-
-```
-Addressables ("json_lecciones")
-  → AddressablesService.CargarAssetAsync<TextAsset>
-  → LeccionesService.ObtenerLeccionesAsync() (deserializa → List<LeccionItemData>, ordena por .orden)
-  → MenuLeccionesPresenter (construye EstadoLeccionMapa con ProgresoService)
-  → MenuLeccionesView.CrearIsla() (instancia prefab, posiciona, inyecta datos)
-  → IslaLeccionView.Configurar() (aplica visual según EstadoLeccion)
-```
-
-### Relación Temas ↔ Lecciones ↔ Isla RA
-
-```
-TemaItemData { id, nombre, orden, ra_id }
-    │
-    ├── LeccionItemData[] (filtradas por id_tema, ordenadas por .orden)
-    │       → Islas normales en el mapa
-    │
-    └── ra_id → ActividadCatalogoItemData (fase: "tema", categoria: "ra")
-            → Isla RA al final del tema en el mapa
-```
-
-### Cadena completa de datos — Palabras en práctica
-
-```
-PlayerPrefs ("LECCION_ACTUAL") → id de lección
-  → PalabrasService.ObtenerPalabrasPorLeccionAsync(id)
-  → LeccionesService.ObtenerLeccionPorIdAsync(id)  → LeccionItemData
-  → VocabularioService.ObtenerPalabrasPorIdsAsync(leccion.palabras_base)
-  → AddressablesService.CargarAssetAsync<TextAsset>("json_palabras")
-  → JsonUtility.FromJson<PalabrasWrapperData>
-  → List<PalabraItemData> (en orden de palabras_base)
-  → LeccionBaseView / CarouselView (muestra palabras una a una)
-```
-
-### Cadena completa de datos — Oraciones en práctica
-
-```
-PlayerPrefs ("LECCION_ACTUAL") → id de lección
-  → OracionesService.ObtenerOracionesDeLeccionAsync(leccion)
-  → (requiere LeccionItemData con lista oraciones_ids)
-  → AddressablesService.CargarAssetAsync<TextAsset>("json_oraciones")
-  → JsonUtility.FromJson<OracionesWrapperData>
-  → List<OracionItemData> (en orden de oraciones_ids)
-  → Fase Producción / Vistas de actividades
-```
-
-### Carga de recursos visuales (sprites / prefabs)
-
-```
-MenuLeccionesService
-  ├── CargarPrefabIslaAsync()         → Addressables("prefab_isla_leccion") → GameObject
-  ├── CargarPrefabIslaRAAsync()       → Addressables("prefab_isla_ra") → GameObject
-  ├── CargarDictSpritesIslasAsync()   → Addressables(label "img_islas") → Dict<id, Sprite>
-  └── CargarSpritesEstadoAsync()      → 3 cargas en paralelo (Task.WhenAll)
-                                         ("icono_bloqueado", "icono_enprogreso", "icono_completado")
-```
-
-### Inicialización de la app
-
-```
-AppInitializer.Awake()  (DontDestroyOnLoad)
-  1. Addressables.InitializeAsync()
-  2. AppConfig.Instance             → Resources.Load<AppConfig>("AppConfig")
-                                      → aplica config.enableDebugLogs
-  3. UIThemeManager.CargarTema()    → AddressablesService.CargarAssetAsync<UITheme>("UITheme")
-                                      → dispara OnThemeChanged → ThemedButton / ThemedText se actualizan
-  4. GestorOrientacionPantalla.ConfigurarInicial() → EstablecerVertical()
-  5. AndroidMicrophonePermission.SolicitarPermiso()
-```
-
-### Relación con el flujo por bloques
-
-- La división en bloques (≤4 palabras) es responsabilidad del **Presenter**, no del Service
-- El Service entrega la lista completa de palabras de una lección
-- El Presenter aplica la regla: `bloques = palabras.Chunk(4)` y controla índice de bloque activo
-- La View solo muestra el bloque actual; nunca tiene acceso a bloques futuros
-
----
-
-## Patrones Clave del Proyecto
-
-### Instanciación de prefabs UI (Addressables)
-
-Los prefabs UI **nunca se arrastran al Inspector directamente** cuando se cargan por Addressables. El flujo es:
-
-```csharp
-// 1. Service carga el prefab
-var prefab = await AddressablesService.CargarAssetAsync<GameObject>("prefab_isla_leccion");
-
-// 2. Presenter inyecta el prefab en la View
-menuView.SetPrefabIsla(prefab);
-
-// 3. View instancia con Instantiate (no con Addressables.InstantiateAsync)
-var islaGO = Instantiate(prefabIsla, islasRoot);
-```
-
-Para botones dinámicos, `LeccionBaseView` usa `AddressablesService.InstanciarUIAsync` directamente:
-```csharp
-GameObject go = await LeccionBaseService.InstanciarBotonAsync(contenedorBotones);
-var boton = go.GetComponent<BotonView>();
-boton.Configurar(texto, colorFondo, colorTexto, onClick);
-```
-
-### Posicionamiento sin LayoutGroup
-
-El mapa de islas **no usa `VerticalLayoutGroup`**. Las posiciones se calculan manualmente con una función senoidal para crear un camino zigzag:
-
-```csharp
-private Vector2 CalcularPosicionIsla(int index, int total)
-{
-    float y = index * distanciaVertical;
-    float t = (float)index / Mathf.Max(1, total - 1);
-    float angulo = t * Mathf.PI * 2f * curvasVisibles;
-    float x = Mathf.Sin(angulo) * amplitudHorizontal;
-    return new Vector2(x, y);
-}
-```
-
-La altura del ScrollRect se calcula manualmente en `PrepararLayout(int totalIslas)`.
-
-### Manejo de eventos
-
-El proyecto usa **`System.Action<T>` como callbacks** (no EventBus, no UnityEvent en código):
-
-```csharp
-// En Presenter: se pasa el callback como parámetro
-menuView.CrearIsla(leccion, estado, ..., OnLeccionSeleccionada);
-
-// En View: se almacena y dispara en el botón
-isla.Configurar(leccion, estado, ..., onClick);
-boton.onClick.AddListener(OnBotonPresionado);
-// → callbackSeleccion?.Invoke(leccionData);
-```
-
-`UIThemeManager` usa `event Action OnThemeChanged` para notificar a componentes themed sin referencias directas.
-
-### Separación UI vs lógica
-
-- **Views** solo tienen campos `[SerializeField]` para referencias Unity y métodos `public` de presentación
-- **Presenters** tienen toda la lógica de estado, navegación y construcción de modelos intermedios
-- **Colores y textos fijos** se definen en el Presenter (constantes `private static readonly Color`)
-- La View **nunca** llama a un Service directamente
-
----
-
-## Reglas de Desarrollo
-
-### ✅ Permitido
-
-- Crear nuevas Features como subcarpetas de `Features/`
-- Agregar Services como clases `static` con caché interna
-- Agregar Models como clases `[Serializable]` puras (sin herencia de MonoBehaviour)
-- Usar `AddressablesService` para toda carga de assets externos
-- Usar `async/await` con `Task.WhenAll` para cargas en paralelo
-- Llamar `LimpiarCache()` en `OnDestroy` del Presenter
-
-### ❌ Prohibido
-
-- Poner lógica de negocio en Views
-- Llamar Services directamente desde Views
-- Romper la organización por Feature (no mover scripts entre Features sin actualizar namespaces)
-- Mezclar responsabilidades entre capas MVP
-- Usar `Resources.Load` para assets que no sean ScriptableObjects de configuración
-- Usar `FindObjectOfType` o `GameObject.Find` en tiempo de ejecución
-- Crear singletons de MonoBehaviour (use Services estáticos o ScriptableObjects)
-- Serializar lógica de estado en la View
-
----
-
-## Convenciones de Código
-
-### Namespaces
-
-```
-Assets.Scripts.Core                    → Core/
-Assets.Scripts.Core.Services           → Core/Services/
-Assets.Scripts.Core.UI.Theme           → Core/UI/Theme/
-Assets.Scripts.Core.UI.Components      → Core/UI/Components/
-Assets.Scripts.Core.UI.Views           → Core/UI/Views/
-Assets.Scripts.Core.Sistema            → Core/Sistema/
-Assets.Scripts.Features.Lecciones.Models      → Features/Lecciones/Models/
-Assets.Scripts.Features.Lecciones.Services    → Features/Lecciones/Services/
-Assets.Scripts.Features.Lecciones.Views       → Features/Lecciones/Views/
-Assets.Scripts.Features.MenuPrincipal.Presenters → Features/MenuPrincipal/Presenters/
-Assets.Scripts.Features.ProgresoUsuario.Services → Features/ProgresoUsuario/Services/
-Assets.Scripts.Utils                   → Utils/
-```
-
-### Nombres de clases
-
-| Tipo | Sufijo | Ejemplo |
+| Escenario | Lecciones requeridas | Posición |
 |---|---|---|
-| View (MonoBehaviour) | `View` | `MenuLeccionesView` |
-| Presenter (MonoBehaviour) | `Presenter` | `MenuLeccionesPresenter` |
-| Service (static) | `Service` | `LeccionesService` |
-| Model (Serializable) | `Data` | `TemaData`, `LeccionItemData` |
-| Wrapper JSON | `WrapperData` | `PalabrasWrapperData` |
-| ScriptableObject de config | (nombre directo) | `AppConfig`, `UITheme` |
+| Encuentro y comunicación | L01–L06 | después de L06 |
+| Familia y vestimenta | L07–L11 | después de L11 |
+| Casa y objetos cotidianos | L12–L15 | después de L15 |
+| Cocina y alimentos | L16–L19 | después de L19 |
+| Animales y ecosistema | L20–L24 | después de L24 |
+| Naturaleza y orientación | L25–L27 | después de L27 |
 
-### Métodos
+La posición se deriva de la última entrada de `lecciones_asociadas`; no se hardcodea en UI.
 
-- Métodos async: `async Task<T> NombreAsync()` — siempre con sufijo `Async`
-- Métodos de carga: `ObtenerXxxAsync`, `CargarXxxAsync`
-- Métodos de UI: `SetXxx`, `CrearXxx`, `LimpiarXxx`, `AplicarXxx`
-- Métodos de caché: `LimpiarCache()`
+## Datos y recursos offline
 
-### MonoBehaviour vs clases puras
+- Corpus: `Assets/Content/Data/`
+- Audio de palabras y formas: `Assets/Content/Audio/Palabras/`
+- Audio de oraciones: `Assets/Content/Audio/Oraciones/`
+- Claves canónicas: `audio_palabra/{id}` y `audio_oracion/{id}`
+- Todos los recursos de runtime se resuelven mediante Addressables.
+- La persistencia del usuario se guarda bajo `Application.persistentDataPath`.
 
-- **MonoBehaviour**: solo Views y Presenters (necesitan ciclo de vida Unity)
-- **`static class`**: Services (no necesitan instancia, una sola copia global con caché)
-- **`[Serializable] class`**: Models (datos puros, serializables para JsonUtility)
-- **`ScriptableObject`**: Configuración global (`AppConfig`, `UITheme`)
+## Validación mínima
 
----
+1. Compilar sin errores.
+2. Ejecutar Edit Mode Tests.
+3. Validar integridad del corpus y contrato de tipos de pasos.
+4. Revisar referencias críticas y duplicados de las cinco escenas.
+5. Probar en Play Mode al menos L01 y una lección afectada.
+6. Para cambios móviles, validar en Android real y modo avión.
 
-## Reglas Específicas para IA
-
-> ⚠️ **CRÍTICO — Leer antes de cualquier modificación**
-
-1. **NO cambiar el flujo de bloques de 4 palabras** definido en la sección "Flujo de la Aplicación"
-2. **NO saltar fases**: el orden Exposición → Actividades → Producción es obligatorio dentro de una lección
-3. **NO mezclar palabras entre bloques**: cada bloque es independiente
-4. **NO modificar las secciones "Objetivo del Proyecto" y "Flujo de la Aplicación"**
-5. **NO crear Services como MonoBehaviour** — siempre `static class`
-6. **NO agregar lógica en Views** — las Views solo reciben datos y disparan callbacks
-7. **NO usar namespaces `App.`** — el prefijo correcto es `Assets.Scripts.`
-8. **NO incluir la RA dentro del flujo de una lección** — la RA es una isla separada al final del tema
-9. **SI** una nueva Feature necesita datos JSON: crear su Service que use `AddressablesService`
-10. **SI** una nueva actividad necesita palabras del bloque actual: el Presenter debe pasarlas, la View no las busca
-11. **SI** detectas carpetas vacías (`Pronunciacion/`, `Actividades/Base/`, etc.): son reservadas y no deben eliminarse
-12. **SI** construyes el mapa de islas: siempre insertar una isla RA al final de cada grupo de lecciones del mismo tema
-
----
-
-## Ejemplos Prácticos
-
-### Cómo crear una nueva Feature
-
-Ejemplo: Feature `Estadisticas`.
-
-```
-Assets/Scripts/Features/Estadisticas/
-├── Models/
-│   └── EstadisticaData.cs         ← [Serializable], mapeado a JSON
-├── Services/
-│   └── EstadisticasService.cs     ← static class con caché y async
-├── Presenters/
-│   └── EstadisticasPresenter.cs   ← MonoBehaviour, orquesta
-└── Views/
-    └── EstadisticasView.cs        ← MonoBehaviour, solo UI
-```
-
-```csharp
-// EstadisticaData.cs
-namespace Assets.Scripts.Features.Estadisticas.Models
-{
-    [System.Serializable]
-    public class EstadisticaData
-    {
-        public string idLeccion;
-        public int intentos;
-        public float porcentajeAciertos;
-    }
-}
-```
-
-### Cómo agregar una nueva UI dinámica (prefab vía Addressables)
-
-1. Crear el prefab en Unity y agregarlo al grupo de Addressables con una clave (ej: `"prefab_carta_estadistica"`)
-2. Crear o usar el Service para cargarlo:
-
-```csharp
-// En el Service de la Feature
-public static async Task<GameObject> CargarPrefabCartaAsync()
-{
-    return await AddressablesService.CargarAssetAsync<GameObject>("prefab_carta_estadistica");
-}
-```
-
-3. Desde el Presenter, cargar e inyectar en la View:
-
-```csharp
-// En el Presenter
-var prefab = await EstadisticasService.CargarPrefabCartaAsync();
-miView.SetPrefabCarta(prefab);
-miView.MostrarEstadisticas(datos);
-```
-
-4. En la View, instanciar y configurar:
-
-```csharp
-// En la View
-public void MostrarEstadisticas(List<EstadisticaData> datos)
-{
-    LimpiarContenedor();
-    foreach (var item in datos)
-    {
-        var go = Instantiate(prefabCarta, contenedor);
-        go.GetComponent<CartaEstadisticaView>().Configurar(item);
-    }
-}
-```
-
-### Cómo cargar datos correctamente desde JSON
-
-```csharp
-// 1. Definir el Model con [Serializable]
-[System.Serializable]
-public class MiData { public string id; public string nombre; }
-
-// 2. Definir el Wrapper (JsonUtility no soporta arrays raíz)
-[System.Serializable]
-public class MiDataWrapper { public List<MiData> items; }
-
-// 3. En el Service: cargar via AddressablesService y deserializar
-private const string KEY_MI_DATA = "json_mi_dato"; // clave en Addressables
-private static List<MiData> cache;
-
-public static async Task<List<MiData>> ObtenerDatosAsync()
-{
-    if (cache != null) return cache;
-
-    var asset = await AddressablesService.CargarAssetAsync<TextAsset>(KEY_MI_DATA);
-    var wrapper = JsonUtility.FromJson<MiDataWrapper>(asset.text);
-    cache = wrapper?.items ?? new List<MiData>();
-    return cache;
-}
-
-public static void LimpiarCache() => cache = null;
-```
+La guía detallada está en `Docs/Specifications/guia-pruebas-validacion.md`.

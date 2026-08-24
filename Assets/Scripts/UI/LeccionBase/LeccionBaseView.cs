@@ -97,11 +97,12 @@ namespace Assets.Scripts.UI.LeccionBase
                 _actividadInstanciada = Instantiate(prefabPresentacion, actividadContainer);
                 return _actividadInstanciada.GetComponent<PresentacionFamiliaView>();
             }
-            // Fallback dinámico si no hay prefab asignado en Inspector
-            GameObject go = new GameObject("PresentacionFamiliaView", typeof(RectTransform), typeof(PresentacionFamiliaView));
-            go.transform.SetParent(actividadContainer, false);
+            if (actividadContainer == null) return null;
+            GameObject go = RuntimeActividadUIFactory.CrearContenedor("PresentacionFamiliaView", actividadContainer);
             _actividadInstanciada = go;
-            return go.GetComponent<PresentacionFamiliaView>();
+            var actividad = go.AddComponent<PresentacionFamiliaView>();
+            actividad.InicializarRuntime();
+            return actividad;
         }
 
         public SeleccionMultipleView InstanciarSeleccionMultiple()
@@ -112,10 +113,12 @@ namespace Assets.Scripts.UI.LeccionBase
                 _actividadInstanciada = Instantiate(prefabSeleccionMultiple, actividadContainer);
                 return _actividadInstanciada.GetComponent<SeleccionMultipleView>();
             }
-            GameObject go = new GameObject("SeleccionMultipleView", typeof(RectTransform), typeof(SeleccionMultipleView));
-            go.transform.SetParent(actividadContainer, false);
+            if (actividadContainer == null) return null;
+            GameObject go = RuntimeActividadUIFactory.CrearContenedor("SeleccionMultipleView", actividadContainer);
             _actividadInstanciada = go;
-            return go.GetComponent<SeleccionMultipleView>();
+            var actividad = go.AddComponent<SeleccionMultipleView>();
+            actividad.InicializarRuntime();
+            return actividad;
         }
 
         public EmparejamientoView InstanciarEmparejamiento()
@@ -126,10 +129,12 @@ namespace Assets.Scripts.UI.LeccionBase
                 _actividadInstanciada = Instantiate(prefabEmparejamiento, actividadContainer);
                 return _actividadInstanciada.GetComponent<EmparejamientoView>();
             }
-            GameObject go = new GameObject("EmparejamientoView", typeof(RectTransform), typeof(EmparejamientoView));
-            go.transform.SetParent(actividadContainer, false);
+            if (actividadContainer == null) return null;
+            GameObject go = RuntimeActividadUIFactory.CrearContenedor("EmparejamientoView", actividadContainer);
             _actividadInstanciada = go;
-            return go.GetComponent<EmparejamientoView>();
+            var actividad = go.AddComponent<EmparejamientoView>();
+            actividad.InicializarRuntime();
+            return actividad;
         }
 
         public WordBankView InstanciarWordBank()
@@ -140,21 +145,23 @@ namespace Assets.Scripts.UI.LeccionBase
                 _actividadInstanciada = Instantiate(prefabWordBank, actividadContainer);
                 return _actividadInstanciada.GetComponent<WordBankView>();
             }
-            GameObject go = new GameObject("WordBankView", typeof(RectTransform), typeof(WordBankView));
-            go.transform.SetParent(actividadContainer, false);
+            if (actividadContainer == null) return null;
+            GameObject go = RuntimeActividadUIFactory.CrearContenedor("WordBankView", actividadContainer);
             _actividadInstanciada = go;
-            return go.GetComponent<WordBankView>();
+            var actividad = go.AddComponent<WordBankView>();
+            actividad.InicializarRuntime();
+            return actividad;
         }
 
-        public void MostrarFeedback(bool correcto, string detalle = null, double similitud = 0, string correcta = null)
+        public void MostrarFeedback(string semaforo, string detalle = null, double similitud = 0, string correcta = null)
         {
             if (feedbackOverlay != null)
             {
-                if (correcto)
+                if (semaforo == "verde")
                 {
                     feedbackOverlay.MostrarCorrecto(detalle);
                 }
-                else if (similitud >= 60)
+                else if (semaforo == "amarillo")
                 {
                     feedbackOverlay.MostrarCasi(detalle, similitud);
                 }

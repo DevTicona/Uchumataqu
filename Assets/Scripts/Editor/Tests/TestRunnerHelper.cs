@@ -38,7 +38,19 @@ namespace Assets.Scripts.Editor.Tests
             EjecutarPrueba("Persistencia: Desbloqueo Curricular de Escenarios RA", () => persistencia.Progreso_CompletarLeccion_ActualizaDesbloqueoRA(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("GestorLeccion: Finalización por Recorrido sin Precisión Mínima ni ASR", () => persistencia.GestorLeccion_FinalizaSinPrecisionMinimaNiASR(), ref pruebasPasadas, ref totalPruebas);
 
-            Debug.Log($"<color=green><b>=== [TEST RUNNER] RESUMEN: {pruebasPasadas}/{totalPruebas} PRUEBAS EXITOSAS (100% PASS) ===</b></color>");
+            // 4. Puerta de estabilización previa a Semana 3
+            var estabilizacion = new EstabilizacionTests();
+            estabilizacion.PrepararCorpus();
+            EjecutarPrueba("Contrato: 19 tipos compilados soportados", () => estabilizacion.Contrato_CubreLos19TiposCompilados(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Actividades: 27 lecciones construibles", () => estabilizacion.TodasLasLecciones_PuedenConstruirSusActividades(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("L01: contrato completo válido", () => estabilizacion.L01_TodosSusPasosTienenContratoValido(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("RA: hitos curriculares canónicos", () => estabilizacion.EscenariosRa_RespetanLosHitosCanonicos(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Escenas: una View principal por escena", () => estabilizacion.Escenas_TienenUnaUnicaViewPrincipal(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Addressables: datos y 382 audios disponibles", () => estabilizacion.Addressables_ContieneDatosYTodosLosAudiosDisponibles(), ref pruebasPasadas, ref totalPruebas);
+
+            string color = pruebasPasadas == totalPruebas ? "green" : "red";
+            string estado = pruebasPasadas == totalPruebas ? "PASS" : "CON FALLOS";
+            Debug.Log($"<color={color}><b>=== [TEST RUNNER] RESUMEN: {pruebasPasadas}/{totalPruebas} PRUEBAS EXITOSAS ({estado}) ===</b></color>");
         }
 
         private static void EjecutarPrueba(string nombre, System.Action accion, ref int pasadas, ref int total)

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.Data.Corpus;
-using Assets.Scripts.Core.Services;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
@@ -40,17 +39,46 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private string _opcionSeleccionada;
         private int _indiceSeleccionado = -1;
 
+        public void InicializarRuntime()
+        {
+            Transform root = transform;
+            txtInstruccion = RuntimeActividadUIFactory.CrearTexto(root, "Instruccion", 25f);
+            txtTextoPregunta = RuntimeActividadUIFactory.CrearTexto(root, "Pregunta", 36f);
+            btnAudioPregunta = RuntimeActividadUIFactory.CrearBoton(root, "BtnAudio", "Escuchar audio");
+            for (int i = 0; i < 4; i++)
+            {
+                Button boton = RuntimeActividadUIFactory.CrearBoton(root, $"Opcion_{i + 1}", string.Empty);
+                botonesOpcion.Add(boton);
+                textosOpcion.Add(boton.GetComponentInChildren<TextMeshProUGUI>());
+                fondosOpcion.Add(boton.GetComponent<Image>());
+            }
+            btnComprobar = RuntimeActividadUIFactory.CrearBoton(root, "BtnComprobar", "Comprobar");
+            RegistrarListeners();
+        }
+
         private void Awake()
         {
+            RegistrarListeners();
+        }
+
+        private void RegistrarListeners()
+        {
             if (btnAudioPregunta != null)
+            {
+                btnAudioPregunta.onClick.RemoveAllListeners();
                 btnAudioPregunta.onClick.AddListener(() => OnAudioPreguntaClicked?.Invoke());
+            }
 
             if (btnComprobar != null)
+            {
+                btnComprobar.onClick.RemoveAllListeners();
                 btnComprobar.onClick.AddListener(ConfirmarRespuesta);
+            }
 
             for (int i = 0; i < botonesOpcion.Count; i++)
             {
                 int index = i;
+                botonesOpcion[i].onClick.RemoveAllListeners();
                 botonesOpcion[i].onClick.AddListener(() => SeleccionarOpcion(index));
             }
         }
@@ -79,21 +107,16 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 btnAudioPregunta.gameObject.SetActive(esTipoAudio || !string.IsNullOrEmpty(audioPalabraId));
             }
 
-            if (esTipoAudio && !string.IsNullOrEmpty(audioPalabraId))
-            {
-                AudioService.Instance?.ReproducirPalabra(audioPalabraId);
-            }
-
             // Configurar botones de opciones
             for (int i = 0; i < botonesOpcion.Count; i++)
             {
                 if (i < opcionesBarajadas.Count)
                 {
                     botonesOpcion[i].gameObject.SetActive(true);
-                    if (textosOpcion[i] != null)
+                    if (i < textosOpcion.Count && textosOpcion[i] != null)
                         textosOpcion[i].text = opcionesBarajadas[i];
 
-                    if (fondosOpcion[i] != null)
+                    if (i < fondosOpcion.Count && fondosOpcion[i] != null)
                         fondosOpcion[i].color = colorNormal;
                 }
                 else
@@ -134,9 +157,11 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             {
                 case "seleccion_simple_uch_es":
                 case "seleccion_multiple_uch_es":
+                case "uch_a_es":
                     return "¿Cuál es la traducción correcta?";
                 case "seleccion_simple_es_uch":
                 case "seleccion_multiple_es_uch":
+                case "es_a_uch":
                     return "¿Cómo se dice en Uchumataqu?";
                 case "audio_a_uch":
                 case "audio_a_es":
@@ -145,6 +170,14 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                     return "¿A qué palabra raíz pertenece esta forma?";
                 case "forma_a_es":
                     return "¿Qué significado tiene esta forma expresiva?";
+                case "es_a_forma":
+                    return "Selecciona la forma documentada correcta:";
+                case "audio_a_forma":
+                    return "Escucha y selecciona la forma correcta:";
+                case "completar_oracion":
+                    return "Completa la oración:";
+                case "audio_a_es_oracion":
+                    return "Escucha y selecciona la traducción de la oración:";
                 default:
                     return "Selecciona la respuesta correcta:";
             }

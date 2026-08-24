@@ -752,7 +752,6 @@ GameObject:
   m_Component:
   - component: {fileID: 707976997}
   - component: {fileID: 707976999}
-  - component: {fileID: 707976998}
   m_Layer: 0
   m_Name: SafeArea
   m_TagString: Untagged
@@ -781,29 +780,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &707976998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 707976996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26ec46f637569194eb9e03b91e4d24b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.RealidadAumentada.RealidadAumentadaView
-  txtTituloEscenario: {fileID: 0}
-  btnVolver: {fileID: 0}
-  panelEscaneo: {fileID: 0}
-  reticulaColocacion: {fileID: 0}
-  panelObjeto: {fileID: 0}
-  panelMision: {fileID: 0}
-  panelResultado: {fileID: 0}
-  txtObjetoUch: {fileID: 0}
-  txtObjetoEs: {fileID: 0}
-  btnAudioObjeto: {fileID: 0}
-  btnPracticarVoz: {fileID: 0}
 --- !u!114 &707976999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -953,79 +929,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728689083}
   m_CullTransparentMesh: 1
---- !u!1 &806608975
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 806608979}
-  - component: {fileID: 806608978}
-  - component: {fileID: 806608977}
-  - component: {fileID: 806608976}
-  m_Layer: 0
-  m_Name: '[RealidadAumentadaRoot]'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &806608976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806608975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a64f09781b9954e4d9d7cd5e1ba6e4b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.Sistema.NavigationBackHandler
---- !u!114 &806608977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806608975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7216a248b2c0a4dac41127f6967790, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.RA.GestorEscenaRA
---- !u!114 &806608978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806608975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3bce102f2145a74086b6a8cfe0a1836, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.RealidadAumentada.RealidadAumentadaPresenter
-  view: {fileID: 0}
-  gestorRA: {fileID: 0}
-  backHandler: {fileID: 0}
---- !u!4 &806608979
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806608975}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &929619204
 GameObject:
   m_ObjectHideFlags: 0

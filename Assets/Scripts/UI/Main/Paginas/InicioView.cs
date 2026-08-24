@@ -2,8 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Assets.Scripts.Core.Services;
-using Assets.Scripts.Persistencia;
+using Assets.Scripts.UI.Main;
 
 namespace Assets.Scripts.UI.Main.Paginas
 {
@@ -28,6 +27,9 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         private string _leccionSiguienteId = "L01";
 
+        public event Action<string> OnContinuarLeccion;
+        public event Action OnSolicitarActualizacion;
+
         private void Awake()
         {
             if (btnContinuarLeccion != null)
@@ -38,47 +40,37 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         private void OnEnable()
         {
-            RefrescarInicio();
+            OnSolicitarActualizacion?.Invoke();
         }
 
-        public void RefrescarInicio()
+        public void Mostrar(InicioPresentacionData datos)
         {
-            var perfil = PerfilRepository.CargarPerfil();
-            string nombre = (!string.IsNullOrEmpty(perfil?.nombre)) ? perfil.nombre : "Estudiante";
+            if (datos == null) return;
+            string nombre = string.IsNullOrEmpty(datos.Nombre) ? "Estudiante" : datos.Nombre;
 
             if (txtSaludoUsuario != null)
             {
                 txtSaludoUsuario.text = $"¡Hola, {nombre}!";
             }
 
-            var progreso = ProgresoRepository.CargarProgreso();
-            int completadas = progreso != null ? progreso.TotalLeccionesCompletadas : 0;
-            int raDesbloqueados = progreso != null ? progreso.TotalEscenariosVisitados : 0;
-
             if (txtContadorLecciones != null)
-                txtContadorLecciones.text = $"{completadas} / 27";
+                txtContadorLecciones.text = $"{datos.LeccionesCompletadas} / 27";
 
             if (txtContadorRA != null)
-                txtContadorRA.text = $"{raDesbloqueados} / 6";
+                txtContadorRA.text = $"{datos.EscenariosVisitados} / 6";
 
-            // Determinar siguiente lección
-            int siguienteNumero = Mathf.Clamp(completadas + 1, 1, 27);
-            _leccionSiguienteId = $"L{siguienteNumero:D2}";
-
-            var leccionData = CorpusRepository.ObtenerLeccionPorId(_leccionSiguienteId);
-            string tituloLeccion = leccionData != null ? leccionData.titulo : $"Lección {siguienteNumero}";
+            _leccionSiguienteId = datos.LeccionId;
 
             if (txtTituloContinuar != null)
-                txtTituloContinuar.text = $"Continuar: {_leccionSiguienteId}";
+                txtTituloContinuar.text = $"Continuar: {datos.LeccionId}";
 
             if (txtSubtituloContinuar != null)
-                txtSubtituloContinuar.text = tituloLeccion;
+                txtSubtituloContinuar.text = datos.TituloLeccion;
         }
 
         private void OnContinuarLeccionClicked()
         {
-            AudioService.Instance?.ReproducirEfecto("click_boton");
-            NavigationService.IrALeccion(_leccionSiguienteId);
+            OnContinuarLeccion?.Invoke(_leccionSiguienteId);
         }
     }
 }

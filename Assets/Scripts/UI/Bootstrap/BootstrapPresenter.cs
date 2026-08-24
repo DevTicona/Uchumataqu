@@ -21,6 +21,8 @@ namespace Assets.Scripts.UI.Bootstrap
             if (!corpusOk)
             {
                 Debug.LogError("[BootstrapPresenter] Error crítico al cargar el corpus.");
+                enabled = false;
+                return;
             }
 
             // 2. Cargar perfil y progreso

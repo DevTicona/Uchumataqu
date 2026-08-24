@@ -38,6 +38,5 @@ Thumbs.db
 *BurstDebugInformation_DoNotShip/
 Assets/_Recovery/
 
-# Documentación interna local
-[Dd]ocs/
+# La documentación Markdown forma parte de la fuente de verdad del proyecto.
 *.slnx

@@ -8,96 +8,65 @@ using Assets.Scripts.Data.Corpus;
 using Assets.Scripts.Lecciones;
 using Assets.Scripts.PLN;
 using Assets.Scripts.Persistencia;
-using Assets.Scripts.UI.LeccionBase.Actividades;
 
 namespace Assets.Scripts.UI.LeccionBase
 {
-    /// <summary>
-    /// Presenter de la escena 03_LeccionBase.
-    /// Orquesta los pasos pedagógicos continuos de cualquier lección compilada L01-L27.
-    /// Especificado en Docs/UI/04-escena-leccion-base.md y Docs/Specifications/04-flujo-leccion-app.md.
-    /// </summary>
     public class LeccionBasePresenter : MonoBehaviour
     {
         [SerializeField] private LeccionBaseView view;
         [SerializeField] private NavigationBackHandler backHandler;
 
+        private readonly System.Random _random = new System.Random();
         private GestorLeccion _gestorLeccion;
-        private bool _esperandoFeedback = false;
+        private bool _esperandoFeedback;
 
         private void Start()
         {
-            if (view == null) view = FindAnyObjectByType<LeccionBaseView>();
-            if (backHandler == null) backHandler = FindAnyObjectByType<NavigationBackHandler>();
-
-            if (backHandler != null)
+            if (view == null || backHandler == null)
             {
-                backHandler.Configurar(VolverAlMapa);
+                Debug.LogError("[LeccionBasePresenter] Faltan referencias de composición de la escena.");
+                enabled = false;
+                return;
             }
 
-            if (view != null)
-            {
-                view.OnAtrasClick += VolverAlMapa;
-                view.OnVolverAlMapaClick += VolverAlMapa;
-                view.OnContinuarLeccionClick += VolverAlMapa;
-
-                if (view.Feedback != null)
-                {
-                    view.Feedback.OnContinuarFeedbackClicked += AvanzarTrasFeedback;
-                }
-            }
+            backHandler.Configurar(VolverAlMapa);
+            view.OnAtrasClick += VolverAlMapa;
+            view.OnVolverAlMapaClick += VolverAlMapa;
+            view.OnContinuarLeccionClick += VolverAlMapa;
+            if (view.Feedback != null)
+                view.Feedback.OnContinuarFeedbackClicked += AvanzarTrasFeedback;
 
             IniciarEjecucionLeccion();
         }
 
         private void OnDestroy()
         {
-            if (view != null)
-            {
-                view.OnAtrasClick -= VolverAlMapa;
-                view.OnVolverAlMapaClick -= VolverAlMapa;
-                view.OnContinuarLeccionClick -= VolverAlMapa;
-
-                if (view.Feedback != null)
-                {
-                    view.Feedback.OnContinuarFeedbackClicked -= AvanzarTrasFeedback;
-                }
-            }
+            if (view == null) return;
+            view.OnAtrasClick -= VolverAlMapa;
+            view.OnVolverAlMapaClick -= VolverAlMapa;
+            view.OnContinuarLeccionClick -= VolverAlMapa;
+            if (view.Feedback != null)
+                view.Feedback.OnContinuarFeedbackClicked -= AvanzarTrasFeedback;
         }
 
         private void IniciarEjecucionLeccion()
         {
             _gestorLeccion = new GestorLeccion();
-            string leccionId = ContextoNavegacion.LeccionId;
-
-            if (string.IsNullOrEmpty(leccionId))
-            {
-                leccionId = "L01"; // Fallback para pruebas directas en editor
-            }
-
+            string leccionId = string.IsNullOrEmpty(ContextoNavegacion.LeccionId) ? "L01" : ContextoNavegacion.LeccionId;
             if (!_gestorLeccion.IniciarLeccion(leccionId))
             {
-                Debug.LogError($"[LeccionBasePresenter] No se pudo iniciar la lección '{leccionId}'. Volviendo al mapa...");
+                Debug.LogError($"[LeccionBasePresenter] No se pudo iniciar '{leccionId}'.");
                 VolverAlMapa();
                 return;
             }
 
-            if (view != null)
-            {
-                view.ConfigurarHeader(
-                    _gestorLeccion.LeccionActual.titulo,
-                    _gestorLeccion.IndicePasoActual + 1,
-                    _gestorLeccion.TotalPasos,
-                    _gestorLeccion.ProgresoNormalizado
-                );
-            }
-
+            view.ConfigurarHeader(_gestorLeccion.LeccionActual.titulo, 1, _gestorLeccion.TotalPasos, 0f);
             RenderizarPasoActual();
         }
 
         private void RenderizarPasoActual()
         {
-            var paso = _gestorLeccion.PasoActual;
+            PasoLeccionData paso = _gestorLeccion.PasoActual;
             if (paso == null)
             {
                 FinalizarLeccion();
@@ -105,186 +74,128 @@ namespace Assets.Scripts.UI.LeccionBase
             }
 
             _esperandoFeedback = false;
+            view.ActualizarProgreso(
+                _gestorLeccion.IndicePasoActual + 1,
+                _gestorLeccion.TotalPasos,
+                _gestorLeccion.ProgresoNormalizado);
+            view.OcultarFeedback();
 
-            if (view != null)
+            if (!TipoPasoLeccion.EsSoportado(paso.tipo))
             {
-                view.ActualizarProgreso(_gestorLeccion.IndicePasoActual + 1, _gestorLeccion.TotalPasos, _gestorLeccion.ProgresoNormalizado);
-                view.OcultarFeedback();
+                Debug.LogError($"[LeccionBasePresenter] Tipo de paso no soportado: '{paso.tipo}'.");
+                enabled = false;
+                return;
             }
 
-            string tipo = paso.tipo ?? "";
-
-            switch (tipo)
-            {
-                case "presentacion_palabra":
-                    RenderizarPresentacion(paso);
-                    break;
-
-                case "seleccion_simple_uch_es":
-                case "seleccion_simple_es_uch":
-                case "seleccion_multiple_uch_es":
-                case "seleccion_multiple_es_uch":
-                case "audio_a_uch":
-                case "audio_a_es":
-                case "forma_a_raiz":
-                case "forma_a_es":
-                    RenderizarSeleccion(paso);
-                    break;
-
-                case "emparejamiento":
-                case "memoria":
-                    RenderizarEmparejamiento(paso);
-                    break;
-
-                case "ordenar_oracion":
-                case "dictado_word_bank":
-                case "traduccion_constructiva":
-                case "completar_oracion":
-                    RenderizarWordBank(paso);
-                    break;
-
-                default:
-                    RenderizarSeleccion(paso);
-                    break;
-            }
+            if (TipoPasoLeccion.EsPresentacion(paso.tipo)) RenderizarPresentacion(paso, false);
+            else if (TipoPasoLeccion.EsSeleccion(paso.tipo)) RenderizarSeleccion(paso);
+            else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo)) RenderizarEmparejamiento(paso);
+            else if (TipoPasoLeccion.EsWordBank(paso.tipo)) RenderizarWordBank(paso);
+            else if (paso.tipo == TipoPasoLeccion.EscuchaYRepiteAsr) RenderizarPresentacion(paso, true);
         }
 
-        private void RenderizarPresentacion(PasoLeccionData paso)
+        private void RenderizarPresentacion(PasoLeccionData paso, bool practicaOpcional)
         {
-            var actView = view.InstanciarPresentacion();
-            if (actView == null) return;
+            var actividad = view.InstanciarPresentacion();
+            if (actividad == null) return;
 
-            PalabraData palabra = !string.IsNullOrEmpty(paso.objetivo_id)
-                ? CorpusRepository.ObtenerPalabraPorId(paso.objetivo_id)
-                : null;
+            PalabraData palabra = CorpusRepository.ObtenerPalabra(paso.objetivo_id);
+            actividad.Configurar(paso, palabra);
+            actividad.OnAudioClicked += () => ReproducirPalabra(palabra?.id);
+            actividad.OnPracticarVozClicked += () =>
+                Debug.Log("[LeccionBasePresenter] La práctica ASR es opcional y se integrará en la Semana 6.");
+            actividad.OnContinuarClicked += AvanzarPaso;
 
-            actView.Configurar(paso, palabra);
-            actView.OnContinuarClicked += () =>
-            {
-                _gestorLeccion.RegistrarResultadoPaso(true);
-                AvanzarPaso();
-            };
+            if (!practicaOpcional && palabra != null)
+                ReproducirPalabra(palabra.id);
         }
 
         private void RenderizarSeleccion(PasoLeccionData paso)
         {
-            var actView = view.InstanciarSeleccionMultiple();
-            if (actView == null) return;
+            var actividad = view.InstanciarSeleccionMultiple();
+            if (actividad == null) return;
 
-            PalabraData palabraObjetivo = !string.IsNullOrEmpty(paso.objetivo_id)
-                ? CorpusRepository.ObtenerPalabraPorId(paso.objetivo_id)
-                : null;
-
-            bool esUchHaciaEs = paso.tipo == "seleccion_simple_uch_es" || paso.tipo == "seleccion_multiple_uch_es" || paso.tipo == "audio_a_es" || paso.tipo == "forma_a_es";
-            string respuestaCorrecta = palabraObjetivo != null ? (esUchHaciaEs ? palabraObjetivo.es : palabraObjetivo.uch) : "";
-
-            List<string> opciones = new List<string>();
-            if (!string.IsNullOrEmpty(respuestaCorrecta))
+            ActividadSeleccionData datos;
+            try
             {
-                opciones.Add(respuestaCorrecta);
+                datos = ActividadLeccionService.CrearSeleccion(paso);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[LeccionBasePresenter] Paso inválido '{paso.tipo}': {ex.Message}");
+                enabled = false;
+                return;
             }
 
-            if (paso.opciones_ids != null)
-            {
-                foreach (var id in paso.opciones_ids)
-                {
-                    if (id == paso.objetivo_id) continue;
-                    var p = CorpusRepository.ObtenerPalabraPorId(id);
-                    if (p != null)
-                    {
-                        string op = esUchHaciaEs ? p.es : p.uch;
-                        if (!opciones.Contains(op)) opciones.Add(op);
-                    }
-                }
-            }
-
+            var opciones = new List<string>(datos.Opciones);
             Barajar(opciones);
-
-            string prompt = palabraObjetivo != null ? (esUchHaciaEs ? palabraObjetivo.uch : palabraObjetivo.es) : "";
-            actView.Configurar(paso.tipo, prompt, opciones, palabraObjetivo?.id);
-            actView.OnRespuestaEnviada += (respuesta) =>
+            actividad.Configurar(datos.Tipo, datos.Prompt, opciones, datos.AudioPalabraId ?? datos.AudioOracionId);
+            actividad.OnAudioPreguntaClicked += () =>
             {
-                EvaluarRespuestaSeleccion(respuestaCorrecta, respuesta);
+                if (!string.IsNullOrEmpty(datos.AudioOracionId)) ReproducirOracion(datos.AudioOracionId);
+                else ReproducirPalabra(datos.AudioPalabraId);
             };
+            actividad.OnRespuestaEnviada += respuesta => EvaluarSeleccion(datos.RespuestaCorrecta, respuesta);
+
+            if (!string.IsNullOrEmpty(datos.AudioOracionId)) ReproducirOracion(datos.AudioOracionId);
+            else if (!string.IsNullOrEmpty(datos.AudioPalabraId)) ReproducirPalabra(datos.AudioPalabraId);
         }
 
-        private void EvaluarRespuestaSeleccion(string esperada, string respuestaUsuario)
+        private void EvaluarSeleccion(string esperada, string respuesta)
         {
-            ResultadoEvaluacion resultado = MotorEvaluacion.EvaluarTexto(esperada, respuestaUsuario, "seleccion");
-            _gestorLeccion.RegistrarResultadoPaso(resultado.aprobado);
-
-            _esperandoFeedback = true;
-            if (view != null)
-            {
-                view.MostrarFeedback(resultado.aprobado, resultado.aprobado ? "¡Correcto!" : "Revisa la opción correcta", resultado.porcentajeSimilitud, esperada);
-            }
+            ResultadoEvaluacion resultado = MotorEvaluacion.EvaluarSeleccionExacta(esperada, respuesta);
+            RegistrarYMostrarFeedback(resultado, resultado.aprobado ? "¡Correcto!" : "Revisa la opción correcta");
         }
 
         private void RenderizarEmparejamiento(PasoLeccionData paso)
         {
-            var actView = view.InstanciarEmparejamiento();
-            if (actView == null) return;
+            var actividad = view.InstanciarEmparejamiento();
+            if (actividad == null) return;
 
-            Dictionary<string, string> pares = new Dictionary<string, string>();
-            if (paso.items_ids != null)
+            Dictionary<string, string> pares = ActividadLeccionService.CrearPares(paso);
+            if (pares.Count == 0)
             {
-                foreach (var id in paso.items_ids)
-                {
-                    var p = CorpusRepository.ObtenerPalabraPorId(id);
-                    if (p != null && !string.IsNullOrEmpty(p.uch) && !string.IsNullOrEmpty(p.es))
-                        pares[p.uch] = p.es;
-                }
+                Debug.LogError($"[LeccionBasePresenter] El paso '{paso.tipo}' no produjo pares.");
+                enabled = false;
+                return;
             }
 
-            actView.Configurar(pares);
-            actView.OnEmparejamientoCompletado += (completado) =>
+            actividad.Configurar(pares);
+            actividad.OnEmparejamientoCompletado += completado =>
             {
-                _gestorLeccion.RegistrarResultadoPaso(completado);
-                _esperandoFeedback = true;
-                if (view != null)
-                {
-                    view.MostrarFeedback(true, "¡Pares emparejados correctamente!");
-                }
+                var resultado = MotorEvaluacion.EvaluarSeleccionExacta("completo", completado ? "completo" : "incompleto");
+                RegistrarYMostrarFeedback(resultado, "¡Pares emparejados correctamente!");
             };
         }
 
         private void RenderizarWordBank(PasoLeccionData paso)
         {
-            var actView = view.InstanciarWordBank();
-            if (actView == null) return;
+            var actividad = view.InstanciarWordBank();
+            if (actividad == null) return;
 
-            OracionData oracion = !string.IsNullOrEmpty(paso.oracion_id)
-                ? CorpusRepository.ObtenerOracionPorId(paso.oracion_id)
-                : null;
-
-            string oracionUch = oracion != null ? oracion.uch : "";
-            string promptEs = oracion != null ? oracion.es : "";
-            List<string> tokens = MotorEvaluacion.Tokenizar(oracionUch);
-
+            ActividadWordBankData datos = ActividadLeccionService.CrearWordBank(paso);
+            var tokens = new List<string>(datos.Tokens);
             Barajar(tokens);
-
-            actView.Configurar(paso.tipo, promptEs, tokens, oracion?.id);
-            actView.OnTokensComprobados += (tokensUsuario) =>
+            actividad.Configurar(datos.Tipo, datos.Prompt, tokens, datos.AudioOracionId);
+            actividad.OnAudioPromptClicked += () => ReproducirOracion(datos.AudioOracionId);
+            actividad.OnTokensComprobados += respuesta =>
             {
-                EvaluarTokensWordBank(oracionUch, tokensUsuario);
+                ResultadoEvaluacion resultado = ValidadorOrden.EvaluarOrdenOracion(datos.RespuestaEsperada, respuesta);
+                RegistrarYMostrarFeedback(
+                    resultado,
+                    resultado.aprobado ? "¡Oración ordenada correctamente!" : "El orden no es correcto.");
             };
+
+            if (paso.tipo == TipoPasoLeccion.DictadoWordBank)
+                ReproducirOracion(datos.AudioOracionId);
         }
 
-        private void EvaluarTokensWordBank(string oracionEsperada, List<string> tokensUsuario)
+        private void RegistrarYMostrarFeedback(ResultadoEvaluacion resultado, string detalle)
         {
-            ResultadoEvaluacion resultado = ValidadorOrden.EvaluarOrdenOracion(oracionEsperada, tokensUsuario);
             _gestorLeccion.RegistrarResultadoPaso(resultado.aprobado);
-
             _esperandoFeedback = true;
-            if (view != null)
-            {
-                view.MostrarFeedback(
-                    resultado.aprobado,
-                    resultado.aprobado ? "¡Oración ordenada perfectamente!" : "El orden de las palabras no es el correcto.",
-                    resultado.porcentajeSimilitud,
-                    oracionEsperada
-                );
-            }
+            view.MostrarFeedback(resultado.colorSemaforo, detalle, resultado.porcentajeSimilitud, resultado.textoEsperado);
+            AudioService.Instance.ReproducirEfecto(resultado.colorSemaforo);
         }
 
         private void AvanzarTrasFeedback()
@@ -296,46 +207,36 @@ namespace Assets.Scripts.UI.LeccionBase
 
         private void AvanzarPaso()
         {
-            if (_gestorLeccion.AvanzarSiguientePaso())
-            {
-                RenderizarPasoActual();
-            }
-            else
-            {
-                FinalizarLeccion();
-            }
+            if (_gestorLeccion.AvanzarSiguientePaso()) RenderizarPasoActual();
+            else FinalizarLeccion();
         }
 
         private void FinalizarLeccion()
         {
             _gestorLeccion.FinalizarYGuardar();
             int total = _gestorLeccion.Aciertos + _gestorLeccion.Errores;
-            double precision = total > 0 ? ((double)_gestorLeccion.Aciertos / total) * 100.0 : 100.0;
-
-            Debug.Log($"[LeccionBasePresenter] Lección completada: {_gestorLeccion.Aciertos}/{total} ({precision:F0}%)");
-
-            if (view != null)
-            {
-                view.MostrarResultado(_gestorLeccion.Aciertos, total, precision);
-            }
+            double precision = total > 0 ? (double)_gestorLeccion.Aciertos / total * 100.0 : 100.0;
+            view.MostrarResultado(_gestorLeccion.Aciertos, total, precision);
         }
 
-        private void VolverAlMapa()
+        private static void ReproducirPalabra(string id)
         {
-            NavigationService.IrAMain(PaginaMain.Lecciones);
+            if (!string.IsNullOrEmpty(id)) AudioService.Instance.ReproducirPalabra(id);
         }
 
-        private void Barajar<T>(List<T> lista)
+        private static void ReproducirOracion(string id)
         {
-            System.Random rng = new System.Random();
-            int n = lista.Count;
-            while (n > 1)
+            if (!string.IsNullOrEmpty(id)) AudioService.Instance.ReproducirOracion(id);
+        }
+
+        private void VolverAlMapa() => NavigationService.IrAMain(PaginaMain.Lecciones);
+
+        private void Barajar<T>(IList<T> lista)
+        {
+            for (int n = lista.Count - 1; n > 0; n--)
             {
-                n--;
-                int k = rng.Next(n + 1);
-                T value = lista[k];
-                lista[k] = lista[n];
-                lista[n] = value;
+                int k = _random.Next(n + 1);
+                (lista[n], lista[k]) = (lista[k], lista[n]);
             }
         }
     }

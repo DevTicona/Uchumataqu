@@ -12,6 +12,7 @@ namespace Assets.Scripts.Data.Corpus
         public List<string> opciones_ids = new List<string>();
         public string forma_id;
         public string raiz_id;
+        public List<string> formas_ids = new List<string>();
         public List<string> items_ids = new List<string>();
         public string oracion_id;
         public List<string> opciones_oraciones_ids = new List<string>();

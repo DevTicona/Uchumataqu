@@ -35,6 +35,7 @@ namespace Assets.Scripts.Persistencia
         {
             if (EstaInicializado) return true;
 
+#if UNITY_EDITOR
             try
             {
                 ProcesarPalabrasJson(LeerJsonDirecto("palabras.json"));
@@ -48,6 +49,10 @@ namespace Assets.Scripts.Persistencia
                 JsonUtilityHelper.LogError($"[CorpusRepository] Error inicializando corpus directo: {ex.Message}");
                 return false;
             }
+#else
+            JsonUtilityHelper.LogError("[CorpusRepository] La carga síncrona directa solo está disponible para pruebas de Editor. Use InicializarAsync en runtime.");
+            return false;
+#endif
         }
 
         public static async Task<bool> InicializarAsync()
@@ -73,13 +78,8 @@ namespace Assets.Scripts.Persistencia
 
         private static string LeerJsonDirecto(string fileName)
         {
-            // Intentar primero con Application.dataPath si está disponible
-            try
-            {
-                var path = Path.Combine(Application.dataPath, "Content", "Data", fileName);
-                if (File.Exists(path)) return File.ReadAllText(path);
-            }
-            catch { }
+            var pathProyecto = Path.Combine(Application.dataPath, "Content", "Data", fileName);
+            if (File.Exists(pathProyecto)) return File.ReadAllText(pathProyecto);
 
             string[] possiblePaths = new string[]
             {
@@ -92,20 +92,11 @@ namespace Assets.Scripts.Persistencia
 
             foreach (var p in possiblePaths)
             {
-                try
-                {
-                    if (File.Exists(p)) return File.ReadAllText(Path.GetFullPath(p));
-                }
-                catch { }
+                if (File.Exists(p)) return File.ReadAllText(Path.GetFullPath(p));
             }
 
-            // Intentar StreamingAssets
-            try
-            {
-                var pathStreaming = Path.Combine(Application.streamingAssetsPath, "Data", fileName);
-                if (File.Exists(pathStreaming)) return File.ReadAllText(pathStreaming);
-            }
-            catch { }
+            var pathStreaming = Path.Combine(Application.streamingAssetsPath, "Data", fileName);
+            if (File.Exists(pathStreaming)) return File.ReadAllText(pathStreaming);
 
             throw new FileNotFoundException($"[CorpusRepository] No se encontró el recurso '{fileName}'.");
         }
@@ -206,20 +197,25 @@ namespace Assets.Scripts.Persistencia
         {
             try
             {
-                string directo = LeerJsonDirecto(fallbackFileName);
-                if (!string.IsNullOrEmpty(directo)) return directo;
+                var textAsset = await AddressablesService.CargarAssetAsync<TextAsset>(addressableKey);
+                if (textAsset != null && !string.IsNullOrWhiteSpace(textAsset.text)) return textAsset.text;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                JsonUtilityHelper.LogError($"[CorpusRepository] Falló Addressable '{addressableKey}': {ex.Message}");
+            }
 
+#if UNITY_EDITOR
             try
             {
-                var textAsset = await AddressablesService.CargarAssetAsync<TextAsset>(addressableKey);
-                if (textAsset != null) return textAsset.text;
+                string directo = LeerJsonDirecto(fallbackFileName);
+                if (!string.IsNullOrWhiteSpace(directo)) return directo;
             }
-            catch
+            catch (Exception ex)
             {
-                // Fallback directo
+                JsonUtilityHelper.LogError($"[CorpusRepository] Falló fallback de Editor '{fallbackFileName}': {ex.Message}");
             }
+#endif
 
             throw new FileNotFoundException($"[CorpusRepository] No se encontró el recurso '{fallbackFileName}'.");
         }

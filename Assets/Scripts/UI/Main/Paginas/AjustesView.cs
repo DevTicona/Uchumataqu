@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Assets.Scripts.Core.Services;
-using Assets.Scripts.Persistencia;
 
 namespace Assets.Scripts.UI.Main.Paginas
 {
@@ -26,6 +24,11 @@ namespace Assets.Scripts.UI.Main.Paginas
         [SerializeField] private Button btnConfirmarReinicio;
         [SerializeField] private Button btnCancelarReinicio;
 
+        public event Action<string> OnGuardarNombre;
+        public event Action<float> OnCambiarVolumen;
+        public event Action OnConfirmarReinicio;
+        public event Action OnSolicitarActualizacion;
+
         private void Awake()
         {
             if (btnGuardarPerfil != null)
@@ -46,18 +49,14 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         private void OnEnable()
         {
-            var perfil = PerfilRepository.CargarPerfil();
-            if (inputNombre != null && perfil != null)
-            {
-                inputNombre.text = perfil.nombre ?? "";
-            }
-
-            if (sliderVolumenGeneral != null)
-            {
-                sliderVolumenGeneral.value = AudioListener.volume;
-            }
-
             MostrarDialogoReinicio(false);
+            OnSolicitarActualizacion?.Invoke();
+        }
+
+        public void Mostrar(string nombre, float volumen)
+        {
+            if (inputNombre != null) inputNombre.text = nombre ?? string.Empty;
+            if (sliderVolumenGeneral != null) sliderVolumenGeneral.SetValueWithoutNotify(volumen);
         }
 
         private void GuardarNombre()
@@ -66,16 +65,12 @@ namespace Assets.Scripts.UI.Main.Paginas
             string nuevoNombre = inputNombre.text.Trim();
             if (string.IsNullOrEmpty(nuevoNombre)) return;
 
-            var perfil = PerfilRepository.CargarPerfil();
-            perfil.nombre = nuevoNombre;
-            PerfilRepository.GuardarPerfil(perfil);
-
-            AudioService.Instance?.ReproducirEfecto("click_boton");
+            OnGuardarNombre?.Invoke(nuevoNombre);
         }
 
         private void OnVolumenChanged(float vol)
         {
-            AudioListener.volume = vol;
+            OnCambiarVolumen?.Invoke(vol);
         }
 
         private void MostrarDialogoReinicio(bool mostrar)
@@ -87,8 +82,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         private void EjecutarReinicio()
         {
             MostrarDialogoReinicio(false);
-            ProgresoRepository.ReiniciarProgreso();
-            NavigationService.IrABootstrap();
+            OnConfirmarReinicio?.Invoke();
         }
     }
 }

@@ -17,14 +17,16 @@ namespace Assets.Scripts.UI.Onboarding
 
         private void Start()
         {
-            if (view == null) view = FindAnyObjectByType<OnboardingView>();
-
-            if (view != null)
+            if (view == null)
             {
-                view.OnContinuarClick += AvanzarPaso;
-                view.OnAtrasClick += RetrocederPaso;
-                view.MostrarPaso(1);
+                Debug.LogError("[OnboardingPresenter] La View no está enlazada en la escena.");
+                enabled = false;
+                return;
             }
+
+            view.OnContinuarClick += AvanzarPaso;
+            view.OnAtrasClick += RetrocederPaso;
+            view.MostrarPaso(1);
         }
 
         private void OnDestroy()

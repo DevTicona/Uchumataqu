@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.Data.Corpus;
-using Assets.Scripts.Core.Services;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
@@ -38,8 +37,32 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private PasoLeccionData _pasoActual;
 
+        public void InicializarRuntime()
+        {
+            Transform root = transform;
+            txtBadge = RuntimeActividadUIFactory.CrearTexto(root, "Badge", 22f);
+            txtRaizUch = RuntimeActividadUIFactory.CrearTexto(root, "RaizUch", 42f);
+            txtSignificadoEs = RuntimeActividadUIFactory.CrearTexto(root, "SignificadoEs", 30f);
+            btnAudio = RuntimeActividadUIFactory.CrearBoton(root, "BtnAudio", "Escuchar");
+            txtAudioBoton = btnAudio.GetComponentInChildren<TextMeshProUGUI>();
+            contenedorFormas = RuntimeActividadUIFactory.CrearSubcontenedor(root, "Formas").gameObject;
+            txtTituloFormas = RuntimeActividadUIFactory.CrearTexto(contenedorFormas.transform, "TituloFormas", 24f);
+            txtFormasLista = RuntimeActividadUIFactory.CrearTexto(contenedorFormas.transform, "ListaFormas", 24f);
+            btnPracticarVoz = RuntimeActividadUIFactory.CrearBoton(root, "BtnPracticarVoz", "Practicar voz (opcional)");
+            btnContinuar = RuntimeActividadUIFactory.CrearBoton(root, "BtnContinuar", "Continuar");
+            RegistrarListeners();
+        }
+
         private void Awake()
         {
+            RegistrarListeners();
+        }
+
+        private void RegistrarListeners()
+        {
+            if (btnContinuar != null) btnContinuar.onClick.RemoveAllListeners();
+            if (btnAudio != null) btnAudio.onClick.RemoveAllListeners();
+            if (btnPracticarVoz != null) btnPracticarVoz.onClick.RemoveAllListeners();
             if (btnContinuar != null) btnContinuar.onClick.AddListener(() => OnContinuarClicked?.Invoke());
             if (btnAudio != null) btnAudio.onClick.AddListener(() => OnAudioClicked?.Invoke());
             if (btnPracticarVoz != null) btnPracticarVoz.onClick.AddListener(() => OnPracticarVozClicked?.Invoke());
@@ -73,11 +96,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                     if (contenedorFormas != null) contenedorFormas.SetActive(false);
                 }
 
-                // Reproducción automática de audio de presentación
-                if (!string.IsNullOrEmpty(palabra.id))
-                {
-                    AudioService.Instance?.ReproducirPalabra(palabra.id);
-                }
             }
             else
             {

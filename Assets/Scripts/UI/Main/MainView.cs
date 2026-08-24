@@ -1,5 +1,6 @@
 using UnityEngine;
 using Assets.Scripts.Core;
+using Assets.Scripts.UI.Main.Paginas;
 
 namespace Assets.Scripts.UI.Main
 {
@@ -23,6 +24,10 @@ namespace Assets.Scripts.UI.Main
         [SerializeField] private GameObject dialogoSalida;
 
         public BottomNavigationView BottomNav => bottomNavigation;
+        public InicioView Inicio => pageInicio != null ? pageInicio.GetComponent<InicioView>() : null;
+        public MapaLeccionesView MapaLecciones => pageLecciones != null ? pageLecciones.GetComponent<MapaLeccionesView>() : null;
+        public LogrosView Logros => pageLogros != null ? pageLogros.GetComponent<LogrosView>() : null;
+        public AjustesView Ajustes => pageAjustes != null ? pageAjustes.GetComponent<AjustesView>() : null;
 
         public void MostrarPagina(PaginaMain pagina)
         {

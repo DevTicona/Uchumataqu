@@ -1455,7 +1455,6 @@ GameObject:
   m_Component:
   - component: {fileID: 511051205}
   - component: {fileID: 511051207}
-  - component: {fileID: 511051206}
   m_Layer: 0
   m_Name: SafeArea
   m_TagString: Untagged
@@ -1485,26 +1484,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &511051206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511051204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7600e4da1bf3fb4f9b9e34dbfb6cb6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.Onboarding.OnboardingView
-  pasoBienvenida: {fileID: 0}
-  pasoPerfil: {fileID: 0}
-  pasoAvatar: {fileID: 0}
-  inputNombre: {fileID: 0}
-  dropdownEdad: {fileID: 0}
-  botonContinuar: {fileID: 0}
-  botonAtras: {fileID: 0}
-  textoBotonContinuar: {fileID: 0}
 --- !u!114 &511051207
 MonoBehaviour:
   m_ObjectHideFlags: 0

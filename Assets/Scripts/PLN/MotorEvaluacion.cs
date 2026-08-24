@@ -68,6 +68,20 @@ namespace Assets.Scripts.PLN
             };
         }
 
+        public static ResultadoEvaluacion EvaluarSeleccionExacta(string esperado, string respuesta)
+        {
+            bool correcto = NormalizadorTexto.Normalizar(esperado) == NormalizadorTexto.Normalizar(respuesta);
+            return new ResultadoEvaluacion
+            {
+                aprobado = correcto,
+                porcentajeSimilitud = correcto ? 100f : 0f,
+                colorSemaforo = correcto ? "verde" : "rojo",
+                textoEsperado = esperado,
+                textoIngresado = respuesta,
+                origenEntrada = "seleccion"
+            };
+        }
+
         public static List<string> Tokenizar(string oracion)
         {
             if (string.IsNullOrWhiteSpace(oracion)) return new List<string>();

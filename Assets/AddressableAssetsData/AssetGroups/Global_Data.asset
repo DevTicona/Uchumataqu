@@ -25,13 +25,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 717270f554a98c1488a2183090cc969c
-    m_Address: json_oraciones
+  - m_GUID: 4076cb940634a9545b10bc9e58f8e134
+    m_Address: json_escenarios_ra
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 91bc4f2338f243d43867b8e0d8151316
-    m_Address: Assets/Content/imagenes/objetos_ra-Photoroom.png
+  - m_GUID: 5c196a0579b160f459727c11d8d2f0bf
+    m_Address: json_lecciones
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 717270f554a98c1488a2183090cc969c
+    m_Address: json_oraciones
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

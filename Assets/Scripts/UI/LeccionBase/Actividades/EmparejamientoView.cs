@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.Data.Corpus;
-using Assets.Scripts.Core.Services;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
@@ -41,17 +40,45 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private HashSet<int> _indicesDerResueltos = new HashSet<int>();
         private int _totalPares = 0;
 
+        public void InicializarRuntime()
+        {
+            Transform root = transform;
+            txtInstruccion = RuntimeActividadUIFactory.CrearTexto(root, "Instruccion", 25f);
+            Transform izquierda = RuntimeActividadUIFactory.CrearSubcontenedor(root, "ColumnaIzquierda");
+            Transform derecha = RuntimeActividadUIFactory.CrearSubcontenedor(root, "ColumnaDerecha");
+            for (int i = 0; i < 4; i++)
+            {
+                Button botonIzq = RuntimeActividadUIFactory.CrearBoton(izquierda, $"Izquierda_{i + 1}", string.Empty);
+                botonesColumnaIzq.Add(botonIzq);
+                textosColumnaIzq.Add(botonIzq.GetComponentInChildren<TextMeshProUGUI>());
+                fondosColumnaIzq.Add(botonIzq.GetComponent<Image>());
+
+                Button botonDer = RuntimeActividadUIFactory.CrearBoton(derecha, $"Derecha_{i + 1}", string.Empty);
+                botonesColumnaDer.Add(botonDer);
+                textosColumnaDer.Add(botonDer.GetComponentInChildren<TextMeshProUGUI>());
+                fondosColumnaDer.Add(botonDer.GetComponent<Image>());
+            }
+            RegistrarListeners();
+        }
+
         private void Awake()
+        {
+            RegistrarListeners();
+        }
+
+        private void RegistrarListeners()
         {
             for (int i = 0; i < botonesColumnaIzq.Count; i++)
             {
                 int index = i;
+                botonesColumnaIzq[i].onClick.RemoveAllListeners();
                 botonesColumnaIzq[i].onClick.AddListener(() => SeleccionarIzq(index));
             }
 
             for (int i = 0; i < botonesColumnaDer.Count; i++)
             {
                 int index = i;
+                botonesColumnaDer[i].onClick.RemoveAllListeners();
                 botonesColumnaDer[i].onClick.AddListener(() => SeleccionarDer(index));
             }
         }
@@ -145,8 +172,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 fondosColumnaIzq[_seleccionIzq].color = colorEmparejado;
                 fondosColumnaDer[_seleccionDer].color = colorEmparejado;
 
-                AudioService.Instance?.ReproducirEfecto("correcto");
-
                 _seleccionIzq = -1;
                 _seleccionDer = -1;
 
@@ -160,8 +185,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 // Par incorrecto
                 fondosColumnaIzq[_seleccionIzq].color = colorError;
                 fondosColumnaDer[_seleccionDer].color = colorError;
-
-                AudioService.Instance?.ReproducirEfecto("incorrecto");
 
                 _seleccionIzq = -1;
                 _seleccionDer = -1;

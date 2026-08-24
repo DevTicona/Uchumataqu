@@ -22,9 +22,12 @@ namespace Assets.Scripts.UI.RealidadAumentada
 
         private void Start()
         {
-            if (view == null) view = FindAnyObjectByType<RealidadAumentadaView>();
-            if (gestorRA == null) gestorRA = FindAnyObjectByType<GestorEscenaRA>();
-            if (backHandler == null) backHandler = FindAnyObjectByType<NavigationBackHandler>();
+            if (view == null || gestorRA == null || backHandler == null)
+            {
+                Debug.LogError("[RealidadAumentadaPresenter] Faltan referencias de composición de la escena.");
+                enabled = false;
+                return;
+            }
 
             if (backHandler != null)
                 backHandler.Configurar(VolverAlMapa);
@@ -49,12 +52,6 @@ namespace Assets.Scripts.UI.RealidadAumentada
 
         private void InicializarEscenario()
         {
-            if (gestorRA == null)
-            {
-                var go = new GameObject("[GestorEscenaRA]");
-                gestorRA = go.AddComponent<GestorEscenaRA>();
-            }
-
             string escenarioId = ContextoNavegacion.EscenarioRaId;
             if (gestorRA.CargarEscenario(escenarioId))
             {

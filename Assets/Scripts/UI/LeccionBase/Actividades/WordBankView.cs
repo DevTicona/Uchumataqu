@@ -31,8 +31,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         public event Action<List<string>> OnTokensComprobados;
         public event Action OnAudioPromptClicked;
 
-        private List<string> _tokensSeleccionados = new List<string>();
-        private List<GameObject> _fichasActivas = new List<GameObject>();
+        private readonly List<GameObject> _fichasActivas = new List<GameObject>();
 
         public void InicializarRuntime()
         {
@@ -68,8 +67,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         public void Configurar(string tipo, string promptEs, List<string> tokensDisponibles, string oracionAudioId = null)
         {
-            _tokensSeleccionados.Clear();
-
             LimpiarFichas();
 
             if (btnComprobar != null)
@@ -92,12 +89,12 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             {
                 foreach (var token in tokensDisponibles)
                 {
-                    CrearFicha(token, contenedorOrigen, false);
+                    CrearFicha(token, contenedorOrigen);
                 }
             }
         }
 
-        private void CrearFicha(string textoToken, Transform padre, bool enDestino)
+        private void CrearFicha(string textoToken, Transform padre)
         {
             GameObject ficha = prefabFichaToken != null
                 ? Instantiate(prefabFichaToken, padre)
@@ -120,23 +117,35 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             {
                 // Mover al contenedor de destino (armar oración)
                 ficha.transform.SetParent(contenedorDestino, false);
-                _tokensSeleccionados.Add(textoToken);
             }
             else
             {
                 // Devolver al banco
                 ficha.transform.SetParent(contenedorOrigen, false);
-                _tokensSeleccionados.Remove(textoToken);
             }
 
             if (btnComprobar != null)
-                btnComprobar.interactable = _tokensSeleccionados.Count > 0;
+                btnComprobar.interactable = contenedorDestino != null && contenedorDestino.childCount > 0;
         }
 
         private void ConfirmarRespuesta()
         {
-            if (_tokensSeleccionados.Count == 0) return;
-            OnTokensComprobados?.Invoke(new List<string>(_tokensSeleccionados));
+            List<string> tokensSeleccionados = ObtenerTokensSeleccionados();
+            if (tokensSeleccionados.Count == 0) return;
+            OnTokensComprobados?.Invoke(tokensSeleccionados);
+        }
+
+        private List<string> ObtenerTokensSeleccionados()
+        {
+            var tokens = new List<string>();
+            if (contenedorDestino == null) return tokens;
+
+            foreach (Transform ficha in contenedorDestino)
+            {
+                TMP_Text texto = ficha.GetComponentInChildren<TMP_Text>();
+                if (texto != null) tokens.Add(texto.text);
+            }
+            return tokens;
         }
 
         private void LimpiarFichas()

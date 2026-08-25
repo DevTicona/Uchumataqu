@@ -56,7 +56,7 @@ namespace Assets.Scripts.Core.Services
                 {
                     _audioSource.clip = clip;
                     var config = AppConfig.Instance;
-                    _audioSource.volume = config != null ? config.defaultMasterVolume * config.defaultWordVolume : 1.0f;
+                    _audioSource.volume = config != null ? config.defaultWordVolume : 1.0f;
                     _audioSource.Play();
                 }
             }

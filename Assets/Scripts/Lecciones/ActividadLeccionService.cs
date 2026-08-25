@@ -139,6 +139,9 @@ namespace Assets.Scripts.Lecciones
                 ?? throw new InvalidOperationException($"No existe la forma '{paso.forma_id}'.");
             PalabraData raiz = CorpusRepository.ObtenerPalabra(paso.raiz_id);
 
+            if (paso.tipo == TipoPasoLeccion.FormaARaiz && raiz == null)
+                throw new InvalidOperationException($"No existe la raíz '{paso.raiz_id}'.");
+
             bool formaComoRespuesta = paso.tipo == TipoPasoLeccion.EspanolAForma || paso.tipo == TipoPasoLeccion.AudioAForma;
             bool raizComoRespuesta = paso.tipo == TipoPasoLeccion.FormaARaiz;
             string respuesta = raizComoRespuesta ? raiz?.uch : formaComoRespuesta ? forma.uch : AlternativaNatural(forma.es);
@@ -176,16 +179,22 @@ namespace Assets.Scripts.Lecciones
         {
             OracionData oracion = CorpusRepository.ObtenerOracion(paso.oracion_id)
                 ?? throw new InvalidOperationException($"No existe la oración '{paso.oracion_id}'.");
-            PalabraData oculta = CorpusRepository.ObtenerPalabra(paso.palabra_oculta_id)
-                ?? throw new InvalidOperationException($"No existe la palabra oculta '{paso.palabra_oculta_id}'.");
+            string textoOculto = CorpusRepository.ObtenerPalabra(paso.palabra_oculta_id)?.uch
+                ?? CorpusRepository.ObtenerForma(paso.palabra_oculta_id)?.uch;
+            if (string.IsNullOrWhiteSpace(textoOculto))
+                throw new InvalidOperationException($"No existe la palabra o forma oculta '{paso.palabra_oculta_id}'.");
 
-            string prompt = Regex.Replace(oracion.uch, Regex.Escape(oculta.uch), "_____", RegexOptions.IgnoreCase);
+            string prompt = Regex.Replace(oracion.uch, Regex.Escape(textoOculto), "_____", RegexOptions.IgnoreCase);
+            if (string.Equals(prompt, oracion.uch, StringComparison.Ordinal))
+                throw new InvalidOperationException(
+                    $"La respuesta '{textoOculto}' no aparece en la oración '{oracion.id}'.");
+
             return new ActividadSeleccionData
             {
                 Tipo = paso.tipo,
                 Prompt = prompt,
-                RespuestaCorrecta = oculta.uch,
-                Opciones = ResolverOpcionesPalabra(paso.opciones_ids, false, oculta.uch)
+                RespuestaCorrecta = textoOculto,
+                Opciones = ResolverOpcionesPalabraOForma(paso.opciones_ids, textoOculto)
             };
         }
 
@@ -219,15 +228,36 @@ namespace Assets.Scripts.Lecciones
             return opciones;
         }
 
+        private static List<string> ResolverOpcionesPalabraOForma(IEnumerable<string> ids, string respuesta)
+        {
+            var opciones = new List<string>();
+            AgregarUnica(opciones, respuesta);
+            foreach (string id in ids ?? Enumerable.Empty<string>())
+            {
+                string opcion = CorpusRepository.ObtenerPalabra(id)?.uch
+                    ?? CorpusRepository.ObtenerForma(id)?.uch;
+                AgregarUnica(opciones, opcion);
+            }
+            return opciones;
+        }
+
         private static void AgregarPar(IDictionary<string, string> pares, string izquierda, string derecha)
         {
-            if (!string.IsNullOrWhiteSpace(izquierda) && !string.IsNullOrWhiteSpace(derecha) && !pares.ContainsKey(izquierda))
+            bool derechaDuplicada = pares.Values.Any(valor =>
+                string.Equals(valor, derecha, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(izquierda) && !string.IsNullOrWhiteSpace(derecha) &&
+                !pares.ContainsKey(izquierda) && !derechaDuplicada)
                 pares.Add(izquierda, derecha);
         }
 
         private static void AgregarUnica(ICollection<string> opciones, string valor)
         {
-            if (!string.IsNullOrWhiteSpace(valor) && !opciones.Contains(valor))
+            bool duplicada = opciones.Any(opcion =>
+                string.Equals(
+                    NormalizadorTexto.Normalizar(opcion),
+                    NormalizadorTexto.Normalizar(valor),
+                    StringComparison.Ordinal));
+            if (!string.IsNullOrWhiteSpace(valor) && !duplicada)
                 opciones.Add(valor);
         }
     }

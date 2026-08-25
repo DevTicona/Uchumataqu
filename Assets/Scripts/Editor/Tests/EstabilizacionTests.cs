@@ -102,8 +102,8 @@ namespace Assets.Scripts.Editor.Tests
                 StringAssert.Contains($"m_Address: {direccion}", datos);
 
             string audios = File.ReadAllText("Assets/AddressableAssetsData/AssetGroups/Audios.asset");
-            Assert.AreEqual(382, audios.Split(new[] { "m_Address: audio_" }, System.StringSplitOptions.None).Length - 1,
-                "El catálogo debe contener los 382 clips que actualmente tienen correspondencia inequívoca.");
+            Assert.AreEqual(386, audios.Split(new[] { "m_Address: audio_" }, System.StringSplitOptions.None).Length - 1,
+                "El catálogo debe contener exactamente los 386 clips requeridos por el corpus actual.");
         }
 
         private static void ValidarSeleccion(string leccionId, ActividadSeleccionData actividad)

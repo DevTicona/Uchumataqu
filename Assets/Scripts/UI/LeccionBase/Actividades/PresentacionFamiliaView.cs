@@ -33,9 +33,11 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         public event Action OnContinuarClicked;
         public event Action OnAudioClicked;
+        public event Action<string> OnFormaAudioClicked;
         public event Action OnPracticarVozClicked;
 
         private PasoLeccionData _pasoActual;
+        private readonly List<GameObject> _botonesForma = new List<GameObject>();
 
         public void InicializarRuntime()
         {
@@ -71,6 +73,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         public void Configurar(PasoLeccionData paso, PalabraData palabra)
         {
             _pasoActual = paso;
+            foreach (GameObject boton in _botonesForma)
+                if (boton != null) Destroy(boton);
+            _botonesForma.Clear();
 
             if (txtBadge != null) txtBadge.text = "NUEVA PALABRA";
             
@@ -88,6 +93,13 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                     foreach (var f in palabra.formas)
                     {
                         sb.AppendLine($"<b>{f.uch}</b>: {f.es}");
+                        FormaData forma = f;
+                        Button boton = RuntimeActividadUIFactory.CrearBoton(
+                            contenedorFormas.transform,
+                            $"AudioForma_{forma.id}",
+                            $"Escuchar {forma.uch}");
+                        boton.onClick.AddListener(() => OnFormaAudioClicked?.Invoke(forma.id));
+                        _botonesForma.Add(boton.gameObject);
                     }
                     if (txtFormasLista != null) txtFormasLista.text = sb.ToString();
                 }

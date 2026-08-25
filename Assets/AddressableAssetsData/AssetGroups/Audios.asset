@@ -410,11 +410,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 977a6489025ebee4d9c083d92a8bbb67
-    m_Address: audio_palabra/irohito_urus
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0f92a5f2ecd9589469ea40eb82f33ab8
     m_Address: audio_palabra/iwaltaki
     m_ReadOnly: 0
@@ -1190,11 +1185,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2665d460fcfb523478dc258126930059
-    m_Address: audio_palabra/waki
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9b7966fb5abaf0c4193f25b5b9e0af1b
     m_Address: audio_palabra/wakpacha
     m_ReadOnly: 0
@@ -1395,8 +1385,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d01ed94f92a61b743950f6c6dcf5ba9c
+    m_Address: audio_oracion/O_009
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 471838cbf4491bc45861450d5e36a757
     m_Address: audio_oracion/O_010
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ae960e023819854ea64239903150b2d
+    m_Address: audio_oracion/O_011
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -1470,6 +1470,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b3755f533a8cd94c8a900d5709b33da
+    m_Address: audio_oracion/O_026
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9f78bb630a59b5545998d6a8ab5c7da8
     m_Address: audio_oracion/O_027
     m_ReadOnly: 0
@@ -1532,6 +1537,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3e88f30f90693f440b8eaaaef697b617
     m_Address: audio_oracion/O_039
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4ee5664b6b33024782fa0b360071dac
+    m_Address: audio_oracion/O_040
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -1735,6 +1745,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: daacd0be2d8b5c74d94067ba0cbabf9a
+    m_Address: audio_oracion/O_081
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8208918819bd74d40824110572aec2ff
     m_Address: audio_oracion/O_082
     m_ReadOnly: 0
@@ -1832,6 +1847,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e2a7fa62803f1743a300b7c7713fb7c
     m_Address: audio_oracion/O_101
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce5781bc34ee08a40a1caed875d5b40d
+    m_Address: audio_oracion/O_102
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

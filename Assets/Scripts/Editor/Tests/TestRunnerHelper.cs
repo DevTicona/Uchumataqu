@@ -46,7 +46,17 @@ namespace Assets.Scripts.Editor.Tests
             EjecutarPrueba("L01: contrato completo válido", () => estabilizacion.L01_TodosSusPasosTienenContratoValido(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("RA: hitos curriculares canónicos", () => estabilizacion.EscenariosRa_RespetanLosHitosCanonicos(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Escenas: una View principal por escena", () => estabilizacion.Escenas_TienenUnaUnicaViewPrincipal(), ref pruebasPasadas, ref totalPruebas);
-            EjecutarPrueba("Addressables: datos y 382 audios disponibles", () => estabilizacion.Addressables_ContieneDatosYTodosLosAudiosDisponibles(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Addressables: datos y 386 audios vigentes", () => estabilizacion.Addressables_ContieneDatosYTodosLosAudiosDisponibles(), ref pruebasPasadas, ref totalPruebas);
+
+            // 5. Semana 3
+            var semana3 = new Semana3Tests();
+            semana3.PrepararCorpus();
+            EjecutarPrueba("Onboarding: validación de perfil y avatar", () => semana3.Onboarding_ValidaNombreUnicodeYAvatarExplicito(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Mapa: 27 lecciones, 6 hitos y 6 regiones", () => semana3.Mapa_Crea27LeccionesSeisHitosYSeisRegiones(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Mapa: desbloqueo de RA1 y L07", () => semana3.Mapa_DesbloqueaRa1YL07TrasCompletarL01AL06(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("L01-L05: construcción de actividades", () => semana3.L01AL05_ConstruyenTodosSusPasosEvaluables(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Nombres propios: solo contexto, sin familia ni audio léxico", () => semana3.NombresPropios_NoSeEnsenanComoFamiliasNiTienenAudioLexico(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Semana 3: composición de escenas", () => semana3.EscenasSemana3_TienenComposicionSerializada(), ref pruebasPasadas, ref totalPruebas);
 
             string color = pruebasPasadas == totalPruebas ? "green" : "red";
             string estado = pruebasPasadas == totalPruebas ? "PASS" : "CON FALLOS";

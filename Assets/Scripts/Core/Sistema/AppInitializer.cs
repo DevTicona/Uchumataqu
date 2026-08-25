@@ -1,81 +1,47 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using System;
 using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Assets.Scripts.Core.UI.Theme;
+using Assets.Scripts.Core.Services;
 using Assets.Scripts.Core; // necesario para AppConfig
+using Assets.Scripts.Persistencia;
 
 namespace Assets.Scripts.Core.Sistema
 {
     public class AppInitializer : MonoBehaviour
     {
-        private static bool inicializado = false;
+        private Task _tareaInicializacion;
 
-        private async void Awake()
+        public Task InicializarAsync()
         {
-            if (inicializado) return;
+            return _tareaInicializacion ??= InicializarInternoAsync();
+        }
 
-            inicializado = true;
-            DontDestroyOnLoad(gameObject);
+        public void Reiniciar()
+        {
+            _tareaInicializacion = null;
+        }
 
+        private static async Task InicializarInternoAsync()
+        {
             Debug.Log("[AppInitializer] Iniciando aplicación...");
 
-            await InicializarAsync();
-
-            Debug.Log("[AppInitializer] Inicialización completa.");
-        }
-
-        private async Task InicializarAsync()
-        {
-            // 1. Addressables
-            await InicializarAddressables();
-
-            // 2. Configuración global
-            InicializarConfiguracion();
-
-            // 3. Sistema de UI (Theme)
-            InicializarUI();
-
-            // 4. Sistema de plataforma (Android, orientación, etc.)
-            InicializarSistema();
-        }
-
-        private async Task InicializarAddressables()
-        {
-            Debug.Log("[AppInitializer] Inicializando Addressables...");
-            await Addressables.InitializeAsync().Task;
-        }
-
-        private void InicializarConfiguracion()
-        {
-            Debug.Log("[AppInitializer] Cargando configuración...");
-
             var config = AppConfig.Instance;
-
             if (config == null)
-            {
-                Debug.LogError("[AppInitializer] No se encontró AppConfig.");
-                return;
-            }
+                throw new InvalidOperationException("No se encontró AppConfig en Resources.");
 
-            // Ejemplo de uso real de configuración
             Debug.unityLogger.logEnabled = config.enableDebugLogs;
-        }
-
-        private void InicializarUI()
-        {
-            Debug.Log("[AppInitializer] Cargando tema...");
-            UIThemeManager.CargarTema("UITheme");
-        }
-
-        private void InicializarSistema()
-        {
-            Debug.Log("[AppInitializer] Configurando sistema...");
-
-            // Orientación inicial (menú)
             GestorOrientacionPantalla.ConfigurarInicial();
-
-            // Permisos (ej: micrófono)
-            AndroidMicrophonePermission.SolicitarPermiso();
+            AudioListener.volume = ConfiguracionRepository.Obtener().volumen_general;
+            _ = AudioService.Instance;
+            var addressables = Addressables.InitializeAsync();
+            await addressables.Task;
+            if (addressables.Status != AsyncOperationStatus.Succeeded)
+                throw new InvalidOperationException("No se pudo inicializar el catálogo Addressables.");
+            await UIThemeManager.CargarTemaAsync("UITheme");
+            Debug.Log("[AppInitializer] Inicialización completa.");
         }
     }
 }

@@ -2679,6 +2679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.Onboarding.OnboardingPresenter
   view: {fileID: 1167188423}
+  backHandler: {fileID: 1167188420}
 --- !u!4 &1167188422
 Transform:
   m_ObjectHideFlags: 0

@@ -27,6 +27,7 @@ namespace Assets.Scripts.UI.LeccionBase
         [SerializeField] private GameObject prefabPresentacion;
         [SerializeField] private GameObject prefabSeleccionMultiple;
         [SerializeField] private GameObject prefabEmparejamiento;
+        [SerializeField] private GameObject prefabMemoria;
         [SerializeField] private GameObject prefabWordBank;
 
         [Header("Overlays")]
@@ -36,11 +37,14 @@ namespace Assets.Scripts.UI.LeccionBase
         public event Action OnAtrasClick;
         public event Action OnVolverAlMapaClick;
         public event Action OnContinuarLeccionClick;
+        public event Action OnConfirmarSalidaClick;
+        public event Action OnCancelarSalidaClick;
 
         public FeedbackOverlayView Feedback => feedbackOverlay;
         public ModalResultadoView ModalResultado => modalResultado;
 
         private GameObject _actividadInstanciada;
+        private GameObject _panelConfirmacionSalida;
 
         private void Awake()
         {
@@ -56,7 +60,9 @@ namespace Assets.Scripts.UI.LeccionBase
             {
                 modalResultado.OnContinuarClicked += () => OnContinuarLeccionClick?.Invoke();
                 modalResultado.OnVolverMapaClicked += () => OnVolverAlMapaClick?.Invoke();
+                modalResultado.Ocultar();
             }
+            feedbackOverlay?.Ocultar();
         }
 
         public void ConfigurarHeader(string titulo, int pasoActual, int totalPasos, float progreso)
@@ -153,6 +159,22 @@ namespace Assets.Scripts.UI.LeccionBase
             return actividad;
         }
 
+        public MemoriaView InstanciarMemoria()
+        {
+            LimpiarActividadActual();
+            if (prefabMemoria != null && actividadContainer != null)
+            {
+                _actividadInstanciada = Instantiate(prefabMemoria, actividadContainer);
+                return _actividadInstanciada.GetComponent<MemoriaView>();
+            }
+            if (actividadContainer == null) return null;
+            GameObject go = RuntimeActividadUIFactory.CrearContenedor("MemoriaView", actividadContainer);
+            _actividadInstanciada = go;
+            var actividad = go.AddComponent<MemoriaView>();
+            actividad.InicializarRuntime();
+            return actividad;
+        }
+
         public void MostrarFeedback(string semaforo, string detalle = null, double similitud = 0, string correcta = null)
         {
             if (feedbackOverlay != null)
@@ -184,6 +206,33 @@ namespace Assets.Scripts.UI.LeccionBase
             {
                 modalResultado.Mostrar(aciertos, total, precision);
             }
+        }
+
+        public void MostrarConfirmacionSalida(bool mostrar)
+        {
+            if (_panelConfirmacionSalida == null) CrearConfirmacionSalida();
+            if (_panelConfirmacionSalida != null) _panelConfirmacionSalida.SetActive(mostrar);
+        }
+
+        private void CrearConfirmacionSalida()
+        {
+            Transform padre = feedbackOverlay != null
+                ? feedbackOverlay.transform.parent
+                : actividadContainer != null ? actividadContainer.parent : null;
+            if (padre == null) return;
+
+            _panelConfirmacionSalida = RuntimeActividadUIFactory.CrearContenedor("ConfirmacionSalida", padre);
+            RuntimeActividadUIFactory.CrearTexto(_panelConfirmacionSalida.transform, "Titulo", 30f).text =
+                "¿Quieres salir de la lección?";
+            RuntimeActividadUIFactory.CrearTexto(_panelConfirmacionSalida.transform, "Detalle", 23f).text =
+                "Tu avance hasta este punto se guardará.";
+            Button seguir = RuntimeActividadUIFactory.CrearBoton(
+                _panelConfirmacionSalida.transform, "BtnSeguir", "Seguir aprendiendo");
+            Button salir = RuntimeActividadUIFactory.CrearBoton(
+                _panelConfirmacionSalida.transform, "BtnSalir", "Salir");
+            seguir.onClick.AddListener(() => OnCancelarSalidaClick?.Invoke());
+            salir.onClick.AddListener(() => OnConfirmarSalidaClick?.Invoke());
+            _panelConfirmacionSalida.SetActive(false);
         }
     }
 }

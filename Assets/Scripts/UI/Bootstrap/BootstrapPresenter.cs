@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Assets.Scripts.Core.Services;
 using Assets.Scripts.Persistencia;
+using Assets.Scripts.Core.Sistema;
 
 namespace Assets.Scripts.UI.Bootstrap
 {
@@ -12,36 +13,79 @@ namespace Assets.Scripts.UI.Bootstrap
     /// </summary>
     public class BootstrapPresenter : MonoBehaviour
     {
-        private async void Start()
-        {
-            Debug.Log("[BootstrapPresenter] Iniciando verificación de arranque...");
+        [SerializeField] private BootstrapView view;
+        [SerializeField] private AppInitializer appInitializer;
 
-            // 1. Inicializar corpus offline
-            bool corpusOk = await CorpusRepository.InicializarAsync();
-            if (!corpusOk)
+        private bool _inicializando;
+
+        private void Awake()
+        {
+            if (view == null || appInitializer == null)
             {
-                Debug.LogError("[BootstrapPresenter] Error crítico al cargar el corpus.");
+                Debug.LogError("[BootstrapPresenter] Faltan referencias de composición.");
                 enabled = false;
                 return;
             }
 
-            // 2. Cargar perfil y progreso
-            bool tienePerfil = PerfilRepository.ExistePerfil();
-            ProgresoRepository.ObtenerProgreso();
+            view.OnReintentar += Reintentar;
+            view.OnCerrar += Cerrar;
+        }
 
-            // 3. Breve espera para estabilidad visual y enrutamiento
-            await Task.Delay(300);
+        private async void Start()
+        {
+            await InicializarYNavegarAsync();
+        }
 
-            if (tienePerfil)
+        private void OnDestroy()
+        {
+            if (view == null) return;
+            view.OnReintentar -= Reintentar;
+            view.OnCerrar -= Cerrar;
+        }
+
+        private async Task InicializarYNavegarAsync()
+        {
+            if (_inicializando) return;
+            _inicializando = true;
+            view.MostrarCarga("Preparando recursos locales...");
+
+            try
             {
-                Debug.Log("[BootstrapPresenter] Perfil existente detectado. Navegando a Main.");
-                NavigationService.IrAMain();
+                await appInitializer.InicializarAsync();
+                view.MostrarCarga("Cargando contenido educativo...");
+                bool corpusOk = await CorpusRepository.InicializarAsync();
+                if (!corpusOk)
+                    throw new System.InvalidOperationException("El corpus local no pudo inicializarse.");
+
+                bool tienePerfil = PerfilRepository.ExistePerfil();
+                ProgresoRepository.ObtenerProgreso();
+                _ = AudioService.Instance;
+
+                view.MostrarCarga("Todo listo");
+                await Task.Delay(200);
+                if (this == null) return;
+
+                if (tienePerfil) NavigationService.IrAMain();
+                else NavigationService.IrAOnboarding();
             }
-            else
+            catch (System.Exception ex)
             {
-                Debug.Log("[BootstrapPresenter] Primer inicio detectado. Navegando a Onboarding.");
-                NavigationService.IrAOnboarding();
+                Debug.LogError($"[BootstrapPresenter] Error crítico: {ex}");
+                view.MostrarError("No se pudo iniciar la aplicación.\nFaltan recursos locales necesarios.");
+            }
+            finally
+            {
+                _inicializando = false;
             }
         }
+
+        private void Reintentar()
+        {
+            CorpusRepository.LimpiarCache();
+            appInitializer.Reiniciar();
+            _ = InicializarYNavegarAsync();
+        }
+
+        private static void Cerrar() => Application.Quit();
     }
 }

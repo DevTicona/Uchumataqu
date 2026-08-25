@@ -18,13 +18,17 @@ namespace Assets.Scripts.UI.Main.Paginas
         private void OnEnable()
         {
             if (txtTitulo != null)
-                txtTitulo.text = "Uchumataqu — Revitalización Lingüística";
+                txtTitulo.text = "Acerca de Uchumataqu";
 
             if (txtCreditosComunidad != null)
-                txtCreditosComunidad.text = "Desarrollado en memoria y homenaje a la comunidad Uru de Iruhito y Ch'imu, preservando su lengua ancestral y sabiduría milenaria.";
+                txtCreditosComunidad.text =
+                    "Aplicación educativa dedicada a la lengua uchumataqu y a la Comunidad Irohito Urus. " +
+                    "Los datos de perfil y progreso se guardan localmente en el dispositivo.";
 
             if (txtCreditosInstitucionales != null)
-                txtCreditosInstitucionales.text = "Basado en los estudios y registros lingüísticos de FUNPROEIB Andes y el Ministerio de Educación de Bolivia.";
+                txtCreditosInstitucionales.text =
+                    "Proyecto de Grado con apoyo documental de FUNPROEIB ANDES. " +
+                    "Los créditos nominales y las fuentes lingüísticas se completarán tras su validación.";
 
             if (txtVersionApp != null)
                 txtVersionApp.text = $"Versión {Application.version} — 100% Offline";

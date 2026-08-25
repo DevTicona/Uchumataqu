@@ -115,6 +115,20 @@ namespace Assets.Scripts.Persistencia
             CompletarLeccion(leccionId, aciertos, errores, totalActividades);
         }
 
+        public static void GuardarLeccionEnProgreso(string leccionId, int pasoActual, int aciertos, int errores)
+        {
+            if (string.IsNullOrWhiteSpace(leccionId)) return;
+            var progreso = ObtenerProgreso();
+            var leccion = progreso.ObtenerOCrearLeccion(leccionId);
+            if (leccion.estado == "completada") return;
+            leccion.estado = "en_progreso";
+            leccion.paso_actual = Mathf.Max(0, pasoActual);
+            leccion.aciertos = Mathf.Max(0, aciertos);
+            leccion.errores = Mathf.Max(0, errores);
+            progreso.ultima_leccion_id = leccionId;
+            Guardar();
+        }
+
         public static void ReiniciarProgreso()
         {
             _progresoCache = new ProgresoUsuario();

@@ -41,10 +41,35 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         private void Awake()
         {
+            AsegurarReferencias();
             if (btnIsla != null)
             {
                 btnIsla.onClick.AddListener(OnIslaClicked);
             }
+        }
+
+        public void InicializarRuntime()
+        {
+            AsegurarReferencias();
+            var rect = GetComponent<RectTransform>();
+            if (rect.sizeDelta.y <= 0f) rect.sizeDelta = new Vector2(0f, 116f);
+        }
+
+        private void AsegurarReferencias()
+        {
+            btnIsla ??= GetComponent<Button>();
+            imgFondo ??= transform.Find("ImgIsla")?.GetComponent<Image>() ?? GetComponent<Image>();
+            txtTitulo ??= GetComponentInChildren<TMP_Text>(true);
+
+            if (imgFondo == null) imgFondo = gameObject.AddComponent<Image>();
+            if (btnIsla == null) btnIsla = gameObject.AddComponent<Button>();
+            btnIsla.targetGraphic = imgFondo;
+
+            txtNumero ??= CrearTexto("Numero", new Vector2(0f, 0f), new Vector2(0.24f, 1f), 26f);
+            txtTitulo ??= CrearTexto("Titulo", new Vector2(0.24f, 0f), new Vector2(0.84f, 1f), 23f);
+            iconoCandado ??= CrearIndicador("Candado", "BLOQ.", new Vector2(0.84f, 0f), new Vector2(1f, 1f));
+            iconoEstrella ??= CrearIndicador("Completada", "✓", new Vector2(0.84f, 0f), new Vector2(1f, 1f));
+            indicadorRA ??= CrearIndicador("IndicadorRA", "RA", new Vector2(0.02f, 0.72f), new Vector2(0.16f, 0.98f));
         }
 
         public void ConfigurarLeccion(string id, int numero, string titulo, EstadoIsla estado)
@@ -109,6 +134,30 @@ namespace Assets.Scripts.UI.Main.Paginas
             {
                 OnLeccionSeleccionada?.Invoke(LeccionId);
             }
+        }
+
+        private TMP_Text CrearTexto(string nombre, Vector2 anchorMin, Vector2 anchorMax, float tamano)
+        {
+            var objeto = new GameObject(nombre, typeof(RectTransform), typeof(TextMeshProUGUI));
+            objeto.transform.SetParent(transform, false);
+            var rect = (RectTransform)objeto.transform;
+            rect.anchorMin = anchorMin;
+            rect.anchorMax = anchorMax;
+            rect.offsetMin = new Vector2(12f, 8f);
+            rect.offsetMax = new Vector2(-12f, -8f);
+            var texto = objeto.GetComponent<TextMeshProUGUI>();
+            texto.fontSize = tamano;
+            texto.alignment = TextAlignmentOptions.MidlineLeft;
+            texto.color = Color.white;
+            return texto;
+        }
+
+        private GameObject CrearIndicador(string nombre, string valor, Vector2 anchorMin, Vector2 anchorMax)
+        {
+            TMP_Text texto = CrearTexto(nombre, anchorMin, anchorMax, 22f);
+            texto.text = valor;
+            texto.alignment = TextAlignmentOptions.Center;
+            return texto.gameObject;
         }
     }
 }

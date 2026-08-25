@@ -438,6 +438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 744994579}
   - component: {fileID: 744994580}
+  - component: {fileID: 744994581}
   m_Layer: 0
   m_Name: SafeArea
   m_TagString: Untagged
@@ -478,6 +479,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77325e35216a5c842a8f8c96aae770e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.SafeAreaUI
+--- !u!114 &744994581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744994578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7cc1cffaa18496fa4d30cb6eb7b00d1, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.Bootstrap.BootstrapView
+  textoEstado: {fileID: 1570526415}
 --- !u!1 &1045144839
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d90f2311a34c1478bbbf8bad724717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.Bootstrap.BootstrapPresenter
+  view: {fileID: 744994581}
+  appInitializer: {fileID: 1453209405}
 --- !u!114 &1453209405
 MonoBehaviour:
   m_ObjectHideFlags: 0

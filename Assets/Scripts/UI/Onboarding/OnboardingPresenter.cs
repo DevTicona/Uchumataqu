@@ -1,41 +1,40 @@
 using UnityEngine;
 using Assets.Scripts.Core.Services;
+using Assets.Scripts.Core.Sistema;
 using Assets.Scripts.Persistencia;
 
 namespace Assets.Scripts.UI.Onboarding
 {
-    /// <summary>
-    /// Presenter para la escena 01_Onboarding.
-    /// Recopila nombre, rango de edad y avatar, guarda el perfil y navega a Main.
-    /// Especificado en Docs/UI/02-escena-onboarding.md.
-    /// </summary>
     public class OnboardingPresenter : MonoBehaviour
     {
         [SerializeField] private OnboardingView view;
+        [SerializeField] private NavigationBackHandler backHandler;
 
         private int _pasoActual = 1;
+        private string _avatarSeleccionado;
 
         private void Start()
         {
-            if (view == null)
+            if (view == null || backHandler == null)
             {
-                Debug.LogError("[OnboardingPresenter] La View no está enlazada en la escena.");
+                Debug.LogError("[OnboardingPresenter] Faltan referencias de composición.");
                 enabled = false;
                 return;
             }
 
             view.OnContinuarClick += AvanzarPaso;
             view.OnAtrasClick += RetrocederPaso;
+            view.OnAvatarSeleccionado += SeleccionarAvatar;
+            backHandler.Configurar(RetrocederPaso);
             view.MostrarPaso(1);
         }
 
         private void OnDestroy()
         {
-            if (view != null)
-            {
-                view.OnContinuarClick -= AvanzarPaso;
-                view.OnAtrasClick -= RetrocederPaso;
-            }
+            if (view == null) return;
+            view.OnContinuarClick -= AvanzarPaso;
+            view.OnAtrasClick -= RetrocederPaso;
+            view.OnAvatarSeleccionado -= SeleccionarAvatar;
         }
 
         private void AvanzarPaso()
@@ -44,42 +43,70 @@ namespace Assets.Scripts.UI.Onboarding
             {
                 _pasoActual = 2;
                 view.MostrarPaso(2);
+                return;
             }
-            else if (_pasoActual == 2)
+
+            if (_pasoActual == 2)
             {
-                string nombre = view.ObtenerNombre();
-                if (string.IsNullOrWhiteSpace(nombre))
+                ResultadoValidacionPerfil resultado =
+                    PerfilOnboardingService.ValidarDatos(view.ObtenerNombre(), view.ObtenerRangoEdad());
+                if (!resultado.Valido)
                 {
-                    Debug.LogWarning("[OnboardingPresenter] El nombre es obligatorio.");
+                    view.MostrarErrorPerfil(resultado.Mensaje);
                     return;
                 }
 
                 _pasoActual = 3;
                 view.MostrarPaso(3);
+                return;
             }
-            else if (_pasoActual == 3)
+
+            ResultadoValidacionPerfil avatar = PerfilOnboardingService.ValidarAvatar(_avatarSeleccionado);
+            if (!avatar.Valido)
             {
-                FinalizarOnboarding();
+                view.MostrarErrorAvatar(avatar.Mensaje);
+                return;
             }
+            FinalizarOnboarding();
         }
 
         private void RetrocederPaso()
         {
-            if (_pasoActual > 1)
+            if (_pasoActual <= 1)
             {
-                _pasoActual--;
-                view.MostrarPaso(_pasoActual);
+                Application.Quit();
+                return;
             }
+
+            _pasoActual--;
+            view.MostrarPaso(_pasoActual);
+        }
+
+        private void SeleccionarAvatar(string avatarId)
+        {
+            _avatarSeleccionado = avatarId;
+            view.MostrarAvatarSeleccionado(avatarId);
         }
 
         private void FinalizarOnboarding()
         {
             string nombre = view.ObtenerNombre();
             string rangoEdad = view.ObtenerRangoEdad();
-            string avatarId = view.ObtenerAvatarId();
+            ResultadoValidacionPerfil datos = PerfilOnboardingService.ValidarDatos(nombre, rangoEdad);
+            if (!datos.Valido)
+            {
+                _pasoActual = 2;
+                view.MostrarPaso(2);
+                view.MostrarErrorPerfil(datos.Mensaje);
+                return;
+            }
 
-            PerfilRepository.CrearOActualizar(nombre, 0, rangoEdad, avatarId, onboardingCompletado: true);
-            Debug.Log($"[OnboardingPresenter] Perfil guardado: {nombre} ({rangoEdad}). Navegando a Main...");
+            PerfilRepository.CrearOActualizar(
+                nombre,
+                edad: 0,
+                rangoEdad,
+                _avatarSeleccionado,
+                onboardingCompletado: true);
             NavigationService.IrAMain();
         }
     }

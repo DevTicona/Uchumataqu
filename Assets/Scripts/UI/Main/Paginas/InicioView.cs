@@ -57,12 +57,22 @@ namespace Assets.Scripts.UI.Main.Paginas
                 txtContadorLecciones.text = $"{datos.LeccionesCompletadas} / 27";
 
             if (txtContadorRA != null)
-                txtContadorRA.text = $"{datos.EscenariosVisitados} / 6";
+            {
+                string proximoRa = string.IsNullOrWhiteSpace(datos.ProximoRaTitulo)
+                    ? "Todos los escenarios visitados"
+                    : $"Próximo: {datos.ProximoRaTitulo} ({datos.ProximoRaCompletadas}/{datos.ProximoRaTotal})";
+                txtContadorRA.text = $"{datos.EscenariosVisitados} / 6\n{proximoRa}";
+            }
 
             _leccionSiguienteId = datos.LeccionId;
 
             if (txtTituloContinuar != null)
-                txtTituloContinuar.text = $"Continuar: {datos.LeccionId}";
+            {
+                string accion = datos.CurriculoCompletado
+                    ? "Repasar"
+                    : datos.EsContinuacion ? "Continuar" : "Comenzar";
+                txtTituloContinuar.text = $"{accion}: {datos.LeccionId}";
+            }
 
             if (txtSubtituloContinuar != null)
                 txtSubtituloContinuar.text = datos.TituloLeccion;

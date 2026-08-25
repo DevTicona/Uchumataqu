@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Threading.Tasks;
 using Assets.Scripts.Core.Services;
 
 namespace Assets.Scripts.Core.UI.Theme
@@ -16,7 +17,7 @@ namespace Assets.Scripts.Core.UI.Theme
         /// <summary>
         /// Carga el tema usando AddressablesService
         /// </summary>
-        public static async void CargarTema(string key = "UITheme")
+        public static async Task CargarTemaAsync(string key = "UITheme")
         {
             try
             {
@@ -28,6 +29,7 @@ namespace Assets.Scripts.Core.UI.Theme
             catch (Exception ex)
             {
                 Debug.LogError($"[UIThemeManager] Error cargando UITheme: {ex.Message}");
+                throw;
             }
         }
 

@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 2754054793625394244}
   - component: {fileID: 501499825819283260}
   - component: {fileID: 6398928084508838545}
-  - component: {fileID: -8704570196398639891}
+  - component: {fileID: 900000000000000001}
   m_Layer: 5
   m_Name: IslaLeccion
   m_TagString: Untagged
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-8704570196398639891
+--- !u!114 &900000000000000001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,15 +244,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5528865251175424615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73be905bf9fdf22469943e0682ace413, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a6179b7a954ff44b8885bf58da7e979, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Views.UI.IslaLeccionView
-  boton: {fileID: 6398928084508838545}
-  fondoIsla: {fileID: 611670260395427537}
-  iconoEstado: {fileID: 7819030777183021198}
-  tituloTexto: {fileID: 5615347631652979839}
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.Main.Paginas.IslaItemView
+  btnIsla: {fileID: 6398928084508838545}
+  txtNumero: {fileID: 0}
+  txtTitulo: {fileID: 5615347631652979839}
+  imgFondo: {fileID: 611670260395427537}
+  iconoCandado: {fileID: 0}
+  iconoEstrella: {fileID: 7819030777183021198}
+  indicadorRA: {fileID: 0}
   colorBloqueada: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  colorEnProgreso: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  colorDisponible: {r: 0.92, g: 0.76, b: 0.35, a: 1}
   colorCompletada: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &6621616306326069781
 GameObject:

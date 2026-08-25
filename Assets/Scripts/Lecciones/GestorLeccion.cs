@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Assets.Scripts.Data.Corpus;
 using Assets.Scripts.Persistencia;
@@ -18,7 +19,19 @@ namespace Assets.Scripts.Lecciones
         public int Aciertos { get; private set; }
         public int Errores { get; private set; }
         public int TotalPasos => LeccionActual?.pasos?.Count ?? 0;
-        public float ProgresoNormalizado => TotalPasos > 0 ? (float)IndicePasoActual / TotalPasos : 0f;
+        public int TotalPasosObligatorios => LeccionActual?.pasos?.Count(p => !p.opcional) ?? 0;
+        public int PasoObligatorioActual => LeccionActual?.pasos?
+            .Take(IndicePasoActual + 1)
+            .Count(p => !p.opcional) ?? 0;
+        public float ProgresoNormalizado
+        {
+            get
+            {
+                if (TotalPasosObligatorios == 0) return 0f;
+                int completados = LeccionActual.pasos.Take(IndicePasoActual).Count(p => !p.opcional);
+                return (float)completados / TotalPasosObligatorios;
+            }
+        }
 
         public PasoLeccionData PasoActual
         {
@@ -42,6 +55,14 @@ namespace Assets.Scripts.Lecciones
             IndicePasoActual = 0;
             Aciertos = 0;
             Errores = 0;
+            var progreso = ProgresoRepository.ObtenerProgreso();
+            var previo = progreso.lecciones?.Find(l => l.leccion_id == leccionId && l.estado == "en_progreso");
+            if (previo != null)
+            {
+                IndicePasoActual = Mathf.Clamp(previo.paso_actual, 0, TotalPasos - 1);
+                Aciertos = Mathf.Max(0, previo.aciertos);
+                Errores = Mathf.Max(0, previo.errores);
+            }
             return true;
         }
 
@@ -57,7 +78,18 @@ namespace Assets.Scripts.Lecciones
         public bool AvanzarSiguientePaso()
         {
             IndicePasoActual++;
+            GuardarEstadoActual();
             return IndicePasoActual < TotalPasos;
+        }
+
+        public void GuardarEstadoActual()
+        {
+            if (LeccionActual == null || IndicePasoActual >= TotalPasos) return;
+            ProgresoRepository.GuardarLeccionEnProgreso(
+                LeccionActual.id,
+                IndicePasoActual,
+                Aciertos,
+                Errores);
         }
 
         public void FinalizarYGuardar()

@@ -555,12 +555,6 @@
       "categoria_gramatical": "sustantivo"
     },
     {
-      "id": "irohito_urus",
-      "uch": "Irohito urus",
-      "es": "Irohito Urus",
-      "categoria_gramatical": "nombre propio"
-    },
-    {
       "id": "iwaltaki",
       "uch": "Iwaltaki",
       "es": "Igualmente",
@@ -614,12 +608,6 @@
       "uch": "Jipu",
       "es": "Viento",
       "categoria_gramatical": "sustantivo"
-    },
-    {
-      "id": "juana",
-      "uch": "Juana",
-      "es": "Juana",
-      "categoria_gramatical": "nombre propio"
     },
     {
       "id": "julsnay",
@@ -795,12 +783,6 @@
       "categoria_gramatical": "sustantivo"
     },
     {
-      "id": "lorenzo",
-      "uch": "Lorenzo",
-      "es": "Lorenzo",
-      "categoria_gramatical": "nombre propio"
-    },
-    {
       "id": "lowalowa",
       "uch": "Lowalowa",
       "es": "Rápido",
@@ -836,12 +818,6 @@
       "uch": "Malaqoy",
       "es": "Tía",
       "categoria_gramatical": "sustantivo"
-    },
-    {
-      "id": "maria",
-      "uch": "María",
-      "es": "María",
-      "categoria_gramatical": "nombre propio"
     },
     {
       "id": "maska",
@@ -891,7 +867,7 @@
       "id": "nis",
       "uch": "Nis",
       "es": "Su (de él/ella)",
-      "categoria_gramatical": "determinante posesivo"
+      "categoria_gramatical": "determinante_posesivo"
     },
     {
       "id": "nonschay",
@@ -983,12 +959,6 @@
       "uch": "Paxpiku",
       "es": "Cuatro",
       "categoria_gramatical": "numeral"
-    },
-    {
-      "id": "pedro",
-      "uch": "Pedro",
-      "es": "Pedro",
-      "categoria_gramatical": "nombre propio"
     },
     {
       "id": "pesaqa",
@@ -1711,7 +1681,7 @@
       "id": "uchums",
       "uch": "Uchums",
       "es": "Nuestro (Exclusivo)",
-      "categoria_gramatical": "determinante posesivo"
+      "categoria_gramatical": "determinante_posesivo"
     },
     {
       "id": "ulanchay",
@@ -1743,12 +1713,6 @@
       "uch": "Urkhu",
       "es": "Vestido uru",
       "categoria_gramatical": "sustantivo"
-    },
-    {
-      "id": "urus",
-      "uch": "Urus",
-      "es": "Urus",
-      "categoria_gramatical": "nombre propio"
     },
     {
       "id": "usa",
@@ -1787,12 +1751,6 @@
           "es": "Vacas"
         }
       ]
-    },
-    {
-      "id": "waki",
-      "uch": "Waki",
-      "es": "Guaqui",
-      "categoria_gramatical": "sustantivo"
     },
     {
       "id": "wakpacha",
@@ -1860,7 +1818,7 @@
       "id": "wisnaks",
       "uch": "Wisnaks",
       "es": "Nuestro (Inclusivo)",
-      "categoria_gramatical": "determinante posesivo"
+      "categoria_gramatical": "determinante_posesivo"
     },
     {
       "id": "wisnakti",
@@ -1872,7 +1830,7 @@
       "id": "wist",
       "uch": "Wist",
       "es": "Mi",
-      "categoria_gramatical": "determinante posesivo"
+      "categoria_gramatical": "determinante_posesivo"
     },
     {
       "id": "wistakchay",

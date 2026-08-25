@@ -29,10 +29,12 @@ namespace Assets.Scripts.UI.LeccionBase
                 return;
             }
 
-            backHandler.Configurar(VolverAlMapa);
-            view.OnAtrasClick += VolverAlMapa;
+            backHandler.Configurar(SolicitarSalida);
+            view.OnAtrasClick += SolicitarSalida;
             view.OnVolverAlMapaClick += VolverAlMapa;
             view.OnContinuarLeccionClick += VolverAlMapa;
+            view.OnConfirmarSalidaClick += ConfirmarSalida;
+            view.OnCancelarSalidaClick += CancelarSalida;
             if (view.Feedback != null)
                 view.Feedback.OnContinuarFeedbackClicked += AvanzarTrasFeedback;
 
@@ -42,9 +44,11 @@ namespace Assets.Scripts.UI.LeccionBase
         private void OnDestroy()
         {
             if (view == null) return;
-            view.OnAtrasClick -= VolverAlMapa;
+            view.OnAtrasClick -= SolicitarSalida;
             view.OnVolverAlMapaClick -= VolverAlMapa;
             view.OnContinuarLeccionClick -= VolverAlMapa;
+            view.OnConfirmarSalidaClick -= ConfirmarSalida;
+            view.OnCancelarSalidaClick -= CancelarSalida;
             if (view.Feedback != null)
                 view.Feedback.OnContinuarFeedbackClicked -= AvanzarTrasFeedback;
         }
@@ -60,7 +64,11 @@ namespace Assets.Scripts.UI.LeccionBase
                 return;
             }
 
-            view.ConfigurarHeader(_gestorLeccion.LeccionActual.titulo, 1, _gestorLeccion.TotalPasos, 0f);
+            view.ConfigurarHeader(
+                _gestorLeccion.LeccionActual.titulo,
+                Mathf.Max(1, _gestorLeccion.PasoObligatorioActual),
+                _gestorLeccion.TotalPasosObligatorios,
+                _gestorLeccion.ProgresoNormalizado);
             RenderizarPasoActual();
         }
 
@@ -75,8 +83,8 @@ namespace Assets.Scripts.UI.LeccionBase
 
             _esperandoFeedback = false;
             view.ActualizarProgreso(
-                _gestorLeccion.IndicePasoActual + 1,
-                _gestorLeccion.TotalPasos,
+                Mathf.Max(1, _gestorLeccion.PasoObligatorioActual),
+                _gestorLeccion.TotalPasosObligatorios,
                 _gestorLeccion.ProgresoNormalizado);
             view.OcultarFeedback();
 
@@ -89,6 +97,7 @@ namespace Assets.Scripts.UI.LeccionBase
 
             if (TipoPasoLeccion.EsPresentacion(paso.tipo)) RenderizarPresentacion(paso, false);
             else if (TipoPasoLeccion.EsSeleccion(paso.tipo)) RenderizarSeleccion(paso);
+            else if (paso.tipo == TipoPasoLeccion.MemoriaUchEspanol) RenderizarMemoria(paso);
             else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo)) RenderizarEmparejamiento(paso);
             else if (TipoPasoLeccion.EsWordBank(paso.tipo)) RenderizarWordBank(paso);
             else if (paso.tipo == TipoPasoLeccion.EscuchaYRepiteAsr) RenderizarPresentacion(paso, true);
@@ -102,11 +111,12 @@ namespace Assets.Scripts.UI.LeccionBase
             PalabraData palabra = CorpusRepository.ObtenerPalabra(paso.objetivo_id);
             actividad.Configurar(paso, palabra);
             actividad.OnAudioClicked += () => ReproducirPalabra(palabra?.id);
+            actividad.OnFormaAudioClicked += ReproducirPalabra;
             actividad.OnPracticarVozClicked += () =>
                 Debug.Log("[LeccionBasePresenter] La práctica ASR es opcional y se integrará en la Semana 6.");
             actividad.OnContinuarClicked += AvanzarPaso;
 
-            if (!practicaOpcional && palabra != null)
+            if (!practicaOpcional && palabra != null && ConfiguracionRepository.Obtener().audio_automatico)
                 ReproducirPalabra(palabra.id);
         }
 
@@ -190,12 +200,32 @@ namespace Assets.Scripts.UI.LeccionBase
                 ReproducirOracion(datos.AudioOracionId);
         }
 
+        private void RenderizarMemoria(PasoLeccionData paso)
+        {
+            var actividad = view.InstanciarMemoria();
+            if (actividad == null) return;
+            Dictionary<string, string> pares = ActividadLeccionService.CrearPares(paso);
+            if (pares.Count == 0)
+            {
+                Debug.LogError("[LeccionBasePresenter] La actividad de memoria no produjo pares.");
+                enabled = false;
+                return;
+            }
+            actividad.Configurar(pares);
+            actividad.OnMemoriaCompletada += completada =>
+            {
+                ResultadoEvaluacion resultado =
+                    MotorEvaluacion.EvaluarSeleccionExacta("completo", completada ? "completo" : "incompleto");
+                RegistrarYMostrarFeedback(resultado, "¡Memoria completada!");
+            };
+        }
+
         private void RegistrarYMostrarFeedback(ResultadoEvaluacion resultado, string detalle)
         {
+            if (_esperandoFeedback) return;
             _gestorLeccion.RegistrarResultadoPaso(resultado.aprobado);
             _esperandoFeedback = true;
             view.MostrarFeedback(resultado.colorSemaforo, detalle, resultado.porcentajeSimilitud, resultado.textoEsperado);
-            AudioService.Instance.ReproducirEfecto(resultado.colorSemaforo);
         }
 
         private void AvanzarTrasFeedback()
@@ -227,6 +257,16 @@ namespace Assets.Scripts.UI.LeccionBase
         private static void ReproducirOracion(string id)
         {
             if (!string.IsNullOrEmpty(id)) AudioService.Instance.ReproducirOracion(id);
+        }
+
+        private void SolicitarSalida() => view.MostrarConfirmacionSalida(true);
+
+        private void CancelarSalida() => view.MostrarConfirmacionSalida(false);
+
+        private void ConfirmarSalida()
+        {
+            _gestorLeccion?.GuardarEstadoActual();
+            VolverAlMapa();
         }
 
         private void VolverAlMapa() => NavigationService.IrAMain(PaginaMain.Lecciones);

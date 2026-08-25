@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Assets.Scripts.PLN;
 
@@ -12,22 +13,34 @@ namespace Assets.Scripts.ASR
     {
         public static ResultadoEvaluacion EvaluarPronunciacion(string esperado, AudioClip audioUsuario, IReconocedorVoz asr)
         {
-            if (asr == null || !asr.EstaDisponible() || audioUsuario == null)
-            {
-                // Si el ASR no está disponible, no bloquear la experiencia
-                return new ResultadoEvaluacion
-                {
-                    aprobado = true,
-                    porcentajeSimilitud = 100f,
-                    colorSemaforo = "verde",
-                    textoEsperado = esperado,
-                    textoIngresado = "(Práctica no evaluada / ASR opcional)",
-                    origenEntrada = "voz"
-                };
-            }
+            if (asr == null || audioUsuario == null)
+                return CrearResultadoNoEvaluado(esperado);
 
-            string transcrito = asr.TranscribirAudio(audioUsuario);
-            return MotorEvaluacion.EvaluarTexto(esperado, transcrito, origenEntrada: "voz");
+            try
+            {
+                if (!asr.EstaDisponible()) return CrearResultadoNoEvaluado(esperado);
+                string transcrito = asr.TranscribirAudio(audioUsuario);
+                return MotorEvaluacion.EvaluarTexto(esperado, transcrito, origenEntrada: "voz");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[EvaluadorVoz] La práctica no pudo evaluarse: {ex.Message}");
+                return CrearResultadoNoEvaluado(esperado);
+            }
+        }
+
+        private static ResultadoEvaluacion CrearResultadoNoEvaluado(string esperado)
+        {
+            return new ResultadoEvaluacion
+            {
+                evaluado = false,
+                aprobado = true,
+                porcentajeSimilitud = 0f,
+                colorSemaforo = "neutral",
+                textoEsperado = esperado,
+                textoIngresado = "(Práctica no evaluada / ASR opcional)",
+                origenEntrada = "voz"
+            };
         }
     }
 }

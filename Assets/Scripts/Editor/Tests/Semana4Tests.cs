@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using UnityEngine;
+using Assets.Scripts.ASR;
 using Assets.Scripts.Core.Services;
 using Assets.Scripts.Data.Persistencia;
 using Assets.Scripts.Lecciones;
@@ -123,6 +126,71 @@ namespace Assets.Scripts.Editor.Tests
             Assert.IsTrue(perfil.onboarding_completado);
             Assert.AreEqual("L05", progreso.ultima_leccion_id);
             Assert.AreEqual(7, progreso.lecciones.Single().paso_actual);
+        }
+
+        [Test]
+        public void AsrNoDisponible_DevuelveResultadoNeutralNoBloqueante()
+        {
+            var resultado = EvaluarConClip(new ReconocedorSimulado(disponible: false));
+            Assert.IsFalse(resultado.evaluado);
+            Assert.IsTrue(resultado.aprobado);
+            Assert.AreEqual(0f, resultado.porcentajeSimilitud);
+            Assert.AreEqual("neutral", resultado.colorSemaforo);
+            Assert.AreEqual("voz", resultado.origenEntrada);
+        }
+
+        [Test]
+        public void AsrDisponible_DelegaLaEvaluacionAlMotorDeTexto()
+        {
+            var resultado = EvaluarConClip(new ReconocedorSimulado(true, "palitak"));
+            Assert.IsTrue(resultado.evaluado);
+            Assert.IsTrue(resultado.aprobado);
+            Assert.AreEqual(100f, resultado.porcentajeSimilitud);
+            Assert.AreEqual("verde", resultado.colorSemaforo);
+        }
+
+        [Test]
+        public void FalloDelBindingAsr_NoPropagaLaExcepcionNiBloquea()
+        {
+            var resultado = EvaluarConClip(new ReconocedorSimulado(true, lanzarError: true));
+            Assert.IsFalse(resultado.evaluado);
+            Assert.IsTrue(resultado.aprobado);
+            Assert.AreEqual("neutral", resultado.colorSemaforo);
+        }
+
+        private static ResultadoEvaluacion EvaluarConClip(IReconocedorVoz reconocedor)
+        {
+            AudioClip clip = AudioClip.Create("prueba_asr", 160, 1, 16000, false);
+            try
+            {
+                return EvaluadorVoz.EvaluarPronunciacion("palitak", clip, reconocedor);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(clip);
+            }
+        }
+
+        private sealed class ReconocedorSimulado : IReconocedorVoz
+        {
+            private readonly bool _disponible;
+            private readonly string _transcripcion;
+            private readonly bool _lanzarError;
+
+            public ReconocedorSimulado(bool disponible, string transcripcion = "", bool lanzarError = false)
+            {
+                _disponible = disponible;
+                _transcripcion = transcripcion;
+                _lanzarError = lanzarError;
+            }
+
+            public bool EstaDisponible() => _disponible;
+
+            public string TranscribirAudio(AudioClip clip)
+            {
+                if (_lanzarError) throw new InvalidOperationException("Fallo nativo simulado");
+                return _transcripcion;
+            }
         }
 
         private static void VerificarSeleccion(

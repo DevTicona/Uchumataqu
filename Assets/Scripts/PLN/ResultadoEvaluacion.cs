@@ -9,6 +9,7 @@ namespace Assets.Scripts.PLN
     [Serializable]
     public class ResultadoEvaluacion
     {
+        public bool evaluado = true;
         public bool aprobado;
         public float porcentajeSimilitud;
         public string colorSemaforo; // "verde" (>=85%) | "amarillo" (60-84%) | "rojo" (<60%)

@@ -66,6 +66,11 @@ namespace Assets.Scripts.Editor.Tests
             EjecutarPrueba("Logros: umbrales canónicos", () => semana4.Logros_UsanUmbralesCanonicosYProgresoAcotado(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Perfil: edición validada sin alterar progreso", () => semana4.EdicionPerfil_ValidaTodosLosCamposSinAlterarProgreso(), ref pruebasPasadas, ref totalPruebas);
 
+            // 7. Lógica ASR no bloqueante
+            EjecutarPrueba("ASR: ausencia produce resultado neutral", () => semana4.AsrNoDisponible_DevuelveResultadoNeutralNoBloqueante(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("ASR: transcripción delegada al motor PLN", () => semana4.AsrDisponible_DelegaLaEvaluacionAlMotorDeTexto(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("ASR: fallo nativo no bloqueante", () => semana4.FalloDelBindingAsr_NoPropagaLaExcepcionNiBloquea(), ref pruebasPasadas, ref totalPruebas);
+
             string color = pruebasPasadas == totalPruebas ? "green" : "red";
             string estado = pruebasPasadas == totalPruebas ? "PASS" : "CON FALLOS";
             Debug.Log($"<color={color}><b>=== [TEST RUNNER] RESUMEN: {pruebasPasadas}/{totalPruebas} PRUEBAS EXITOSAS ({estado}) ===</b></color>");

@@ -51,7 +51,7 @@ namespace Assets.Scripts.UI.Main
             if (view.Ajustes != null)
             {
                 view.Ajustes.OnSolicitarActualizacion += RefrescarAjustes;
-                view.Ajustes.OnGuardarNombre += GuardarNombre;
+                view.Ajustes.OnGuardarPerfil += GuardarPerfil;
                 view.Ajustes.OnCambiarVolumen += CambiarVolumen;
                 view.Ajustes.OnCambiarAudioAutomatico += CambiarAudioAutomatico;
                 view.Ajustes.OnCambiarVibracion += CambiarVibracion;
@@ -78,7 +78,7 @@ namespace Assets.Scripts.UI.Main
             if (view.Ajustes != null)
             {
                 view.Ajustes.OnSolicitarActualizacion -= RefrescarAjustes;
-                view.Ajustes.OnGuardarNombre -= GuardarNombre;
+                view.Ajustes.OnGuardarPerfil -= GuardarPerfil;
                 view.Ajustes.OnCambiarVolumen -= CambiarVolumen;
                 view.Ajustes.OnCambiarAudioAutomatico -= CambiarAudioAutomatico;
                 view.Ajustes.OnCambiarVibracion -= CambiarVibracion;
@@ -134,16 +134,30 @@ namespace Assets.Scripts.UI.Main
             var configuracion = ConfiguracionRepository.Obtener();
             view.Ajustes?.Mostrar(
                 perfil?.nombre,
+                perfil?.rango_edad,
+                perfil?.avatar_id,
                 configuracion.volumen_general,
                 configuracion.audio_automatico,
                 configuracion.vibracion);
         }
 
-        private void GuardarNombre(string nombre)
+        private void GuardarPerfil(string nombre, string rangoEdad, string avatarId)
         {
             PerfilUsuario perfil = PerfilRepository.CargarPerfil() ?? new PerfilUsuario();
-            perfil.nombre = nombre;
+            ResultadoValidacionPerfil validacion = PerfilOnboardingService.AplicarEdicion(
+                perfil,
+                nombre,
+                rangoEdad,
+                avatarId);
+            if (!validacion.Valido)
+            {
+                view.Ajustes?.MostrarErrorPerfil(validacion.Mensaje);
+                return;
+            }
+
             PerfilRepository.GuardarPerfil(perfil);
+            view.Ajustes?.MostrarPerfilGuardado();
+            RefrescarInicio();
             AudioService.Instance.ReproducirEfecto("click_boton");
         }
 

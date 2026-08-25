@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using Assets.Scripts.Core.Services;
 using Assets.Scripts.Data.Persistencia;
 using Assets.Scripts.Lecciones;
 using Assets.Scripts.Persistencia;
@@ -85,6 +86,43 @@ namespace Assets.Scripts.Editor.Tests
             Assert.IsTrue(logros.Single(logro => logro.Id == "lecciones_5").Desbloqueado);
             Assert.AreEqual(6, logros.Single(logro => logro.Id == "lecciones_14").ProgresoActual);
             Assert.IsTrue(logros.Single(logro => logro.Id == "ra_1").Desbloqueado);
+        }
+
+        [Test]
+        public void EdicionPerfil_ValidaTodosLosCamposSinAlterarProgreso()
+        {
+            var perfil = new PerfilUsuario
+            {
+                nombre = "Inti",
+                rango_edad = "10–12",
+                avatar_id = "avatar_01",
+                onboarding_completado = true
+            };
+            var progreso = new ProgresoUsuario
+            {
+                ultima_leccion_id = "L05",
+                lecciones = new List<ProgresoLeccionData>
+                {
+                    new ProgresoLeccionData { leccion_id = "L05", estado = "en_progreso", paso_actual = 7 }
+                }
+            };
+
+            Assert.IsFalse(PerfilOnboardingService.AplicarEdicion(perfil, "A", "13–17", "avatar_02").Valido);
+            Assert.AreEqual("Inti", perfil.nombre, "Una edición inválida no debe alterar el perfil existente.");
+            Assert.IsFalse(PerfilOnboardingService.ValidarPerfilCompleto("Ana", "", "avatar_02").Valido);
+            Assert.IsFalse(PerfilOnboardingService.ValidarPerfilCompleto("Ana", "13–17", "").Valido);
+            Assert.IsTrue(PerfilOnboardingService.AplicarEdicion(
+                perfil,
+                "  Ana  ",
+                "13–17",
+                "avatar_02").Valido);
+
+            Assert.AreEqual("Ana", perfil.nombre);
+            Assert.AreEqual("13–17", perfil.rango_edad);
+            Assert.AreEqual("avatar_02", perfil.avatar_id);
+            Assert.IsTrue(perfil.onboarding_completado);
+            Assert.AreEqual("L05", progreso.ultima_leccion_id);
+            Assert.AreEqual(7, progreso.lecciones.Single().paso_actual);
         }
 
         private static void VerificarSeleccion(

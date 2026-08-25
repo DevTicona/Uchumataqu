@@ -58,6 +58,14 @@ namespace Assets.Scripts.Editor.Tests
             EjecutarPrueba("Nombres propios: solo contexto, sin familia ni audio léxico", () => semana3.NombresPropios_NoSeEnsenanComoFamiliasNiTienenAudioLexico(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Semana 3: composición de escenas", () => semana3.EscenasSemana3_TienenComposicionSerializada(), ref pruebasPasadas, ref totalPruebas);
 
+            // 6. Semana 4
+            var semana4 = new Semana4Tests();
+            semana4.PrepararCorpus();
+            EjecutarPrueba("L01-L27: construcción de actividades", () => semana4.L01AL27_ConstruyenTodosLosPasosEvaluables(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Inicio: reanudación por estado persistido", () => semana4.Inicio_PriorizaLeccionEnProgresoAunqueHayaHuecosCompletados(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Logros: umbrales canónicos", () => semana4.Logros_UsanUmbralesCanonicosYProgresoAcotado(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Perfil: edición validada sin alterar progreso", () => semana4.EdicionPerfil_ValidaTodosLosCamposSinAlterarProgreso(), ref pruebasPasadas, ref totalPruebas);
+
             string color = pruebasPasadas == totalPruebas ? "green" : "red";
             string estado = pruebasPasadas == totalPruebas ? "PASS" : "CON FALLOS";
             Debug.Log($"<color={color}><b>=== [TEST RUNNER] RESUMEN: {pruebasPasadas}/{totalPruebas} PRUEBAS EXITOSAS ({estado}) ===</b></color>");

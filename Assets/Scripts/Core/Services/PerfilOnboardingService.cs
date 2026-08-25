@@ -1,3 +1,5 @@
+using Assets.Scripts.Data.Persistencia;
+
 namespace Assets.Scripts.Core.Services
 {
     public readonly struct ResultadoValidacionPerfil
@@ -36,5 +38,33 @@ namespace Assets.Scripts.Core.Services
             string.IsNullOrWhiteSpace(avatarId)
                 ? ResultadoValidacionPerfil.Error("avatar", "Selecciona un avatar para continuar.")
                 : ResultadoValidacionPerfil.Exito();
+
+        public static ResultadoValidacionPerfil ValidarPerfilCompleto(
+            string nombre,
+            string rangoEdad,
+            string avatarId)
+        {
+            ResultadoValidacionPerfil datos = ValidarDatos(nombre, rangoEdad);
+            return datos.Valido ? ValidarAvatar(avatarId) : datos;
+        }
+
+        public static ResultadoValidacionPerfil AplicarEdicion(
+            PerfilUsuario perfil,
+            string nombre,
+            string rangoEdad,
+            string avatarId)
+        {
+            if (perfil == null)
+                return ResultadoValidacionPerfil.Error("perfil", "No se pudo cargar el perfil.");
+
+            ResultadoValidacionPerfil validacion = ValidarPerfilCompleto(nombre, rangoEdad, avatarId);
+            if (!validacion.Valido) return validacion;
+
+            perfil.nombre = nombre.Trim();
+            perfil.edad = 0;
+            perfil.rango_edad = rangoEdad;
+            perfil.avatar_id = avatarId;
+            return ResultadoValidacionPerfil.Exito();
+        }
     }
 }

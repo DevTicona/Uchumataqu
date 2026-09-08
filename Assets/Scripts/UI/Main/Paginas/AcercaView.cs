@@ -1,11 +1,10 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Main.Paginas
 {
     /// <summary>
-    /// Vista de la pestaña de Acerca de / Créditos en 02_Main.
-    /// Especificado en Docs/UI/08-perfil-logros-ajustes-acerca.md §5.
+    /// Presenta la informacion comunitaria, institucional y tecnica de la aplicacion.
     /// </summary>
     public class AcercaView : MonoBehaviour
     {
@@ -21,17 +20,25 @@ namespace Assets.Scripts.UI.Main.Paginas
                 txtTitulo.text = "Acerca de Uchumataqu";
 
             if (txtCreditosComunidad != null)
+            {
                 txtCreditosComunidad.text =
-                    "Aplicación educativa dedicada a la lengua uchumataqu y a la Comunidad Irohito Urus. " +
-                    "Los datos de perfil y progreso se guardan localmente en el dispositivo.";
+                    "Aplicacion educativa dedicada a la lengua uchumataqu y a la Comunidad Irohito Urus. " +
+                    "Apoya la preservacion y el aprendizaje de la lengua.\n\n" +
+                    "El perfil y el progreso se guardan solamente en este dispositivo.";
+            }
 
             if (txtCreditosInstitucionales != null)
+            {
                 txtCreditosInstitucionales.text =
-                    "Proyecto de Grado con apoyo documental de FUNPROEIB ANDES. " +
-                    "Los créditos nominales y las fuentes lingüísticas se completarán tras su validación.";
+                    "Institucion: FUNPROEIB Andes\n" +
+                    "Comunidad: Irohito Urus\n" +
+                    "Modalidad: Proyecto de grado\n" +
+                    "Fuentes: corpus linguistico local validado para el proyecto\n" +
+                    "Tecnologia: Unity 6, C#, Addressables y AR Foundation";
+            }
 
             if (txtVersionApp != null)
-                txtVersionApp.text = $"Versión {Application.version} — 100% Offline";
+                txtVersionApp.text = $"Version {Application.version} - 100% offline";
         }
     }
 }

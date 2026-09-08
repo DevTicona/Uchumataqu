@@ -17,7 +17,7 @@ namespace Assets.Scripts.UI.Main
 
         private PaginaMain _paginaActual = PaginaMain.Inicio;
 
-        private void Start()
+        private async void Start()
         {
             if (view == null || backHandler == null)
             {
@@ -26,9 +26,19 @@ namespace Assets.Scripts.UI.Main
                 return;
             }
 
+            if (!CorpusRepository.EstaInicializado && !await CorpusRepository.InicializarAsync())
+            {
+                Debug.LogError("[MainPresenter] No se pudo inicializar el corpus para mostrar la escena Main.");
+                enabled = false;
+                return;
+            }
+
+            if (this == null) return;
             SuscribirEventos();
             backHandler.Configurar(OnBackPresionado);
-            CambiarPagina(ContextoNavegacion.PaginaDestino);
+            PaginaMain paginaDestino = ContextoNavegacion.PaginaDestino;
+            ContextoNavegacion.PaginaDestino = PaginaMain.Inicio;
+            CambiarPagina(paginaDestino);
         }
 
         private void OnDestroy() => DesuscribirEventos();
@@ -38,19 +48,15 @@ namespace Assets.Scripts.UI.Main
             if (view.BottomNav != null) view.BottomNav.OnTabSelected += CambiarPagina;
             if (view.Inicio != null)
             {
-                view.Inicio.OnSolicitarActualizacion += RefrescarInicio;
                 view.Inicio.OnContinuarLeccion += IrALeccion;
             }
             if (view.MapaLecciones != null)
             {
-                view.MapaLecciones.OnSolicitarActualizacion += RefrescarMapa;
                 view.MapaLecciones.OnLeccionSeleccionada += IrALeccion;
                 view.MapaLecciones.OnHitoRaSeleccionado += IrAEscenarioRa;
             }
-            if (view.Logros != null) view.Logros.OnSolicitarActualizacion += RefrescarLogros;
             if (view.Ajustes != null)
             {
-                view.Ajustes.OnSolicitarActualizacion += RefrescarAjustes;
                 view.Ajustes.OnGuardarPerfil += GuardarPerfil;
                 view.Ajustes.OnCambiarVolumen += CambiarVolumen;
                 view.Ajustes.OnCambiarAudioAutomatico += CambiarAudioAutomatico;
@@ -65,19 +71,15 @@ namespace Assets.Scripts.UI.Main
             if (view.BottomNav != null) view.BottomNav.OnTabSelected -= CambiarPagina;
             if (view.Inicio != null)
             {
-                view.Inicio.OnSolicitarActualizacion -= RefrescarInicio;
                 view.Inicio.OnContinuarLeccion -= IrALeccion;
             }
             if (view.MapaLecciones != null)
             {
-                view.MapaLecciones.OnSolicitarActualizacion -= RefrescarMapa;
                 view.MapaLecciones.OnLeccionSeleccionada -= IrALeccion;
                 view.MapaLecciones.OnHitoRaSeleccionado -= IrAEscenarioRa;
             }
-            if (view.Logros != null) view.Logros.OnSolicitarActualizacion -= RefrescarLogros;
             if (view.Ajustes != null)
             {
-                view.Ajustes.OnSolicitarActualizacion -= RefrescarAjustes;
                 view.Ajustes.OnGuardarPerfil -= GuardarPerfil;
                 view.Ajustes.OnCambiarVolumen -= CambiarVolumen;
                 view.Ajustes.OnCambiarAudioAutomatico -= CambiarAudioAutomatico;
@@ -88,7 +90,9 @@ namespace Assets.Scripts.UI.Main
 
         public void CambiarPagina(PaginaMain pagina)
         {
+            if (!System.Enum.IsDefined(typeof(PaginaMain), pagina)) pagina = PaginaMain.Inicio;
             _paginaActual = pagina;
+            view.MostrarDialogoSalida(false);
             view.MostrarPagina(pagina);
             switch (pagina)
             {
@@ -156,7 +160,6 @@ namespace Assets.Scripts.UI.Main
             PerfilRepository.GuardarPerfil(perfil);
             view.Ajustes?.MostrarPerfilGuardado();
             RefrescarInicio();
-            AudioService.Instance.ReproducirEfecto("click_boton");
         }
 
         private static void CambiarVolumen(float volumen)
@@ -180,15 +183,16 @@ namespace Assets.Scripts.UI.Main
             ConfiguracionRepository.Guardar(configuracion);
         }
 
-        private static void ReiniciarProgreso()
+        private void ReiniciarProgreso()
         {
             ProgresoRepository.ReiniciarProgreso();
-            NavigationService.IrABootstrap();
+            RefrescarMapa();
+            RefrescarLogros();
+            CambiarPagina(PaginaMain.Inicio);
         }
 
         private static void IrALeccion(string id)
         {
-            AudioService.Instance.ReproducirEfecto("click_boton");
             NavigationService.IrALeccion(id);
         }
 
@@ -196,7 +200,8 @@ namespace Assets.Scripts.UI.Main
 
         private void OnBackPresionado()
         {
-            if (_paginaActual != PaginaMain.Inicio) CambiarPagina(PaginaMain.Inicio);
+            if (view.DialogoSalidaVisible) view.MostrarDialogoSalida(false);
+            else if (_paginaActual != PaginaMain.Inicio) CambiarPagina(PaginaMain.Inicio);
             else view.MostrarDialogoSalida(true);
         }
     }

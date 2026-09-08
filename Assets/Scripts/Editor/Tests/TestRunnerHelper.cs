@@ -46,7 +46,8 @@ namespace Assets.Scripts.Editor.Tests
             EjecutarPrueba("L01: contrato completo válido", () => estabilizacion.L01_TodosSusPasosTienenContratoValido(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("RA: hitos curriculares canónicos", () => estabilizacion.EscenariosRa_RespetanLosHitosCanonicos(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Escenas: una View principal por escena", () => estabilizacion.Escenas_TienenUnaUnicaViewPrincipal(), ref pruebasPasadas, ref totalPruebas);
-            EjecutarPrueba("Addressables: datos y 386 audios vigentes", () => estabilizacion.Addressables_ContieneDatosYTodosLosAudiosDisponibles(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Addressables: datos y todos los audios vigentes", () => estabilizacion.Addressables_ContieneDatosYTodosLosAudiosDisponibles(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Main: cinco pestanas y dialogos operativos", () => estabilizacion.Main_ContieneLasCincoPestanasYDialogosOperativos(), ref pruebasPasadas, ref totalPruebas);
 
             // 5. Semana 3
             var semana3 = new Semana3Tests();

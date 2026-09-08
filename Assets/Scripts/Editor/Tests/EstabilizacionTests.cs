@@ -102,8 +102,27 @@ namespace Assets.Scripts.Editor.Tests
                 StringAssert.Contains($"m_Address: {direccion}", datos);
 
             string audios = File.ReadAllText("Assets/AddressableAssetsData/AssetGroups/Audios.asset");
-            Assert.AreEqual(386, audios.Split(new[] { "m_Address: audio_" }, System.StringSplitOptions.None).Length - 1,
-                "El catálogo debe contener exactamente los 386 clips requeridos por el corpus actual.");
+            int clipsDisponibles = Directory.GetFiles("Assets/Content/Audio", "*.wav", SearchOption.AllDirectories).Length;
+            int clipsCatalogados = audios.Split(new[] { "m_Address: audio_" }, System.StringSplitOptions.None).Length - 1;
+            Assert.AreEqual(clipsDisponibles, clipsCatalogados,
+                "El catalogo debe contener todos los clips disponibles, sin depender de una cifra obsoleta.");
+        }
+
+        [Test]
+        public void Main_ContieneLasCincoPestanasYDialogosOperativos()
+        {
+            string escena = File.ReadAllText("Assets/Scenes/02_Main.unity");
+            foreach (string nombre in new[]
+                     {
+                         "PageInicio", "PageLecciones", "PageLogros", "PageAjustes", "PageAcerca",
+                         "BtnInicio", "BtnLecciones", "BtnLogros", "BtnAjustes", "BtnAcerca",
+                         "BottomNav", "ScrollMap", "ScrollLogros", "DialogoConfirmacionReinicio", "DialogoSalida",
+                         "BtnConfirmarReinicio", "BtnCancelarReinicio", "BtnConfirmarSalir", "BtnCancelarSalir"
+                     })
+            {
+                int cantidad = escena.Split(new[] { $"m_Name: {nombre}" }, System.StringSplitOptions.None).Length - 1;
+                Assert.AreEqual(1, cantidad, $"02_Main debe contener exactamente un objeto {nombre}.");
+            }
         }
 
         private static void ValidarSeleccion(string leccionId, ActividadSeleccionData actividad)

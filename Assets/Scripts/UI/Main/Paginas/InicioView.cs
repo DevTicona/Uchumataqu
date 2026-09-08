@@ -81,6 +81,18 @@ namespace Assets.Scripts.UI.Main.Paginas
 
             if (txtSubtituloContinuar != null)
                 txtSubtituloContinuar.text = datos.TituloLeccion;
+
+            if (btnContinuarLeccion != null)
+            {
+                btnContinuarLeccion.interactable = !string.IsNullOrWhiteSpace(datos.LeccionId);
+                TMP_Text etiquetaBoton = btnContinuarLeccion.GetComponentInChildren<TMP_Text>(true);
+                if (etiquetaBoton != null)
+                {
+                    etiquetaBoton.text = datos.CurriculoCompletado
+                        ? "REPASAR LECCION 27"
+                        : datos.EsContinuacion ? "CONTINUAR" : "COMENZAR";
+                }
+            }
         }
 
         private void OnContinuarLeccionClicked()

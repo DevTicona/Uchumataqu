@@ -58,7 +58,7 @@ namespace Assets.Scripts.UI.Main.Paginas
             var item = go.GetComponent<IslaItemView>() ?? go.AddComponent<IslaItemView>();
             item.InicializarRuntime();
 
-            item.ConfigurarLeccion(datos.LeccionId, datos.Numero, datos.Titulo, datos.Estado);
+            item.ConfigurarLeccion(datos.LeccionId, datos.Numero, datos.Titulo, datos.Estado, datos.EsActual);
             item.OnLeccionSeleccionada += NotificarLeccion;
             _islasInstanciadas.Add(item);
             _elementosInstanciados.Add(go);
@@ -71,7 +71,7 @@ namespace Assets.Scripts.UI.Main.Paginas
             var item = go.GetComponent<IslaItemView>() ?? go.AddComponent<IslaItemView>();
             item.InicializarRuntime();
 
-            item.ConfigurarHitoRA(datos.EscenarioRaId, datos.Titulo, datos.Estado);
+            item.ConfigurarHitoRA(datos.EscenarioRaId, datos.Titulo, datos.Estado, datos.EsActual);
             item.OnHitoRaSeleccionado += NotificarHitoRa;
             _islasInstanciadas.Add(item);
             _elementosInstanciados.Add(go);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Assets.Scripts.Core;
 using Assets.Scripts.UI.Main.Paginas;
 
@@ -28,6 +29,29 @@ namespace Assets.Scripts.UI.Main
         public MapaLeccionesView MapaLecciones => pageLecciones != null ? pageLecciones.GetComponent<MapaLeccionesView>() : null;
         public LogrosView Logros => pageLogros != null ? pageLogros.GetComponent<LogrosView>() : null;
         public AjustesView Ajustes => pageAjustes != null ? pageAjustes.GetComponent<AjustesView>() : null;
+        public bool DialogoSalidaVisible => dialogoSalida != null && dialogoSalida.activeSelf;
+
+        private void Awake()
+        {
+            ConfigurarDialogoSalida();
+            MostrarDialogoSalida(false);
+            foreach (Button boton in GetComponentsInChildren<Button>(true))
+            {
+                ColorBlock colores = boton.colors;
+                if (colores.highlightedColor.maxColorComponent <= 1f &&
+                    colores.pressedColor.maxColorComponent <= 1f)
+                    continue;
+
+                Color normal = colores.normalColor;
+                colores.highlightedColor = new Color(
+                    Mathf.Min(1f, normal.r * 1.1f),
+                    Mathf.Min(1f, normal.g * 1.1f),
+                    Mathf.Min(1f, normal.b * 1.1f),
+                    normal.a);
+                colores.pressedColor = new Color(normal.r * 0.85f, normal.g * 0.85f, normal.b * 0.85f, normal.a);
+                boton.colors = colores;
+            }
+        }
 
         public void MostrarPagina(PaginaMain pagina)
         {
@@ -50,6 +74,25 @@ namespace Assets.Scripts.UI.Main
         public void ConfirmarSalirApp()
         {
             Application.Quit();
+        }
+
+        public void CancelarSalirApp() => MostrarDialogoSalida(false);
+
+        private void ConfigurarDialogoSalida()
+        {
+            if (dialogoSalida == null) return;
+
+            Button confirmar = BuscarDescendiente(dialogoSalida.transform, "BtnConfirmarSalir")?.GetComponent<Button>();
+            Button cancelar = BuscarDescendiente(dialogoSalida.transform, "BtnCancelarSalir")?.GetComponent<Button>();
+            if (confirmar != null) confirmar.onClick.AddListener(ConfirmarSalirApp);
+            if (cancelar != null) cancelar.onClick.AddListener(CancelarSalirApp);
+        }
+
+        private static Transform BuscarDescendiente(Transform raiz, string nombre)
+        {
+            foreach (Transform descendiente in raiz.GetComponentsInChildren<Transform>(true))
+                if (descendiente.name == nombre) return descendiente;
+            return null;
         }
     }
 }

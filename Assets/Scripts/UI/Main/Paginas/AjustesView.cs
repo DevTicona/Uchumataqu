@@ -117,12 +117,19 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         private void CrearControlesOpcionalesSiFaltan()
         {
-            Transform contenedor = sliderVolumenGeneral != null ? sliderVolumenGeneral.transform.parent : transform;
-            CrearControlesPerfilSiFaltan(contenedor);
+            Transform contenedorPerfil = inputNombre != null ? inputNombre.transform.parent : transform;
+            Transform contenedorAudio = sliderVolumenGeneral != null ? sliderVolumenGeneral.transform.parent : transform;
+            CrearControlesPerfilSiFaltan(contenedorPerfil);
             if (toggleAudioAutomatico == null)
-                toggleAudioAutomatico = CrearToggle(contenedor, "ToggleAudioAutomatico", "Reproducir audio automáticamente");
+                toggleAudioAutomatico = CrearToggle(contenedorAudio, "ToggleAudioAutomatico", "Reproducir audio automáticamente");
             if (toggleVibracion == null)
-                toggleVibracion = CrearToggle(contenedor, "ToggleVibracion", "Vibración");
+                toggleVibracion = CrearToggle(contenedorAudio, "ToggleVibracion", "Vibración");
+
+            if (contenedorAudio is RectTransform rectAudio)
+                rectAudio.sizeDelta = new Vector2(rectAudio.sizeDelta.x, 300f);
+
+            if (transform.Find("VersionApp") == null)
+                CrearTexto(transform, "VersionApp", 16f).text = $"Uchumataqu · Versión {Application.version} · Offline";
         }
 
         private void CrearControlesPerfilSiFaltan(Transform contenedor)
@@ -133,14 +140,18 @@ namespace Assets.Scripts.UI.Main.Paginas
             if (selectorEdad != null) selectorEdad.gameObject.SetActive(false);
 
             Transform selectorAvatar = contenedor.Find("SelectorAvatar") ??
-                                        CrearSelector(contenedor, "SelectorAvatar", "Avatar", 4, 56f);
+                                        CrearSelector(contenedor, "SelectorAvatar", "Avatar", 3, 112f);
             CrearBotonesSelector(
                 selectorAvatar,
                 PerfilOnboardingService.AvataresDisponibles,
                 _botonesAvatar,
                 SeleccionarAvatar);
 
-            _textoEstadoPerfil = CrearTexto(contenedor, "EstadoPerfil", 18f);
+            if (contenedor is RectTransform rectContenedor)
+                rectContenedor.sizeDelta = new Vector2(rectContenedor.sizeDelta.x, 400f);
+
+            _textoEstadoPerfil = contenedor.Find("EstadoPerfil")?.GetComponent<TMP_Text>() ??
+                                  CrearTexto(contenedor, "EstadoPerfil", 18f);
             _textoEstadoPerfil.gameObject.SetActive(false);
         }
 

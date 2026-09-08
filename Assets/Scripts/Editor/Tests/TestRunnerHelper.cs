@@ -56,7 +56,7 @@ namespace Assets.Scripts.Editor.Tests
             EjecutarPrueba("Mapa: 27 lecciones, 6 hitos y 6 regiones", () => semana3.Mapa_Crea27LeccionesSeisHitosYSeisRegiones(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Mapa: desbloqueo de RA1 y L07", () => semana3.Mapa_DesbloqueaRa1YL07TrasCompletarL01AL06(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("L01-L05: construcción de actividades", () => semana3.L01AL05_ConstruyenTodosSusPasosEvaluables(), ref pruebasPasadas, ref totalPruebas);
-            EjecutarPrueba("Nombres propios: solo contexto, sin familia ni audio léxico", () => semana3.NombresPropios_NoSeEnsenanComoFamiliasNiTienenAudioLexico(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Nombres propios: solo contexto, sin familia ni objetivo compilado", () => semana3.NombresPropios_NoSeEnsenanComoFamiliasNiObjetivosCompilados(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Semana 3: composición de escenas", () => semana3.EscenasSemana3_TienenComposicionSerializada(), ref pruebasPasadas, ref totalPruebas);
 
             // 6. Semana 4

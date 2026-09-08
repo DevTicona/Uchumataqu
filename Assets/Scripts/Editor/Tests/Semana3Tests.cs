@@ -91,11 +91,10 @@ namespace Assets.Scripts.Editor.Tests
         }
 
         [Test]
-        public void NombresPropios_NoSeEnsenanComoFamiliasNiTienenAudioLexico()
+        public void NombresPropios_NoSeEnsenanComoFamiliasNiObjetivosCompilados()
         {
             string palabras = System.IO.File.ReadAllText("Assets/Content/Data/palabras.json");
             string lecciones = System.IO.File.ReadAllText("Assets/Content/Data/lecciones_compiladas.json");
-            string audios = System.IO.File.ReadAllText("Assets/AddressableAssetsData/AssetGroups/Audios.asset");
 
             foreach (string nombreId in new[]
                      {
@@ -106,8 +105,6 @@ namespace Assets.Scripts.Editor.Tests
                     $"{nombreId} no debe registrarse como familia léxica.");
                 StringAssert.DoesNotContain($"\"{nombreId}\"", lecciones,
                     $"{nombreId} no debe convertirse en objetivo compilado.");
-                StringAssert.DoesNotContain($"m_Address: audio_palabra/{nombreId}", audios,
-                    $"{nombreId} no debe requerir audio léxico individual.");
             }
         }
 

@@ -22,7 +22,6 @@ namespace Assets.Scripts.Editor.Tests
             var perfil = new PerfilUsuario
             {
                 nombre = "Inti",
-                rango_edad = "8-12",
                 avatar_id = "avatar_02",
                 onboarding_completado = true
             };
@@ -33,7 +32,6 @@ namespace Assets.Scripts.Editor.Tests
             var cargado = PerfilRepository.CargarPerfil();
             Assert.IsNotNull(cargado);
             Assert.AreEqual("Inti", cargado.nombre);
-            Assert.AreEqual("8-12", cargado.rango_edad);
             Assert.AreEqual("avatar_02", cargado.avatar_id);
             Assert.IsTrue(cargado.onboarding_completado);
         }

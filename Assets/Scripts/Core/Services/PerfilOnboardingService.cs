@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Assets.Scripts.Data.Persistencia;
 
 namespace Assets.Scripts.Core.Services
@@ -22,47 +24,56 @@ namespace Assets.Scripts.Core.Services
 
     public static class PerfilOnboardingService
     {
-        public static ResultadoValidacionPerfil ValidarDatos(string nombre, string rangoEdad)
+        private static readonly string[] Avatares =
+        {
+            "avatar_01",
+            "avatar_02",
+            "avatar_03",
+            "avatar_04",
+            "avatar_05",
+            "avatar_06"
+        };
+
+        private static readonly HashSet<string> AvatarIds =
+            new HashSet<string>(Avatares, StringComparer.Ordinal);
+
+        public static IReadOnlyList<string> AvataresDisponibles { get; } = Array.AsReadOnly(Avatares);
+
+        public static ResultadoValidacionPerfil ValidarNombre(string nombre)
         {
             string nombreLimpio = nombre?.Trim() ?? string.Empty;
             if (nombreLimpio.Length < 2)
                 return ResultadoValidacionPerfil.Error("nombre", "Escribe un nombre de al menos 2 caracteres.");
             if (nombreLimpio.Length > 30)
                 return ResultadoValidacionPerfil.Error("nombre", "El nombre no puede superar 30 caracteres.");
-            if (string.IsNullOrWhiteSpace(rangoEdad))
-                return ResultadoValidacionPerfil.Error("edad", "Selecciona un rango de edad.");
             return ResultadoValidacionPerfil.Exito();
         }
 
         public static ResultadoValidacionPerfil ValidarAvatar(string avatarId) =>
-            string.IsNullOrWhiteSpace(avatarId)
+            !AvatarIds.Contains(avatarId ?? string.Empty)
                 ? ResultadoValidacionPerfil.Error("avatar", "Selecciona un avatar para continuar.")
                 : ResultadoValidacionPerfil.Exito();
 
         public static ResultadoValidacionPerfil ValidarPerfilCompleto(
             string nombre,
-            string rangoEdad,
             string avatarId)
         {
-            ResultadoValidacionPerfil datos = ValidarDatos(nombre, rangoEdad);
-            return datos.Valido ? ValidarAvatar(avatarId) : datos;
+            ResultadoValidacionPerfil nombreValido = ValidarNombre(nombre);
+            return nombreValido.Valido ? ValidarAvatar(avatarId) : nombreValido;
         }
 
         public static ResultadoValidacionPerfil AplicarEdicion(
             PerfilUsuario perfil,
             string nombre,
-            string rangoEdad,
             string avatarId)
         {
             if (perfil == null)
                 return ResultadoValidacionPerfil.Error("perfil", "No se pudo cargar el perfil.");
 
-            ResultadoValidacionPerfil validacion = ValidarPerfilCompleto(nombre, rangoEdad, avatarId);
+            ResultadoValidacionPerfil validacion = ValidarPerfilCompleto(nombre, avatarId);
             if (!validacion.Valido) return validacion;
 
             perfil.nombre = nombre.Trim();
-            perfil.edad = 0;
-            perfil.rango_edad = rangoEdad;
             perfil.avatar_id = avatarId;
             return ResultadoValidacionPerfil.Exito();
         }

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using Assets.Scripts.Core.Services;
 using Assets.Scripts.Data.Persistencia;
 
 namespace Assets.Scripts.Persistencia
@@ -31,7 +32,9 @@ namespace Assets.Scripts.Persistencia
         public static bool ExistePerfil()
         {
             var perfil = ObtenerPerfil();
-            return perfil != null && perfil.onboarding_completado && !string.IsNullOrWhiteSpace(perfil.nombre);
+            return perfil != null &&
+                   perfil.onboarding_completado &&
+                   PerfilOnboardingService.ValidarPerfilCompleto(perfil.nombre, perfil.avatar_id).Valido;
         }
 
         public static PerfilUsuario ObtenerPerfil()
@@ -51,7 +54,11 @@ namespace Assets.Scripts.Persistencia
                 {
                     string json = File.ReadAllText(RutaArchivo);
                     var perfil = Assets.Scripts.Utils.JsonUtilityHelper.FromJson<PerfilUsuario>(json);
-                    if (perfil != null) return perfil;
+                    if (perfil != null)
+                    {
+                        perfil.version = 2;
+                        return perfil;
+                    }
                 }
             }
             catch (Exception ex)
@@ -77,12 +84,13 @@ namespace Assets.Scripts.Persistencia
             }
         }
 
-        public static void CrearOActualizar(string nombre, int edad, string rangoEdad, string avatarId, bool onboardingCompletado = true)
+        public static void CrearOActualizar(
+            string nombre,
+            string avatarId,
+            bool onboardingCompletado = true)
         {
             var perfil = ObtenerPerfil();
             perfil.nombre = nombre?.Trim() ?? "";
-            perfil.edad = edad;
-            perfil.rango_edad = rangoEdad;
             perfil.avatar_id = avatarId;
             perfil.onboarding_completado = onboardingCompletado;
             GuardarPerfil(perfil);

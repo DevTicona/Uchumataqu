@@ -22,10 +22,11 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void Onboarding_ValidaNombreUnicodeYAvatarExplicito()
         {
-            Assert.IsTrue(PerfilOnboardingService.ValidarDatos("Ñusta", "13 – 17 años").Valido);
-            Assert.IsFalse(PerfilOnboardingService.ValidarDatos("A", "13 – 17 años").Valido);
-            Assert.IsFalse(PerfilOnboardingService.ValidarDatos(new string('a', 31), "18+ años").Valido);
+            Assert.IsTrue(PerfilOnboardingService.ValidarNombre("Ñusta").Valido);
+            Assert.IsFalse(PerfilOnboardingService.ValidarNombre("A").Valido);
+            Assert.IsFalse(PerfilOnboardingService.ValidarNombre(new string('a', 31)).Valido);
             Assert.IsFalse(PerfilOnboardingService.ValidarAvatar(null).Valido);
+            Assert.IsFalse(PerfilOnboardingService.ValidarAvatar("avatar_99").Valido);
             Assert.IsTrue(PerfilOnboardingService.ValidarAvatar("avatar_04").Valido);
         }
 

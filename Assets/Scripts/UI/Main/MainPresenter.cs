@@ -134,20 +134,18 @@ namespace Assets.Scripts.UI.Main
             var configuracion = ConfiguracionRepository.Obtener();
             view.Ajustes?.Mostrar(
                 perfil?.nombre,
-                perfil?.rango_edad,
                 perfil?.avatar_id,
                 configuracion.volumen_general,
                 configuracion.audio_automatico,
                 configuracion.vibracion);
         }
 
-        private void GuardarPerfil(string nombre, string rangoEdad, string avatarId)
+        private void GuardarPerfil(string nombre, string avatarId)
         {
             PerfilUsuario perfil = PerfilRepository.CargarPerfil() ?? new PerfilUsuario();
             ResultadoValidacionPerfil validacion = PerfilOnboardingService.AplicarEdicion(
                 perfil,
                 nombre,
-                rangoEdad,
                 avatarId);
             if (!validacion.Valido)
             {

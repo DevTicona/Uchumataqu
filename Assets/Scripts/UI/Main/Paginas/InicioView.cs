@@ -1,7 +1,10 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Assets.Scripts.Core;
+using Assets.Scripts.Core.Services;
 using Assets.Scripts.UI.Main;
 
 namespace Assets.Scripts.UI.Main.Paginas
@@ -26,6 +29,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         [SerializeField] private TMP_Text txtContadorRA;
 
         private string _leccionSiguienteId = "L01";
+        private string _avatarSolicitado;
 
         public event Action<string> OnContinuarLeccion;
         public event Action OnSolicitarActualizacion;
@@ -47,6 +51,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         {
             if (datos == null) return;
             string nombre = string.IsNullOrEmpty(datos.Nombre) ? "Estudiante" : datos.Nombre;
+            _ = MostrarAvatarAsync(datos.AvatarId);
 
             if (txtSaludoUsuario != null)
             {
@@ -81,6 +86,26 @@ namespace Assets.Scripts.UI.Main.Paginas
         private void OnContinuarLeccionClicked()
         {
             OnContinuarLeccion?.Invoke(_leccionSiguienteId);
+        }
+
+        private async Task MostrarAvatarAsync(string avatarId)
+        {
+            if (imgAvatarUsuario == null || string.IsNullOrWhiteSpace(avatarId)) return;
+            _avatarSolicitado = avatarId;
+
+            try
+            {
+                Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(ContentAddress.Avatar(avatarId));
+                if (imgAvatarUsuario == null || _avatarSolicitado != avatarId) return;
+                imgAvatarUsuario.sprite = sprite;
+                imgAvatarUsuario.color = Color.white;
+                imgAvatarUsuario.preserveAspect = true;
+                imgAvatarUsuario.enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[InicioView] No se pudo cargar {avatarId}: {ex.Message}");
+            }
         }
     }
 }

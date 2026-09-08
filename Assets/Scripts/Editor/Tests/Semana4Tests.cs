@@ -97,7 +97,6 @@ namespace Assets.Scripts.Editor.Tests
             var perfil = new PerfilUsuario
             {
                 nombre = "Inti",
-                rango_edad = "10–12",
                 avatar_id = "avatar_01",
                 onboarding_completado = true
             };
@@ -110,18 +109,15 @@ namespace Assets.Scripts.Editor.Tests
                 }
             };
 
-            Assert.IsFalse(PerfilOnboardingService.AplicarEdicion(perfil, "A", "13–17", "avatar_02").Valido);
+            Assert.IsFalse(PerfilOnboardingService.AplicarEdicion(perfil, "A", "avatar_02").Valido);
             Assert.AreEqual("Inti", perfil.nombre, "Una edición inválida no debe alterar el perfil existente.");
-            Assert.IsFalse(PerfilOnboardingService.ValidarPerfilCompleto("Ana", "", "avatar_02").Valido);
-            Assert.IsFalse(PerfilOnboardingService.ValidarPerfilCompleto("Ana", "13–17", "").Valido);
+            Assert.IsFalse(PerfilOnboardingService.ValidarPerfilCompleto("Ana", "").Valido);
             Assert.IsTrue(PerfilOnboardingService.AplicarEdicion(
                 perfil,
                 "  Ana  ",
-                "13–17",
                 "avatar_02").Valido);
 
             Assert.AreEqual("Ana", perfil.nombre);
-            Assert.AreEqual("13–17", perfil.rango_edad);
             Assert.AreEqual("avatar_02", perfil.avatar_id);
             Assert.IsTrue(perfil.onboarding_completado);
             Assert.AreEqual("L05", progreso.ultima_leccion_id);

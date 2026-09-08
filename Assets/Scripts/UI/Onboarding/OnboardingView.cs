@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Assets.Scripts.Core;
+using Assets.Scripts.Core.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,22 +12,19 @@ namespace Assets.Scripts.UI.Onboarding
 {
     public class OnboardingView : MonoBehaviour
     {
-        [Header("Paneles de Pasos")]
+        [Header("Paneles")]
         [SerializeField] private GameObject pasoBienvenida;
         [SerializeField] private GameObject pasoPerfil;
         [SerializeField] private GameObject pasoAvatar;
 
-        [Header("Campos Perfil")]
+        [Header("Perfil")]
         [SerializeField] private TMP_InputField inputNombre;
-        [SerializeField] private TMP_Dropdown dropdownEdad;
 
-        [Header("Navegación")]
+        [Header("Acción")]
         [SerializeField] private Button botonContinuar;
-        [SerializeField] private Button botonAtras;
         [SerializeField] private TextMeshProUGUI textoBotonContinuar;
 
-        public event Action OnContinuarClick;
-        public event Action OnAtrasClick;
+        public event Action OnComenzarClick;
         public event Action<string> OnAvatarSeleccionado;
 
         private readonly List<Button> _botonesAvatar = new List<Button>();
@@ -34,58 +34,44 @@ namespace Assets.Scripts.UI.Onboarding
 
         private void Awake()
         {
+            NormalizarColoresBotones(transform);
+            if (inputNombre != null) inputNombre.characterLimit = 30;
             if (botonContinuar != null)
-                botonContinuar.onClick.AddListener(() => OnContinuarClick?.Invoke());
-            if (botonAtras != null)
-                botonAtras.onClick.AddListener(() => OnAtrasClick?.Invoke());
+                botonContinuar.onClick.AddListener(NotificarComienzo);
 
-            if (pasoAvatar != null)
-            {
-                _botonesAvatar.AddRange(pasoAvatar.GetComponentsInChildren<Button>(true));
-                _botonesAvatar.Sort((a, b) => string.CompareOrdinal(a.name, b.name));
-                for (int i = 0; i < _botonesAvatar.Count; i++)
-                {
-                    int indice = i;
-                    _botonesAvatar[i].onClick.AddListener(() =>
-                        OnAvatarSeleccionado?.Invoke($"avatar_{indice + 1:D2}"));
-                }
-            }
-
+            PrepararAvatares();
+            _ = CargarSpritesAvataresAsync();
             _textoErrorPerfil = CrearTextoError(pasoPerfil, "ErrorPerfil");
             _textoErrorAvatar = CrearTextoError(pasoAvatar, "ErrorAvatar");
         }
 
-        public void MostrarPaso(int paso)
+        public void MostrarFormulario()
         {
             LimpiarErrores();
-            if (pasoBienvenida != null) pasoBienvenida.SetActive(paso == 1);
-            if (pasoPerfil != null) pasoPerfil.SetActive(paso == 2);
-            if (pasoAvatar != null) pasoAvatar.SetActive(paso == 3);
-            if (botonAtras != null) botonAtras.gameObject.SetActive(paso > 1);
-            if (textoBotonContinuar != null)
-                textoBotonContinuar.text = paso == 3 ? "COMENZAR" : paso == 1 ? "EMPEZAR" : "CONTINUAR";
+            if (pasoBienvenida != null) pasoBienvenida.SetActive(false);
+            if (pasoPerfil != null) pasoPerfil.SetActive(true);
+            if (pasoAvatar != null) pasoAvatar.SetActive(true);
+            if (botonContinuar != null) botonContinuar.gameObject.SetActive(true);
+            if (textoBotonContinuar != null) textoBotonContinuar.text = "COMENZAR";
 
-            GameObject panel = paso == 1 ? pasoBienvenida : paso == 2 ? pasoPerfil : pasoAvatar;
-            if (panel == null) return;
+            if (pasoPerfil == null) return;
             if (_animacionPaso != null) StopCoroutine(_animacionPaso);
-            _animacionPaso = StartCoroutine(AnimarEntrada(panel));
+            _animacionPaso = StartCoroutine(AnimarEntrada(pasoPerfil));
         }
 
         public string ObtenerNombre() => inputNombre != null ? inputNombre.text.Trim() : string.Empty;
-
-        public string ObtenerRangoEdad() =>
-            dropdownEdad != null && dropdownEdad.options.Count > 0
-                ? dropdownEdad.options[dropdownEdad.value].text
-                : string.Empty;
 
         public void MostrarAvatarSeleccionado(string avatarId)
         {
             for (int i = 0; i < _botonesAvatar.Count; i++)
             {
-                bool seleccionado = avatarId == $"avatar_{i + 1:D2}";
+                bool seleccionado = i < PerfilOnboardingService.AvataresDisponibles.Count &&
+                                     avatarId == PerfilOnboardingService.AvataresDisponibles[i];
                 Image imagen = _botonesAvatar[i].GetComponent<Image>();
                 if (imagen != null)
-                    imagen.color = seleccionado ? new Color(0.92f, 0.76f, 0.35f) : Color.white;
+                    imagen.color = seleccionado
+                        ? new Color(0.96f, 0.66f, 0.20f, 1f)
+                        : ColorAvatar(i);
                 _botonesAvatar[i].transform.localScale = seleccionado ? Vector3.one * 1.06f : Vector3.one;
             }
             MostrarErrorAvatar(null);
@@ -100,11 +86,112 @@ namespace Assets.Scripts.UI.Onboarding
             MostrarErrorAvatar(null);
         }
 
+        private void PrepararAvatares()
+        {
+            if (pasoAvatar == null) return;
+
+            _botonesAvatar.AddRange(pasoAvatar.GetComponentsInChildren<Button>(true));
+            _botonesAvatar.Sort((a, b) => string.CompareOrdinal(a.name, b.name));
+            int cantidad = Mathf.Min(_botonesAvatar.Count, PerfilOnboardingService.AvataresDisponibles.Count);
+            for (int i = 0; i < cantidad; i++)
+            {
+                string avatarId = PerfilOnboardingService.AvataresDisponibles[i];
+                PrepararBotonAvatar(_botonesAvatar[i], i);
+                _botonesAvatar[i].onClick.AddListener(() => OnAvatarSeleccionado?.Invoke(avatarId));
+            }
+        }
+
+        private void NotificarComienzo() => OnComenzarClick?.Invoke();
+
+        private async Task CargarSpritesAvataresAsync()
+        {
+            int cantidad = Mathf.Min(_botonesAvatar.Count, PerfilOnboardingService.AvataresDisponibles.Count);
+            for (int i = 0; i < cantidad; i++)
+            {
+                Button boton = _botonesAvatar[i];
+                string avatarId = PerfilOnboardingService.AvataresDisponibles[i];
+                try
+                {
+                    Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(ContentAddress.Avatar(avatarId));
+                    if (boton == null) continue;
+
+                    Image icono = null;
+                    foreach (Image imagen in boton.GetComponentsInChildren<Image>(true))
+                    {
+                        if (imagen.gameObject == boton.gameObject) continue;
+                        icono = imagen;
+                        break;
+                    }
+
+                    if (icono == null) continue;
+                    icono.sprite = sprite;
+                    icono.color = Color.white;
+                    icono.preserveAspect = true;
+                    icono.gameObject.SetActive(true);
+
+                    TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>(true);
+                    if (etiqueta != null) etiqueta.gameObject.SetActive(false);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[OnboardingView] No se pudo cargar {avatarId}: {ex.Message}");
+                }
+            }
+        }
+
+        private static void PrepararBotonAvatar(Button boton, int indice)
+        {
+            if (boton == null) return;
+            Image fondo = boton.GetComponent<Image>();
+            if (fondo != null) fondo.color = ColorAvatar(indice);
+
+            TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>(true);
+            if (etiqueta == null) return;
+            etiqueta.text = ((char)('A' + indice)).ToString();
+            etiqueta.fontSize = 34f;
+            etiqueta.fontStyle = FontStyles.Bold;
+            etiqueta.alignment = TextAlignmentOptions.Center;
+            etiqueta.color = Color.white;
+        }
+
+        private static Color ColorAvatar(int indice)
+        {
+            Color[] colores =
+            {
+                new Color(0.09f, 0.62f, 0.67f, 1f),
+                new Color(0.47f, 0.36f, 0.76f, 1f),
+                new Color(0.91f, 0.36f, 0.31f, 1f),
+                new Color(0.21f, 0.67f, 0.42f, 1f)
+            };
+            return colores[Mathf.Abs(indice) % colores.Length];
+        }
+
+        private static void NormalizarColoresBotones(Transform raiz)
+        {
+            foreach (Button boton in raiz.GetComponentsInChildren<Button>(true))
+            {
+                ColorBlock colores = boton.colors;
+                if (colores.highlightedColor.maxColorComponent <= 1f &&
+                    colores.pressedColor.maxColorComponent <= 1f)
+                    continue;
+
+                Color normal = colores.normalColor;
+                colores.highlightedColor = new Color(
+                    Mathf.Min(1f, normal.r * 1.1f),
+                    Mathf.Min(1f, normal.g * 1.1f),
+                    Mathf.Min(1f, normal.b * 1.1f),
+                    normal.a);
+                colores.pressedColor = new Color(normal.r * 0.85f, normal.g * 0.85f, normal.b * 0.85f, normal.a);
+                boton.colors = colores;
+            }
+        }
+
         private static TMP_Text CrearTextoError(GameObject padre, string nombre)
         {
             if (padre == null) return null;
-            var objeto = new GameObject(nombre, typeof(RectTransform), typeof(TextMeshProUGUI));
+            var objeto = new GameObject(nombre, typeof(RectTransform), typeof(TextMeshProUGUI), typeof(LayoutElement));
             objeto.transform.SetParent(padre.transform, false);
+            objeto.GetComponent<LayoutElement>().preferredHeight = 32f;
             var texto = objeto.GetComponent<TextMeshProUGUI>();
             texto.fontSize = 20f;
             texto.color = new Color(0.92f, 0.3f, 0.25f);

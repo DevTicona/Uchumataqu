@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Assets.Scripts.Core.Services;
+using Assets.Scripts.Core;
 
 namespace Assets.Scripts.UI.Main.Paginas
 {
@@ -27,17 +30,14 @@ namespace Assets.Scripts.UI.Main.Paginas
         [SerializeField] private Button btnConfirmarReinicio;
         [SerializeField] private Button btnCancelarReinicio;
 
-        public event Action<string, string, string> OnGuardarPerfil;
+        public event Action<string, string> OnGuardarPerfil;
         public event Action<float> OnCambiarVolumen;
         public event Action<bool> OnCambiarAudioAutomatico;
         public event Action<bool> OnCambiarVibracion;
         public event Action OnConfirmarReinicio;
         public event Action OnSolicitarActualizacion;
 
-        private static readonly string[] RangosEdad = { "6–9", "10–12", "13–17", "18+" };
-        private readonly List<Button> _botonesRango = new List<Button>();
         private readonly List<Button> _botonesAvatar = new List<Button>();
-        private string _rangoSeleccionado;
         private string _avatarSeleccionado;
         private TMP_Text _textoEstadoPerfil;
 
@@ -75,14 +75,12 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         public void Mostrar(
             string nombre,
-            string rangoEdad,
             string avatarId,
             float volumen,
             bool audioAutomatico,
             bool vibracion)
         {
             if (inputNombre != null) inputNombre.text = nombre ?? string.Empty;
-            SeleccionarRango(rangoEdad);
             SeleccionarAvatar(avatarId);
             MostrarEstadoPerfil(null, false);
             if (sliderVolumenGeneral != null) sliderVolumenGeneral.SetValueWithoutNotify(volumen);
@@ -97,7 +95,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         private void GuardarPerfil()
         {
             if (inputNombre == null) return;
-            OnGuardarPerfil?.Invoke(inputNombre.text.Trim(), _rangoSeleccionado, _avatarSeleccionado);
+            OnGuardarPerfil?.Invoke(inputNombre.text.Trim(), _avatarSeleccionado);
         }
 
         private void OnVolumenChanged(float vol)
@@ -131,24 +129,19 @@ namespace Assets.Scripts.UI.Main.Paginas
         {
             if (contenedor == null) return;
 
-            Transform selectorEdad = contenedor.Find("SelectorRangoEdad") ??
-                                      CrearSelector(contenedor, "SelectorRangoEdad", "Rango de edad", 2, 112f);
-            CrearBotonesSelector(selectorEdad, RangosEdad, _botonesRango, SeleccionarRango);
+            Transform selectorEdad = contenedor.Find("SelectorRangoEdad");
+            if (selectorEdad != null) selectorEdad.gameObject.SetActive(false);
 
             Transform selectorAvatar = contenedor.Find("SelectorAvatar") ??
-                                        CrearSelector(contenedor, "SelectorAvatar", "Avatar", 3, 112f);
-            string[] avatares = { "avatar_01", "avatar_02", "avatar_03", "avatar_04", "avatar_05", "avatar_06" };
-            CrearBotonesSelector(selectorAvatar, avatares, _botonesAvatar, SeleccionarAvatar);
+                                        CrearSelector(contenedor, "SelectorAvatar", "Avatar", 4, 56f);
+            CrearBotonesSelector(
+                selectorAvatar,
+                PerfilOnboardingService.AvataresDisponibles,
+                _botonesAvatar,
+                SeleccionarAvatar);
 
             _textoEstadoPerfil = CrearTexto(contenedor, "EstadoPerfil", 18f);
             _textoEstadoPerfil.gameObject.SetActive(false);
-        }
-
-        private void SeleccionarRango(string rango)
-        {
-            _rangoSeleccionado = rango ?? string.Empty;
-            ActualizarSeleccion(_botonesRango, _rangoSeleccionado);
-            MostrarEstadoPerfil(null, false);
         }
 
         private void SeleccionarAvatar(string avatarId)
@@ -210,6 +203,36 @@ namespace Assets.Scripts.UI.Main.Paginas
                 Button boton = CrearBoton(grilla, valor);
                 boton.onClick.AddListener(() => alSeleccionar(valor));
                 destino.Add(boton);
+                if (valor.StartsWith("avatar_", StringComparison.Ordinal))
+                    _ = ConfigurarAvatarAsync(boton, valor);
+            }
+        }
+
+        private static async Task ConfigurarAvatarAsync(Button boton, string avatarId)
+        {
+            try
+            {
+                Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(ContentAddress.Avatar(avatarId));
+                if (boton == null) return;
+
+                var iconoObjeto = new GameObject("IconoAvatar", typeof(RectTransform), typeof(Image));
+                iconoObjeto.transform.SetParent(boton.transform, false);
+                RectTransform rect = (RectTransform)iconoObjeto.transform;
+                rect.anchorMin = new Vector2(0.15f, 0.08f);
+                rect.anchorMax = new Vector2(0.85f, 0.92f);
+                rect.offsetMin = Vector2.zero;
+                rect.offsetMax = Vector2.zero;
+                Image icono = iconoObjeto.GetComponent<Image>();
+                icono.sprite = sprite;
+                icono.preserveAspect = true;
+                icono.raycastTarget = false;
+
+                TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>(true);
+                if (etiqueta != null) etiqueta.gameObject.SetActive(false);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[AjustesView] No se pudo cargar {avatarId}: {ex.Message}");
             }
         }
 

@@ -15,7 +15,8 @@ MonoBehaviour:
   m_DefaultGroup: 596042a382323644e892b1ad47a6ee02
   m_currentHash:
     serializedVersion: 2
-    Hash: 931edf9293528fd4591df0bb43b31021
+    Hash: 00000000000000000000000000000000
+  m_ExtractTypeTreeData: 0
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -42,6 +43,7 @@ MonoBehaviour:
   m_BundleRedirectLimit: -1
   m_SharedBundleSettings: 0
   m_SharedBundleSettingsCustomGroupIndex: 0
+  m_simulatedLoadDelay: 0.1
   m_ContiguousBundles: 1
   m_StripUnityVersionFromBundleBuild: 0
   m_DisableVisibleSubAssetRepresentations: 0
@@ -57,7 +59,7 @@ MonoBehaviour:
   m_ContentStateBuildPathProfileVariableName: 
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 0
+  m_BuildAddressablesWithPlayerBuild: 1
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: 6340d6919cc399c469de997c3112b3fc, type: 2}
@@ -104,18 +106,22 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - default
-    - lesson_card
-    - lesson_icons
-    - menu_lecciones
-    - menu_principal
-    - leccion_base
-    - global_data
-    - actividades
-    - prefab
-    - img_islas
-    - islas
     - 3D
+    - audio_oraciones
+    - audio_palabras
+    - avatars
+    - backgrounds
+    - branding
+    - global_data
+    - islands
+    - prefab
+    - ra
+    - ui
+    - ui_base
+    - ui_effects
+    - ui_fonts
+    - ui_icons
+    - ui_theme
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 215297ee9f2d8e848abbc499683dd446, type: 2}

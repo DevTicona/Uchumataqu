@@ -19,8 +19,7 @@ MonoBehaviour:
     m_Address: personaje_base
     m_ReadOnly: 0
     m_SerializedLabels:
-    - 3D
-    - prefab
+    - ra
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 30c16aa3f6c5c784694e0dbfc06d3dec, type: 2}

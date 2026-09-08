@@ -17,7 +17,7 @@ namespace Assets.Scripts.Core.UI.Theme
         /// <summary>
         /// Carga el tema usando AddressablesService
         /// </summary>
-        public static async Task CargarTemaAsync(string key = "UITheme")
+        public static async Task CargarTemaAsync(string key = ContentAddress.TemaUi)
         {
             try
             {

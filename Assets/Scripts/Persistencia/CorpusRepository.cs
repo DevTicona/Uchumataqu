@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using Assets.Scripts.Core;
 using Assets.Scripts.Core.Services;
 using Assets.Scripts.Data.Corpus;
 using Assets.Scripts.Utils;
@@ -16,10 +17,10 @@ namespace Assets.Scripts.Persistencia
     /// </summary>
     public static class CorpusRepository
     {
-        private const string KEY_PALABRAS = "json_palabras";
-        private const string KEY_ORACIONES = "json_oraciones";
-        private const string KEY_LECCIONES = "json_lecciones";
-        private const string KEY_ESCENARIOS_RA = "json_escenarios_ra";
+        private const string KEY_PALABRAS = ContentAddress.DatosPalabras;
+        private const string KEY_ORACIONES = ContentAddress.DatosOraciones;
+        private const string KEY_LECCIONES = ContentAddress.DatosLecciones;
+        private const string KEY_ESCENARIOS_RA = ContentAddress.DatosEscenariosRa;
 
         private static Dictionary<string, PalabraData> _palabrasDict;
         private static Dictionary<string, FormaData> _formasDict;

@@ -18,27 +18,26 @@ MonoBehaviour:
   - m_GUID: 05f63df2be8db7642897bd6fb21bb89d
     m_Address: json_palabras
     m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1e27a18d63dc231489e56109beeed1cc
-    m_Address: UITheme
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - global_data
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4076cb940634a9545b10bc9e58f8e134
     m_Address: json_escenarios_ra
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - global_data
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5c196a0579b160f459727c11d8d2f0bf
     m_Address: json_lecciones
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - global_data
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 717270f554a98c1488a2183090cc969c
     m_Address: json_oraciones
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - global_data
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 30c16aa3f6c5c784694e0dbfc06d3dec, type: 2}

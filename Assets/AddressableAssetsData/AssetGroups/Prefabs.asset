@@ -18,43 +18,43 @@ MonoBehaviour:
   - m_GUID: 12196468690ed4e4ab55caf38387532a
     m_Address: prefab_nube_dialogo
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 47529659ba265184d84fe921c0eb5f79
     m_Address: actividad_emparejamiento
     m_ReadOnly: 0
     m_SerializedLabels:
-    - actividades
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 623fd97315fccf04987ed2dafb1b91ac
     m_Address: prefab_boton
     m_ReadOnly: 0
     m_SerializedLabels:
-    - leccion_base
+    - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d86eb827f86fb74cb9920221baae66f
     m_Address: prefab_isla_leccion
     m_ReadOnly: 0
     m_SerializedLabels:
-    - menu_lecciones
+    - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 95c4c683c29b9db4d9835513c446b355
     m_Address: pln_palabra
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c5aea51b2f30e9b409e6bd4012ca9369
     m_Address: prefab_word_card
     m_ReadOnly: 0
     m_SerializedLabels:
-    - leccion_base
+    - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f52b27e2cc2143248a96da761641f713
     m_Address: actividad_seleccion
     m_ReadOnly: 0
     m_SerializedLabels:
-    - actividades
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0

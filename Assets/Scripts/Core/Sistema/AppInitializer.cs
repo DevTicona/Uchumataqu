@@ -40,7 +40,7 @@ namespace Assets.Scripts.Core.Sistema
             await addressables.Task;
             if (addressables.Status != AsyncOperationStatus.Succeeded)
                 throw new InvalidOperationException("No se pudo inicializar el catálogo Addressables.");
-            await UIThemeManager.CargarTemaAsync("UITheme");
+            await UIThemeManager.CargarTemaAsync(ContentAddress.TemaUi);
             Debug.Log("[AppInitializer] Inicialización completa.");
         }
     }

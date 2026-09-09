@@ -22,17 +22,21 @@ namespace Assets.Scripts.UI.Onboarding
             }
 
             view.OnComenzarClick += CompletarOnboarding;
+            view.OnContinuarBienvenida += MostrarFormulario;
             view.OnAvatarSeleccionado += SeleccionarAvatar;
             backHandler.Configurar(Salir);
-            view.MostrarFormulario();
+            view.MostrarBienvenida();
         }
 
         private void OnDestroy()
         {
             if (view == null) return;
             view.OnComenzarClick -= CompletarOnboarding;
+            view.OnContinuarBienvenida -= MostrarFormulario;
             view.OnAvatarSeleccionado -= SeleccionarAvatar;
         }
+
+        private void MostrarFormulario() => view.MostrarFormulario();
 
         private void SeleccionarAvatar(string avatarId)
         {

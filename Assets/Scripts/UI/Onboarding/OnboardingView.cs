@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Assets.Scripts.Core;
 using Assets.Scripts.Core.Services;
+using Assets.Scripts.Core.UI.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,33 +19,74 @@ namespace Assets.Scripts.UI.Onboarding
         [Header("Perfil")]
         [SerializeField] private TMP_InputField inputNombre;
 
+        [Header("Avatares")]
+        [SerializeField] private Button[] botonesAvatar = Array.Empty<Button>();
+
+        [Header("Validacion")]
+        [SerializeField] private TMP_Text textoErrorPerfil;
+        [SerializeField] private TMP_Text textoErrorAvatar;
+
         [Header("Acción")]
         [SerializeField] private Button botonContinuar;
         [SerializeField] private TextMeshProUGUI textoBotonContinuar;
 
         public event Action OnComenzarClick;
+        public event Action OnContinuarBienvenida;
         public event Action<string> OnAvatarSeleccionado;
 
+        private enum PasoActual { Ninguno, Bienvenida, Formulario }
+        private PasoActual _paso = PasoActual.Ninguno;
+
         private readonly List<Button> _botonesAvatar = new List<Button>();
-        private TMP_Text _textoErrorPerfil;
-        private TMP_Text _textoErrorAvatar;
         private Coroutine _animacionPaso;
 
         private void Awake()
         {
-            NormalizarColoresBotones(transform);
-            if (inputNombre != null) inputNombre.characterLimit = 30;
+            ConfigurarCampoNombre();
+
+            // Un único listener fijo que despacha según el paso actual.
+            // Nunca se llama RemoveAllListeners para no romper el ThemedButton.
             if (botonContinuar != null)
-                botonContinuar.onClick.AddListener(NotificarComienzo);
+                botonContinuar.onClick.AddListener(OnBotonContinuarClick);
 
             PrepararAvatares();
-            _ = CargarSpritesAvataresAsync();
-            _textoErrorPerfil = CrearTextoError(pasoPerfil, "ErrorPerfil");
-            _textoErrorAvatar = CrearTextoError(pasoAvatar, "ErrorAvatar");
+        }
+
+        /// <summary>Listener único del BtnContinuar — despacha según el paso activo.</summary>
+        private void OnBotonContinuarClick()
+        {
+            switch (_paso)
+            {
+                case PasoActual.Bienvenida:
+                    OnContinuarBienvenida?.Invoke();
+                    break;
+                case PasoActual.Formulario:
+                    NotificarComienzo();
+                    break;
+            }
+        }
+
+        public void MostrarBienvenida()
+        {
+            _paso = PasoActual.Bienvenida;
+
+            if (pasoBienvenida != null) pasoBienvenida.SetActive(true);
+            if (pasoPerfil != null) pasoPerfil.SetActive(false);
+            if (pasoAvatar != null) pasoAvatar.SetActive(false);
+            if (botonContinuar != null) botonContinuar.gameObject.SetActive(true);
+            if (textoBotonContinuar != null) textoBotonContinuar.text = "CONTINUAR";
+
+            RestablecerTemaBoton();
+
+            if (pasoBienvenida == null) return;
+            if (_animacionPaso != null) StopCoroutine(_animacionPaso);
+            _animacionPaso = StartCoroutine(AnimarEntrada(pasoBienvenida));
         }
 
         public void MostrarFormulario()
         {
+            _paso = PasoActual.Formulario;
+
             LimpiarErrores();
             if (pasoBienvenida != null) pasoBienvenida.SetActive(false);
             if (pasoPerfil != null) pasoPerfil.SetActive(true);
@@ -54,9 +94,20 @@ namespace Assets.Scripts.UI.Onboarding
             if (botonContinuar != null) botonContinuar.gameObject.SetActive(true);
             if (textoBotonContinuar != null) textoBotonContinuar.text = "COMENZAR";
 
+            RestablecerTemaBoton();
+
             if (pasoPerfil == null) return;
             if (_animacionPaso != null) StopCoroutine(_animacionPaso);
             _animacionPaso = StartCoroutine(AnimarEntrada(pasoPerfil));
+        }
+
+        private void RestablecerTemaBoton()
+        {
+            if (botonContinuar != null)
+            {
+                var themed = botonContinuar.GetComponent<ThemedButton>();
+                if (themed != null) themed.AplicarTema();
+            }
         }
 
         public string ObtenerNombre() => inputNombre != null ? inputNombre.text.Trim() : string.Empty;
@@ -67,18 +118,15 @@ namespace Assets.Scripts.UI.Onboarding
             {
                 bool seleccionado = i < PerfilOnboardingService.AvataresDisponibles.Count &&
                                      avatarId == PerfilOnboardingService.AvataresDisponibles[i];
-                Image imagen = _botonesAvatar[i].GetComponent<Image>();
-                if (imagen != null)
-                    imagen.color = seleccionado
-                        ? new Color(0.96f, 0.66f, 0.20f, 1f)
-                        : ColorAvatar(i);
-                _botonesAvatar[i].transform.localScale = seleccionado ? Vector3.one * 1.06f : Vector3.one;
+                Transform indicador = _botonesAvatar[i].transform.Find("Seleccion");
+                if (indicador != null)
+                    indicador.gameObject.SetActive(seleccionado);
             }
             MostrarErrorAvatar(null);
         }
 
-        public void MostrarErrorPerfil(string mensaje) => MostrarError(_textoErrorPerfil, mensaje);
-        public void MostrarErrorAvatar(string mensaje) => MostrarError(_textoErrorAvatar, mensaje);
+        public void MostrarErrorPerfil(string mensaje) => MostrarError(textoErrorPerfil, mensaje);
+        public void MostrarErrorAvatar(string mensaje) => MostrarError(textoErrorAvatar, mensaje);
 
         public void LimpiarErrores()
         {
@@ -90,115 +138,38 @@ namespace Assets.Scripts.UI.Onboarding
         {
             if (pasoAvatar == null) return;
 
-            _botonesAvatar.AddRange(pasoAvatar.GetComponentsInChildren<Button>(true));
+            _botonesAvatar.Clear();
+            if (botonesAvatar != null)
+            {
+                foreach (Button boton in botonesAvatar)
+                {
+                    if (boton != null)
+                        _botonesAvatar.Add(boton);
+                }
+            }
+
+            if (_botonesAvatar.Count == 0)
+                _botonesAvatar.AddRange(pasoAvatar.GetComponentsInChildren<Button>(true));
+
             _botonesAvatar.Sort((a, b) => string.CompareOrdinal(a.name, b.name));
             int cantidad = Mathf.Min(_botonesAvatar.Count, PerfilOnboardingService.AvataresDisponibles.Count);
             for (int i = 0; i < cantidad; i++)
             {
                 string avatarId = PerfilOnboardingService.AvataresDisponibles[i];
-                PrepararBotonAvatar(_botonesAvatar[i], i);
                 _botonesAvatar[i].onClick.AddListener(() => OnAvatarSeleccionado?.Invoke(avatarId));
             }
         }
 
+        private void ConfigurarCampoNombre()
+        {
+            if (inputNombre == null) return;
+
+            inputNombre.characterLimit = 30;
+            inputNombre.lineType = TMP_InputField.LineType.SingleLine;
+            inputNombre.onFocusSelectAll = false;
+        }
+
         private void NotificarComienzo() => OnComenzarClick?.Invoke();
-
-        private async Task CargarSpritesAvataresAsync()
-        {
-            int cantidad = Mathf.Min(_botonesAvatar.Count, PerfilOnboardingService.AvataresDisponibles.Count);
-            for (int i = 0; i < cantidad; i++)
-            {
-                Button boton = _botonesAvatar[i];
-                string avatarId = PerfilOnboardingService.AvataresDisponibles[i];
-                try
-                {
-                    Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(ContentAddress.Avatar(avatarId));
-                    if (boton == null) continue;
-
-                    Image icono = null;
-                    foreach (Image imagen in boton.GetComponentsInChildren<Image>(true))
-                    {
-                        if (imagen.gameObject == boton.gameObject) continue;
-                        icono = imagen;
-                        break;
-                    }
-
-                    if (icono == null) continue;
-                    icono.sprite = sprite;
-                    icono.color = Color.white;
-                    icono.preserveAspect = true;
-                    icono.gameObject.SetActive(true);
-
-                    TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>(true);
-                    if (etiqueta != null) etiqueta.gameObject.SetActive(false);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogWarning($"[OnboardingView] No se pudo cargar {avatarId}: {ex.Message}");
-                }
-            }
-        }
-
-        private static void PrepararBotonAvatar(Button boton, int indice)
-        {
-            if (boton == null) return;
-            Image fondo = boton.GetComponent<Image>();
-            if (fondo != null) fondo.color = ColorAvatar(indice);
-
-            TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>(true);
-            if (etiqueta == null) return;
-            etiqueta.text = ((char)('A' + indice)).ToString();
-            etiqueta.fontSize = 34f;
-            etiqueta.fontStyle = FontStyles.Bold;
-            etiqueta.alignment = TextAlignmentOptions.Center;
-            etiqueta.color = Color.white;
-        }
-
-        private static Color ColorAvatar(int indice)
-        {
-            Color[] colores =
-            {
-                new Color(0.09f, 0.62f, 0.67f, 1f),
-                new Color(0.47f, 0.36f, 0.76f, 1f),
-                new Color(0.91f, 0.36f, 0.31f, 1f),
-                new Color(0.21f, 0.67f, 0.42f, 1f)
-            };
-            return colores[Mathf.Abs(indice) % colores.Length];
-        }
-
-        private static void NormalizarColoresBotones(Transform raiz)
-        {
-            foreach (Button boton in raiz.GetComponentsInChildren<Button>(true))
-            {
-                ColorBlock colores = boton.colors;
-                if (colores.highlightedColor.maxColorComponent <= 1f &&
-                    colores.pressedColor.maxColorComponent <= 1f)
-                    continue;
-
-                Color normal = colores.normalColor;
-                colores.highlightedColor = new Color(
-                    Mathf.Min(1f, normal.r * 1.1f),
-                    Mathf.Min(1f, normal.g * 1.1f),
-                    Mathf.Min(1f, normal.b * 1.1f),
-                    normal.a);
-                colores.pressedColor = new Color(normal.r * 0.85f, normal.g * 0.85f, normal.b * 0.85f, normal.a);
-                boton.colors = colores;
-            }
-        }
-
-        private static TMP_Text CrearTextoError(GameObject padre, string nombre)
-        {
-            if (padre == null) return null;
-            var objeto = new GameObject(nombre, typeof(RectTransform), typeof(TextMeshProUGUI), typeof(LayoutElement));
-            objeto.transform.SetParent(padre.transform, false);
-            objeto.GetComponent<LayoutElement>().preferredHeight = 32f;
-            var texto = objeto.GetComponent<TextMeshProUGUI>();
-            texto.fontSize = 20f;
-            texto.color = new Color(0.92f, 0.3f, 0.25f);
-            texto.alignment = TextAlignmentOptions.Center;
-            objeto.SetActive(false);
-            return texto;
-        }
 
         private static void MostrarError(TMP_Text texto, string mensaje)
         {
@@ -209,16 +180,24 @@ namespace Assets.Scripts.UI.Onboarding
 
         private static IEnumerator AnimarEntrada(GameObject panel)
         {
-            CanvasGroup grupo = panel.GetComponent<CanvasGroup>() ?? panel.AddComponent<CanvasGroup>();
+            if (panel == null) yield break;
+
+            CanvasGroup grupo = panel.GetComponent<CanvasGroup>();
+            if (grupo == null)
+                grupo = panel.AddComponent<CanvasGroup>();
+            if (grupo == null) yield break;
+
+            grupo.alpha = 0f;
             float tiempo = 0f;
             const float duracion = 0.2f;
             while (tiempo < duracion)
             {
+                if (grupo == null) yield break;
                 tiempo += Time.unscaledDeltaTime;
                 grupo.alpha = Mathf.Clamp01(tiempo / duracion);
                 yield return null;
             }
-            grupo.alpha = 1f;
+            if (grupo != null) grupo.alpha = 1f;
         }
     }
 }

@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c768d7b9e146d184d95d962fdda895fb, type: 3}
   m_Name: UITheme
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.UITheme
-  colorPrimario: {r: 0.22745098, g: 0.49019608, b: 1, a: 0}
-  colorSecundario: {r: 0, g: 0.7490196, b: 0.6509804, a: 0}
-  colorFondo: {r: 1, g: 0.80784315, b: 0.36862746, a: 0.78431374}
-  colorTexto: {r: 0.12156863, g: 0.16078432, b: 0.2, a: 1}
-  colorCorrecto: {r: 0.13333334, g: 0.77254903, b: 0.36862746, a: 0}
-  colorIncorrecto: {r: 0.9372549, g: 0.26666668, b: 0.26666668, a: 0}
-  colorBoton: {r: 0.22745098, g: 0.49019608, b: 1, a: 0}
-  colorBotonHover: {r: 0.18039216, g: 0.4, b: 0.827451, a: 0}
+  colorFondo: {r: 1, g: 0.98, b: 0.92, a: 1}
+  colorTextoPrimario: {r: 0.06, g: 0.14, b: 0.2, a: 1}
+  colorTextoSecundario: {r: 0.25, g: 0.31, b: 0.36, a: 1}
+  colorTextoTerciario: {r: 0.02, g: 0.55, b: 0.56, a: 1}
+  colorCorrecto: {r: 0.1, g: 0.65, b: 0.31, a: 1}
+  colorIncorrecto: {r: 0.88, g: 0.2, b: 0.2, a: 1}
+  colorBoton: {r: 0.8113208, g: 0.4314535, b: 0.0045923153, a: 1}
+  colorBotonHover: {r: 0.65, g: 0.14, b: 0.01, a: 1}
+  spriteBoton: {fileID: 21300000, guid: 1afa82e460e2e374aa52fa2cf133c37a, type: 3}
+  spriteCircular: {fileID: 21300000, guid: 198ed81974ff2bf4b91a7c270cc9b0b0, type: 3}
   fuentePrincipal: {fileID: 11400000, guid: cac2546b7b3c3154e89adc062af451a2, type: 2}
-  tituloGrande: 48
-  titulo: 36
-  subtitulo: 28
-  textoNormal: 24
-  textoPequeno: 18
+  escalaTextoGlobal: 1
+  tituloGrande: 72
+  titulo: 52
+  subtitulo: 38
+  textoNormal: 32
+  textoPequeno: 24

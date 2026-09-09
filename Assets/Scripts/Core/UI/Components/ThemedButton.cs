@@ -4,6 +4,7 @@ using Assets.Scripts.Core.UI.Theme;
 
 namespace Assets.Scripts.Core.UI.Components
 {
+    [ExecuteAlways]
     [RequireComponent(typeof(Button))]
     public class ThemedButton : MonoBehaviour
     {
@@ -30,18 +31,31 @@ namespace Assets.Scripts.Core.UI.Components
             UIThemeManager.OnThemeChanged -= AplicarTema;
         }
 
-        private void AplicarTema()
+        public void AplicarTema()
         {
             var theme = UIThemeManager.Theme;
             if (theme == null) return;
 
+            if (button == null) button = GetComponent<Button>();
+            if (button == null) return;
+
+            button.transition = Selectable.Transition.ColorTint;
+
+            if (button.targetGraphic is Image image)
+                image.color = Color.white;
+
             var colors = button.colors;
 
-            colors.normalColor = theme.colorBoton;
-            colors.highlightedColor = theme.colorBotonHover;
-            colors.pressedColor = theme.colorPrimario;
-            colors.selectedColor = theme.colorPrimario;
-            colors.disabledColor = Color.gray;
+            // Un único color para todos los estados: sin variaciones de hover/press
+            colors.normalColor     = theme.colorBoton;
+            colors.highlightedColor = theme.colorBoton;
+            colors.pressedColor    = theme.colorBoton;
+            colors.selectedColor   = theme.colorBoton;
+            colors.disabledColor   = new Color(
+                theme.colorBoton.r,
+                theme.colorBoton.g,
+                theme.colorBoton.b,
+                0.45f);
 
             button.colors = colors;
 

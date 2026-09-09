@@ -4,6 +4,7 @@ using Assets.Scripts.Core.UI.Theme;
 
 namespace Assets.Scripts.Core.UI.Components
 {
+    [ExecuteAlways]
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class ThemedText : MonoBehaviour
     {
@@ -16,8 +17,16 @@ namespace Assets.Scripts.Core.UI.Components
             Pequeño
         }
 
+        public enum ColorTexto
+        {
+            Primario,
+            Secundario,
+            Terciario
+        }
+
         [Header("Configuración")]
         public TipoTexto tipoTexto = TipoTexto.Normal;
+        public ColorTexto tipoColor = ColorTexto.Primario;
 
         [Header("Opcional")]
         public bool usarColorPersonalizado = false;
@@ -36,20 +45,37 @@ namespace Assets.Scripts.Core.UI.Components
             }
         }
 
+        #if UNITY_EDITOR
+        private void OnValidate()
+        {
+            UnityEditor.EditorApplication.delayCall -= AplicarCambiosEnEditor;
+            UnityEditor.EditorApplication.delayCall += AplicarCambiosEnEditor;
+        }
+
+        private void AplicarCambiosEnEditor()
+        {
+            if (this == null) return;
+
+            if (UIThemeManager.Theme == null)
+            {
+                UITheme theme = UnityEditor.AssetDatabase.LoadAssetAtPath<UITheme>(
+                    "Assets/Content/UI/UITheme.asset");
+                if (theme != null)
+                    UIThemeManager.SetTheme(theme);
+            }
+
+            AplicarTema();
+            UnityEditor.EditorUtility.SetDirty(this);
+            if (texto != null)
+                UnityEditor.EditorUtility.SetDirty(texto);
+            UnityEditor.SceneView.RepaintAll();
+        }
+        #endif
+
         private void OnEnable()
         {
             SuscribirseEvento();
-
-            // Aplicar tema si ya existe
-            if (UIThemeManager.Theme != null)
-            {
-                Debug.Log($"[ThemedText] Aplicando tema inicial en {gameObject.name}");
-                AplicarTema();
-            }
-            else
-            {
-                Debug.LogWarning($"[ThemedText] Theme aún no cargado en {gameObject.name}");
-            }
+            if (UIThemeManager.Theme != null) AplicarTema();
         }
 
         private void OnDisable()
@@ -73,41 +99,26 @@ namespace Assets.Scripts.Core.UI.Components
             estaSuscrito = false;
         }
 
-        private void AplicarTema()
+        public void AplicarTema()
         {
-            if (texto == null)
-            {
-                Debug.LogError($"[ThemedText] Texto es null en {gameObject.name}");
-                return;
-            }
+            if (texto == null) texto = GetComponent<TextMeshProUGUI>();
+            if (texto == null) return;
 
             var theme = UIThemeManager.Theme;
-
-            if (theme == null)
-            {
-                Debug.LogWarning($"[ThemedText] Theme es null en {gameObject.name}");
-                return;
-            }
+            if (theme == null) return;
 
             // =========================
             // FUENTE (reactivada segura)
             // =========================
             if (theme.fuentePrincipal != null)
-            {
                 texto.font = theme.fuentePrincipal;
-                Debug.Log($"[ThemedText] Fuente aplicada en {gameObject.name}");
-            }
-            else
-            {
-                Debug.LogWarning($"[ThemedText] Fuente del tema es null en {gameObject.name}");
-            }
 
             // =========================
             // COLOR
             // =========================
             texto.color = usarColorPersonalizado
                 ? colorPersonalizado
-                : theme.colorTexto;
+                : ObtenerColor(theme);
 
             // =========================
             // TAMAÑO
@@ -115,36 +126,46 @@ namespace Assets.Scripts.Core.UI.Components
             switch (tipoTexto)
             {
                 case TipoTexto.TituloGrande:
-                    texto.fontSize = theme.tituloGrande;
+                    texto.fontSize = UIThemeManager.EscalarTexto(theme.tituloGrande);
                     break;
 
                 case TipoTexto.Titulo:
-                    texto.fontSize = theme.titulo;
+                    texto.fontSize = UIThemeManager.EscalarTexto(theme.titulo);
                     break;
 
                 case TipoTexto.Subtitulo:
-                    texto.fontSize = theme.subtitulo;
+                    texto.fontSize = UIThemeManager.EscalarTexto(theme.subtitulo);
                     break;
 
                 case TipoTexto.Normal:
-                    texto.fontSize = theme.textoNormal;
+                    texto.fontSize = UIThemeManager.EscalarTexto(theme.textoNormal);
                     break;
 
                 case TipoTexto.Pequeño:
-                    texto.fontSize = theme.textoPequeno;
+                    texto.fontSize = UIThemeManager.EscalarTexto(theme.textoPequeno);
                     break;
 
-                default:
-                    Debug.LogWarning($"[ThemedText] TipoTexto no reconocido en {gameObject.name}");
-                    break;
+                default: return;
             }
 
             // =========================
             // FORZAR ACTUALIZACIÓN
             // =========================
             texto.ForceMeshUpdate();
+            Canvas.ForceUpdateCanvases();
+        }
 
-            Debug.Log($"[ThemedText] Tema aplicado correctamente en {gameObject.name}");
+        private Color ObtenerColor(UITheme theme)
+        {
+            switch (tipoColor)
+            {
+                case ColorTexto.Secundario:
+                    return theme.colorTextoSecundario;
+                case ColorTexto.Terciario:
+                    return theme.colorTextoTerciario;
+                default:
+                    return theme.colorTextoPrimario;
+            }
         }
     }
 }

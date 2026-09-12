@@ -47,22 +47,25 @@ namespace Assets.Scripts.UI.Bootstrap
         {
             if (_inicializando) return;
             _inicializando = true;
+            view.MostrarProgreso(0f);
             view.MostrarCarga("Preparando recursos locales...");
 
             try
             {
                 await appInitializer.InicializarAsync();
+                view.MostrarProgreso(0.5f);
                 view.MostrarCarga("Cargando contenido educativo...");
                 bool corpusOk = await CorpusRepository.InicializarAsync();
                 if (!corpusOk)
                     throw new System.InvalidOperationException("El corpus local no pudo inicializarse.");
 
                 bool tienePerfil = PerfilRepository.ExistePerfil();
+                view.MostrarProgreso(0.9f);
                 ProgresoRepository.ObtenerProgreso();
                 _ = AudioService.Instance;
 
+                view.MostrarProgreso(1f);
                 view.MostrarCarga("Todo listo");
-                await Task.Delay(200);
                 if (this == null) return;
 
                 if (tienePerfil) NavigationService.IrAMain();

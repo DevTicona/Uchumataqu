@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Core.Services;
 using Assets.Scripts.Core.UI.Components;
+using Assets.Scripts.UI.Avatares;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +21,7 @@ namespace Assets.Scripts.UI.Onboarding
 
         [Header("Avatares")]
         [SerializeField] private Button[] botonesAvatar = Array.Empty<Button>();
+        [SerializeField] private CatalogoAvatares catalogoAvatares;
 
         [Header("Validacion")]
         [SerializeField] private TMP_Text textoErrorPerfil;
@@ -38,7 +39,16 @@ namespace Assets.Scripts.UI.Onboarding
         private PasoActual _paso = PasoActual.Ninguno;
 
         private readonly List<Button> _botonesAvatar = new List<Button>();
+        private readonly List<string> _avatarIds = new List<string>();
         private Coroutine _animacionPaso;
+
+        public void ConfigurarAvatares(IReadOnlyList<string> avatarIds)
+        {
+            _avatarIds.Clear();
+            if (avatarIds != null)
+                _avatarIds.AddRange(avatarIds);
+            PrepararAvatares();
+        }
 
         private void Awake()
         {
@@ -116,8 +126,8 @@ namespace Assets.Scripts.UI.Onboarding
         {
             for (int i = 0; i < _botonesAvatar.Count; i++)
             {
-                bool seleccionado = i < PerfilOnboardingService.AvataresDisponibles.Count &&
-                                     avatarId == PerfilOnboardingService.AvataresDisponibles[i];
+                bool seleccionado = i < _avatarIds.Count &&
+                                     string.Equals(avatarId, _avatarIds[i], StringComparison.Ordinal);
                 Transform indicador = _botonesAvatar[i].transform.Find("Seleccion");
                 if (indicador != null)
                     indicador.gameObject.SetActive(seleccionado);
@@ -152,11 +162,29 @@ namespace Assets.Scripts.UI.Onboarding
                 _botonesAvatar.AddRange(pasoAvatar.GetComponentsInChildren<Button>(true));
 
             _botonesAvatar.Sort((a, b) => string.CompareOrdinal(a.name, b.name));
-            int cantidad = Mathf.Min(_botonesAvatar.Count, PerfilOnboardingService.AvataresDisponibles.Count);
+
+            if (_avatarIds.Count == 0 && catalogoAvatares != null)
+            {
+                foreach (var av in catalogoAvatares.Avatares)
+                    _avatarIds.Add(av.id);
+            }
+
+            int cantidad = Mathf.Min(_botonesAvatar.Count, _avatarIds.Count);
             for (int i = 0; i < cantidad; i++)
             {
-                string avatarId = PerfilOnboardingService.AvataresDisponibles[i];
+                string avatarId = _avatarIds[i];
+                _botonesAvatar[i].onClick.RemoveAllListeners();
                 _botonesAvatar[i].onClick.AddListener(() => OnAvatarSeleccionado?.Invoke(avatarId));
+
+                if (catalogoAvatares != null)
+                {
+                    var img = _botonesAvatar[i].GetComponent<Image>() ?? _botonesAvatar[i].GetComponentInChildren<Image>(true);
+                    if (img != null && img.sprite == null)
+                    {
+                        var sp = catalogoAvatares.ObtenerSprite(avatarId);
+                        if (sp != null) img.sprite = sp;
+                    }
+                }
             }
         }
 

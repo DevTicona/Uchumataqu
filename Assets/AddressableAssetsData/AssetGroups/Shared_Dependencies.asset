@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Shared_Dependencies
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Shared_Dependencies
+  m_GUID: c36bb0b9783e4f16afda737791e07f26
+  m_SerializeEntries:
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: shared/tmp_sdf_mobile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - shared_dependency
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 30c16aa3f6c5c784694e0dbfc06d3dec, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 91bb975869ef4867b32b69b9207dc517, type: 2}
+    - {fileID: 11400000, guid: a2c8be277b62437f9b97df1e751f3230, type: 2}

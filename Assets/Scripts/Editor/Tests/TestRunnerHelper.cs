@@ -55,6 +55,8 @@ namespace Assets.Scripts.Editor.Tests
             EjecutarPrueba("Onboarding: validación de perfil y avatar", () => semana3.Onboarding_ValidaNombreUnicodeYAvatarExplicito(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Mapa: 27 lecciones, 6 hitos y 6 regiones", () => semana3.Mapa_Crea27LeccionesSeisHitosYSeisRegiones(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Mapa: desbloqueo de RA1 y L07", () => semana3.Mapa_DesbloqueaRa1YL07TrasCompletarL01AL06(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Logros: composición persistente y límites en dos formatos", () => LogrosCompositionTests.Validar(false), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("Ajustes: composición persistente y RectTransform válidos", () => new AjustesCompositionTests().PageAjustes_ConservaComposicionYRectTransformsValidos(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("L01-L05: construcción de actividades", () => semana3.L01AL05_ConstruyenTodosSusPasosEvaluables(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Nombres propios: solo contexto, sin familia ni objetivo compilado", () => semana3.NombresPropios_NoSeEnsenanComoFamiliasNiObjetivosCompilados(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("Semana 3: composición de escenas", () => semana3.EscenasSemana3_TienenComposicionSerializada(), ref pruebasPasadas, ref totalPruebas);
@@ -71,6 +73,11 @@ namespace Assets.Scripts.Editor.Tests
             EjecutarPrueba("ASR: ausencia produce resultado neutral", () => semana4.AsrNoDisponible_DevuelveResultadoNeutralNoBloqueante(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("ASR: transcripción delegada al motor PLN", () => semana4.AsrDisponible_DelegaLaEvaluacionAlMotorDeTexto(), ref pruebasPasadas, ref totalPruebas);
             EjecutarPrueba("ASR: fallo nativo no bloqueante", () => semana4.FalloDelBindingAsr_NoPropagaLaExcepcionNiBloquea(), ref pruebasPasadas, ref totalPruebas);
+
+            // 8. Composición de LeccionBase y sus renderers reutilizables
+            var leccionBase = new LeccionBaseCompositionTests();
+            EjecutarPrueba("LeccionBase: cinco elementos reutilizables", () => leccionBase.ElementosDinamicos_TienenReferenciasYTransformacionesValidas(), ref pruebasPasadas, ref totalPruebas);
+            EjecutarPrueba("LeccionBase: seis Pages y 19 tipos en dos formatos", () => leccionBase.Pages_CubrenCorpusYFormatosMoviles(), ref pruebasPasadas, ref totalPruebas);
 
             string color = pruebasPasadas == totalPruebas ? "green" : "red";
             string estado = pruebasPasadas == totalPruebas ? "PASS" : "CON FALLOS";

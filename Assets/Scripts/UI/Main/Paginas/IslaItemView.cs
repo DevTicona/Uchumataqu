@@ -4,7 +4,6 @@ using Assets.Scripts.Core;
 using Assets.Scripts.Core.Services;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace Assets.Scripts.UI.Main.Paginas
 {
@@ -16,25 +15,32 @@ namespace Assets.Scripts.UI.Main.Paginas
     }
 
     /// <summary>
-    /// Componente de botón de nodo/isla dentro del mapa curricular de 27 lecciones e hitos RA.
-    /// Especificado en Docs/UI/03-escena-main.md §5.
+    /// Controla la interacción y el estado visual del prefab ContenedorIsla.
+    /// IconoEstado muestra candado, ubicación o estrella; IconoRa identifica los hitos RA.
     /// </summary>
     public class IslaItemView : MonoBehaviour
     {
-        [Header("Elementos de UI")]
+        [Header("Elementos del prefab ContenedorIsla")]
+        [SerializeField] private Image iconoEstado;
+        [SerializeField] private GameObject iconoRa;
         [SerializeField] private Button btnIsla;
-        [SerializeField] private TMP_Text txtNumero;
-        [SerializeField] private TMP_Text txtTitulo;
         [SerializeField] private Image imgFondo;
-        [SerializeField] private GameObject iconoCandado;
-        [SerializeField] private GameObject iconoEstrella;
-        [SerializeField] private GameObject indicadorRA; // Si es un hito de RA
-        [SerializeField] private GameObject indicadorActual;
 
-        [Header("Colores por Estado")]
-        [SerializeField] private Color colorBloqueada = new Color(0.70f, 0.70f, 0.70f, 1f);
-        [SerializeField] private Color colorDisponible = new Color(0.92f, 0.76f, 0.35f, 1f); // Tierra
-        [SerializeField] private Color colorCompletada = new Color(0.35f, 0.72f, 0.45f, 1f); // Verde acierto
+        [Header("Iconos de Estado")]
+        [SerializeField] private Sprite iconoBloqueado;
+        [SerializeField] private Sprite iconoActual;
+        [SerializeField] private Sprite iconoCompletado;
+
+        public Sprite IconoBloqueado => iconoBloqueado;
+        public Sprite IconoActual => iconoActual;
+        public Sprite IconoCompletado => iconoCompletado;
+
+        private static readonly Color ColorIslaNormal = Color.white;
+        private static readonly Color ColorIslaBloqueada = new Color(0.40f, 0.40f, 0.44f, 1f);
+        private static readonly Color ColorEstadoBloqueado = new Color(0.40f, 0.47f, 0.54f, 1f);
+        private static readonly Color ColorEstadoActual = new Color(0.96f, 0.55f, 0.08f, 1f);
+        private static readonly Color ColorEstadoCompletado = new Color(1f, 0.78f, 0.08f, 1f);
+        private static readonly Color ColorIndicadorRa = new Color(0.06f, 0.20f, 0.38f, 1f);
 
         public string LeccionId { get; private set; }
         public string EscenarioRaId { get; private set; }
@@ -43,7 +49,8 @@ namespace Assets.Scripts.UI.Main.Paginas
         public event Action<string> OnLeccionSeleccionada;
         public event Action<string> OnHitoRaSeleccionado;
 
-        private bool _iconosSolicitados;
+        private EstadoIsla _estadoActual = EstadoIsla.Disponible;
+        private bool _esActual;
         private string _spriteSolicitado;
 
         private void Awake()
@@ -51,6 +58,7 @@ namespace Assets.Scripts.UI.Main.Paginas
             AsegurarReferencias();
             if (btnIsla != null)
             {
+                btnIsla.onClick.RemoveAllListeners();
                 btnIsla.onClick.AddListener(OnIslaClicked);
             }
         }
@@ -59,180 +67,150 @@ namespace Assets.Scripts.UI.Main.Paginas
         {
             AsegurarReferencias();
             var rect = GetComponent<RectTransform>();
-            if (rect.sizeDelta.y <= 0f) rect.sizeDelta = new Vector2(0f, 116f);
+            if (rect != null && rect.sizeDelta == Vector2.zero)
+            {
+                rect.sizeDelta = new Vector2(300f, 300f);
+            }
         }
 
         private void AsegurarReferencias()
         {
-            btnIsla ??= GetComponent<Button>();
-            imgFondo ??= transform.Find("ImgIsla")?.GetComponent<Image>() ?? GetComponent<Image>();
-            txtTitulo ??= GetComponentInChildren<TMP_Text>(true);
+            if (imgFondo == null)
+                imgFondo = transform.Find("ImgIsla")?.GetComponent<Image>();
 
-            if (imgFondo == null) imgFondo = gameObject.AddComponent<Image>();
-            if (btnIsla == null) btnIsla = gameObject.AddComponent<Button>();
-            btnIsla.targetGraphic = imgFondo;
+            if (iconoEstado == null)
+                iconoEstado = transform.Find("IconoEstado")?.GetComponent<Image>();
 
-            txtNumero ??= CrearTexto("Numero", new Vector2(0f, 0f), new Vector2(0.24f, 1f), 26f);
-            txtTitulo ??= CrearTexto("Titulo", new Vector2(0.24f, 0f), new Vector2(0.84f, 1f), 23f);
-            iconoCandado ??= CrearIndicador("Candado", "BLOQ.", new Vector2(0.84f, 0f), new Vector2(1f, 1f));
-            iconoEstrella ??= CrearIndicador("Completada", "✓", new Vector2(0.84f, 0f), new Vector2(1f, 1f));
-            indicadorRA ??= CrearIndicador("IndicadorRA", "RA", new Vector2(0.02f, 0.72f), new Vector2(0.16f, 0.98f));
-            indicadorActual ??= CrearIndicador("IndicadorActual", "ACTUAL", new Vector2(0.70f, 0.72f), new Vector2(0.98f, 0.98f));
+            if (iconoRa == null)
+                iconoRa = transform.Find("IconoRa")?.gameObject;
 
-            if (_iconosSolicitados) return;
-            _iconosSolicitados = true;
-            _ = ConfigurarIconosAsync();
+            if (btnIsla == null)
+                btnIsla = GetComponent<Button>();
+
+            if (btnIsla != null && imgFondo != null)
+            {
+                btnIsla.targetGraphic = imgFondo;
+                btnIsla.transition = Selectable.Transition.None;
+            }
         }
 
-        public void ConfigurarLeccion(string id, int numero, string titulo, EstadoIsla estado, bool esActual = false)
+        public void ConfigurarLeccion(string id, EstadoIsla estado, bool esActual)
         {
             LeccionId = id;
             EscenarioRaId = null;
+            _estadoActual = estado;
+            _esActual = esActual;
 
-            if (txtNumero != null) txtNumero.text = $"L{numero:D2}";
-            if (txtTitulo != null) txtTitulo.text = titulo;
-            if (indicadorRA != null) indicadorRA.SetActive(false);
-            if (indicadorActual != null) indicadorActual.SetActive(esActual);
-
-            ActualizarEstadoVisual(estado);
+            AsegurarReferencias();
+            ActualizarEstadoVisual();
             _ = CargarSpriteAsync(ContentAddress.Isla(id));
         }
 
-        public void ConfigurarHitoRA(string escenarioId, string titulo, EstadoIsla estado, bool esActual = false)
+        public void ConfigurarHitoRA(string escenarioId, EstadoIsla estado, bool esActual)
         {
             LeccionId = null;
             EscenarioRaId = escenarioId;
+            _estadoActual = estado;
+            _esActual = esActual;
 
-            if (txtNumero != null) txtNumero.text = "RA";
-            if (txtTitulo != null) txtTitulo.text = titulo;
-            if (indicadorRA != null) indicadorRA.SetActive(true);
-            if (indicadorActual != null) indicadorActual.SetActive(esActual);
-
-            ActualizarEstadoVisual(estado);
+            AsegurarReferencias();
+            ActualizarEstadoVisual();
             _ = CargarSpriteAsync(ContentAddress.Isla(escenarioId));
         }
 
-        private void ActualizarEstadoVisual(EstadoIsla estado)
+        private void ActualizarEstadoVisual()
         {
+            bool bloqueada = _estadoActual == EstadoIsla.Bloqueada;
+
             if (btnIsla != null)
-                btnIsla.interactable = (estado != EstadoIsla.Bloqueada);
-
-            if (iconoCandado != null)
-                iconoCandado.SetActive(estado == EstadoIsla.Bloqueada);
-
-            if (iconoEstrella != null)
-                iconoEstrella.SetActive(estado == EstadoIsla.Completada);
+                btnIsla.interactable = !bloqueada;
 
             if (imgFondo != null)
+                imgFondo.color = bloqueada ? ColorIslaBloqueada : ColorIslaNormal;
+
+            if (iconoRa != null)
             {
-                switch (estado)
-                {
-                    case EstadoIsla.Bloqueada:
-                        imgFondo.color = colorBloqueada;
-                        break;
-                    case EstadoIsla.Disponible:
-                        imgFondo.color = colorDisponible;
-                        break;
-                    case EstadoIsla.Completada:
-                        imgFondo.color = colorCompletada;
-                        break;
-                }
+                iconoRa.SetActive(EsHitoRA);
+                if (EsHitoRA)
+                    SetColorIcono(iconoRa, ColorIndicadorRa);
+            }
+
+            ActualizarIconoEstado();
+        }
+
+        private void ActualizarIconoEstado()
+        {
+            if (iconoEstado == null) return;
+            bool bloqueada = _estadoActual == EstadoIsla.Bloqueada;
+            bool completada = _estadoActual == EstadoIsla.Completada;
+            bool mostrarIcono = bloqueada || completada || _esActual;
+            iconoEstado.gameObject.SetActive(mostrarIcono);
+            if (!mostrarIcono) return;
+
+            Sprite sprite = ObtenerSpriteEstado(bloqueada, completada);
+            if (sprite != null)
+                iconoEstado.sprite = sprite;
+
+            iconoEstado.color = ObtenerColorEstado(bloqueada, completada);
+        }
+
+        private Sprite ObtenerSpriteEstado(bool bloqueada, bool completada)
+        {
+            if (bloqueada) return iconoBloqueado;
+            if (completada) return iconoCompletado;
+            return iconoActual;
+        }
+
+        private static Color ObtenerColorEstado(bool bloqueada, bool completada)
+        {
+            if (bloqueada) return ColorEstadoBloqueado;
+            if (completada) return ColorEstadoCompletado;
+            return ColorEstadoActual;
+        }
+
+        private static void SetColorIcono(GameObject obj, Color color)
+        {
+            var img = obj.GetComponent<Image>() ?? obj.GetComponentInChildren<Image>(true);
+            if (img != null)
+            {
+                img.color = color;
             }
         }
 
         private void OnIslaClicked()
         {
+            if (_estadoActual == EstadoIsla.Bloqueada) return;
             if (EsHitoRA)
-            {
                 OnHitoRaSeleccionado?.Invoke(EscenarioRaId);
-            }
             else
-            {
                 OnLeccionSeleccionada?.Invoke(LeccionId);
-            }
-        }
-
-        private TMP_Text CrearTexto(string nombre, Vector2 anchorMin, Vector2 anchorMax, float tamano)
-        {
-            var objeto = new GameObject(nombre, typeof(RectTransform), typeof(TextMeshProUGUI));
-            objeto.transform.SetParent(transform, false);
-            var rect = (RectTransform)objeto.transform;
-            rect.anchorMin = anchorMin;
-            rect.anchorMax = anchorMax;
-            rect.offsetMin = new Vector2(12f, 8f);
-            rect.offsetMax = new Vector2(-12f, -8f);
-            var texto = objeto.GetComponent<TextMeshProUGUI>();
-            texto.fontSize = tamano;
-            texto.alignment = TextAlignmentOptions.MidlineLeft;
-            texto.color = Color.white;
-            return texto;
-        }
-
-        private GameObject CrearIndicador(string nombre, string valor, Vector2 anchorMin, Vector2 anchorMax)
-        {
-            TMP_Text texto = CrearTexto(nombre, anchorMin, anchorMax, 22f);
-            texto.text = valor;
-            texto.alignment = TextAlignmentOptions.Center;
-            return texto.gameObject;
-        }
-
-        private async Task ConfigurarIconosAsync()
-        {
-            await Task.WhenAll(
-                AsignarIconoAsync(iconoCandado, "estados", "icono_candado"),
-                AsignarIconoAsync(iconoEstrella, "estados", "icono_completado"),
-                AsignarIconoAsync(indicadorActual, "estados", "icono_actual"),
-                AsignarIconoAsync(indicadorRA, "ra", "icono_ra"));
-        }
-
-        private static async Task AsignarIconoAsync(GameObject contenedor, string categoria, string nombre)
-        {
-            if (contenedor == null) return;
-            try
-            {
-                Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(
-                    ContentAddress.Icono(categoria, nombre));
-                if (contenedor == null) return;
-
-                Image imagen = contenedor.GetComponent<Image>();
-                if (imagen == null)
-                {
-                    var objeto = new GameObject("Icono", typeof(RectTransform), typeof(Image));
-                    objeto.transform.SetParent(contenedor.transform, false);
-                    RectTransform rect = (RectTransform)objeto.transform;
-                    rect.anchorMin = Vector2.zero;
-                    rect.anchorMax = Vector2.one;
-                    rect.offsetMin = Vector2.zero;
-                    rect.offsetMax = Vector2.zero;
-                    imagen = objeto.GetComponent<Image>();
-                }
-                imagen.sprite = sprite;
-                imagen.color = Color.white;
-                imagen.preserveAspect = true;
-                imagen.raycastTarget = false;
-
-                TMP_Text texto = contenedor.GetComponent<TMP_Text>();
-                if (texto != null) texto.enabled = false;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"[IslaItemView] No se pudo cargar {nombre}: {ex.Message}");
-            }
         }
 
         private async Task CargarSpriteAsync(string direccion)
         {
             _spriteSolicitado = direccion;
+            Sprite sprite = null;
+
             try
             {
-                Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(direccion);
-                if (imgFondo == null || _spriteSolicitado != direccion) return;
-                imgFondo.sprite = sprite;
-                imgFondo.preserveAspect = true;
+                sprite = await AddressablesService.CargarAssetAsync<Sprite>(direccion);
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"[IslaItemView] No se pudo cargar {direccion}: {ex.Message}");
+                Debug.LogError($"[IslaItemView] Error cargando sprite Addressables '{direccion}': {ex.Message}");
+            }
+
+            if (imgFondo == null || _spriteSolicitado != direccion) return;
+
+            if (sprite != null)
+            {
+                imgFondo.sprite = sprite;
+                imgFondo.preserveAspect = true;
+                imgFondo.color = _estadoActual == EstadoIsla.Bloqueada ? ColorIslaBloqueada : ColorIslaNormal;
+            }
+            else
+            {
+                Debug.LogError($"[IslaItemView] Sprite Addressables no disponible o nulo: '{direccion}'.");
             }
         }
     }

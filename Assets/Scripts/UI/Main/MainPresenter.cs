@@ -100,7 +100,13 @@ namespace Assets.Scripts.UI.Main
                 case PaginaMain.Lecciones: RefrescarMapa(); break;
                 case PaginaMain.Logros: RefrescarLogros(); break;
                 case PaginaMain.Ajustes: RefrescarAjustes(); break;
+                case PaginaMain.Acerca: RefrescarAcerca(); break;
             }
+        }
+
+        private void RefrescarAcerca()
+        {
+            view.Acerca?.Refrescar();
         }
 
         private void RefrescarInicio()
@@ -108,7 +114,7 @@ namespace Assets.Scripts.UI.Main
             if (view.Inicio == null) return;
             PerfilUsuario perfil = PerfilRepository.CargarPerfil();
             ProgresoUsuario progreso = ProgresoRepository.ObtenerProgreso();
-            view.Inicio.Mostrar(MainPresentacionService.CrearInicio(
+            view.Inicio.Mostrar(MainService.CrearInicio(
                 perfil,
                 progreso,
                 CorpusRepository.ObtenerTodasLecciones(),
@@ -123,13 +129,13 @@ namespace Assets.Scripts.UI.Main
             ProgresoUsuario progreso = ProgresoRepository.ObtenerProgreso();
 
             view.MapaLecciones.Mostrar(
-                MapaLeccionesPresentacionService.Crear(lecciones, escenarios, progreso));
+                MapaLeccionesService.Crear(lecciones, escenarios, progreso));
         }
 
         private void RefrescarLogros()
         {
             if (view.Logros == null) return;
-            view.Logros.Mostrar(MainPresentacionService.CrearLogros(ProgresoRepository.ObtenerProgreso()));
+            view.Logros.Mostrar(MainService.CrearLogros(ProgresoRepository.ObtenerProgreso()));
         }
 
         private void RefrescarAjustes()

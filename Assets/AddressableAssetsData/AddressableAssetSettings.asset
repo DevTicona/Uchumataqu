@@ -68,6 +68,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b950478270dbc4745ab53d53a80b7ab0, type: 2}
   - {fileID: 11400000, guid: 10390353cd66e304e9887b15f9505cbd, type: 2}
   - {fileID: 11400000, guid: de4920dc0960d5d45a8e6348abafbccb, type: 2}
+  - {fileID: 11400000, guid: 8f0d9549c1654a82aa5ec0677b535e88, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
     m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
@@ -122,6 +123,7 @@ MonoBehaviour:
     - ui_fonts
     - ui_icons
     - ui_theme
+    - shared_dependency
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 215297ee9f2d8e848abbc499683dd446, type: 2}

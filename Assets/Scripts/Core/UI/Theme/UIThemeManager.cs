@@ -37,7 +37,19 @@ namespace Assets.Scripts.Core.UI.Theme
         // Evento para notificar cambios
         public static event Action OnThemeChanged;
 
-        public static UITheme Theme => _theme;
+        public static UITheme Theme
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_theme == null)
+                {
+                    _theme = UnityEditor.AssetDatabase.LoadAssetAtPath<UITheme>("Assets/Content/UI/UITheme.asset");
+                }
+#endif
+                return _theme;
+            }
+        }
 
         /// <summary>
         /// Carga el tema usando AddressablesService
@@ -102,6 +114,50 @@ namespace Assets.Scripts.Core.UI.Theme
             imagen.preserveAspect = true;
         }
 
+        public static void AplicarSpritePanel(Image imagen, Sprite sprite = null)
+        {
+            if (imagen == null) return;
+
+            Sprite spritePanel = sprite != null ? sprite : _theme?.spritePanel;
+            if (spritePanel == null) return;
+
+            imagen.sprite = spritePanel;
+            imagen.type = Image.Type.Sliced;
+        }
+
+        public static void AplicarSpritePill(Image imagen, Sprite sprite = null)
+        {
+            if (imagen == null) return;
+
+            Sprite spritePill = sprite != null ? sprite : _theme?.spritePill;
+            if (spritePill == null) return;
+
+            imagen.sprite = spritePill;
+            imagen.type = Image.Type.Sliced;
+        }
+
+        public static void AplicarSpriteProgreso(Image imagen, Sprite sprite = null)
+        {
+            if (imagen == null) return;
+
+            Sprite spriteProgreso = sprite != null ? sprite : _theme?.spriteProgreso;
+            if (spriteProgreso == null) return;
+
+            imagen.sprite = spriteProgreso;
+            imagen.type = Image.Type.Sliced;
+        }
+
+        public static void AplicarSombraTarjeta(Image imagen, Sprite sprite = null)
+        {
+            if (imagen == null) return;
+
+            Sprite spriteSombra = sprite != null ? sprite : _theme?.spriteSombraTarjeta;
+            if (spriteSombra == null) return;
+
+            imagen.sprite = spriteSombra;
+            imagen.type = Image.Type.Sliced;
+        }
+
         private static void ActivarAplicacionAutomatica()
         {
             if (_escuchaEscenasActiva) return;
@@ -149,11 +205,11 @@ namespace Assets.Scripts.Core.UI.Theme
 
         private static void AplicarFuente(TMP_Text texto)
         {
-            if (_theme?.fuentePrincipal != null)
-                texto.font = _theme.fuentePrincipal;
+            if (Theme?.fuentePrincipal != null)
+                texto.font = Theme.fuentePrincipal;
         }
 
         private static float ObtenerEscalaTexto() =>
-            _theme != null ? Mathf.Max(1f, _theme.escalaTextoGlobal) : EscalaTextoPredeterminada;
+            Theme != null ? Mathf.Max(1f, Theme.escalaTextoGlobal) : EscalaTextoPredeterminada;
     }
 }

@@ -33,7 +33,7 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void Mapa_Crea27LeccionesSeisHitosYSeisRegiones()
         {
-            var mapa = MapaLeccionesPresentacionService.Crear(
+            var mapa = MapaLeccionesService.Crear(
                 CorpusRepository.ObtenerTodasLecciones(),
                 CorpusRepository.ObtenerTodosEscenariosRa(),
                 new ProgresoUsuario());
@@ -60,7 +60,7 @@ namespace Assets.Scripts.Editor.Tests
                 });
             }
 
-            var mapa = MapaLeccionesPresentacionService.Crear(
+            var mapa = MapaLeccionesService.Crear(
                 CorpusRepository.ObtenerTodasLecciones(),
                 CorpusRepository.ObtenerTodosEscenariosRa(),
                 progreso);
@@ -119,7 +119,10 @@ namespace Assets.Scripts.Editor.Tests
             string onboarding = System.IO.File.ReadAllText("Assets/Scenes/01_Onboarding.unity");
             StringAssert.Contains("backHandler: {fileID: 1167188420}", onboarding);
 
-            string prefab = System.IO.File.ReadAllText("Assets/Content/Prefabs/IslaLeccion.prefab");
+            string rutaPrefab = System.IO.File.Exists("Assets/Content/Prefabs/ContenedorIsla.prefab")
+                ? "Assets/Content/Prefabs/ContenedorIsla.prefab"
+                : "Assets/Content/Prefabs/IslaLeccion.prefab";
+            string prefab = System.IO.File.ReadAllText(rutaPrefab);
             StringAssert.Contains("UI.Main.Paginas.IslaItemView", prefab);
             StringAssert.DoesNotContain("Assets.Scripts.Views.UI.IslaLeccionView", prefab);
         }

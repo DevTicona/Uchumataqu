@@ -21,6 +21,7 @@ namespace Assets.Scripts.UI.Onboarding
                 return;
             }
 
+            view.ConfigurarAvatares(PerfilOnboardingService.AvataresDisponibles);
             view.OnComenzarClick += CompletarOnboarding;
             view.OnContinuarBienvenida += MostrarFormulario;
             view.OnAvatarSeleccionado += SeleccionarAvatar;

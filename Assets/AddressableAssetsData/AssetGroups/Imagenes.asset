@@ -52,13 +52,13 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1bd302fe00e915f47be05a16f1553cd5
-    m_Address: imagen/fondo/fondo_pantalla
+    m_Address: imagen/fondo/fondo_onboarding
     m_ReadOnly: 0
     m_SerializedLabels:
     - backgrounds
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 300e3cc56f795a043ab690b0b2853344
-    m_Address: imagen/fondo/fondo_menu_lecciones
+  - m_GUID: 33efa556abe5f12489a3f1094adf6c0b
+    m_Address: imagen/fondo/principal
     m_ReadOnly: 0
     m_SerializedLabels:
     - backgrounds
@@ -76,7 +76,7 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 47cc7516a9922b041bbffdb1f1582755
-    m_Address: imagen/fondo/fondo2
+    m_Address: imagen/fondo/fondo_principal
     m_ReadOnly: 0
     m_SerializedLabels:
     - backgrounds
@@ -95,6 +95,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 534a8851ef5101e4dbda0e25122958eb
     m_Address: imagen/isla/l01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - islands
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55b19778b01b73641a6d7d87cdd428aa
+    m_Address: imagen/isla/l06
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -178,7 +184,7 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9293fd9d74cc81f4186bbb932627d3da
-    m_Address: imagen/isla/l06
+    m_Address: imagen/isla/l07
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -195,12 +201,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a6407f6965b3df642817d5c63f791a64
-    m_Address: imagen/fondo/fondo1
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - backgrounds
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a799f6b33c8559643bc09cb1742e42c0
     m_Address: imagen/isla/ra_animales_ecosistema
     m_ReadOnly: 0
@@ -213,11 +213,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bdde997aeb8920d4495d8384dcc9226a
-    m_Address: imagen/isla/l07
+  - m_GUID: b4c64d7da8659e04688a807a0cb7bc47
+    m_Address: imagen/fondo/fondo_menu_lecciones
     m_ReadOnly: 0
     m_SerializedLabels:
-    - islands
+    - backgrounds
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c3a5b33be2a89584c8327439d1933ca5
     m_Address: avatar/avatar_06

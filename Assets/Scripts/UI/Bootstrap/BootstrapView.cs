@@ -2,12 +2,15 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Core.UI.Theme;
 
 namespace Assets.Scripts.UI.Bootstrap
 {
     public sealed class BootstrapView : MonoBehaviour
     {
         [SerializeField] private TMP_Text textoEstado;
+        [SerializeField] private TMP_Text textoPorcentaje;
+        [SerializeField] private RectTransform rellenoProgreso;
 
         public event Action OnReintentar;
         public event Action OnCerrar;
@@ -21,13 +24,34 @@ namespace Assets.Scripts.UI.Bootstrap
         {
             if (textoEstado != null)
                 _grupoEstado = textoEstado.GetComponent<CanvasGroup>() ?? textoEstado.gameObject.AddComponent<CanvasGroup>();
+
+            ActualizarProgreso(0f);
         }
 
         private void Update()
         {
-            if (!_animando || _grupoEstado == null) return;
-            _tiempoAnimacion += Time.unscaledDeltaTime;
-            _grupoEstado.alpha = Mathf.Lerp(0.55f, 1f, (Mathf.Sin(_tiempoAnimacion * 3f) + 1f) * 0.5f);
+            if (_animando && _grupoEstado != null)
+            {
+                _tiempoAnimacion += Time.unscaledDeltaTime;
+                _grupoEstado.alpha = Mathf.Lerp(0.55f, 1f, (Mathf.Sin(_tiempoAnimacion * 3f) + 1f) * 0.5f);
+            }
+        }
+
+        public void MostrarProgreso(float progreso)
+        {
+            ActualizarProgreso(progreso);
+        }
+
+        private void ActualizarProgreso(float progreso)
+        {
+            float progresoNormalizado = Mathf.Clamp01(progreso);
+            if (textoPorcentaje != null)
+                textoPorcentaje.text = $"{Mathf.RoundToInt(progresoNormalizado * 100f)}%";
+
+            if (rellenoProgreso == null) return;
+
+            rellenoProgreso.anchorMax = new Vector2(progresoNormalizado, 1f);
+            rellenoProgreso.sizeDelta = new Vector2(0f, rellenoProgreso.sizeDelta.y);
         }
 
         public void MostrarCarga(string mensaje)
@@ -89,10 +113,12 @@ namespace Assets.Scripts.UI.Bootstrap
 
             var texto = textoObjeto.GetComponent<TextMeshProUGUI>();
             texto.text = etiqueta;
-            texto.fontSize = 24f;
+            texto.fontSize = UIThemeManager.EscalarTexto(24f);
             texto.alignment = TextAlignmentOptions.Center;
             texto.color = Color.white;
-            return objeto.GetComponent<Button>();
+            Button boton = objeto.GetComponent<Button>();
+            UIThemeManager.AplicarSpriteBoton(boton);
+            return boton;
         }
     }
 }

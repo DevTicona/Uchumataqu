@@ -1,14 +1,16 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Assets.Scripts.Core;
-using Assets.Scripts.Core.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Main
 {
+    /// <summary>
+    /// Gestiona la navegación; el aspecto visual se configura y serializa en la escena.
+    /// </summary>
     public class BottomNavigationView : MonoBehaviour
     {
         [Header("Botones de navegación")]
@@ -21,97 +23,81 @@ namespace Assets.Scripts.UI.Main
         public event Action<PaginaMain> OnTabSelected;
 
         private readonly Dictionary<PaginaMain, Button> _botones = new Dictionary<PaginaMain, Button>();
-        private readonly Dictionary<Button, Image> _iconos = new Dictionary<Button, Image>();
-        private readonly Dictionary<Button, Image> _indicadores = new Dictionary<Button, Image>();
-        private static readonly Color ColorActivo = new Color(0.85f, 0.47f, 0.04f, 1f);
-        private static readonly Color ColorInactivo = new Color(0.42f, 0.45f, 0.50f, 1f);
+        private readonly Dictionary<Button, GameObject> _indicadores = new Dictionary<Button, GameObject>();
+        private readonly Dictionary<Button, Transform> _iconos = new Dictionary<Button, Transform>();
+        private readonly Dictionary<Button, Coroutine> _animaciones = new Dictionary<Button, Coroutine>();
 
         private void Awake()
         {
-            ConfigurarBoton(btnInicio, PaginaMain.Inicio, "icono_inicio");
-            ConfigurarBoton(btnLecciones, PaginaMain.Lecciones, "icono_lecciones");
-            ConfigurarBoton(btnLogros, PaginaMain.Logros, "icono_logros");
-            ConfigurarBoton(btnAjustes, PaginaMain.Ajustes, "icono_ajustes");
-            ConfigurarBoton(btnAcerca, PaginaMain.Acerca, "icono_acerca");
+            ConfigurarBoton(btnInicio, PaginaMain.Inicio);
+            ConfigurarBoton(btnLecciones, PaginaMain.Lecciones);
+            ConfigurarBoton(btnLogros, PaginaMain.Logros);
+            ConfigurarBoton(btnAjustes, PaginaMain.Ajustes);
+            ConfigurarBoton(btnAcerca, PaginaMain.Acerca);
         }
 
         public void ResaltarPestana(PaginaMain pagina)
         {
             foreach (KeyValuePair<PaginaMain, Button> item in _botones)
             {
-                bool activa = item.Key == pagina;
-                Button boton = item.Value;
-                TMP_Text texto = boton.GetComponentInChildren<TMP_Text>(true);
-                if (texto != null)
-                {
-                    texto.color = activa ? ColorActivo : ColorInactivo;
-                    texto.fontStyle = activa ? FontStyles.Bold : FontStyles.Normal;
-                }
-                if (_iconos.TryGetValue(boton, out Image icono))
-                    icono.color = activa ? ColorActivo : ColorInactivo;
-                if (_indicadores.TryGetValue(boton, out Image indicador))
-                    indicador.gameObject.SetActive(activa);
+                bool seleccionado = item.Key == pagina;
+
+                if (_indicadores.TryGetValue(item.Value, out GameObject indicador))
+                    indicador.SetActive(seleccionado);
+
+                if (!_iconos.TryGetValue(item.Value, out Transform icono)) continue;
+
+                if (_animaciones.TryGetValue(item.Value, out Coroutine animacion) && animacion != null)
+                    StopCoroutine(animacion);
+
+                if (seleccionado)
+                    _animaciones[item.Value] = StartCoroutine(AnimarSeleccion(icono));
+                else
+                    icono.localScale = Vector3.one;
             }
         }
 
-        private void ConfigurarBoton(Button boton, PaginaMain pagina, string nombreIcono)
+        private void ConfigurarBoton(Button boton, PaginaMain pagina)
         {
             if (boton == null) return;
+
             _botones[pagina] = boton;
             boton.onClick.AddListener(() => OnTabSelected?.Invoke(pagina));
 
             TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>(true);
-            if (etiqueta != null)
-            {
-                RectTransform rectEtiqueta = etiqueta.rectTransform;
-                rectEtiqueta.anchorMin = Vector2.zero;
-                rectEtiqueta.anchorMax = new Vector2(1f, 0.43f);
-                rectEtiqueta.offsetMin = Vector2.zero;
-                rectEtiqueta.offsetMax = Vector2.zero;
-                etiqueta.fontSize = Mathf.Min(etiqueta.fontSize, 18f);
-            }
+            if (etiqueta != null) etiqueta.gameObject.SetActive(false);
 
-            Image icono = CrearImagen(boton.transform, "Icono");
-            RectTransform rectIcono = icono.rectTransform;
-            rectIcono.anchorMin = new Vector2(0.5f, 0.68f);
-            rectIcono.anchorMax = new Vector2(0.5f, 0.68f);
-            rectIcono.sizeDelta = new Vector2(30f, 30f);
-            icono.preserveAspect = true;
-            _iconos[boton] = icono;
+            Transform indicador = boton.transform.Find("IndicadorActivo");
+            if (indicador != null) _indicadores[boton] = indicador.gameObject;
 
-            Image indicador = CrearImagen(boton.transform, "IndicadorActivo");
-            RectTransform rectIndicador = indicador.rectTransform;
-            rectIndicador.anchorMin = new Vector2(0.25f, 1f);
-            rectIndicador.anchorMax = new Vector2(0.75f, 1f);
-            rectIndicador.pivot = new Vector2(0.5f, 1f);
-            rectIndicador.sizeDelta = new Vector2(0f, 4f);
-            indicador.color = ColorActivo;
-            _indicadores[boton] = indicador;
-
-            _ = CargarIconoAsync(icono, nombreIcono);
+            Transform icono = boton.transform.Find("Icono");
+            if (icono != null) _iconos[boton] = icono;
         }
 
-        private static Image CrearImagen(Transform padre, string nombre)
+        private static IEnumerator AnimarSeleccion(Transform icono)
         {
-            var objeto = new GameObject(nombre, typeof(RectTransform), typeof(Image));
-            objeto.transform.SetParent(padre, false);
-            Image imagen = objeto.GetComponent<Image>();
-            imagen.raycastTarget = false;
-            return imagen;
-        }
+            const float duracionSubida = 0.1f;
+            const float duracionAsentamiento = 0.08f;
+            Vector3 escalaInicial = Vector3.one;
+            Vector3 escalaMaxima = Vector3.one * 1.16f;
+            Vector3 escalaFinal = Vector3.one * 1.08f;
 
-        private static async Task CargarIconoAsync(Image destino, string nombre)
-        {
-            try
+            for (float tiempo = 0f; tiempo < duracionSubida; tiempo += Time.unscaledDeltaTime)
             {
-                Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(
-                    ContentAddress.Icono("navegacion", nombre));
-                if (destino != null) destino.sprite = sprite;
+                if (icono == null) yield break;
+                icono.localScale = Vector3.Lerp(escalaInicial, escalaMaxima, tiempo / duracionSubida);
+                yield return null;
             }
-            catch (Exception ex)
+
+            for (float tiempo = 0f; tiempo < duracionAsentamiento; tiempo += Time.unscaledDeltaTime)
             {
-                Debug.LogWarning($"[BottomNavigationView] No se pudo cargar {nombre}: {ex.Message}");
+                if (icono == null) yield break;
+                icono.localScale = Vector3.Lerp(escalaMaxima, escalaFinal, tiempo / duracionAsentamiento);
+                yield return null;
             }
+
+            if (icono != null)
+                icono.localScale = escalaFinal;
         }
     }
 }

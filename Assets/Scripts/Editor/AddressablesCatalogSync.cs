@@ -48,6 +48,7 @@ namespace Assets.Scripts.Editor
             AddressableAssetGroup imagenes = ObtenerOCrearGrupo(settings, "Imagenes");
             AddressableAssetGroup prefabs = ObtenerOCrearGrupo(settings, "Prefabs");
             AddressableAssetGroup ra = ObtenerOCrearGrupo(settings, "RA");
+            AddressableAssetGroup compartidos = ObtenerOCrearGrupo(settings, "Shared_Dependencies");
 
             int cantidad = 0;
             cantidad += SincronizarCarpeta(settings, datos, "Assets/Content/Data", CrearDireccionDato, "global_data");
@@ -58,12 +59,18 @@ namespace Assets.Scripts.Editor
             cantidad += SincronizarCarpeta(settings, ui, "Assets/Content/UI/Fonts", p => Direccion(p, "ui/font"), "ui", "ui_fonts");
             cantidad += SincronizarCarpeta(settings, ui, "Assets/Content/UI/Icons", CrearDireccionIcono, "ui", "ui_icons");
             cantidad += SincronizarArchivo(settings, ui, "Assets/Content/UI/UITheme.asset", "UITheme", "ui_theme");
-            cantidad += SincronizarCarpeta(settings, imagenes, "Assets/Content/Imagenes/Avatares", p => Direccion(p, "avatar"), "avatars");
+            // Los avatares fijos se gestionan mediante CatalogoAvatares.asset (ScriptableObject serializado por Inspector)
             cantidad += SincronizarCarpeta(settings, imagenes, "Assets/Content/Imagenes/Fondos", p => Direccion(p, "imagen/fondo"), "backgrounds");
             cantidad += SincronizarCarpeta(settings, imagenes, "Assets/Content/Imagenes/Marca", p => Direccion(p, "imagen/marca"), "branding");
             cantidad += SincronizarCarpeta(settings, imagenes, "Assets/Content/Imagenes/Islas", p => Direccion(p, "imagen/isla"), "islands");
             cantidad += SincronizarCarpeta(settings, prefabs, "Assets/Content/Prefabs", CrearDireccionPrefab, "prefab");
             cantidad += SincronizarCarpeta(settings, ra, "Assets/Content/Modelos3D", CrearDireccionModelo, "ra");
+            cantidad += SincronizarArchivo(
+                settings,
+                compartidos,
+                "Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader",
+                "shared/tmp_sdf_mobile",
+                "shared_dependency");
 
             EliminarEntradasInexistentes(settings);
             settings.SetDirty(AddressableAssetSettings.ModificationEvent.BatchModification, null, true, true);
@@ -73,6 +80,11 @@ namespace Assets.Scripts.Editor
 
         private static void SincronizarSilenciosamente()
         {
+            // Un reload de dominio también ocurre al entrar en Play Mode. No se deben
+            // reimportar ni guardar assets mientras la aplicación está arrancando.
+            if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling)
+                return;
+
             try
             {
                 Sincronizar();
@@ -249,13 +261,7 @@ namespace Assets.Scripts.Editor
             string nombre = Normalizar(Path.GetFileNameWithoutExtension(ruta));
             return nombre switch
             {
-                "boton" => "prefab_boton",
                 "islaleccion" => "prefab_isla_leccion",
-                "wordcard" => "prefab_word_card",
-                "actividademparejamiento" => "actividad_emparejamiento",
-                "actividadseleccion" => "actividad_seleccion",
-                "pln_palabra" => "pln_palabra",
-                "nubedialogo" => "prefab_nube_dialogo",
                 _ => $"prefab/{nombre}"
             };
         }

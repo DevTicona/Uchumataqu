@@ -34,22 +34,16 @@ namespace Assets.Scripts.Core.UI.Components
 
         private void AplicarSafeArea()
         {
+            if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
+            if (Screen.width <= 0 || Screen.height <= 0) return;
             Rect safeArea = Screen.safeArea;
             ultimoSafeArea = safeArea;
-
-            Vector2 anchorMin = safeArea.position;
-            Vector2 anchorMax = safeArea.position + safeArea.size;
-
-            anchorMin.x /= Screen.width;
-            anchorMin.y /= Screen.height;
-
-            anchorMax.x /= Screen.width;
-            anchorMax.y /= Screen.height;
-
-            rectTransform.anchorMin = anchorMin;
-            rectTransform.anchorMax = anchorMax;
-            rectTransform.offsetMin = Vector2.zero;
-            rectTransform.offsetMax = Vector2.zero;
+            Canvas canvas = GetComponentInParent<Canvas>();
+            float factor = canvas != null ? canvas.scaleFactor : 1f;
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.one;
+            rectTransform.offsetMin = safeArea.min / factor;
+            rectTransform.offsetMax = (safeArea.max - new Vector2(Screen.width, Screen.height)) / factor;
         }
     }
 }

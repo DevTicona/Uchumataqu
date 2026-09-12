@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Assets.Scripts.Core.Services;
 using Assets.Scripts.Core;
+using Assets.Scripts.Core.UI.Theme;
+using Assets.Scripts.UI.Avatares;
 
 namespace Assets.Scripts.UI.Main.Paginas
 {
@@ -15,9 +15,26 @@ namespace Assets.Scripts.UI.Main.Paginas
     /// </summary>
     public class AjustesView : MonoBehaviour
     {
-        [Header("Datos de Perfil")]
-        [SerializeField] private TMP_InputField inputNombre;
-        [SerializeField] private Button btnGuardarPerfil;
+        private const float MargenKnob = 5f;
+
+        [Header("Cabecera de Perfil (Vista Principal)")]
+        [SerializeField] private Image imgAvatarPrincipal;
+        [SerializeField] private CatalogoAvatares catalogoAvatares;
+        [SerializeField] private TMP_Text txtNombrePrincipal;
+        [SerializeField] private Button btnEditarPerfilBadge;
+        [SerializeField] private Button btnEditarPerfilTexto;
+
+        [Header("Modal de Edición de Perfil")]
+        [SerializeField] private GameObject modalEditarPerfil;
+        [SerializeField] private TMP_InputField inputNombreModal;
+        [SerializeField] private Transform contenedorBotonesAvatarModal;
+        [SerializeField] private Button btnGuardarModalPerfil;
+        [SerializeField] private Button btnCancelarModalPerfil;
+        [SerializeField] private Button btnCerrarModalPerfil;
+        [SerializeField] private TMP_Text textoErrorModal;
+
+        [Header("Scroll y Contenido")]
+        [SerializeField] private GameObject scrollAjustes;
 
         [Header("Audio")]
         [SerializeField] private Slider sliderVolumenGeneral;
@@ -37,26 +54,55 @@ namespace Assets.Scripts.UI.Main.Paginas
         public event Action OnConfirmarReinicio;
         public event Action OnSolicitarActualizacion;
 
-        private readonly List<Button> _botonesAvatar = new List<Button>();
-        private string _avatarSeleccionado;
-        private TMP_Text _textoEstadoPerfil;
+        private readonly List<Button> _botonesAvatarModal = new List<Button>();
+        private string _nombreActual = string.Empty;
+        private string _avatarActual = "avatar_01";
+        private string _avatarModalSeleccionado = "avatar_01";
 
         private void Awake()
         {
-            CrearControlesOpcionalesSiFaltan();
+            InicializarBotonesAvatarModal();
 
-            if (btnGuardarPerfil != null)
-                btnGuardarPerfil.onClick.AddListener(GuardarPerfil);
+            // Abrir modal al presionar badge o texto de editar
+            if (btnEditarPerfilBadge != null)
+                btnEditarPerfilBadge.onClick.AddListener(AbrirModalEditarPerfil);
 
+            if (btnEditarPerfilTexto != null)
+                btnEditarPerfilTexto.onClick.AddListener(AbrirModalEditarPerfil);
+
+            // Botones del modal de edición
+            if (btnGuardarModalPerfil != null)
+                btnGuardarModalPerfil.onClick.AddListener(GuardarPerfilDesdeModal);
+
+            if (btnCancelarModalPerfil != null)
+                btnCancelarModalPerfil.onClick.AddListener(CerrarModalEditarPerfil);
+
+            if (btnCerrarModalPerfil != null)
+                btnCerrarModalPerfil.onClick.AddListener(CerrarModalEditarPerfil);
+
+            // Audio y Háptica
             if (sliderVolumenGeneral != null)
                 sliderVolumenGeneral.onValueChanged.AddListener(OnVolumenChanged);
 
             if (toggleAudioAutomatico != null)
-                toggleAudioAutomatico.onValueChanged.AddListener(valor => OnCambiarAudioAutomatico?.Invoke(valor));
+            {
+                toggleAudioAutomatico.onValueChanged.AddListener(valor =>
+                {
+                    ActualizarVisualSwitch(toggleAudioAutomatico, valor);
+                    OnCambiarAudioAutomatico?.Invoke(valor);
+                });
+            }
 
             if (toggleVibracion != null)
-                toggleVibracion.onValueChanged.AddListener(valor => OnCambiarVibracion?.Invoke(valor));
+            {
+                toggleVibracion.onValueChanged.AddListener(valor =>
+                {
+                    ActualizarVisualSwitch(toggleVibracion, valor);
+                    OnCambiarVibracion?.Invoke(valor);
+                });
+            }
 
+            // Reinicio de progreso
             if (btnReiniciarProgreso != null)
                 btnReiniciarProgreso.onClick.AddListener(() => MostrarDialogoReinicio(true));
 
@@ -70,6 +116,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         private void OnEnable()
         {
             MostrarDialogoReinicio(false);
+            CerrarModalEditarPerfil();
             OnSolicitarActualizacion?.Invoke();
         }
 
@@ -80,27 +127,203 @@ namespace Assets.Scripts.UI.Main.Paginas
             bool audioAutomatico,
             bool vibracion)
         {
-            if (inputNombre != null) inputNombre.text = nombre ?? string.Empty;
-            SeleccionarAvatar(avatarId);
-            MostrarEstadoPerfil(null, false);
-            if (sliderVolumenGeneral != null) sliderVolumenGeneral.SetValueWithoutNotify(volumen);
-            if (toggleAudioAutomatico != null) toggleAudioAutomatico.SetIsOnWithoutNotify(audioAutomatico);
-            if (toggleVibracion != null) toggleVibracion.SetIsOnWithoutNotify(vibracion);
+            _nombreActual = string.IsNullOrWhiteSpace(nombre) ? "Usuario" : nombre.Trim();
+            _avatarActual = string.IsNullOrEmpty(avatarId) ? "avatar_01" : avatarId;
+
+            if (txtNombrePrincipal != null)
+                txtNombrePrincipal.text = _nombreActual;
+
+            ActualizarAvatarPrincipal(_avatarActual);
+
+            if (sliderVolumenGeneral != null)
+                sliderVolumenGeneral.SetValueWithoutNotify(volumen);
+
+            if (toggleAudioAutomatico != null)
+            {
+                toggleAudioAutomatico.SetIsOnWithoutNotify(audioAutomatico);
+                ActualizarVisualSwitch(toggleAudioAutomatico, audioAutomatico);
+            }
+
+            if (toggleVibracion != null)
+            {
+                toggleVibracion.SetIsOnWithoutNotify(vibracion);
+                ActualizarVisualSwitch(toggleVibracion, vibracion);
+            }
         }
 
-        public void MostrarErrorPerfil(string mensaje) => MostrarEstadoPerfil(mensaje, true);
-
-        public void MostrarPerfilGuardado() => MostrarEstadoPerfil("Perfil actualizado.", false);
-
-        private void GuardarPerfil()
+        public void MostrarErrorPerfil(string mensaje)
         {
-            if (inputNombre == null) return;
-            OnGuardarPerfil?.Invoke(inputNombre.text.Trim(), _avatarSeleccionado);
+            if (textoErrorModal != null)
+            {
+                textoErrorModal.text = mensaje ?? string.Empty;
+                textoErrorModal.gameObject.SetActive(!string.IsNullOrWhiteSpace(mensaje));
+            }
+        }
+
+        public void MostrarPerfilGuardado()
+        {
+            CerrarModalEditarPerfil();
+        }
+
+        private void AbrirModalEditarPerfil()
+        {
+            if (scrollAjustes != null)
+                scrollAjustes.SetActive(false);
+
+            if (modalEditarPerfil != null)
+                modalEditarPerfil.SetActive(true);
+
+            if (inputNombreModal != null)
+                inputNombreModal.text = _nombreActual;
+
+            _avatarModalSeleccionado = _avatarActual;
+            ActualizarSeleccionAvatarModal(_avatarModalSeleccionado);
+
+            if (textoErrorModal != null)
+                textoErrorModal.gameObject.SetActive(false);
+        }
+
+        private void CerrarModalEditarPerfil()
+        {
+            if (modalEditarPerfil != null)
+                modalEditarPerfil.SetActive(false);
+
+            if (scrollAjustes != null)
+                scrollAjustes.SetActive(true);
+
+            if (textoErrorModal != null)
+                textoErrorModal.gameObject.SetActive(false);
+        }
+
+        private void GuardarPerfilDesdeModal()
+        {
+            string nuevoNombre = inputNombreModal != null ? inputNombreModal.text?.Trim() : string.Empty;
+
+            if (string.IsNullOrEmpty(nuevoNombre) || nuevoNombre.Length < 2)
+            {
+                MostrarErrorPerfil("El nombre debe tener al menos 2 caracteres.");
+                return;
+            }
+
+            _nombreActual = nuevoNombre;
+            _avatarActual = _avatarModalSeleccionado;
+
+            if (txtNombrePrincipal != null)
+                txtNombrePrincipal.text = _nombreActual;
+
+            ActualizarAvatarPrincipal(_avatarActual);
+
+            CerrarModalEditarPerfil();
+            OnGuardarPerfil?.Invoke(_nombreActual, _avatarActual);
+        }
+
+        private void SeleccionarAvatarModal(string avatarId)
+        {
+            if (string.IsNullOrEmpty(avatarId))
+                avatarId = "avatar_01";
+
+            _avatarModalSeleccionado = avatarId;
+            ActualizarSeleccionAvatarModal(_avatarModalSeleccionado);
+        }
+
+        private void ActualizarSeleccionAvatarModal(string seleccionado)
+        {
+            foreach (Button boton in _botonesAvatarModal)
+            {
+                if (boton == null) continue;
+                bool esSeleccionado = string.Equals(boton.name, seleccionado, StringComparison.OrdinalIgnoreCase);
+
+                Transform selectorBorde = boton.transform.Find("Seleccionado") ?? boton.transform.Find("Seleccion");
+                if (selectorBorde != null)
+                {
+                    selectorBorde.gameObject.SetActive(esSeleccionado);
+                }
+            }
+        }
+
+        private void ActualizarAvatarPrincipal(string avatarId)
+        {
+            if (imgAvatarPrincipal == null || catalogoAvatares == null) return;
+            Sprite sprite = catalogoAvatares.ObtenerSprite(avatarId);
+            if (sprite != null)
+            {
+                imgAvatarPrincipal.sprite = sprite;
+                imgAvatarPrincipal.color = Color.white;
+            }
+        }
+
+        private void InicializarBotonesAvatarModal()
+        {
+            _botonesAvatarModal.Clear();
+            if (contenedorBotonesAvatarModal == null) return;
+
+            // Busca los botones existentes en la grilla
+            var botones = contenedorBotonesAvatarModal.GetComponentsInChildren<Button>(true);
+            foreach (var btn in botones)
+            {
+                string avId = btn.name;
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(() => SeleccionarAvatarModal(avId));
+                _botonesAvatarModal.Add(btn);
+
+                if (catalogoAvatares != null)
+                {
+                    var img = btn.GetComponent<Image>() ?? btn.GetComponentInChildren<Image>(true);
+                    if (img != null && img.sprite == null)
+                    {
+                        var sp = catalogoAvatares.ObtenerSprite(avId);
+                        if (sp != null) img.sprite = sp;
+                    }
+                }
+            }
         }
 
         private void OnVolumenChanged(float vol)
         {
             OnCambiarVolumen?.Invoke(vol);
+        }
+
+        private void ActualizarVisualSwitch(Toggle toggle, bool activo)
+        {
+            if (toggle == null) return;
+
+            Transform switchBg = toggle.transform.Find("SwitchBg")
+                ?? toggle.transform.Find("Switch/SwitchBg")
+                ?? toggle.transform;
+            Image bgImg = switchBg.GetComponent<Image>();
+            if (bgImg != null)
+            {
+                UITheme theme = UIThemeManager.Theme;
+                bgImg.color = theme != null
+                    ? activo ? theme.colorPrimario : theme.colorBorde
+                    : activo
+                        ? new Color(0.85f, 0.47f, 0.04f, 1f)
+                        : new Color(0.85f, 0.86f, 0.88f, 1f);
+            }
+
+            Transform knob = toggle.transform.Find("SwitchBg/Knob")
+                ?? toggle.transform.Find("Switch/SwitchBg/Knob")
+                ?? toggle.transform.Find("Knob");
+            if (knob is RectTransform knobRect)
+            {
+                toggle.graphic = null;
+                knob.gameObject.SetActive(true);
+
+                Image knobImage = knob.GetComponent<Image>();
+                if (knobImage != null)
+                {
+                    knobImage.color = Color.white;
+                    knobImage.canvasRenderer.SetAlpha(1f);
+                }
+
+                float posicionInicial = MargenKnob;
+                if (knobRect.parent is RectTransform fondoRect)
+                    posicionInicial += knobRect.rect.width - fondoRect.rect.width;
+
+                knobRect.anchoredPosition = new Vector2(
+                    activo ? -MargenKnob : posicionInicial,
+                    0f);
+            }
         }
 
         private void MostrarDialogoReinicio(bool mostrar)
@@ -113,226 +336,6 @@ namespace Assets.Scripts.UI.Main.Paginas
         {
             MostrarDialogoReinicio(false);
             OnConfirmarReinicio?.Invoke();
-        }
-
-        private void CrearControlesOpcionalesSiFaltan()
-        {
-            Transform contenedorPerfil = inputNombre != null ? inputNombre.transform.parent : transform;
-            Transform contenedorAudio = sliderVolumenGeneral != null ? sliderVolumenGeneral.transform.parent : transform;
-            CrearControlesPerfilSiFaltan(contenedorPerfil);
-            if (toggleAudioAutomatico == null)
-                toggleAudioAutomatico = CrearToggle(contenedorAudio, "ToggleAudioAutomatico", "Reproducir audio automáticamente");
-            if (toggleVibracion == null)
-                toggleVibracion = CrearToggle(contenedorAudio, "ToggleVibracion", "Vibración");
-
-            if (contenedorAudio is RectTransform rectAudio)
-                rectAudio.sizeDelta = new Vector2(rectAudio.sizeDelta.x, 300f);
-
-            if (transform.Find("VersionApp") == null)
-                CrearTexto(transform, "VersionApp", 16f).text = $"Uchumataqu · Versión {Application.version} · Offline";
-        }
-
-        private void CrearControlesPerfilSiFaltan(Transform contenedor)
-        {
-            if (contenedor == null) return;
-
-            Transform selectorEdad = contenedor.Find("SelectorRangoEdad");
-            if (selectorEdad != null) selectorEdad.gameObject.SetActive(false);
-
-            Transform selectorAvatar = contenedor.Find("SelectorAvatar") ??
-                                        CrearSelector(contenedor, "SelectorAvatar", "Avatar", 3, 112f);
-            CrearBotonesSelector(
-                selectorAvatar,
-                PerfilOnboardingService.AvataresDisponibles,
-                _botonesAvatar,
-                SeleccionarAvatar);
-
-            if (contenedor is RectTransform rectContenedor)
-                rectContenedor.sizeDelta = new Vector2(rectContenedor.sizeDelta.x, 400f);
-
-            _textoEstadoPerfil = contenedor.Find("EstadoPerfil")?.GetComponent<TMP_Text>() ??
-                                  CrearTexto(contenedor, "EstadoPerfil", 18f);
-            _textoEstadoPerfil.gameObject.SetActive(false);
-        }
-
-        private void SeleccionarAvatar(string avatarId)
-        {
-            _avatarSeleccionado = avatarId ?? string.Empty;
-            ActualizarSeleccion(_botonesAvatar, _avatarSeleccionado);
-            MostrarEstadoPerfil(null, false);
-        }
-
-        private void MostrarEstadoPerfil(string mensaje, bool esError)
-        {
-            if (_textoEstadoPerfil == null) return;
-            _textoEstadoPerfil.text = mensaje ?? string.Empty;
-            _textoEstadoPerfil.color = esError
-                ? new Color(0.92f, 0.3f, 0.25f)
-                : new Color(0.20f, 0.75f, 0.48f);
-            _textoEstadoPerfil.gameObject.SetActive(!string.IsNullOrWhiteSpace(mensaje));
-        }
-
-        private static Transform CrearSelector(
-            Transform padre,
-            string nombre,
-            string titulo,
-            int columnas,
-            float altura)
-        {
-            var raiz = new GameObject(nombre, typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(LayoutElement));
-            raiz.transform.SetParent(padre, false);
-            raiz.GetComponent<LayoutElement>().preferredHeight = altura + 34f;
-            var layout = raiz.GetComponent<VerticalLayoutGroup>();
-            layout.spacing = 6f;
-            layout.childControlHeight = false;
-            layout.childForceExpandHeight = false;
-
-            CrearTexto(raiz.transform, "Titulo", 19f).text = titulo;
-            var grilla = new GameObject("Opciones", typeof(RectTransform), typeof(GridLayoutGroup), typeof(LayoutElement));
-            grilla.transform.SetParent(raiz.transform, false);
-            grilla.GetComponent<LayoutElement>().preferredHeight = altura;
-            var grid = grilla.GetComponent<GridLayoutGroup>();
-            grid.cellSize = new Vector2(132f, 48f);
-            grid.spacing = new Vector2(8f, 8f);
-            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            grid.constraintCount = columnas;
-            return raiz.transform;
-        }
-
-        private static void CrearBotonesSelector(
-            Transform selector,
-            IReadOnlyList<string> valores,
-            ICollection<Button> destino,
-            Action<string> alSeleccionar)
-        {
-            Transform grilla = selector.Find("Opciones");
-            if (grilla == null) return;
-
-            for (int i = 0; i < valores.Count; i++)
-            {
-                string valor = valores[i];
-                Button boton = CrearBoton(grilla, valor);
-                boton.onClick.AddListener(() => alSeleccionar(valor));
-                destino.Add(boton);
-                if (valor.StartsWith("avatar_", StringComparison.Ordinal))
-                    _ = ConfigurarAvatarAsync(boton, valor);
-            }
-        }
-
-        private static async Task ConfigurarAvatarAsync(Button boton, string avatarId)
-        {
-            try
-            {
-                Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(ContentAddress.Avatar(avatarId));
-                if (boton == null) return;
-
-                var iconoObjeto = new GameObject("IconoAvatar", typeof(RectTransform), typeof(Image));
-                iconoObjeto.transform.SetParent(boton.transform, false);
-                RectTransform rect = (RectTransform)iconoObjeto.transform;
-                rect.anchorMin = new Vector2(0.15f, 0.08f);
-                rect.anchorMax = new Vector2(0.85f, 0.92f);
-                rect.offsetMin = Vector2.zero;
-                rect.offsetMax = Vector2.zero;
-                Image icono = iconoObjeto.GetComponent<Image>();
-                icono.sprite = sprite;
-                icono.preserveAspect = true;
-                icono.raycastTarget = false;
-
-                TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>(true);
-                if (etiqueta != null) etiqueta.gameObject.SetActive(false);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"[AjustesView] No se pudo cargar {avatarId}: {ex.Message}");
-            }
-        }
-
-        private static Button CrearBoton(Transform padre, string valor)
-        {
-            var objeto = new GameObject(valor, typeof(RectTransform), typeof(Image), typeof(Button));
-            objeto.transform.SetParent(padre, false);
-            Image fondo = objeto.GetComponent<Image>();
-            fondo.color = new Color(0.20f, 0.24f, 0.30f, 1f);
-            Button boton = objeto.GetComponent<Button>();
-            boton.targetGraphic = fondo;
-            TMP_Text texto = CrearTexto(objeto.transform, "Etiqueta", 17f);
-            texto.text = valor.StartsWith("avatar_", StringComparison.Ordinal)
-                ? $"Avatar {valor.Substring(valor.Length - 2)}"
-                : valor;
-            texto.alignment = TextAlignmentOptions.Center;
-            RectTransform rect = (RectTransform)texto.transform;
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
-            return boton;
-        }
-
-        private static TMP_Text CrearTexto(Transform padre, string nombre, float tamano)
-        {
-            var objeto = new GameObject(nombre, typeof(RectTransform), typeof(TextMeshProUGUI));
-            objeto.transform.SetParent(padre, false);
-            var texto = objeto.GetComponent<TextMeshProUGUI>();
-            texto.fontSize = tamano;
-            texto.color = Color.white;
-            texto.alignment = TextAlignmentOptions.MidlineLeft;
-            return texto;
-        }
-
-        private static void ActualizarSeleccion(IEnumerable<Button> botones, string valorSeleccionado)
-        {
-            foreach (Button boton in botones)
-            {
-                Image fondo = boton != null ? boton.GetComponent<Image>() : null;
-                if (fondo != null)
-                    fondo.color = boton.name == valorSeleccionado
-                        ? new Color(0.03f, 0.60f, 0.65f, 1f)
-                        : new Color(0.20f, 0.24f, 0.30f, 1f);
-            }
-        }
-
-        private static Toggle CrearToggle(Transform padre, string nombre, string etiqueta)
-        {
-            var raiz = new GameObject(nombre, typeof(RectTransform), typeof(Toggle), typeof(LayoutElement));
-            raiz.transform.SetParent(padre, false);
-            raiz.GetComponent<LayoutElement>().preferredHeight = 56f;
-
-            var fondo = new GameObject("Fondo", typeof(RectTransform), typeof(Image));
-            fondo.transform.SetParent(raiz.transform, false);
-            var fondoRect = (RectTransform)fondo.transform;
-            fondoRect.anchorMin = new Vector2(0f, 0.5f);
-            fondoRect.anchorMax = new Vector2(0f, 0.5f);
-            fondoRect.anchoredPosition = new Vector2(24f, 0f);
-            fondoRect.sizeDelta = new Vector2(36f, 36f);
-            fondo.GetComponent<Image>().color = new Color(0.20f, 0.24f, 0.30f, 1f);
-
-            var marca = new GameObject("Marca", typeof(RectTransform), typeof(Image));
-            marca.transform.SetParent(fondo.transform, false);
-            var marcaRect = (RectTransform)marca.transform;
-            marcaRect.anchorMin = new Vector2(0.2f, 0.2f);
-            marcaRect.anchorMax = new Vector2(0.8f, 0.8f);
-            marcaRect.offsetMin = Vector2.zero;
-            marcaRect.offsetMax = Vector2.zero;
-            marca.GetComponent<Image>().color = new Color(0.03f, 0.60f, 0.65f, 1f);
-
-            var textoObjeto = new GameObject("Etiqueta", typeof(RectTransform), typeof(TextMeshProUGUI));
-            textoObjeto.transform.SetParent(raiz.transform, false);
-            var textoRect = (RectTransform)textoObjeto.transform;
-            textoRect.anchorMin = Vector2.zero;
-            textoRect.anchorMax = Vector2.one;
-            textoRect.offsetMin = new Vector2(56f, 0f);
-            textoRect.offsetMax = Vector2.zero;
-            var texto = textoObjeto.GetComponent<TextMeshProUGUI>();
-            texto.text = etiqueta;
-            texto.fontSize = 20f;
-            texto.color = Color.white;
-            texto.alignment = TextAlignmentOptions.MidlineLeft;
-
-            Toggle toggle = raiz.GetComponent<Toggle>();
-            toggle.targetGraphic = fondo.GetComponent<Image>();
-            toggle.graphic = marca.GetComponent<Image>();
-            toggle.isOn = true;
-            return toggle;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Assets.Scripts.UI.Main
         public MapaLeccionesView MapaLecciones => pageLecciones != null ? pageLecciones.GetComponent<MapaLeccionesView>() : null;
         public LogrosView Logros => pageLogros != null ? pageLogros.GetComponent<LogrosView>() : null;
         public AjustesView Ajustes => pageAjustes != null ? pageAjustes.GetComponent<AjustesView>() : null;
+        public AcercaView Acerca => pageAcerca != null ? pageAcerca.GetComponent<AcercaView>() : null;
         public bool DialogoSalidaVisible => dialogoSalida != null && dialogoSalida.activeSelf;
 
         private void Awake()

@@ -61,7 +61,7 @@ namespace Assets.Scripts.Editor.Tests
                 }
             };
 
-            InicioPresentacionData inicio = MainPresentacionService.CrearInicio(
+            InicioData inicio = MainService.CrearInicio(
                 new PerfilUsuario { nombre = "Ana", avatar_id = "avatar_02" },
                 progreso,
                 CorpusRepository.ObtenerTodasLecciones(),
@@ -69,6 +69,7 @@ namespace Assets.Scripts.Editor.Tests
 
             Assert.AreEqual("L05", inicio.LeccionId);
             Assert.IsTrue(inicio.EsContinuacion);
+            Assert.Greater(inicio.PorcentajeLeccionActual, 0);
             Assert.IsFalse(inicio.CurriculoCompletado);
             Assert.AreEqual("avatar_02", inicio.AvatarId);
         }
@@ -81,11 +82,14 @@ namespace Assets.Scripts.Editor.Tests
                 progreso.lecciones.Add(new ProgresoLeccionData { leccion_id = $"L{i:D2}", estado = "completada" });
             progreso.MarcarEscenarioVisitado("ra_encuentro_comunicacion");
 
-            List<LogroPresentacionData> logros = MainPresentacionService.CrearLogros(progreso);
+            List<LogroData> logros = MainService.CrearLogros(progreso);
 
             CollectionAssert.AreEquivalent(
                 new[] { "lecciones_1", "lecciones_5", "lecciones_14", "lecciones_27", "ra_1", "ra_3", "ra_6" },
                 logros.Select(logro => logro.Id));
+            Assert.IsTrue(logros.All(logro => !string.IsNullOrWhiteSpace(logro.IconoId)));
+            Assert.AreEqual(logros.Count, logros.Select(logro => logro.IconoId).Distinct().Count(),
+                "Cada logro debe tener un icono propio.");
             Assert.IsTrue(logros.Single(logro => logro.Id == "lecciones_5").Desbloqueado);
             Assert.AreEqual(6, logros.Single(logro => logro.Id == "lecciones_14").ProgresoActual);
             Assert.IsTrue(logros.Single(logro => logro.Id == "ra_1").Desbloqueado);

@@ -36,10 +36,21 @@ namespace Assets.Scripts.Core.Sistema
             GestorOrientacionPantalla.ConfigurarInicial();
             AudioListener.volume = ConfiguracionRepository.Obtener().volumen_general;
             _ = AudioService.Instance;
-            var addressables = Addressables.InitializeAsync();
-            await addressables.Task;
-            if (addressables.Status != AsyncOperationStatus.Succeeded)
-                throw new InvalidOperationException("No se pudo inicializar el catálogo Addressables.");
+            // Se conserva el handle hasta consultar su estado. InitializeAsync() usa
+            // autoReleaseHandle=true por defecto y en dispositivos puede invalidarlo
+            // justo antes de que continúe este await.
+            var addressables = Addressables.InitializeAsync(false);
+            try
+            {
+                await addressables.Task;
+                if (addressables.Status != AsyncOperationStatus.Succeeded)
+                    throw new InvalidOperationException("No se pudo inicializar el catálogo Addressables.");
+            }
+            finally
+            {
+                if (addressables.IsValid())
+                    Addressables.Release(addressables);
+            }
             await UIThemeManager.CargarTemaAsync(ContentAddress.TemaUi);
             Debug.Log("[AppInitializer] Inicialización completa.");
         }

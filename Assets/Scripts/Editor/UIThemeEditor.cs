@@ -36,19 +36,24 @@ namespace Assets.Scripts.Editor
             UIThemeManager.SetTheme(theme);
 
             foreach (ThemedText texto in Object.FindObjectsByType<ThemedText>(
-                         FindObjectsInactive.Include,
-                         FindObjectsSortMode.None))
+                         FindObjectsInactive.Include))
             {
                 texto.AplicarTema();
                 EditorUtility.SetDirty(texto);
             }
 
             foreach (ThemedButton boton in Object.FindObjectsByType<ThemedButton>(
-                         FindObjectsInactive.Include,
-                         FindObjectsSortMode.None))
+                         FindObjectsInactive.Include))
             {
                 boton.AplicarTema();
                 EditorUtility.SetDirty(boton);
+            }
+
+            foreach (ThemedGraphic graphic in Object.FindObjectsByType<ThemedGraphic>(
+                         FindObjectsInactive.Include))
+            {
+                graphic.AplicarTema();
+                EditorUtility.SetDirty(graphic);
             }
 
             if (EditorSceneManager.GetActiveScene().IsValid())

@@ -8,6 +8,26 @@ namespace Assets.Scripts.Core.UI.Components
     [RequireComponent(typeof(Button))]
     public class ThemedButton : MonoBehaviour
     {
+        public enum EstiloBoton
+        {
+            Primario,
+            Secundario,
+            Respuesta,
+            Peligro
+        }
+
+        [SerializeField] private EstiloBoton estilo = EstiloBoton.Primario;
+
+        public EstiloBoton Estilo
+        {
+            get => estilo;
+            set
+            {
+                estilo = value;
+                AplicarTema();
+            }
+        }
+
         private Button button;
 
         private void Awake()
@@ -41,26 +61,51 @@ namespace Assets.Scripts.Core.UI.Components
 
             button.transition = Selectable.Transition.ColorTint;
 
+            Color normal = ObtenerColorNormal(theme);
+            Color resaltado = Color.Lerp(normal, Color.white, 0.10f);
+            Color presionado = Color.Lerp(normal, Color.black, 0.12f);
+
             if (button.targetGraphic is Image image)
+            {
                 image.color = Color.white;
+                if (theme.spriteBoton != null)
+                {
+                    image.sprite = theme.spriteBoton;
+                    image.type = Image.Type.Sliced;
+                }
+            }
 
             var colors = button.colors;
 
             // Un único color para todos los estados: sin variaciones de hover/press
-            colors.normalColor     = theme.colorBoton;
-            colors.highlightedColor = theme.colorBoton;
-            colors.pressedColor    = theme.colorBoton;
-            colors.selectedColor   = theme.colorBoton;
+            colors.normalColor = normal;
+            colors.highlightedColor = resaltado;
+            colors.pressedColor = presionado;
+            colors.selectedColor = resaltado;
             colors.disabledColor   = new Color(
-                theme.colorBoton.r,
-                theme.colorBoton.g,
-                theme.colorBoton.b,
+                normal.r,
+                normal.g,
+                normal.b,
                 0.45f);
 
             button.colors = colors;
 
             // Fuerza actualización visual
             button.targetGraphic?.SetAllDirty();
+        }
+
+        private Color ObtenerColorNormal(UITheme theme)
+        {
+            switch (estilo)
+            {
+                case EstiloBoton.Secundario:
+                case EstiloBoton.Respuesta:
+                    return theme.colorBotonSuave;
+                case EstiloBoton.Peligro:
+                    return theme.colorIncorrecto;
+                default:
+                    return theme.colorBoton;
+            }
         }
     }
 }

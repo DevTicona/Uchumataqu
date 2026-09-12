@@ -1,0 +1,841 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: UI
+  m_GUID: 9c27037842ce93b419506ad48a539f9e
+  m_SerializeEntries:
+  - m_GUID: 02034c7769145ef44a4e51a389aa6154
+    m_Address: ui/icon/estados/icono_completado
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0264c920a33c04841923df56367d0318
+    m_Address: ui/icon/ra/icono_rotar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 02767cfc132cc014d9d0820833b82912
+    m_Address: ui/icon/ra/icono_permiso_camara
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07545813672485f4d97dee568bf91305
+    m_Address: ui/icon/perfil/icono_datos_locales
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1179dada13a318744b9417a7044ac50d
+    m_Address: ui/base/ui_panel_rounded_16
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 119638e3aa59b5846918cb264da91aa7
+    m_Address: ui/icon/estados/icono_candado
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12f11b43d2cebe949b055159950ee27d
+    m_Address: ui/icon/estados/icono_informacion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1944e9565145cb14989349387ba55718
+    m_Address: ui/icon/ra/icono_objetivo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 198ed81974ff2bf4b91a7c270cc9b0b0
+    m_Address: ui/base/ui_circle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1abf7854bb6cc844cb5faccd45ba6e1a
+    m_Address: ui/icon/perfil/icono_creditos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ac77a1cccaab324dbaaadd24d3fabae
+    m_Address: ui/icon/lecciones/icono_escribir
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1afa82e460e2e374aa52fa2cf133c37a
+    m_Address: ui/base/ui_button_rounded_14
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c72de7a89773cd489f1ebe8725d2d45
+    m_Address: ui/icon/ra/icono_mision
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e27a18d63dc231489e56109beeed1cc
+    m_Address: UITheme
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui_theme
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ffa1b8fcdc526f448afcfc957c15abd
+    m_Address: ui/icon/lecciones/icono_volver_mapa
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ffe220cd12a48d4bbcb2e52167882ec
+    m_Address: ui/icon/logros/icono_logro_primer_paso
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2051eb67908d4864d836c91a7471b2e5
+    m_Address: ui/icon/estados/icono_disponible
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23248d2f70be2054ab7a0b7fb1a766a1
+    m_Address: ui/effect/ui_card_shadow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_effects
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 263a7ead482fae24a99d0a6b6a7b2745
+    m_Address: ui/icon/logros/icono_estrella
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 292aaaa23df40424b9b3ab520597ba22
+    m_Address: ui/font/notosans_semibold
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_fonts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2acb61f6b563a664b9eed8e2666beabb
+    m_Address: ui/icon/acciones/icono_reiniciar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b1141d1f1b23fa4a96ef5895eb125ca
+    m_Address: ui/icon/navegacion/icono_inicio
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ecbbbd7b7703d441a6c278611f580f0
+    m_Address: ui/effect/ui_avatar_selected
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_effects
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 312a87774ec464042b81c03997ed77e2
+    m_Address: ui/base/ui_input_rounded_12
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 353f4418bb895c64ba36e262613f0eaa
+    m_Address: ui/icon/navegacion/icono_cerrar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35ed0fdf362ae29468d171b2e892bd0c
+    m_Address: ui/icon/acciones/icono_mas
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 383a083f434531043b77d689ddd3e3c7
+    m_Address: ui/icon/ra/icono_superficie_detectada
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b19a414fde5d2b49a36b18a034afd91
+    m_Address: ui/icon/audio/icono_repetir_audio
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d0f3274cfc444640b1fa530de197849
+    m_Address: ui/icon/logros/icono_medalla
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f058bdecf3f53f459ceab07322e7248
+    m_Address: ui/icon/navegacion/icono_mapa
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4044c8103b5602b48a85692542c81d5d
+    m_Address: ui/icon/acciones/icono_eliminar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42ebdfd48c2302240a27895a40fb1b56
+    m_Address: ui/icon/audio/icono_silencio
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43473a930bda61f44a31bee4f5c2de49
+    m_Address: ui/icon/estados/icono_nueva_palabra
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 438dd8f213bc62848aae2b960cffd585
+    m_Address: ui/icon/estados/icono_correcto
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 447a67e1a3713a34d8a44bc7e628b20a
+    m_Address: ui/icon/logros/icono_logro_guardian_palabra
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44fa7e21068b148489f13e2c56087f4e
+    m_Address: ui/icon/acciones/icono_recargar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a6ff317fd1290d40b984d2c714e916d
+    m_Address: ui/effect/ui_modal_shadow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_effects
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4abd302187c958c4e89e6b1c41f6b29b
+    m_Address: ui/icon/audio/icono_volumen_alto
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4aeae3c472822244894613dff182fc0b
+    m_Address: ui/icon/lecciones/icono_palabra
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d2b857d756dc724f8f70242ef5874e2
+    m_Address: ui/base/ui_pill
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5301f90b4abf9aa469ce3fd4398d0c92
+    m_Address: ui/icon/audio/icono_pausa
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53fd8884a4853234988c231d061e7a32
+    m_Address: ui/icon/acciones/icono_reintentar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58fcc4348a777ac41881b8f92e2c387a
+    m_Address: ui/icon/ra/icono_ra
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a02bfb048ebc4e489b0e96f7f9855a1
+    m_Address: ui/font/notosans_bold_sdf
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_fonts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6160530222bee2f4fa75321b35da5ef9
+    m_Address: ui/icon/lecciones/icono_pronunciacion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 63272469b348ac04ca7424fab107d509
+    m_Address: ui/icon/logros/icono_ra_completada
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6428450a8290fc14fbbb28e281c1a665
+    m_Address: ui/icon/lecciones/icono_continuar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6625dc47c686dd946ae72d2e2f8e75c3
+    m_Address: ui/icon/estados/icono_pendiente
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6703855c6bc2d3a428280c51aba366cf
+    m_Address: ui/icon/audio/icono_audio
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6714ce33a75d2be4ea8f3c4186147560
+    m_Address: ui/icon/ra/icono_camara
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c56ce830765db049b96f7d549f773d9
+    m_Address: ui/font/notosans_semibold_sdf
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_fonts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d56d24c57fe7e4428b1ab5d48a2cb76
+    m_Address: ui/icon/audio/icono_audio_activo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e07f97e27d7e3f49a630150ba86f6d3
+    m_Address: ui/icon/logros/icono_logro_primera_exploracion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7002d298cd661f443aeb0cb9e9ce06d5
+    m_Address: ui/icon/estados/icono_actual
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73b6f7163e9aad3418602deb12c6f2e0
+    m_Address: ui/icon/audio/icono_vibracion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74124998cdc74234facbbc534befb59a
+    m_Address: ui/icon/ra/icono_escanear_superficie
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7575ec3bebdc9b74bbde2ad85f916ce9
+    m_Address: ui/icon/lecciones/icono_ordenar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7737106b384d9284eb37aa1b2dad3fad
+    m_Address: ui/icon/logros/icono_lecciones_completadas
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 788a11bc68396f04995d135ed8533648
+    m_Address: ui/icon/acciones/icono_guardar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8129aee3bcc04b8448e9bf04d65a8cf2
+    m_Address: ui/icon/lecciones/icono_hablar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85ea1efbe8db5254385310c4283cff89
+    m_Address: ui/icon/acciones/icono_compartir
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87e2afab66569e44c83798512f1766ef
+    m_Address: ui/icon/navegacion/icono_salir
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8be81036833856640920705332b0fb17
+    m_Address: ui/icon/perfil/icono_avatar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ed9feaeadc3f014bbb70b77fdfc4d52
+    m_Address: ui/icon/lecciones/icono_oracion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91750a6a066961a45a00b0f497a77e5f
+    m_Address: ui/icon/perfil/icono_version
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 939cf04cd43a9a946ab96bb90be9a918
+    m_Address: ui/icon/perfil/icono_usuario
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 981d011c20372b047b176acd57339185
+    m_Address: ui/icon/audio/icono_volumen_bajo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98c3d9e64ea16b74388370516accc89c
+    m_Address: ui/icon/logros/icono_logro_explorador_uru
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a368615c12b5d243ae8a6c84bb367c0
+    m_Address: ui/icon/logros/icono_progreso_general
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9bca5005fddfa364e8163f8ed2088ee7
+    m_Address: ui/icon/estados/icono_sin_conexion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9fea74ce8c323aa48ad3e975979e6b10
+    m_Address: ui/effect/ui_avatar_glow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_effects
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a077713740b0c4149a3edfb00d41dd81
+    m_Address: ui/icon/lecciones/icono_traduccion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0e36b6a4c0a4184891ae360a534efa5
+    m_Address: ui/icon/estados/icono_incorrecto
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3efc1d87d5036f4ea57271bec73b2a2
+    m_Address: ui/icon/perfil/icono_privacidad
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a571c37f57fabd14f887e547c06d5d05
+    m_Address: ui/icon/acciones/icono_cancelar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6ab4e1e04518d743b33a2ac1833ea17
+    m_Address: ui/icon/perfil/icono_reiniciar_progreso
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a92d9d909b57b764bbc8584c528dbd9a
+    m_Address: ui/icon/lecciones/icono_escuchar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac14fb50d6f3c584eb81e3152ceedd82
+    m_Address: ui/icon/estados/icono_pista
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acadfe3abb95b0d428f771722ab467ef
+    m_Address: ui/icon/audio/icono_grabando
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: adb52a8694ebecc43b6e21424024b015
+    m_Address: ui/icon/acciones/icono_menos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: adbb02412a4300e43a5b5ba7e03f718d
+    m_Address: ui/icon/ra/icono_enfocar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b04e59c9e5301f5459d9ae6164d74438
+    m_Address: ui/icon/estados/icono_desbloqueado
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1a3b811b64267948906e57a3aff691d
+    m_Address: ui/icon/perfil/icono_idioma
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1e33ea98b63f5c41a10923ce093edb5
+    m_Address: ui/icon/navegacion/icono_atras
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7d8ce1ad4438104895281eaba2e6f9a
+    m_Address: ui/icon/estados/icono_advertencia
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba134043a4d4a184c9fb0fb1c75314e6
+    m_Address: ui/font/notosans_bold
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_fonts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb2a8df8e67ec6e44b59c4aedc11f627
+    m_Address: ui/effect/ui_avatar_check
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_effects
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf857bc79295c8549ba071c6dc4278ae
+    m_Address: ui/icon/acciones/icono_confirmar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1073994f3e51f246bf5b3a84d2eea34
+    m_Address: ui/icon/lecciones/icono_comprobar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c21097e2573ab5b4692b74111d455005
+    m_Address: ui/icon/audio/icono_microfono
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c29d92bb62d7c764b88c9294842ec02b
+    m_Address: ui/icon/logros/icono_logro_guia_territorios
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4d19f4e7afe1194784f9c01fb6acf73
+    m_Address: ui/icon/lecciones/icono_seleccion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c64183fa9d8f90b419dc9611efd7dead
+    m_Address: ui/icon/audio/icono_detener
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8a46f9ab38520f41931f7dc4dc9581a
+    m_Address: ui/font/notosans_regular
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_fonts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cac2546b7b3c3154e89adc062af451a2
+    m_Address: ui/font/notosans_regular_sdf
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_fonts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc3a2ced52f820f4188242a6efe32708
+    m_Address: ui/icon/ra/icono_recolocar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce5f9a505d21b044b9ecf981391063ee
+    m_Address: ui/icon/logros/icono_trofeo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2b30ead558df294c8499841220dd882
+    m_Address: ui/base/aro_avatar_cuadrado
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5b25cbb57a41f140bcf7061896546c9
+    m_Address: ui/icon/navegacion/icono_logros
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7316e41b26c9d349b44f723523f2ff5
+    m_Address: ui/icon/lecciones/icono_emparejar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d762fe2f6a937554180bd2cf4b3bff67
+    m_Address: ui/icon/navegacion/icono_siguiente
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d79d5d8375b45d347995bbdfd16be927
+    m_Address: ui/icon/navegacion/icono_lecciones
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d893b30312a6c52489bd5054ad86957f
+    m_Address: ui/icon/logros/icono_logro_heredero_lengua
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9f2034b202b14440b63650c6a554eef
+    m_Address: ui/base/ui_progress_rounded
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_base
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da37f1805d5a0c24e9136923ce71d2b7
+    m_Address: ui/icon/navegacion/icono_acerca
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbda610d01a98194293b03f8cc0c45f6
+    m_Address: ui/icon/logros/icono_logro_caminante_lago
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e01604f4569b2344f8f6dc0392222b6a
+    m_Address: ui/icon/logros/icono_precision
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2d949bb4df483f4fbfba55948c86ec6
+    m_Address: ui/icon/audio/icono_escuchando
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e671000accc06464fb90c0f811b11a55
+    m_Address: ui/icon/navegacion/icono_ajustes
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e78d39ed9248fed4b812b2b8d7318311
+    m_Address: ui/icon/lecciones/icono_memoria
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e96e29b98e7315544954061b8542631d
+    m_Address: ui/icon/ra/icono_colocar_objeto
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea688619a595391468e29969fe5ddcd1
+    m_Address: ui/icon/perfil/icono_audio_automatico
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1e51b176621c1345ba8db85b53dd9a6
+    m_Address: ui/icon/acciones/icono_editar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2d2033475aecf8468f1b19a46cdb424
+    m_Address: ui/icon/estados/icono_progreso
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7ce871149fd97347ac0551265effb73
+    m_Address: ui/icon/acciones/icono_buscar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd681c293eeeb694ea7a823aad848b4d
+    m_Address: ui/icon/ra/icono_mover
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe3e772b36adb1149b4e739cff97e4c5
+    m_Address: ui/icon/ra/icono_mision_completada
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_icons
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 30c16aa3f6c5c784694e0dbfc06d3dec, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 28c4424388a2fd747b0c457b116cc5e7, type: 2}
+    - {fileID: 11400000, guid: 7f68cd2c4f1ba144b82dd027ab086282, type: 2}

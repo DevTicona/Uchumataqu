@@ -21,7 +21,13 @@ namespace Assets.Scripts.Core.UI.Components
         {
             Primario,
             Secundario,
-            Terciario
+            Terciario,
+            SobrePrimario,
+            AcentoPrimario,
+            TituloSobreOscuro,
+            Exito,
+            Advertencia,
+            Boton
         }
 
         [Header("Configuración")]
@@ -163,6 +169,18 @@ namespace Assets.Scripts.Core.UI.Components
                     return theme.colorTextoSecundario;
                 case ColorTexto.Terciario:
                     return theme.colorTextoTerciario;
+                case ColorTexto.SobrePrimario:
+                    return theme.colorTextoSobreOscuro;
+                case ColorTexto.AcentoPrimario:
+                    return theme.colorPrimario;
+                case ColorTexto.TituloSobreOscuro:
+                    return theme.colorTituloSobreOscuro;
+                case ColorTexto.Exito:
+                    return theme.colorCorrecto;
+                case ColorTexto.Advertencia:
+                    return theme.colorAdvertencia;
+                case ColorTexto.Boton:
+                    return theme.colorBoton;
                 default:
                     return theme.colorTextoPrimario;
             }

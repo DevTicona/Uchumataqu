@@ -10,7 +10,7 @@ namespace Assets.Scripts.UI.Bootstrap
     {
         [SerializeField] private TMP_Text textoEstado;
         [SerializeField] private TMP_Text textoPorcentaje;
-        [SerializeField] private RectTransform rellenoProgreso;
+        [SerializeField] private Slider sliderProgreso;
 
         public event Action OnReintentar;
         public event Action OnCerrar;
@@ -48,10 +48,8 @@ namespace Assets.Scripts.UI.Bootstrap
             if (textoPorcentaje != null)
                 textoPorcentaje.text = $"{Mathf.RoundToInt(progresoNormalizado * 100f)}%";
 
-            if (rellenoProgreso == null) return;
-
-            rellenoProgreso.anchorMax = new Vector2(progresoNormalizado, 1f);
-            rellenoProgreso.sizeDelta = new Vector2(0f, rellenoProgreso.sizeDelta.y);
+            if (sliderProgreso != null)
+                sliderProgreso.value = progresoNormalizado;
         }
 
         public void MostrarCarga(string mensaje)

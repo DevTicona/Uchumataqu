@@ -22,6 +22,11 @@ namespace Assets.Scripts.Core.UI.Theme
         public Color colorTarjetaSecundaria = new Color(1f, 0.9568627f, 0.8392157f, 1f);
         public Color colorTarjetaDestacada = new Color(1f, 0.9058824f, 0.6392157f, 1f);
 
+        [Header("Bordes de logros")]
+        public Color colorBordeLogroObtenido = new Color(0.1f, 0.65f, 0.31f, 1f);
+        public Color colorBordeLogroEnProgreso = new Color(0.85f, 0.47f, 0.04f, 1f);
+        public Color colorBordeLogroPendiente = new Color(0.55f, 0.58f, 0.6f, 1f);
+
         [Header("Colores de texto")]
         [FormerlySerializedAs("colorTexto")]
         public Color colorTextoPrimario = new Color(0.06f, 0.14f, 0.2f, 1f);

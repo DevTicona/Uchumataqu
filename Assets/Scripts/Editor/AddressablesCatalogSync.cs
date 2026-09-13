@@ -164,6 +164,7 @@ namespace Assets.Scripts.Editor
         {
             var bordes = new Dictionary<string, Vector4>(StringComparer.OrdinalIgnoreCase)
             {
+                ["aro_cuadrado"] = new Vector4(32, 32, 32, 32),
                 ["ui_panel_rounded_16"] = new Vector4(24, 24, 24, 24),
                 ["ui_button_rounded_14"] = new Vector4(20, 20, 20, 20),
                 ["ui_input_rounded_12"] = new Vector4(18, 18, 18, 18),

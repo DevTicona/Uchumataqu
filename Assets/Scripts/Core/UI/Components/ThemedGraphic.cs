@@ -33,7 +33,10 @@ namespace Assets.Scripts.Core.UI.Components
             TarjetaPrincipal = 20,
             TarjetaSecundaria = 21,
             TarjetaDestacada = 22,
-            Secundario = 23
+            Secundario = 23,
+            BordeLogroObtenido = 24,
+            BordeLogroEnProgreso = 25,
+            BordeLogroPendiente = 26
         }
 
         [SerializeField] private RolColor rol = RolColor.Superficie;
@@ -117,6 +120,9 @@ namespace Assets.Scripts.Core.UI.Components
                 case RolColor.BadgeProgreso: return theme.colorBadgeProgreso;
                 case RolColor.BadgeBloqueado: return theme.colorBadgeBloqueado;
                 case RolColor.Secundario: return theme.colorTextoSecundario;
+                case RolColor.BordeLogroObtenido: return theme.colorBordeLogroObtenido;
+                case RolColor.BordeLogroEnProgreso: return theme.colorBordeLogroEnProgreso;
+                case RolColor.BordeLogroPendiente: return theme.colorBordeLogroPendiente;
                 default: return theme.colorSuperficie;
             }
         }

@@ -217,6 +217,13 @@ MonoBehaviour:
     - ui
     - ui_icons
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d4a5d93096e9894dabac54a840b73fe
+    m_Address: ui/base/aro_cuadrado
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    - ui_base
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3f058bdecf3f53f459ceab07322e7248
     m_Address: ui/icon/navegacion/icono_mapa
     m_ReadOnly: 0

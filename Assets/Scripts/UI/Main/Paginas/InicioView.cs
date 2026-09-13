@@ -19,8 +19,9 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         [Header("Tarjeta Continuar")]
         [SerializeField] private TMP_Text txtSubtituloContinuar;
+        [SerializeField] private TMP_Text txtProgresoContinuar;
         [SerializeField] private TMP_Text txtPorcentajeContinuar;
-        [SerializeField] private RectTransform rellenoProgresoContinuar;
+        [SerializeField] private Slider sliderProgresoContinuar;
         [SerializeField] private Button btnContinuarLeccion;
 
         [Header("Resumen Rápido")]
@@ -70,14 +71,13 @@ namespace Assets.Scripts.UI.Main.Paginas
                 txtSubtituloContinuar.text = datos.TituloLeccion;
 
             int porcentaje = Mathf.Clamp(datos.PorcentajeLeccionActual, 0, 100);
+            if (txtProgresoContinuar != null)
+                txtProgresoContinuar.text = "Progreso";
             if (txtPorcentajeContinuar != null)
                 txtPorcentajeContinuar.text = $"{porcentaje}%";
 
-            if (rellenoProgresoContinuar != null)
-            {
-                rellenoProgresoContinuar.anchorMax = new Vector2(porcentaje / 100f, 1f);
-                rellenoProgresoContinuar.sizeDelta = new Vector2(0f, rellenoProgresoContinuar.sizeDelta.y);
-            }
+            if (sliderProgresoContinuar != null)
+                sliderProgresoContinuar.value = porcentaje / 100f;
 
             if (btnContinuarLeccion == null) return;
 

@@ -20,6 +20,9 @@ MonoBehaviour:
   colorTarjetaPrincipal: {r: 1, g: 0.9921569, b: 0.9686275, a: 1}
   colorTarjetaSecundaria: {r: 1, g: 0.9568627, b: 0.8392157, a: 1}
   colorTarjetaDestacada: {r: 1, g: 0.9058824, b: 0.6392157, a: 1}
+  colorBordeLogroObtenido: {r: 0.1, g: 0.65, b: 0.31, a: 1}
+  colorBordeLogroEnProgreso: {r: 0.85, g: 0.47, b: 0.04, a: 1}
+  colorBordeLogroPendiente: {r: 0.55, g: 0.58, b: 0.6, a: 1}
   colorTextoPrimario: {r: 0.06, g: 0.14, b: 0.2, a: 1}
   colorTextoSecundario: {r: 0.25, g: 0.31, b: 0.36, a: 1}
   colorTextoTerciario: {r: 0.02, g: 0.55, b: 0.56, a: 1}

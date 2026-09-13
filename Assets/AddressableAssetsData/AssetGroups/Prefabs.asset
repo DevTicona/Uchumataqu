@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Prefabs
   m_GUID: 411293df7f1b1824789075fafe27cfcd
   m_SerializeEntries:
+  - m_GUID: 0be0c57900ae6ed46ba793cba36591ee
+    m_Address: prefab/logrohorizontal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0f12b12c52491ee4582713ee92dc3b6b
     m_Address: prefab/contenedorisla
     m_ReadOnly: 0

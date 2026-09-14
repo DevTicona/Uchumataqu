@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using TMPro;
 using Assets.Scripts.UI.Main;
 
 namespace Assets.Scripts.UI.Main.Paginas
@@ -13,6 +14,17 @@ namespace Assets.Scripts.UI.Main.Paginas
         [Header("Contenedor Scroll")]
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private Transform contenedorIslas;
+
+        [Header("Resumen de lecciones")]
+        [SerializeField] private TMP_Text txtCantidad;
+        [SerializeField] private TMP_Text txtLeccionesCompletadas;
+
+        public void MostrarResumen(int completadas, int total)
+        {
+            total = Mathf.Max(0, total);
+            if (txtCantidad != null) txtCantidad.text = $"{Mathf.Clamp(completadas, 0, total)}/{total}";
+            if (txtLeccionesCompletadas != null) txtLeccionesCompletadas.text = "Completadas";
+        }
 
         [Header("Prefabs")]
         [FormerlySerializedAs("prefabIslaLeccion")]

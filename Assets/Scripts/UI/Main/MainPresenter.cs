@@ -128,8 +128,11 @@ namespace Assets.Scripts.UI.Main
             List<EscenarioRAData> escenarios = CorpusRepository.ObtenerTodosEscenariosRa();
             ProgresoUsuario progreso = ProgresoRepository.ObtenerProgreso();
 
-            view.MapaLecciones.Mostrar(
-                MapaLeccionesService.Crear(lecciones, escenarios, progreso));
+            List<IslaMapaData> mapa = MapaLeccionesService.Crear(lecciones, escenarios, progreso);
+            view.MapaLecciones.MostrarResumen(
+                mapa.FindAll(isla => !isla.EsHitoRa && isla.Estado == EstadoIsla.Completada).Count,
+                mapa.FindAll(isla => !isla.EsHitoRa).Count);
+            view.MapaLecciones.Mostrar(mapa);
         }
 
         private void RefrescarLogros()

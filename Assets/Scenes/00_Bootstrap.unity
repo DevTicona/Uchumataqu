@@ -1065,6 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d149d11e270004049a42f67153166961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.Sistema.AppInitializer
+  temaUI: {fileID: 11400000, guid: 1e27a18d63dc231489e56109beeed1cc, type: 2}
 --- !u!4 &1453209406
 Transform:
   m_ObjectHideFlags: 0

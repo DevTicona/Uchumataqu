@@ -21,7 +21,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         [SerializeField] private Image fondoEstado;
         [SerializeField] private TMP_Text txtEstado;
         [SerializeField] private Image marco;
-        [SerializeField, Min(0.01f)] private float pixelsPerUnitMarco = 4f;
+        [SerializeField] private CatalogoIconosLogros catalogoIconos;
 
         public void Configurar(LogroData logro, EstadoLogro estado)
         {
@@ -33,7 +33,8 @@ namespace Assets.Scripts.UI.Main.Paginas
                 EstadoLogro.Obtenido => "Obtenido",
                 _ => $"{Mathf.Clamp(logro.ProgresoActual, 0, Mathf.Max(0, logro.Objetivo))}/{logro.Objetivo}"
             };
-            LogrosView.CargarIconoLogro(icono, logro);
+            if (icono != null && catalogoIconos != null)
+                icono.sprite = catalogoIconos.ObtenerSprite(logro.IconoId);
 
             float progreso = logro.Objetivo > 0 ? (float)logro.ProgresoActual / logro.Objetivo : 0f;
             if (sliderProgreso != null)
@@ -59,7 +60,6 @@ namespace Assets.Scripts.UI.Main.Paginas
             LogrosView.AsignarThemedGraphic(fondoEstado, rolBadge);
             if (marco != null)
             {
-                marco.pixelsPerUnitMultiplier = pixelsPerUnitMarco;
                 LogrosView.AsignarThemedGraphic(marco, estado switch
                 {
                     EstadoLogro.Obtenido => ThemedGraphic.RolColor.BordeLogroObtenido,

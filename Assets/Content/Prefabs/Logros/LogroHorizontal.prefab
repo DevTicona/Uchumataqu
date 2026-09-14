@@ -908,7 +908,7 @@ MonoBehaviour:
   fondoEstado: {fileID: 3647034435962052255}
   txtEstado: {fileID: 4736840905068735646}
   marco: {fileID: 8171305987026500042}
-  pixelsPerUnitMarco: 4
+  catalogoIconos: {fileID: 11400000, guid: a86f062b771356d46841ab4728fd61aa, type: 2}
 --- !u!1 &6500320270608593991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3d4a5d93096e9894dabac54a840b73fe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 290801b516ba94d45ac436b852ff1742, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 0
@@ -1255,7 +1255,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 4
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &1004189592010014795
 MonoBehaviour:
   m_ObjectHideFlags: 0

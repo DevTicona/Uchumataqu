@@ -35,7 +35,6 @@ namespace Assets.Scripts.Editor
 
         public static int Sincronizar()
         {
-            ConfigurarImportadoresDeSprites();
 
             AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.Settings;
             if (settings == null)
@@ -44,7 +43,6 @@ namespace Assets.Scripts.Editor
 
             AddressableAssetGroup datos = ObtenerOCrearGrupo(settings, "Global_Data");
             AddressableAssetGroup audios = ObtenerOCrearGrupo(settings, "Audios");
-            AddressableAssetGroup ui = ObtenerOCrearGrupo(settings, "UI");
             AddressableAssetGroup imagenes = ObtenerOCrearGrupo(settings, "Imagenes");
             AddressableAssetGroup prefabs = ObtenerOCrearGrupo(settings, "Prefabs");
             AddressableAssetGroup ra = ObtenerOCrearGrupo(settings, "RA");
@@ -54,14 +52,7 @@ namespace Assets.Scripts.Editor
             cantidad += SincronizarCarpeta(settings, datos, "Assets/Content/Data", CrearDireccionDato, "global_data");
             cantidad += SincronizarCarpeta(settings, audios, "Assets/Content/Audio/Palabras", p => Direccion(p, "audio_palabra"), "audio_palabras");
             cantidad += SincronizarCarpeta(settings, audios, "Assets/Content/Audio/Oraciones", p => Direccion(p, "audio_oracion", conservarMayusculas: true), "audio_oraciones");
-            cantidad += SincronizarCarpeta(settings, ui, "Assets/Content/UI/Base", p => Direccion(p, "ui/base"), "ui", "ui_base");
-            cantidad += SincronizarCarpeta(settings, ui, "Assets/Content/UI/Effects", p => Direccion(p, "ui/effect"), "ui", "ui_effects");
-            cantidad += SincronizarCarpeta(settings, ui, "Assets/Content/UI/Fonts", p => Direccion(p, "ui/font"), "ui", "ui_fonts");
-            cantidad += SincronizarCarpeta(settings, ui, "Assets/Content/UI/Icons", CrearDireccionIcono, "ui", "ui_icons");
-            cantidad += SincronizarArchivo(settings, ui, "Assets/Content/UI/UITheme.asset", "UITheme", "ui_theme");
             // Los avatares fijos se gestionan mediante CatalogoAvatares.asset (ScriptableObject serializado por Inspector)
-            cantidad += SincronizarCarpeta(settings, imagenes, "Assets/Content/Imagenes/Fondos", p => Direccion(p, "imagen/fondo"), "backgrounds");
-            cantidad += SincronizarCarpeta(settings, imagenes, "Assets/Content/Imagenes/Marca", p => Direccion(p, "imagen/marca"), "branding");
             cantidad += SincronizarCarpeta(settings, imagenes, "Assets/Content/Imagenes/Islas", p => Direccion(p, "imagen/isla"), "islands");
             cantidad += SincronizarCarpeta(settings, prefabs, "Assets/Content/Prefabs", CrearDireccionPrefab, "prefab");
             cantidad += SincronizarCarpeta(settings, ra, "Assets/Content/Modelos3D", CrearDireccionModelo, "ra");
@@ -73,6 +64,7 @@ namespace Assets.Scripts.Editor
                 "shared_dependency");
 
             EliminarEntradasInexistentes(settings);
+            EliminarUIFija(settings);
             settings.SetDirty(AddressableAssetSettings.ModificationEvent.BatchModification, null, true, true);
             AssetDatabase.SaveAssets();
             return cantidad;
@@ -160,70 +152,6 @@ namespace Assets.Scripts.Editor
             }
         }
 
-        private static void ConfigurarImportadoresDeSprites()
-        {
-            var bordes = new Dictionary<string, Vector4>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["aro_cuadrado"] = new Vector4(32, 32, 32, 32),
-                ["ui_panel_rounded_16"] = new Vector4(24, 24, 24, 24),
-                ["ui_button_rounded_14"] = new Vector4(20, 20, 20, 20),
-                ["ui_input_rounded_12"] = new Vector4(18, 18, 18, 18),
-                ["ui_pill"] = new Vector4(32, 32, 32, 32),
-                ["ui_progress_rounded"] = new Vector4(15, 15, 15, 15),
-                ["ui_card_shadow"] = new Vector4(40, 44, 40, 40),
-                ["ui_modal_shadow"] = new Vector4(48, 52, 48, 44)
-            };
-
-            ConfigurarCarpetaDeSprites("Assets/Content/UI", bordes, 512);
-            ConfigurarCarpetaDeSprites("Assets/Content/Imagenes", bordes, 2048);
-        }
-
-        private static void ConfigurarCarpetaDeSprites(
-            string carpeta,
-            IReadOnlyDictionary<string, Vector4> bordes,
-            int tamanoMaximo)
-        {
-            if (!AssetDatabase.IsValidFolder(carpeta)) return;
-
-            foreach (string guid in AssetDatabase.FindAssets("t:Texture2D", new[] { carpeta }))
-            {
-                string ruta = AssetDatabase.GUIDToAssetPath(guid);
-                if (!string.Equals(Path.GetExtension(ruta), ".png", StringComparison.OrdinalIgnoreCase)) continue;
-                if (!(AssetImporter.GetAtPath(ruta) is TextureImporter importador)) continue;
-
-                string nombre = Path.GetFileNameWithoutExtension(ruta);
-                Vector4 borde = bordes.TryGetValue(nombre, out Vector4 valor) ? valor : Vector4.zero;
-                SpriteImportMode modoDestino = importador.spriteImportMode == SpriteImportMode.Multiple
-                    ? SpriteImportMode.Multiple
-                    : SpriteImportMode.Single;
-                var ajustes = new TextureImporterSettings();
-                importador.ReadTextureSettings(ajustes);
-                bool cambio = importador.textureType != TextureImporterType.Sprite
-                    || importador.spriteImportMode != modoDestino
-                    || importador.mipmapEnabled
-                    || !importador.alphaIsTransparency
-                    || importador.wrapMode != TextureWrapMode.Clamp
-                    || importador.npotScale != TextureImporterNPOTScale.None
-                    || ajustes.spriteMeshType != SpriteMeshType.FullRect
-                    || ajustes.spriteGenerateFallbackPhysicsShape
-                    || importador.maxTextureSize != tamanoMaximo
-                    || importador.spriteBorder != borde;
-
-                if (!cambio) continue;
-                ajustes.spriteMeshType = SpriteMeshType.FullRect;
-                ajustes.spriteGenerateFallbackPhysicsShape = false;
-                importador.SetTextureSettings(ajustes);
-                importador.textureType = TextureImporterType.Sprite;
-                importador.spriteImportMode = modoDestino;
-                importador.mipmapEnabled = false;
-                importador.alphaIsTransparency = true;
-                importador.wrapMode = TextureWrapMode.Clamp;
-                importador.npotScale = TextureImporterNPOTScale.None;
-                importador.maxTextureSize = tamanoMaximo;
-                importador.spriteBorder = borde;
-                importador.SaveAndReimport();
-            }
-        }
 
         private static void EliminarEntradasInexistentes(AddressableAssetSettings settings)
         {
@@ -239,6 +167,20 @@ namespace Assets.Scripts.Editor
                 settings.RemoveAssetEntry(guid, false);
         }
 
+        private static void EliminarUIFija(AddressableAssetSettings settings)
+        {
+            var guids = settings.groups.Where(g => g != null).SelectMany(g => g.entries)
+                .Where(e => e != null && EsUIFija(AssetDatabase.GUIDToAssetPath(e.guid)))
+                .Select(e => e.guid).ToArray();
+            foreach (string guid in guids) settings.RemoveAssetEntry(guid, false);
+        }
+
+        private static bool EsUIFija(string ruta) =>
+            ruta.StartsWith("Assets/Content/UI/", StringComparison.OrdinalIgnoreCase) ||
+            ruta.StartsWith("Assets/Content/Imagenes/Fondos/", StringComparison.OrdinalIgnoreCase) ||
+            ruta.StartsWith("Assets/Content/Imagenes/Marca/", StringComparison.OrdinalIgnoreCase) ||
+            ruta.StartsWith("Assets/Content/Imagenes/Avatares/", StringComparison.OrdinalIgnoreCase);
+
         private static bool EsRecursoValido(string ruta)
         {
             if (string.IsNullOrEmpty(ruta) || AssetDatabase.IsValidFolder(ruta)) return false;
@@ -251,11 +193,6 @@ namespace Assets.Scripts.Editor
             return nombre == "lecciones_compiladas" ? "json_lecciones" : $"json_{nombre}";
         }
 
-        private static string CrearDireccionIcono(string ruta)
-        {
-            string categoria = Normalizar(new DirectoryInfo(Path.GetDirectoryName(ruta) ?? string.Empty).Name);
-            return $"ui/icon/{categoria}/{Normalizar(Path.GetFileNameWithoutExtension(ruta))}";
-        }
 
         private static string CrearDireccionPrefab(string ruta)
         {

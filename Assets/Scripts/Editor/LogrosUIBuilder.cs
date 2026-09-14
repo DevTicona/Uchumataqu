@@ -126,10 +126,10 @@ namespace Assets.Scripts.Editor
             GameObject marcoObject = Crear("Marco", root.transform);
             Estirar(marcoObject.GetComponent<RectTransform>());
             Image marco = Imagen(marcoObject, ThemedGraphic.RolColor.BordeLogroObtenido);
-            marco.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Base/aro_cuadrado.png");
+            marco.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Base/aro_cuadrado_solido.png");
             marco.type = Image.Type.Sliced;
             marco.fillCenter = false;
-            marco.pixelsPerUnitMultiplier = 4f;
+            marco.pixelsPerUnitMultiplier = 1f;
 
             LogroItemView view = root.AddComponent<LogroItemView>();
             Asignar(view, new Dictionary<string, UnityEngine.Object>
@@ -137,7 +137,8 @@ namespace Assets.Scripts.Editor
                 ["fondo"] = fondo, ["badgeIcono"] = badge, ["icono"] = icono, ["txtTitulo"] = titulo,
                 ["txtDescripcion"] = descripcion, ["sliderProgreso"] = slider,
                 ["rellenoProgreso"] = slider != null ? slider.fillRect.GetComponent<Image>() : null,
-                ["fondoEstado"] = estado, ["txtEstado"] = textoEstado, ["marco"] = marco
+                ["fondoEstado"] = estado, ["txtEstado"] = textoEstado, ["marco"] = marco,
+                ["catalogoIconos"] = AssetDatabase.LoadAssetAtPath<CatalogoIconosLogros>("Assets/Content/UI/CatalogoIconosLogros.asset")
             });
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(root, $"{Folder}/{nombre}.prefab");
             UnityEngine.Object.DestroyImmediate(root);

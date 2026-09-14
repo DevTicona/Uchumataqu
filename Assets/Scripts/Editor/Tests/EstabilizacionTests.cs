@@ -122,7 +122,7 @@ namespace Assets.Scripts.Editor.Tests
                          "icono_logro_guia_territorios"
                      })
             {
-                StringAssert.Contains($"m_Address: ui/icon/logros/{icono}", ui);
+                StringAssert.DoesNotContain($"m_Address: ui/icon/logros/{icono}", ui);
             }
 
             foreach (string direccion in new[]
@@ -132,7 +132,7 @@ namespace Assets.Scripts.Editor.Tests
                          "ui/icon/logros/icono_estrella"
                      })
             {
-                StringAssert.Contains($"m_Address: {direccion}", ui);
+                StringAssert.DoesNotContain($"m_Address: {direccion}", ui);
             }
         }
 

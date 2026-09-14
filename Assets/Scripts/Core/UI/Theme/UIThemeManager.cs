@@ -4,8 +4,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Assets.Scripts.Core.Services;
 using Assets.Scripts.Core.UI.Components;
 
 namespace Assets.Scripts.Core.UI.Theme
@@ -48,27 +46,6 @@ namespace Assets.Scripts.Core.UI.Theme
                 }
 #endif
                 return _theme;
-            }
-        }
-
-        /// <summary>
-        /// Carga el tema usando AddressablesService
-        /// </summary>
-        public static async Task CargarTemaAsync(string key = ContentAddress.TemaUi)
-        {
-            try
-            {
-                var tema = await AddressablesService.CargarAssetAsync<UITheme>(key);
-                _theme = tema;
-                ActivarAplicacionAutomatica();
-                AplicarTipografia(SceneManager.GetActiveScene());
-                OnThemeChanged?.Invoke();
-                Debug.Log("[UIThemeManager] Tema cargado correctamente.");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[UIThemeManager] Error cargando UITheme: {ex.Message}");
-                throw;
             }
         }
 

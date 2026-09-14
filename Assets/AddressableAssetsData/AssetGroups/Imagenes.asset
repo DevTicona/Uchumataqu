@@ -33,35 +33,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 14f6426fd12cadb4fbdf623f0ed4b9a8
-    m_Address: imagen/fondo/agua_animada
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - backgrounds
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 15bf503c0dc49c3489c85a4c6653dd66
-    m_Address: avatar/avatar_05
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - avatars
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1ad93371b1cab19468d4d2fe66eda560
     m_Address: imagen/isla/l04
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1bd302fe00e915f47be05a16f1553cd5
-    m_Address: imagen/fondo/fondo_onboarding
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - backgrounds
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 33efa556abe5f12489a3f1094adf6c0b
-    m_Address: imagen/fondo/principal
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - backgrounds
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ca5fe1529d60f44b99a946a92f16cf6
     m_Address: imagen/isla/l15
@@ -74,12 +50,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 47cc7516a9922b041bbffdb1f1582755
-    m_Address: imagen/fondo/fondo_principal
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - backgrounds
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 49d739ffe259bb240b72cb49dc4e0048
     m_Address: imagen/isla/l19
@@ -105,12 +75,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 56a6e962bb7343340a3ada5f5e7682a9
-    m_Address: imagen/marca/logo_funproeib
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - branding
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b379fd06a4a78a47abaad7648e292e3
     m_Address: imagen/isla/l09
     m_ReadOnly: 0
@@ -122,18 +86,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5bc25470a31e5c041842393e71e53b04
-    m_Address: avatar/avatar_02
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - avatars
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5da6f3b4258e8c34ca3f1fd1ce3d0578
-    m_Address: imagen/marca/logo_uchumataqu
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - branding
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60b63b409800ac84898f8b0a924f45f0
     m_Address: imagen/isla/l10
@@ -158,12 +110,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 82b6bcb8e45e2d24dab1536d8269bc0f
-    m_Address: avatar/avatar_03
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - avatars
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8a462f522a426d54f9e72f0d5ca948df
     m_Address: imagen/isla/l18
@@ -213,18 +159,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b4c64d7da8659e04688a807a0cb7bc47
-    m_Address: imagen/fondo/fondo_menu_lecciones
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - backgrounds
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c3a5b33be2a89584c8327439d1933ca5
-    m_Address: avatar/avatar_06
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - avatars
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c5b16e8e0609e0940986aca1f607315c
     m_Address: imagen/isla/l14
     m_ReadOnly: 0
@@ -261,12 +195,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: de7f2eee541051f4c893bec5c4587530
-    m_Address: avatar/avatar_01
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - avatars
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4924201588bb8d44bfd93a984367776
     m_Address: imagen/isla/ra_encuentro_comunicacion
     m_ReadOnly: 0
@@ -278,12 +206,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f07f7e6f3043d7f4f843baeb248ebeb5
-    m_Address: avatar/avatar_04
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - avatars
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd7019ef22dd7e74db70795450641109
     m_Address: imagen/isla/l03

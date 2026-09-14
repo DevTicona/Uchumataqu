@@ -12,6 +12,7 @@ namespace Assets.Scripts.Core.Sistema
 {
     public class AppInitializer : MonoBehaviour
     {
+        [SerializeField] private UITheme temaUI;
         private Task _tareaInicializacion;
 
         public Task InicializarAsync()
@@ -24,7 +25,7 @@ namespace Assets.Scripts.Core.Sistema
             _tareaInicializacion = null;
         }
 
-        private static async Task InicializarInternoAsync()
+        private async Task InicializarInternoAsync()
         {
             Debug.Log("[AppInitializer] Iniciando aplicación...");
 
@@ -51,7 +52,8 @@ namespace Assets.Scripts.Core.Sistema
                 if (addressables.IsValid())
                     Addressables.Release(addressables);
             }
-            await UIThemeManager.CargarTemaAsync(ContentAddress.TemaUi);
+            if (temaUI == null) throw new InvalidOperationException("Falta asignar UITheme en AppInitializer.");
+            UIThemeManager.SetTheme(temaUI);
             Debug.Log("[AppInitializer] Inicialización completa.");
         }
     }

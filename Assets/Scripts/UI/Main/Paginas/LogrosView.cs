@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Assets.Scripts.Core;
-using Assets.Scripts.Core.Services;
 using Assets.Scripts.Core.UI.Components;
 using Assets.Scripts.UI.Main;
 using TMPro;
@@ -30,7 +27,6 @@ namespace Assets.Scripts.UI.Main.Paginas
         [SerializeField] private TMP_Text txtTotalLogros;
 
         private readonly Dictionary<TipoSeccion, SeccionLogros> secciones = new();
-        private static readonly Dictionary<string, Sprite> CacheIconos = new();
 
         public event Action OnSolicitarActualizacion;
 
@@ -251,40 +247,6 @@ namespace Assets.Scripts.UI.Main.Paginas
             rect.anchorMax = Vector2.one;
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
-        }
-
-        public static void CargarIconoLogro(Image destino, LogroData logro)
-        {
-            string fallback = logro.Id.StartsWith("ra_", StringComparison.Ordinal) ? "icono_ra_completada" : "icono_lecciones_completadas";
-            CargarSpriteIcono(destino, "logros", string.IsNullOrWhiteSpace(logro.IconoId) ? fallback : logro.IconoId, "logros", fallback);
-        }
-        private static void CargarSpriteIcono(Image destino, string categoria, string nombre, string categoriaFallback, string nombreFallback)
-        {
-            if (destino == null) return;
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-            {
-                destino.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Content/UI/Icons/{categoria}/{nombre}.png")
-                    ?? AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Content/UI/Icons/{categoriaFallback}/{nombreFallback}.png");
-                return;
-            }
-#endif
-            string key = $"{categoria}/{nombre}";
-            if (CacheIconos.TryGetValue(key, out Sprite sprite) && sprite != null) { destino.sprite = sprite; return; }
-            _ = CargarIconoAsync(destino, key, ContentAddress.Icono(categoria, nombre), ContentAddress.Icono(categoriaFallback, nombreFallback));
-        }
-        private static async Task CargarIconoAsync(Image destino, string key, string direccion, string respaldo)
-        {
-            try
-            {
-                Sprite sprite = await AddressablesService.CargarAssetAsync<Sprite>(direccion);
-                if (destino != null && sprite != null) { CacheIconos[key] = sprite; destino.sprite = sprite; }
-            }
-            catch (Exception)
-            {
-                try { if (destino != null) destino.sprite = await AddressablesService.CargarAssetAsync<Sprite>(respaldo); }
-                catch (Exception) { }
-            }
         }
 
         public static ThemedText AsignarThemedText(TMP_Text texto, ThemedText.TipoTexto tipo, ThemedText.ColorTexto color)

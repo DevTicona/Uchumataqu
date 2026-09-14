@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d35226f96e2a94d9e24bc48f204a31, type: 3}
+  m_Name: CatalogoIconosLogros
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.Main.Paginas.CatalogoIconosLogros
+  iconos:
+  - id: icono_logro_primer_paso
+    sprite: {fileID: 21300000, guid: 1ffe220cd12a48d4bbcb2e52167882ec, type: 3}
+  - id: icono_logro_caminante_lago
+    sprite: {fileID: 21300000, guid: dbda610d01a98194293b03f8cc0c45f6, type: 3}
+  - id: icono_logro_guardian_palabra
+    sprite: {fileID: 21300000, guid: 447a67e1a3713a34d8a44bc7e628b20a, type: 3}
+  - id: icono_logro_heredero_lengua
+    sprite: {fileID: 21300000, guid: d893b30312a6c52489bd5054ad86957f, type: 3}
+  - id: icono_logro_primera_exploracion
+    sprite: {fileID: 21300000, guid: 6e07f97e27d7e3f49a630150ba86f6d3, type: 3}
+  - id: icono_logro_explorador_uru
+    sprite: {fileID: 21300000, guid: 98c3d9e64ea16b74388370516accc89c, type: 3}
+  - id: icono_logro_guia_territorios
+    sprite: {fileID: 21300000, guid: c29d92bb62d7c764b88c9294842ec02b, type: 3}

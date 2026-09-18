@@ -76,7 +76,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.25, g: 0.31, b: 0.36, a: 1}
+  m_fontColor: {r: 0.34901962, g: 0.3882353, b: 0.43137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9a3161aac5f94c4181037d2ce6cc6b6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedText
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedTextView
   tipoTexto: 4
   tipoColor: 1
   usarColorPersonalizado: 0
@@ -165,7 +165,6 @@ GameObject:
   - component: {fileID: 6088840467580676988}
   - component: {fileID: 2815310255196361625}
   - component: {fileID: 7380191235147584489}
-  - component: {fileID: 4123982152685989326}
   m_Layer: 5
   m_Name: BadgeIcono
   m_TagString: Untagged
@@ -190,7 +189,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 20, y: 0}
+  m_AnchoredPosition: {x: 40, y: 0}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2815310255196361625
@@ -214,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.88, g: 0.96, b: 0.9, a: 1}
+  m_Color: {r: 0.8666667, g: 0.9607843, b: 0.9019608, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -231,20 +230,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4123982152685989326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2334389187869515670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphic
-  rol: 17
-  multiplicadorAlpha: 1
 --- !u!1 &2737497290535686352
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +306,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.06, g: 0.14, b: 0.2, a: 1}
+  m_fontColor: {r: 0.09019608, g: 0.1372549, b: 0.20392157, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -338,8 +323,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -394,7 +379,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9a3161aac5f94c4181037d2ce6cc6b6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedText
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedTextView
   tipoTexto: 3
   tipoColor: 0
   usarColorPersonalizado: 0
@@ -468,10 +453,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6088840467580676988}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -28, y: -28}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2424086355532732272
 CanvasRenderer:
@@ -494,7 +479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1, g: 0.65, b: 0.31, a: 1}
+  m_Color: {r: 0.18039216, g: 0.54509807, b: 0.34117648, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -522,7 +507,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphic
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphicView
   rol: 6
   multiplicadorAlpha: 1
 --- !u!1 &4476579678865602509
@@ -536,7 +521,6 @@ GameObject:
   - component: {fileID: 953742219041639886}
   - component: {fileID: 274940445379046664}
   - component: {fileID: 3647034435962052255}
-  - component: {fileID: 2463685960103387376}
   m_Layer: 5
   m_Name: Estado
   m_TagString: Untagged
@@ -561,7 +545,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: 0}
+  m_AnchoredPosition: {x: -40, y: 0}
   m_SizeDelta: {x: 112, y: 44}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &274940445379046664
@@ -585,7 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.88, g: 0.96, b: 0.9, a: 1}
+  m_Color: {r: 0.8666667, g: 0.9607843, b: 0.9019608, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -602,20 +586,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2463685960103387376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4476579678865602509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphic
-  rol: 17
-  multiplicadorAlpha: 1
 --- !u!1 &5740265434782386395
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,7 +662,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.25, g: 0.31, b: 0.36, a: 1}
+  m_fontColor: {r: 0.34901962, g: 0.3882353, b: 0.43137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -709,8 +679,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -765,7 +735,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9a3161aac5f94c4181037d2ce6cc6b6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedText
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedTextView
   tipoTexto: 4
   tipoColor: 1
   usarColorPersonalizado: 0
@@ -812,7 +782,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 880, y: 160}
+  m_SizeDelta: {x: 880, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1282747973363123803
 MonoBehaviour:
@@ -828,9 +798,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: -1
+  m_MinHeight: 170
   m_PreferredWidth: -1
-  m_PreferredHeight: 160
+  m_PreferredHeight: 170
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -855,14 +825,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.9921569, b: 0.9686275, a: 1}
+  m_Color: {r: 1, g: 0.99215686, b: 0.96862745, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1179dada13a318744b9417a7044ac50d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 00d3f3832deb6d64d9b81690d492e050, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -883,8 +853,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphic
-  rol: 20
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphicView
+  rol: 1
   multiplicadorAlpha: 1
 --- !u!114 &2885505521690029539
 MonoBehaviour:
@@ -909,6 +879,9 @@ MonoBehaviour:
   txtEstado: {fileID: 4736840905068735646}
   marco: {fileID: 8171305987026500042}
   catalogoIconos: {fileID: 11400000, guid: a86f062b771356d46841ab4728fd61aa, type: 2}
+  colorObtenido: {r: 0.12156863, g: 0.68235296, b: 0.35686275, a: 1}
+  colorPendiente: {r: 0.6509804, g: 0.6784314, b: 0.7019608, a: 1}
+  colorBadgeObtenido: {r: 0.8666667, g: 0.9607843, b: 0.9019608, a: 1}
 --- !u!1 &6500320270608593991
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,7 +941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8509804, g: 0.4705882, b: 0.0431373, a: 1}
+  m_Color: {r: 0.8509804, g: 0.4745098, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -984,7 +957,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 4
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &6387597404096029213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,7 +969,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphic
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphicView
   rol: 4
   multiplicadorAlpha: 1
 --- !u!1 &6858726645422950067
@@ -1060,7 +1033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.91, g: 0.88, b: 0.82, a: 1}
+  m_Color: {r: 0.89411765, g: 0.88235295, b: 0.8509804, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1076,7 +1049,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 4
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &5070402106159055184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1088,7 +1061,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphic
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphicView
   rol: 14
   multiplicadorAlpha: 1
 --- !u!114 &3812519665248276027
@@ -1177,8 +1150,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16, y: 0}
-  m_SizeDelta: {x: -264, y: -44}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -300, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8573691684648194292
 GameObject:
@@ -1191,7 +1164,6 @@ GameObject:
   - component: {fileID: 5998695264198459606}
   - component: {fileID: 6518005136946334249}
   - component: {fileID: 8171305987026500042}
-  - component: {fileID: 1004189592010014795}
   m_Layer: 5
   m_Name: Marco
   m_TagString: Untagged
@@ -1239,14 +1211,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1, g: 0.65, b: 0.31, a: 1}
+  m_Color: {r: 0.12156863, g: 0.68235296, b: 0.35686275, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 290801b516ba94d45ac436b852ff1742, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 73c81a14220bd254582884b0316c70f7, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 0
@@ -1255,18 +1227,4 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2
---- !u!114 &1004189592010014795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8573691684648194292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphic
-  rol: 24
-  multiplicadorAlpha: 1
+  m_PixelsPerUnitMultiplier: 1.5

@@ -76,7 +76,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281541647
-  m_fontColor: {r: 0.06, g: 0.14, b: 0.2, a: 1}
+  m_fontColor: {r: 0.09019608, g: 0.1372549, b: 0.20392157, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
-  m_fontSizeBase: 38
+  m_fontSize: 42
+  m_fontSizeBase: 42
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9a3161aac5f94c4181037d2ce6cc6b6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedText
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedTextView
   tipoTexto: 2
   tipoColor: 0
   usarColorPersonalizado: 0
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.94, b: 0.8, a: 1}
+  m_Color: {r: 1, g: 0.9411765, b: 0.8, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphic
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphicView
   rol: 5
   multiplicadorAlpha: 1
 --- !u!1 &5798873016202020357
@@ -421,4 +421,3 @@ MonoBehaviour:
   textoRegion: {fileID: 5020887624785969457}
   separadorSuperior: {fileID: 7802422658906595348}
   separadorInferior: {fileID: 4482304778783833693}
-  themedText: {fileID: 9204469062006876077}

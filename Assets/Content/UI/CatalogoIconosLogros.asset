@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35d35226f96e2a94d9e24bc48f204a31, type: 3}
   m_Name: CatalogoIconosLogros
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.Main.Paginas.CatalogoIconosLogros
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.UI.Main.CatalogoIconosLogrosModel
   iconos:
   - id: icono_logro_primer_paso
     sprite: {fileID: 21300000, guid: 1ffe220cd12a48d4bbcb2e52167882ec, type: 3}

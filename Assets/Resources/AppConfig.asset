@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 478937c5de90e6b4abd15c39af4cd2e1, type: 3}
   m_Name: AppConfig
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.AppConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.AppConfigModel
   enableDebugLogs: 1
   enableVerboseLogs: 0
   defaultMasterVolume: 1

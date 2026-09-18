@@ -11,45 +11,27 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c768d7b9e146d184d95d962fdda895fb, type: 3}
   m_Name: UITheme
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.UITheme
-  colorFondo: {r: 0.9843137, g: 0.9764706, b: 0.9529412, a: 1}
-  colorSuperficie: {r: 1, g: 1, b: 1, a: 1}
-  colorSuperficieSuave: {r: 0.9686, g: 0.949, b: 0.8902, a: 1}
-  colorBorde: {r: 0.89411765, g: 0.8862745, b: 0.8666667, a: 1}
-  colorPrimario: {r: 0.8509804, g: 0.4705882, b: 0.0431373, a: 1}
-  colorTarjetaPrincipal: {r: 1, g: 0.9921569, b: 0.9686275, a: 1}
-  colorTarjetaSecundaria: {r: 1, g: 0.9568627, b: 0.8392157, a: 1}
-  colorTarjetaDestacada: {r: 1, g: 0.9058824, b: 0.6392157, a: 1}
-  colorBordeLogroObtenido: {r: 0.1, g: 0.65, b: 0.31, a: 1}
-  colorBordeLogroEnProgreso: {r: 0.85, g: 0.47, b: 0.04, a: 1}
-  colorBordeLogroPendiente: {r: 0.55, g: 0.58, b: 0.6, a: 1}
-  colorTextoPrimario: {r: 0.06, g: 0.14, b: 0.2, a: 1}
-  colorTextoSecundario: {r: 0.25, g: 0.31, b: 0.36, a: 1}
-  colorTextoTerciario: {r: 0.02, g: 0.55, b: 0.56, a: 1}
-  colorTextoSobreOscuro: {r: 1, g: 1, b: 1, a: 1}
-  colorTituloSobreOscuro: {r: 0.9607843, g: 0.6196079, b: 0.0431373, a: 1}
-  colorCorrecto: {r: 0.1, g: 0.65, b: 0.31, a: 1}
-  colorIncorrecto: {r: 0.88, g: 0.2, b: 0.2, a: 1}
-  colorAdvertencia: {r: 0.85, g: 0.6, b: 0, a: 1}
-  colorInformacion: {r: 0.16, g: 0.47, b: 0.71, a: 1}
-  colorBoton: {r: 0.8113208, g: 0.4314535, b: 0.0045923153, a: 1}
-  colorBotonSuave: {r: 1, g: 0.94, b: 0.8, a: 1}
-  colorScrim: {r: 0.03, g: 0.05, b: 0.06, a: 0.76}
-  spriteBoton: {fileID: 21300000, guid: 1afa82e460e2e374aa52fa2cf133c37a, type: 3}
-  spriteCircular: {fileID: 21300000, guid: 198ed81974ff2bf4b91a7c270cc9b0b0, type: 3}
-  spritePanel: {fileID: 21300000, guid: 1179dada13a318744b9417a7044ac50d, type: 3}
-  spritePill: {fileID: 21300000, guid: 4d2b857d756dc724f8f70242ef5874e2, type: 3}
-  spriteProgreso: {fileID: 21300000, guid: d9f2034b202b14440b63650c6a554eef, type: 3}
-  spriteSombraTarjeta: {fileID: 21300000, guid: 23248d2f70be2054ab7a0b7fb1a766a1, type: 3}
-  colorProgresoFondo: {r: 0.91, g: 0.88, b: 0.82, a: 1}
-  colorLogroDorado: {r: 0.95, g: 0.7, b: 0.15, a: 1}
-  colorBadgeDesbloqueado: {r: 0.88, g: 0.96, b: 0.9, a: 1}
-  colorBadgeProgreso: {r: 1, g: 0.93, b: 0.8, a: 1}
-  colorBadgeBloqueado: {r: 0.92, g: 0.9, b: 0.86, a: 1}
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Theme.UIThemeModel
+  colorPrimario: {r: 0.8509804, g: 0.4745098, b: 0, a: 1}
+  colorSuperficie: {r: 1, g: 0.99215686, b: 0.96862745, a: 1}
+  colorSuperficieSuave: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  colorBorde: {r: 0.85882354, g: 0.7607843, b: 0.6901961, a: 1}
+  colorTextoPrimario: {r: 0.09019608, g: 0.1372549, b: 0.20392157, a: 1}
+  colorTextoSecundario: {r: 0.34901962, g: 0.3882353, b: 0.43137255, a: 1}
+  colorTextoTerciario: {r: 0.020612193, g: 0.7283019, b: 0.6988769, a: 1}
+  colorTextoSobreColor: {r: 1, g: 1, b: 1, a: 1}
+  colorExito: {r: 0.18039216, g: 0.54509807, b: 0.34117648, a: 1}
+  colorError: {r: 0.8627451, g: 0.22745098, b: 0.22745098, a: 1}
+  colorAdvertencia: {r: 0.8980392, g: 0.627451, b: 0, a: 1}
+  colorInformacion: {r: 0.14509805, g: 0.5372549, b: 0.7882353, a: 1}
+  colorControlSuave: {r: 1, g: 0.9411765, b: 0.8, a: 1}
+  colorDeshabilitado: {r: 0.8509804, g: 0.8509804, b: 0.8509804, a: 1}
+  colorScrim: {r: 0, g: 0, b: 0, a: 0.6}
+  colorProgresoFondo: {r: 0.89411765, g: 0.88235295, b: 0.8509804, a: 1}
   fuentePrincipal: {fileID: 11400000, guid: cac2546b7b3c3154e89adc062af451a2, type: 2}
   escalaTextoGlobal: 1
   tituloGrande: 72
-  titulo: 52
-  subtitulo: 38
-  textoNormal: 32
-  textoPequeno: 24
+  titulo: 56
+  subtitulo: 42
+  textoNormal: 36
+  textoPequeno: 28

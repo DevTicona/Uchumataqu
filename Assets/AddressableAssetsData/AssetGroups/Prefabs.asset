@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Prefabs
   m_GUID: 411293df7f1b1824789075fafe27cfcd
   m_SerializeEntries:
+  - m_GUID: 014c520d743fe33459a74c0de90e1e77
+    m_Address: prefab/item_emparejamiento
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0be0c57900ae6ed46ba793cba36591ee
     m_Address: prefab/logrohorizontal
     m_ReadOnly: 0
@@ -27,14 +33,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 21dc511fae4b2e64b837c57909d11448
-    m_Address: prefab/fichatoken
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 23dcdfb7463c6eb41bfa65c2abb03f5a
-    m_Address: prefab/actividadseleccion
+  - m_GUID: 108f3a52a4b5a4e47be7c9ff165cd4ee
+    m_Address: prefab/opcion_respuesta
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -45,50 +45,38 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 84e115e57bcd02242a9e456bf29796d4
-    m_Address: prefab/feedbackoverlay
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8656ef06b65169245bba9f6d7510c391
-    m_Address: prefab/modalresultado
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8ddf351fe67baf64b9bc940b9fc0a6ed
-    m_Address: prefab/actividadwordbank
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9aaac87e588eee6488fa462ae8eca3f5
-    m_Address: prefab/actividadpresentacionfamilia
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - prefab
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a024d319b50479143b1e078231bd6ab9
     m_Address: prefab/confirmacionsalida
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: af5844d5088ae474784990a4e761a055
-    m_Address: prefab/actividademparejamiento
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: affdb43c117087e4880d3040ded40f5d
-    m_Address: prefab/actividadmemoria
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - prefab
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b19c0b51f15ada94f903acd2d1387ff6
     m_Address: prefab/separadorseccion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf294c7b3f64a1b4dbe2af7ccf630218
+    m_Address: prefab/ficha_wordbank
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca53ac1726e9b584e974dfd86054a68b
+    m_Address: prefab/modalresultado
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbec0d9c0077b8c47898450f10ec6dcf
+    m_Address: prefab/fila_forma_familia
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7eae6970f2d9c8439c00e6932f505e4
+    m_Address: prefab/tarjeta_memoria
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab

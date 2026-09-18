@@ -9,8 +9,48 @@ using Assets.Scripts.Persistencia;
 namespace Assets.Scripts.Editor.Tests
 {
     [TestFixture]
-    public class EstabilizacionTests
+    public class ArquitecturaIntegrationTests
     {
+        [Test]
+        public void Main_ModalesDeSalidaYPerfilDespachanSusBotones()
+        {
+            var scene = UnityEditor.SceneManagement.EditorSceneManager.OpenPreviewScene("Assets/Scenes/02_Main.unity");
+            try
+            {
+                var roots = scene.GetRootGameObjects();
+                var main = roots.SelectMany(r => r.GetComponentsInChildren<Assets.Scripts.UI.Main.MainView>(true)).Single();
+                var ajustes = roots.SelectMany(r => r.GetComponentsInChildren<Assets.Scripts.UI.Main.Paginas.AjustesView>(true)).Single();
+                var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+                typeof(Assets.Scripts.UI.Main.MainView).GetMethod("Awake", flags).Invoke(main, null);
+                typeof(Assets.Scripts.UI.Main.Paginas.AjustesView).GetMethod("Awake", flags).Invoke(ajustes, null);
+                var modal = (UnityEngine.GameObject)new UnityEditor.SerializedObject(main).FindProperty("dialogoSalida").objectReferenceValue;
+                Assert.AreEqual("Assets/Content/Prefabs/Lesson/ConfirmacionSalida.prefab",
+                    UnityEditor.PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(modal));
+                int confirmaciones = 0;
+                main.OnConfirmarSalida += () => confirmaciones++;
+                main.MostrarDialogoSalida(true);
+                Assert.IsTrue(main.DialogoSalidaVisible);
+                modal.transform.Find("CardConfirmacion/BtnSeguirAprendiendo").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+                Assert.IsFalse(main.DialogoSalidaVisible);
+                Assert.AreEqual(0, confirmaciones);
+                main.MostrarDialogoSalida(true);
+                modal.transform.Find("CardConfirmacion/BtnConfirmarSalida").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+                Assert.AreEqual(1, confirmaciones);
+                var serialized = new UnityEditor.SerializedObject(ajustes);
+                var editar = (UnityEngine.UI.Button)serialized.FindProperty("btnEditarPerfil").objectReferenceValue;
+                var perfil = (UnityEngine.GameObject)serialized.FindProperty("modalEditarPerfil").objectReferenceValue;
+                Assert.IsNotNull(editar);
+                perfil.SetActive(false);
+                editar.onClick.Invoke();
+                Assert.IsTrue(perfil.activeSelf);
+                ((UnityEngine.UI.Button)serialized.FindProperty("btnCancelarModalPerfil").objectReferenceValue).onClick.Invoke();
+                Assert.IsFalse(perfil.activeSelf);
+            }
+            finally
+            {
+                UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(scene);
+            }
+        }
         private static readonly IReadOnlyDictionary<string, string[]> LeccionesPorEscenario =
             new Dictionary<string, string[]>
             {
@@ -46,20 +86,20 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void TodasLasLecciones_PuedenConstruirSusActividades()
         {
-            foreach (LeccionCompiladaData leccion in CorpusRepository.ObtenerTodasLecciones())
+            foreach (LeccionCompiladaModel leccion in CorpusRepository.ObtenerTodasLecciones())
             {
-                foreach (PasoLeccionData paso in leccion.pasos)
+                foreach (PasoLeccionModel paso in leccion.pasos)
                 {
                     Assert.IsTrue(TipoPasoLeccion.EsSoportado(paso.tipo),
                         $"{leccion.id} contiene el tipo no soportado '{paso.tipo}'.");
 
                     if (TipoPasoLeccion.EsSeleccion(paso.tipo))
-                        ValidarSeleccion(leccion.id, ActividadLeccionService.CrearSeleccion(paso));
+                        ValidarSeleccion(leccion.id, GestorActividadLeccion.CrearSeleccion(paso));
                     else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo))
-                        Assert.IsNotEmpty(ActividadLeccionService.CrearPares(paso),
+                        Assert.IsNotEmpty(GestorActividadLeccion.CrearPares(paso),
                             $"{leccion.id}/{paso.tipo} debe producir pares.");
                     else if (TipoPasoLeccion.EsWordBank(paso.tipo))
-                        Assert.IsNotEmpty(ActividadLeccionService.CrearWordBank(paso).Tokens,
+                        Assert.IsNotEmpty(GestorActividadLeccion.CrearWordBank(paso).Tokens,
                             $"{leccion.id}/{paso.tipo} debe producir tokens.");
                 }
             }
@@ -68,7 +108,7 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void L01_TodosSusPasosTienenContratoValido()
         {
-            LeccionCompiladaData leccion = CorpusRepository.ObtenerLeccion("L01");
+            LeccionCompiladaModel leccion = CorpusRepository.ObtenerLeccion("L01");
             Assert.IsNotNull(leccion);
             Assert.IsNotEmpty(leccion.pasos);
             Assert.IsTrue(leccion.pasos.All(paso => TipoPasoLeccion.EsSoportado(paso.tipo)));
@@ -140,12 +180,15 @@ namespace Assets.Scripts.Editor.Tests
         public void Main_ContieneLasCincoPestanasYDialogosOperativos()
         {
             string escena = File.ReadAllText("Assets/Scenes/02_Main.unity");
+            StringAssert.Contains("value: ModalConfirmarSalida", escena);
+            StringAssert.Contains("m_SourcePrefab: {fileID: 100100000, guid: a024d319b50479143b1e078231bd6ab9", escena);
+            StringAssert.DoesNotContain("m_Name: DialogoSalida", escena);
             foreach (string nombre in new[]
                      {
                          "PageInicio", "PageLecciones", "PageLogros", "PageAjustes", "PageAcerca",
                          "BtnInicio", "BtnLecciones", "BtnLogros", "BtnAjustes", "BtnAcerca",
-                         "BottomNav", "ScrollMap", "ScrollLogros", "DialogoConfirmacionReinicio", "DialogoSalida",
-                         "BtnConfirmarReinicio", "BtnCancelarReinicio", "BtnConfirmarSalir", "BtnCancelarSalir"
+                         "BottomNav", "ScrollMap", "ScrollLogros", "DialogoConfirmacionReinicio",
+                         "BtnConfirmarReinicio", "BtnCancelarReinicio"
                      })
             {
                 int cantidad = escena.Split(new[] { $"m_Name: {nombre}" }, System.StringSplitOptions.None).Length - 1;
@@ -164,7 +207,7 @@ namespace Assets.Scripts.Editor.Tests
             StringAssert.Contains("Assets.Scripts.UI.Main.Paginas.SeparadorSeccionView", prefabSeparador);
             StringAssert.Contains("UnityEngine.UI::UnityEngine.UI.LayoutElement", prefabSeparador);
 
-            string vistaIsla = File.ReadAllText("Assets/Scripts/UI/Main/Paginas/IslaItemView.cs");
+            string vistaIsla = File.ReadAllText("Assets/Scripts/UI/Main/Views/Pages/IslaItemView.cs");
             StringAssert.Contains("iconoBloqueado", vistaIsla);
             StringAssert.Contains("iconoActual", vistaIsla);
             StringAssert.Contains("iconoCompletado", vistaIsla);
@@ -174,13 +217,13 @@ namespace Assets.Scripts.Editor.Tests
             StringAssert.Contains("iconoActual: {fileID: 21300000, guid: 7002d298cd661f443aeb0cb9e9ce06d5", prefabIsla);
             StringAssert.Contains("iconoCompletado: {fileID: 21300000, guid: 263a7ead482fae24a99d0a6b6a7b2745", prefabIsla);
 
-            string vistaMapa = File.ReadAllText("Assets/Scripts/UI/Main/Paginas/MapaLeccionesView.cs");
+            string vistaMapa = File.ReadAllText("Assets/Scripts/UI/Main/Views/Pages/MapaLeccionesView.cs");
             StringAssert.Contains("CrearFilaIsla", vistaMapa);
             StringAssert.DoesNotContain("SetOffsetZigzag", vistaMapa);
             StringAssert.DoesNotContain("SECCIÓN", vistaMapa.ToUpperInvariant());
             StringAssert.DoesNotContain("spriteSeparadorRegion", vistaMapa);
 
-            string vistaSeparador = File.ReadAllText("Assets/Scripts/UI/Main/Paginas/SeparadorSeccionView.cs");
+            string vistaSeparador = File.ReadAllText("Assets/Scripts/UI/Main/Views/Pages/SeparadorSeccionView.cs");
             StringAssert.DoesNotContain(".sprite =", vistaSeparador);
 
             int inicioLayoutMapa = escena.IndexOf("--- !u!114 &1980467303", System.StringComparison.Ordinal);
@@ -192,7 +235,7 @@ namespace Assets.Scripts.Editor.Tests
             StringAssert.Contains("m_ChildControlHeight: 1", layoutMapa);
         }
 
-        private static void ValidarSeleccion(string leccionId, ActividadSeleccionData actividad)
+        private static void ValidarSeleccion(string leccionId, ActividadSeleccionModel actividad)
         {
             Assert.IsFalse(string.IsNullOrWhiteSpace(actividad.RespuestaCorrecta),
                 $"{leccionId}/{actividad.Tipo} debe tener respuesta.");

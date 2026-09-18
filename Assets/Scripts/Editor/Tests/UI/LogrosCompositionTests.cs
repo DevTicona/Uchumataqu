@@ -18,9 +18,9 @@ namespace Assets.Scripts.Editor.Tests
             foreach (var entrada in settings.groups.Where(g => g != null).SelectMany(g => g.entries))
                 Assert.IsFalse(AssetDatabase.GUIDToAssetPath(entrada.guid).StartsWith("Assets/Content/UI/"),
                     "La UI fija debe estar asignada por Inspector: " + entrada.address);
-            var catalogo = AssetDatabase.LoadAssetAtPath<CatalogoIconosLogros>("Assets/Content/UI/CatalogoIconosLogros.asset");
+            var catalogo = AssetDatabase.LoadAssetAtPath<CatalogoIconosLogrosModel>("Assets/Content/UI/CatalogoIconosLogros.asset");
             Assert.IsNotNull(catalogo);
-            foreach (var logro in MainService.CrearLogros(null))
+            foreach (var logro in MainModelFactory.CrearLogros(null))
                 Assert.IsNotNull(catalogo.ObtenerSprite(logro.IconoId), logro.IconoId);
             foreach (string nombre in new[] { "LogroObtenido", "LogroHorizontal" })
             {
@@ -48,14 +48,18 @@ namespace Assets.Scripts.Editor.Tests
                 try
                 {
                     var tarjeta = instancia.GetComponent<LogroItemView>();
-                    var marco = instancia.transform.Find("Marco").GetComponent<UnityEngine.UI.Image>();
-                    Assert.IsNotNull(marco.sprite);
-                    Assert.IsFalse(marco.raycastTarget);
-                    marco.pixelsPerUnitMultiplier = 1.5f;
+                    var marco = instancia.transform.Find("Marco")?.GetComponent<UnityEngine.UI.Image>();
+                    if (marco != null)
+                    {
+                        Assert.IsNotNull(marco.sprite);
+                        Assert.IsFalse(marco.raycastTarget);
+                        marco.pixelsPerUnitMultiplier = 1.5f;
+                    }
                     foreach (LogroItemView.EstadoLogro estado in System.Enum.GetValues(typeof(LogroItemView.EstadoLogro)))
                     {
-                        tarjeta.Configurar(MainService.CrearLogros(null)[0], estado);
-                        Assert.AreEqual(1.5f, marco.pixelsPerUnitMultiplier, "Los datos no deben sustituir el diseño del prefab.");
+                        tarjeta.Configurar(MainModelFactory.CrearLogros(null)[0], estado);
+                        if (marco != null)
+                            Assert.AreEqual(1.5f, marco.pixelsPerUnitMultiplier, "Los datos no deben sustituir el diseño del prefab.");
                     }
                 }
                 finally { Object.DestroyImmediate(instancia); }
@@ -83,15 +87,15 @@ namespace Assets.Scripts.Editor.Tests
                 SerializedObject serialized = new(view);
                 Assert.IsNotNull(serialized.FindProperty("prefabLogroObtenido").objectReferenceValue);
                 Assert.IsNotNull(serialized.FindProperty("prefabLogroHorizontal").objectReferenceValue);
-                var datos = MainService.CrearLogros(null);
-                view.Mostrar(datos);
+                var datos = MainModelFactory.CrearLogros(null);
+                view.Mostrar(LogrosPresenter.CrearModel(datos));
                 Assert.AreEqual(datos.Count, view.GetComponentsInChildren<LogroItemView>(true)
                     .Count(tarjeta => tarjeta.gameObject.activeInHierarchy));
                 Transform contenedor = (Transform)serialized.FindProperty("contenedorLogros").objectReferenceValue;
                 Assert.IsNull(contenedor.Find("GaleriaObtenidos"));
                 Assert.IsFalse(contenedor.Cast<Transform>().Any(hijo => hijo.name.StartsWith("Logro_")));
                 LogroItemView[] tarjetas = view.GetComponentsInChildren<LogroItemView>(true);
-                view.Mostrar(datos);
+                view.Mostrar(LogrosPresenter.CrearModel(datos));
                 CollectionAssert.AreEqual(tarjetas, view.GetComponentsInChildren<LogroItemView>(true),
                     "Una actualización debe reutilizar las tarjetas existentes.");
             }

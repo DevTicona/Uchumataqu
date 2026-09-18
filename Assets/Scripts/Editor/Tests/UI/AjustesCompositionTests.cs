@@ -40,7 +40,7 @@ namespace Assets.Scripts.Editor.Tests
                 foreach (Toggle item in switches)
                 {
                     Assert.AreEqual(-5f, ObtenerKnob(item).anchoredPosition.x, 0.1f);
-                    Assert.AreEqual(UIThemeManager.Theme.colorPrimario, ObtenerColorFondo(item));
+                    Assert.AreEqual(UIThemeController.Theme.colorPrimario, ObtenerColorFondo(item));
                 }
 
                 view.Mostrar("Primo", "avatar_01", 0.5f, false, false);
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Editor.Tests
                     RectTransform fondo = (RectTransform)knob.parent;
                     float posicionInicial = 5f + knob.rect.width - fondo.rect.width;
                     Assert.AreEqual(posicionInicial, knob.anchoredPosition.x, 0.1f);
-                    Assert.AreEqual(UIThemeManager.Theme.colorBorde, ObtenerColorFondo(switches[i]));
+                    Assert.AreEqual(UIThemeController.Theme.colorDeshabilitado, ObtenerColorFondo(switches[i]));
                     Assert.AreEqual(1f, knob.GetComponent<Image>().canvasRenderer.GetAlpha(), 0.01f);
                     Assert.AreEqual(Color.white, knob.GetComponent<Image>().color);
                     Assert.IsNull(switches[i].graphic);
@@ -74,7 +74,7 @@ namespace Assets.Scripts.Editor.Tests
                 Assert.IsFalse(view.GetComponentsInChildren<Transform>(true)
                     .Any(item => item.name == "TxtCreditos"));
                 Assert.IsFalse(view.GetComponentsInChildren<TMP_Text>(true)
-                    .Any(text => text.GetComponent<ThemedText>() == null));
+                    .Any(text => text.GetComponent<ThemedTextView>() == null));
                 TMP_Text textoReinicio = view.GetComponentsInChildren<TMP_Text>(true)
                     .First(text => text.name == "TxtReinicio");
                 textoReinicio.ForceMeshUpdate(true, true);

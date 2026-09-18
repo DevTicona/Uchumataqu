@@ -1,3 +1,4 @@
+using Assets.Scripts.Data.Persistencia.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ using Assets.Scripts.UI.Main;
 namespace Assets.Scripts.Editor.Tests
 {
     [TestFixture]
-    public class Semana4Tests
+    public class AplicacionIntegrationTests
     {
         [SetUp]
         public void PrepararCorpus()
@@ -39,7 +40,7 @@ namespace Assets.Scripts.Editor.Tests
                     if (TipoPasoLeccion.EsSeleccion(paso.tipo))
                         VerificarSeleccion(leccion.id, paso);
                     else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo))
-                        Assert.IsNotEmpty(ActividadLeccionService.CrearPares(paso), $"{leccion.id}/{paso.tipo}");
+                        Assert.IsNotEmpty(GestorActividadLeccion.CrearPares(paso), $"{leccion.id}/{paso.tipo}");
                     else if (TipoPasoLeccion.EsWordBank(paso.tipo))
                         VerificarWordBank(leccion.id, paso);
                 }
@@ -51,18 +52,18 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void Inicio_PriorizaLeccionEnProgresoAunqueHayaHuecosCompletados()
         {
-            var progreso = new ProgresoUsuario
+            var progreso = new ProgresoUsuarioModel
             {
                 ultima_leccion_id = "L05",
-                lecciones = new List<ProgresoLeccionData>
+                lecciones = new List<ProgresoLeccionModel>
                 {
-                    new ProgresoLeccionData { leccion_id = "L01", estado = "completada" },
-                    new ProgresoLeccionData { leccion_id = "L05", estado = "en_progreso", paso_actual = 3 }
+                    new ProgresoLeccionModel { leccion_id = "L01", estado = "completada" },
+                    new ProgresoLeccionModel { leccion_id = "L05", estado = "en_progreso", paso_actual = 3 }
                 }
             };
 
-            InicioData inicio = MainService.CrearInicio(
-                new PerfilUsuario { nombre = "Ana", avatar_id = "avatar_02" },
+            InicioModel inicio = MainModelFactory.CrearInicio(
+                new PerfilUsuarioModel { nombre = "Ana", avatar_id = "avatar_02" },
                 progreso,
                 CorpusRepository.ObtenerTodasLecciones(),
                 CorpusRepository.ObtenerTodosEscenariosRa());
@@ -77,12 +78,12 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void Logros_UsanUmbralesCanonicosYProgresoAcotado()
         {
-            var progreso = new ProgresoUsuario();
+            var progreso = new ProgresoUsuarioModel();
             for (int i = 1; i <= 6; i++)
-                progreso.lecciones.Add(new ProgresoLeccionData { leccion_id = $"L{i:D2}", estado = "completada" });
+                progreso.lecciones.Add(new ProgresoLeccionModel { leccion_id = $"L{i:D2}", estado = "completada" });
             progreso.MarcarEscenarioVisitado("ra_encuentro_comunicacion");
 
-            List<LogroData> logros = MainService.CrearLogros(progreso);
+            List<LogroModel> logros = MainModelFactory.CrearLogros(progreso);
 
             CollectionAssert.AreEquivalent(
                 new[] { "lecciones_1", "lecciones_5", "lecciones_14", "lecciones_27", "ra_1", "ra_3", "ra_6" },
@@ -98,25 +99,25 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void EdicionPerfil_ValidaTodosLosCamposSinAlterarProgreso()
         {
-            var perfil = new PerfilUsuario
+            var perfil = new PerfilUsuarioModel
             {
                 nombre = "Inti",
                 avatar_id = "avatar_01",
                 onboarding_completado = true
             };
-            var progreso = new ProgresoUsuario
+            var progreso = new ProgresoUsuarioModel
             {
                 ultima_leccion_id = "L05",
-                lecciones = new List<ProgresoLeccionData>
+                lecciones = new List<ProgresoLeccionModel>
                 {
-                    new ProgresoLeccionData { leccion_id = "L05", estado = "en_progreso", paso_actual = 7 }
+                    new ProgresoLeccionModel { leccion_id = "L05", estado = "en_progreso", paso_actual = 7 }
                 }
             };
 
-            Assert.IsFalse(PerfilOnboardingService.AplicarEdicion(perfil, "A", "avatar_02").Valido);
+            Assert.IsFalse(PerfilValidator.AplicarEdicion(perfil, "A", "avatar_02").Valido);
             Assert.AreEqual("Inti", perfil.nombre, "Una edición inválida no debe alterar el perfil existente.");
-            Assert.IsFalse(PerfilOnboardingService.ValidarPerfilCompleto("Ana", "").Valido);
-            Assert.IsTrue(PerfilOnboardingService.AplicarEdicion(
+            Assert.IsFalse(PerfilValidator.ValidarPerfilCompleto("Ana", "").Valido);
+            Assert.IsTrue(PerfilValidator.AplicarEdicion(
                 perfil,
                 "  Ana  ",
                 "avatar_02").Valido);
@@ -195,9 +196,9 @@ namespace Assets.Scripts.Editor.Tests
 
         private static void VerificarSeleccion(
             string leccionId,
-            Assets.Scripts.Data.Corpus.PasoLeccionData paso)
+            Assets.Scripts.Data.Corpus.PasoLeccionModel paso)
         {
-            ActividadSeleccionData datos = ActividadLeccionService.CrearSeleccion(paso);
+            ActividadSeleccionModel datos = GestorActividadLeccion.CrearSeleccion(paso);
             Assert.IsNotEmpty(datos.RespuestaCorrecta, $"{leccionId}/{paso.tipo}");
             Assert.Contains(datos.RespuestaCorrecta, datos.Opciones, $"{leccionId}/{paso.tipo}");
 
@@ -217,9 +218,9 @@ namespace Assets.Scripts.Editor.Tests
 
         private static void VerificarWordBank(
             string leccionId,
-            Assets.Scripts.Data.Corpus.PasoLeccionData paso)
+            Assets.Scripts.Data.Corpus.PasoLeccionModel paso)
         {
-            ActividadWordBankData datos = ActividadLeccionService.CrearWordBank(paso);
+            ActividadWordBankModel datos = GestorActividadLeccion.CrearWordBank(paso);
             Assert.IsNotEmpty(datos.Tokens, $"{leccionId}/{paso.tipo}");
             CollectionAssert.AreEqual(MotorEvaluacion.Tokenizar(datos.RespuestaEsperada), datos.Tokens);
 

@@ -19,7 +19,7 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void Perfil_GuardarYCargar_MantieneDatos()
         {
-            var perfil = new PerfilUsuario
+            var perfil = new PerfilUsuarioModel
             {
                 nombre = "Inti",
                 avatar_id = "avatar_02",
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Editor.Tests
             };
 
             PerfilRepository.GuardarPerfil(perfil);
-            Assert.IsTrue(PerfilRepository.ExistePerfil());
+            Assert.IsTrue(GestorPerfil.ExistePerfil());
 
             var cargado = PerfilRepository.CargarPerfil();
             Assert.IsNotNull(cargado);
@@ -40,29 +40,29 @@ namespace Assets.Scripts.Editor.Tests
         public void Progreso_CompletarLeccion_ActualizaDesbloqueoRA()
         {
             // Inicialmente ningún escenario está desbloqueado
-            Assert.IsFalse(ProgresoRepository.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
+            Assert.IsFalse(GestorProgreso.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
 
             // Completar lecciones L01 a L06 requeridas para el primer escenario RA (Sección 13: RA 1 -> L01-L06)
             for (int i = 1; i <= 5; i++)
             {
-                ProgresoRepository.GuardarLeccionCompletada($"L{i:D2}", 10, 10, 100);
+                GestorProgreso.GuardarLeccionCompletada($"L{i:D2}", 10, 10, 100);
             }
             // Con 5 lecciones aún no debe desbloquearse
-            Assert.IsFalse(ProgresoRepository.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
+            Assert.IsFalse(GestorProgreso.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
 
             // Al completar la 6ta lección se desbloquea
-            ProgresoRepository.GuardarLeccionCompletada("L06", 10, 10, 100);
-            Assert.IsTrue(ProgresoRepository.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
+            GestorProgreso.GuardarLeccionCompletada("L06", 10, 10, 100);
+            Assert.IsTrue(GestorProgreso.EstaEscenarioDesbloqueado("ra_encuentro_comunicacion"));
 
             // El escenario 2 (L07-L11) aún no debe estar desbloqueado
-            Assert.IsFalse(ProgresoRepository.EstaEscenarioDesbloqueado("ra_familia_vestimenta"));
+            Assert.IsFalse(GestorProgreso.EstaEscenarioDesbloqueado("ra_familia_vestimenta"));
 
             // Completar L07 a L11 para desbloquear RA 2
             for (int i = 7; i <= 11; i++)
             {
-                ProgresoRepository.GuardarLeccionCompletada($"L{i:D2}", 10, 10, 100);
+                GestorProgreso.GuardarLeccionCompletada($"L{i:D2}", 10, 10, 100);
             }
-            Assert.IsTrue(ProgresoRepository.EstaEscenarioDesbloqueado("ra_familia_vestimenta"));
+            Assert.IsTrue(GestorProgreso.EstaEscenarioDesbloqueado("ra_familia_vestimenta"));
         }
 
         [Test]

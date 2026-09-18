@@ -1,3 +1,4 @@
+using Assets.Scripts.Data.Persistencia.Validation;
 using System.Linq;
 using NUnit.Framework;
 using Assets.Scripts.Core.Services;
@@ -10,7 +11,7 @@ using Assets.Scripts.UI.Main.Paginas;
 namespace Assets.Scripts.Editor.Tests
 {
     [TestFixture]
-    public class Semana3Tests
+    public class OnboardingMapaIntegrationTests
     {
         [SetUp]
         public void PrepararCorpus()
@@ -22,21 +23,21 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void Onboarding_ValidaNombreUnicodeYAvatarExplicito()
         {
-            Assert.IsTrue(PerfilOnboardingService.ValidarNombre("Ñusta").Valido);
-            Assert.IsFalse(PerfilOnboardingService.ValidarNombre("A").Valido);
-            Assert.IsFalse(PerfilOnboardingService.ValidarNombre(new string('a', 31)).Valido);
-            Assert.IsFalse(PerfilOnboardingService.ValidarAvatar(null).Valido);
-            Assert.IsFalse(PerfilOnboardingService.ValidarAvatar("avatar_99").Valido);
-            Assert.IsTrue(PerfilOnboardingService.ValidarAvatar("avatar_04").Valido);
+            Assert.IsTrue(PerfilValidator.ValidarNombre("Ñusta").Valido);
+            Assert.IsFalse(PerfilValidator.ValidarNombre("A").Valido);
+            Assert.IsFalse(PerfilValidator.ValidarNombre(new string('a', 31)).Valido);
+            Assert.IsFalse(PerfilValidator.ValidarAvatar(null).Valido);
+            Assert.IsFalse(PerfilValidator.ValidarAvatar("avatar_99").Valido);
+            Assert.IsTrue(PerfilValidator.ValidarAvatar("avatar_04").Valido);
         }
 
         [Test]
         public void Mapa_Crea27LeccionesSeisHitosYSeisRegiones()
         {
-            var mapa = MapaLeccionesService.Crear(
+            var mapa = MapaLeccionesModelFactory.Crear(
                 CorpusRepository.ObtenerTodasLecciones(),
                 CorpusRepository.ObtenerTodosEscenariosRa(),
-                new ProgresoUsuario());
+                new ProgresoUsuarioModel());
 
             Assert.AreEqual(33, mapa.Count);
             Assert.AreEqual(27, mapa.Count(item => !item.EsHitoRa));
@@ -50,17 +51,17 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void Mapa_DesbloqueaRa1YL07TrasCompletarL01AL06()
         {
-            var progreso = new ProgresoUsuario();
+            var progreso = new ProgresoUsuarioModel();
             for (int i = 1; i <= 6; i++)
             {
-                progreso.lecciones.Add(new ProgresoLeccionData
+                progreso.lecciones.Add(new ProgresoLeccionModel
                 {
                     leccion_id = $"L{i:D2}",
                     estado = "completada"
                 });
             }
 
-            var mapa = MapaLeccionesService.Crear(
+            var mapa = MapaLeccionesModelFactory.Crear(
                 CorpusRepository.ObtenerTodasLecciones(),
                 CorpusRepository.ObtenerTodosEscenariosRa(),
                 progreso);
@@ -81,11 +82,11 @@ namespace Assets.Scripts.Editor.Tests
                 {
                     Assert.IsTrue(TipoPasoLeccion.EsSoportado(paso.tipo), $"{leccion.id}/{paso.tipo}");
                     if (TipoPasoLeccion.EsSeleccion(paso.tipo))
-                        Assert.IsNotEmpty(ActividadLeccionService.CrearSeleccion(paso).Opciones);
+                        Assert.IsNotEmpty(GestorActividadLeccion.CrearSeleccion(paso).Opciones);
                     else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo))
-                        Assert.IsNotEmpty(ActividadLeccionService.CrearPares(paso));
+                        Assert.IsNotEmpty(GestorActividadLeccion.CrearPares(paso));
                     else if (TipoPasoLeccion.EsWordBank(paso.tipo))
-                        Assert.IsNotEmpty(ActividadLeccionService.CrearWordBank(paso).Tokens);
+                        Assert.IsNotEmpty(GestorActividadLeccion.CrearWordBank(paso).Tokens);
                 }
             }
         }

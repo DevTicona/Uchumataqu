@@ -82,6 +82,63 @@ namespace Assets.Scripts.Lecciones
             };
         }
 
+        public static ActividadEscrituraModel CrearEscritura(PasoLeccionModel paso)
+        {
+            if (paso == null || !TipoPasoLeccion.EsEscritura(paso.tipo))
+                throw new ArgumentException("El paso no corresponde a una actividad de escritura.", nameof(paso));
+            if (string.IsNullOrWhiteSpace(paso.consigna))
+                throw new InvalidOperationException($"El paso '{paso.tipo}' no contiene consigna.");
+            if (paso.fuente_estimulo != "audio" && paso.fuente_estimulo != "texto_es")
+                throw new InvalidOperationException(
+                    $"La fuente de estímulo '{paso.fuente_estimulo}' no es válida para '{paso.tipo}'.");
+
+            string canonica;
+            string audioPalabraId = null;
+            string audioOracionId = null;
+
+            if (paso.tipo == TipoPasoLeccion.EscribirPalabra)
+            {
+                PalabraModel palabra = CorpusRepository.ObtenerPalabra(paso.objetivo_id)
+                    ?? throw new InvalidOperationException($"No existe la palabra '{paso.objetivo_id}'.");
+                canonica = palabra.uch;
+                audioPalabraId = palabra.id;
+            }
+            else if (paso.tipo == TipoPasoLeccion.EscribirForma)
+            {
+                FormaModel forma = CorpusRepository.ObtenerForma(paso.forma_id)
+                    ?? throw new InvalidOperationException($"No existe la forma '{paso.forma_id}'.");
+                if (CorpusRepository.ObtenerPalabra(paso.raiz_id) == null)
+                    throw new InvalidOperationException($"No existe la raíz '{paso.raiz_id}'.");
+                canonica = forma.uch;
+                audioPalabraId = forma.id;
+            }
+            else
+            {
+                OracionModel oracion = CorpusRepository.ObtenerOracion(paso.oracion_id)
+                    ?? throw new InvalidOperationException($"No existe la oración '{paso.oracion_id}'.");
+                canonica = oracion.uch;
+                audioOracionId = oracion.id;
+            }
+
+            if (!string.Equals(
+                    NormalizadorTexto.Normalizar(canonica),
+                    NormalizadorTexto.Normalizar(paso.respuesta_esperada_uch),
+                    StringComparison.Ordinal))
+                throw new InvalidOperationException(
+                    $"La respuesta compilada de '{paso.tipo}' no coincide con el corpus para '{paso.objetivo_id ?? paso.forma_id ?? paso.oracion_id}'.");
+
+            bool usaAudio = paso.fuente_estimulo == "audio";
+            return new ActividadEscrituraModel
+            {
+                Tipo = paso.tipo,
+                Consigna = paso.consigna,
+                RespuestaEsperada = canonica,
+                FuenteEstimulo = paso.fuente_estimulo,
+                AudioPalabraId = usaAudio ? audioPalabraId : null,
+                AudioOracionId = usaAudio ? audioOracionId : null
+            };
+        }
+
         public static string AlternativaNatural(string traduccion)
         {
             if (string.IsNullOrWhiteSpace(traduccion)) return string.Empty;
@@ -107,6 +164,10 @@ namespace Assets.Scripts.Lecciones
                 ? string.Empty
                 : respuestaEspanol ? objetivo.uch : AlternativaNatural(objetivo.es);
 
+            List<string> opciones = ResolverOpcionesPalabra(paso.opciones_ids, respuestaEspanol, respuesta);
+            if (paso.opciones_ids == null || paso.opciones_ids.Count == 0)
+                CompletarOpcionesPalabra(opciones, respuestaEspanol);
+
             return new ActividadSeleccionModel
             {
                 Tipo = paso.tipo,
@@ -114,7 +175,7 @@ namespace Assets.Scripts.Lecciones
                 RespuestaCorrecta = respuesta,
                 AudioPalabraId = paso.tipo.StartsWith("audio_", StringComparison.Ordinal) ||
                     paso.tipo == TipoPasoLeccion.UchAEspanol ? objetivo.id : null,
-                Opciones = ResolverOpcionesPalabra(paso.opciones_ids, respuestaEspanol, respuesta)
+                Opciones = opciones
             };
         }
 
@@ -149,6 +210,8 @@ namespace Assets.Scripts.Lecciones
                 }
                 AgregarUnica(opciones, opcion);
             }
+            if (paso.opciones_ids == null || paso.opciones_ids.Count == 0)
+                CompletarOpcionesForma(opciones, formaComoRespuesta, raizComoRespuesta);
 
             return new ActividadSeleccionModel
             {
@@ -225,6 +288,43 @@ namespace Assets.Scripts.Lecciones
                 AgregarUnica(opciones, opcion);
             }
             return opciones;
+        }
+
+        private static void CompletarOpcionesPalabra(List<string> opciones, bool usarEspanol)
+        {
+            if (opciones.Count >= 4) return;
+
+            foreach (PalabraModel palabra in CorpusRepository.ObtenerTodasLasPalabras()
+                         .OrderBy(p => p.id, StringComparer.Ordinal))
+            {
+                AgregarUnica(opciones, usarEspanol ? AlternativaNatural(palabra.es) : palabra.uch);
+                if (opciones.Count >= 4) return;
+            }
+        }
+
+        private static void CompletarOpcionesForma(List<string> opciones, bool formaComoRespuesta, bool raizComoRespuesta)
+        {
+            if (opciones.Count >= 4) return;
+
+            if (raizComoRespuesta)
+            {
+                foreach (PalabraModel palabra in CorpusRepository.ObtenerTodasLasPalabras()
+                             .OrderBy(p => p.id, StringComparer.Ordinal))
+                {
+                    AgregarUnica(opciones, palabra.uch);
+                    if (opciones.Count >= 4) return;
+                }
+                return;
+            }
+
+            IEnumerable<FormaModel> formas = CorpusRepository.ObtenerTodasLasPalabras()
+                .SelectMany(p => p.formas ?? Enumerable.Empty<FormaModel>())
+                .OrderBy(f => f.id, StringComparer.Ordinal);
+            foreach (FormaModel forma in formas)
+            {
+                AgregarUnica(opciones, formaComoRespuesta ? forma.uch : AlternativaNatural(forma.es));
+                if (opciones.Count >= 4) return;
+            }
         }
 
         private static void AgregarPar(IDictionary<string, string> pares, string izquierda, string derecha)

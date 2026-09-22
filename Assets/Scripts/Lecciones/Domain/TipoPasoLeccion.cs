@@ -23,6 +23,10 @@ namespace Assets.Scripts.Lecciones
         public const string CompletarOracion = "completar_oracion";
         public const string AudioAEspanolOracion = "audio_a_es_oracion";
         public const string EscuchaYRepiteAsr = "escucha_y_repite_asr";
+        public const string EscuchaYRepiteOracionAsr = "escucha_y_repite_oracion_asr";
+        public const string EscribirPalabra = "escribir_palabra";
+        public const string EscribirForma = "escribir_forma";
+        public const string EscribirOracion = "escribir_oracion";
 
         private static readonly HashSet<string> Tipos = new HashSet<string>
         {
@@ -44,7 +48,11 @@ namespace Assets.Scripts.Lecciones
             TraduccionConstructiva,
             CompletarOracion,
             AudioAEspanolOracion,
-            EscuchaYRepiteAsr
+            EscuchaYRepiteAsr,
+            EscuchaYRepiteOracionAsr,
+            EscribirPalabra,
+            EscribirForma,
+            EscribirOracion
         };
 
         public static IReadOnlyCollection<string> Todos => Tipos;
@@ -65,5 +73,11 @@ namespace Assets.Scripts.Lecciones
 
         public static bool EsWordBank(string tipo) =>
             tipo == OrdenarOracion || tipo == DictadoWordBank || tipo == TraduccionConstructiva;
+
+        public static bool EsEscritura(string tipo) =>
+            tipo == EscribirPalabra || tipo == EscribirForma || tipo == EscribirOracion;
+
+        public static bool EsPracticaVoz(string tipo) =>
+            tipo == EscuchaYRepiteAsr || tipo == EscuchaYRepiteOracionAsr;
     }
 }

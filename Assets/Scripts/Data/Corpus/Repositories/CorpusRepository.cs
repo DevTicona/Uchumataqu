@@ -134,6 +134,9 @@ namespace Assets.Scripts.Persistencia
         private static void ProcesarLeccionesJson(string json)
         {
             var wrapper = JsonUtilityHelper.FromJson<LeccionesCompiladasCorpusModel>(json);
+            if (wrapper == null || wrapper.version != 3)
+                throw new InvalidDataException(
+                    $"Se esperaba lecciones_compiladas.json versión 3 y se recibió '{wrapper?.version.ToString() ?? "sin versión"}'.");
             _leccionesDict = new Dictionary<string, LeccionCompiladaModel>();
             _leccionesOrdenadas = new List<LeccionCompiladaModel>();
 

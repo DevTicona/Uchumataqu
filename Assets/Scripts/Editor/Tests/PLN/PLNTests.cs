@@ -77,9 +77,9 @@ namespace Assets.Scripts.Editor.Tests
             Assert.IsTrue(resCasiAlto.aprobado);
             Assert.AreEqual("verde", resCasiAlto.colorSemaforo);
 
-            // Similitud media (60% a 84%) -> Aprobado suave (amarillo)
+            // Similitud media (60% a 84%) -> Casi (amarillo), no aprobado
             var resCasi = MotorEvaluacion.EvaluarTexto("chhaq", "chhok");
-            Assert.IsTrue(resCasi.aprobado);
+            Assert.IsFalse(resCasi.aprobado);
             Assert.AreEqual("amarillo", resCasi.colorSemaforo);
 
             // Similitud baja (<60%) -> Incorrecto (rojo)

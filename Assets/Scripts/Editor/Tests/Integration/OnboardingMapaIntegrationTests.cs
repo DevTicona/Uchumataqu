@@ -87,6 +87,8 @@ namespace Assets.Scripts.Editor.Tests
                         Assert.IsNotEmpty(GestorActividadLeccion.CrearPares(paso));
                     else if (TipoPasoLeccion.EsWordBank(paso.tipo))
                         Assert.IsNotEmpty(GestorActividadLeccion.CrearWordBank(paso).Tokens);
+                    else if (TipoPasoLeccion.EsEscritura(paso.tipo))
+                        Assert.IsNotEmpty(GestorActividadLeccion.CrearEscritura(paso).RespuestaEsperada);
                 }
             }
         }

@@ -70,7 +70,7 @@ namespace Assets.Scripts.Editor.Tests
         }
 
         [Test]
-        public void Contrato_CubreLos19TiposCompilados()
+        public void Contrato_CubreLos23TiposCompilados()
         {
             var tiposCompilados = CorpusRepository.ObtenerTodasLecciones()
                 .SelectMany(leccion => leccion.pasos)
@@ -79,7 +79,7 @@ namespace Assets.Scripts.Editor.Tests
                 .OrderBy(tipo => tipo)
                 .ToArray();
 
-            Assert.AreEqual(19, TipoPasoLeccion.Todos.Count);
+            Assert.AreEqual(23, TipoPasoLeccion.Todos.Count);
             CollectionAssert.AreEquivalent(TipoPasoLeccion.Todos, tiposCompilados);
         }
 
@@ -101,6 +101,16 @@ namespace Assets.Scripts.Editor.Tests
                     else if (TipoPasoLeccion.EsWordBank(paso.tipo))
                         Assert.IsNotEmpty(GestorActividadLeccion.CrearWordBank(paso).Tokens,
                             $"{leccion.id}/{paso.tipo} debe producir tokens.");
+                    else if (TipoPasoLeccion.EsEscritura(paso.tipo))
+                    {
+                        ActividadEscrituraModel escritura = GestorActividadLeccion.CrearEscritura(paso);
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(escritura.RespuestaEsperada));
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(escritura.Consigna));
+                        Assert.Contains(escritura.FuenteEstimulo, new[] { "audio", "texto_es" });
+                        Assert.IsNotNull(paso.refuerzo_al_fallar);
+                        Assert.IsTrue(TipoPasoLeccion.EsSoportado(paso.refuerzo_al_fallar.tipo));
+                        ValidarRefuerzo(leccion.id, paso.refuerzo_al_fallar.CrearPaso());
+                    }
                 }
             }
         }
@@ -243,6 +253,27 @@ namespace Assets.Scripts.Editor.Tests
                 $"{leccionId}/{actividad.Tipo} debe incluir la respuesta entre sus opciones.");
             Assert.AreEqual(actividad.Opciones.Count, actividad.Opciones.Distinct().Count(),
                 $"{leccionId}/{actividad.Tipo} no debe contener opciones duplicadas.");
+        }
+
+        private static void ValidarRefuerzo(string leccionId, PasoLeccionModel refuerzo)
+        {
+            Assert.AreEqual("refuerzo", refuerzo.seccion);
+            if (TipoPasoLeccion.EsSeleccion(refuerzo.tipo))
+            {
+                ActividadSeleccionModel seleccion = GestorActividadLeccion.CrearSeleccion(refuerzo);
+                ValidarSeleccion(leccionId + "/refuerzo", seleccion);
+                Assert.AreEqual(4, seleccion.Opciones.Count,
+                    $"{leccionId}/{refuerzo.tipo} debe completar cuatro opciones de refuerzo.");
+            }
+            else if (TipoPasoLeccion.EsWordBank(refuerzo.tipo))
+            {
+                Assert.IsNotEmpty(GestorActividadLeccion.CrearWordBank(refuerzo).Tokens,
+                    $"{leccionId}/{refuerzo.tipo} debe producir tokens de refuerzo.");
+            }
+            else
+            {
+                Assert.Fail($"{leccionId} contiene un refuerzo no renderizable: {refuerzo.tipo}.");
+            }
         }
 
         private static void AssertUnaView(string ruta, string identificador)

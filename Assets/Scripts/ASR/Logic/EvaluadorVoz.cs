@@ -19,8 +19,11 @@ namespace Assets.Scripts.ASR
             try
             {
                 if (!asr.EstaDisponible()) return CrearResultadoNoEvaluado(esperado);
-                string transcrito = asr.TranscribirAudio(audioUsuario);
-                return MotorEvaluacion.EvaluarTexto(esperado, transcrito, origenEntrada: "voz");
+                string prediccionFonetica = NormalizadorFoneticoAsr.NormalizarPrediccionSherpa(
+                    asr.TranscribirAudio(audioUsuario));
+                string esperadoFonetico = NormalizadorFoneticoAsr.ConvertirEsperado(esperado);
+                return MotorEvaluacion.EvaluarTexto(esperadoFonetico, prediccionFonetica, origenEntrada: "voz",
+                    textoEsperadoOriginal: esperado);
             }
             catch (Exception ex)
             {

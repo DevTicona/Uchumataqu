@@ -43,6 +43,12 @@ namespace Assets.Scripts.Editor.Tests
                         Assert.IsNotEmpty(GestorActividadLeccion.CrearPares(paso), $"{leccion.id}/{paso.tipo}");
                     else if (TipoPasoLeccion.EsWordBank(paso.tipo))
                         VerificarWordBank(leccion.id, paso);
+                    else if (TipoPasoLeccion.EsEscritura(paso.tipo))
+                    {
+                        ActividadEscrituraModel escritura = GestorActividadLeccion.CrearEscritura(paso);
+                        Assert.IsNotEmpty(escritura.Consigna, $"{leccion.id}/{paso.tipo}");
+                        Assert.IsNotEmpty(escritura.RespuestaEsperada, $"{leccion.id}/{paso.tipo}");
+                    }
                 }
             }
 
@@ -150,6 +156,26 @@ namespace Assets.Scripts.Editor.Tests
             Assert.AreEqual("verde", resultado.colorSemaforo);
         }
 
+        [TestCase("Tï wiyanichay", "TIIWIYANICHAY")]
+        [TestCase("Thuñi seschay", "THUNYISESCHAY")]
+        [TestCase("Wilk thö", "WILKTHOO")]
+        [TestCase("Chhñi pichuchay", "CHHNYIPICHUCHAY")]
+        [TestCase("Tï wiyanichay wakpacha", "TIIWIYANICHAYWAKPACHA")]
+        [TestCase("Thuñi seschay sitsñi", "THUNYISESCHAYSITSNYI")]
+        [TestCase("Wilk thö lorenzo", "WILKTHOOLORENSO")]
+        public void AsrFonetico_ValidaExpresionesCompuestasYOracionesSinEspacios(string esperado, string prediccion)
+        {
+            Assert.AreEqual(prediccion, NormalizadorFoneticoAsr.ConvertirEsperado(esperado));
+
+            var resultado = EvaluarConClip(esperado, new ReconocedorSimulado(true, "  " + prediccion + "  "));
+
+            Assert.IsTrue(resultado.evaluado);
+            Assert.IsTrue(resultado.aprobado);
+            Assert.AreEqual(100f, resultado.porcentajeSimilitud);
+            Assert.AreEqual(esperado, resultado.textoEsperado);
+            Assert.AreEqual(prediccion, resultado.textoIngresado);
+        }
+
         [Test]
         public void FalloDelBindingAsr_NoPropagaLaExcepcionNiBloquea()
         {
@@ -159,12 +185,15 @@ namespace Assets.Scripts.Editor.Tests
             Assert.AreEqual("neutral", resultado.colorSemaforo);
         }
 
-        private static ResultadoEvaluacion EvaluarConClip(IReconocedorVoz reconocedor)
+        private static ResultadoEvaluacion EvaluarConClip(IReconocedorVoz reconocedor) =>
+            EvaluarConClip("palitak", reconocedor);
+
+        private static ResultadoEvaluacion EvaluarConClip(string esperado, IReconocedorVoz reconocedor)
         {
             AudioClip clip = AudioClip.Create("prueba_asr", 160, 1, 16000, false);
             try
             {
-                return EvaluadorVoz.EvaluarPronunciacion("palitak", clip, reconocedor);
+                return EvaluadorVoz.EvaluarPronunciacion(esperado, clip, reconocedor);
             }
             finally
             {

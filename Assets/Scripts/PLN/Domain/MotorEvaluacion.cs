@@ -49,10 +49,11 @@ namespace Assets.Scripts.PLN
             return Math.Max(0f, (1f - (float)distancia / largoMax) * 100f);
         }
 
-        public static ResultadoEvaluacion EvaluarTexto(string esperado, string respuesta, string origenEntrada = "texto")
+        public static ResultadoEvaluacion EvaluarTexto(string esperado, string respuesta, string origenEntrada = "texto",
+            string textoEsperadoOriginal = null)
         {
             float similitud = PorcentajeSimilitud(esperado, respuesta);
-            bool aprobado = similitud >= UMBRAL_AMARILLO;
+            bool aprobado = similitud >= UMBRAL_VERDE;
             string semaforo = similitud >= UMBRAL_VERDE ? "verde" : (similitud >= UMBRAL_AMARILLO ? "amarillo" : "rojo");
 
             return new ResultadoEvaluacion
@@ -60,7 +61,7 @@ namespace Assets.Scripts.PLN
                 aprobado = aprobado,
                 porcentajeSimilitud = similitud,
                 colorSemaforo = semaforo,
-                textoEsperado = esperado,
+                textoEsperado = textoEsperadoOriginal ?? esperado,
                 textoIngresado = respuesta,
                 origenEntrada = origenEntrada
             };

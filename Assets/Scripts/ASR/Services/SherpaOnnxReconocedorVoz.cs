@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.ASR
@@ -51,8 +49,7 @@ namespace Assets.Scripts.ASR
                 using (AndroidJavaObject resultado = _reconocedor.Call<AndroidJavaObject>("getResult", stream))
                 {
                     string texto = resultado.Call<string>("getText");
-                    string[] fonemas = resultado.Call<string[]>("getTokens") ?? Array.Empty<string>();
-                    return DecodificadorLexico.Decodificar(fonemas, texto, Resources.Load<TextAsset>("Sherpa/lexicon")?.text);
+                    return NormalizadorFoneticoAsr.NormalizarPrediccionSherpa(texto);
                 }
             }
 #else

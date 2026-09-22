@@ -30,6 +30,7 @@ namespace Assets.Scripts.UI.LeccionBase
         [SerializeField] private GameObject pageEmparejamiento;
         [SerializeField] private GameObject pageMemoria;
         [SerializeField] private GameObject pageWordBank;
+        [SerializeField] private GameObject pageEscritura;
 
         [SerializeField] private GameObject pageASR;
         [Header("Acción principal")]
@@ -40,7 +41,6 @@ namespace Assets.Scripts.UI.LeccionBase
         [SerializeField] private Sprite iconoComprobar;
         [SerializeField] private Sprite iconoFinalizar;
         [SerializeField] private Sprite iconoDetener;
-        [SerializeField] private Button btnOmitirASR;
 
         public enum AccionPrincipal { Continuar, Comprobar, Finalizar }
         public event Action OnAccionPrincipalClick;
@@ -60,7 +60,6 @@ namespace Assets.Scripts.UI.LeccionBase
 
         public FeedbackOverlayView Feedback => feedbackOverlay;
         public ModalResultadoView ModalResultado => modalResultado;
-
         private void Awake()
         {
             if (btnPrincipal != null) btnPrincipal.onClick.AddListener(NotificarAccionPrincipal);
@@ -84,6 +83,7 @@ namespace Assets.Scripts.UI.LeccionBase
             if (panelConfirmacionSalida != null)
                 panelConfirmacionSalida.SetActive(false);
             feedbackOverlay?.Ocultar();
+            ActualizarEspacioActividad();
         }
 
         private void OnDestroy()
@@ -104,7 +104,7 @@ namespace Assets.Scripts.UI.LeccionBase
         public bool ValidarConfiguracion(out string error)
         {
             if (btnPrincipal == null || txtAccionPrincipal == null || iconoAccionPrincipal == null ||
-                iconoContinuar == null || iconoComprobar == null || iconoFinalizar == null || iconoDetener == null || btnOmitirASR == null)
+                iconoContinuar == null || iconoComprobar == null || iconoFinalizar == null || iconoDetener == null)
                 return FallarValidacion("El footer tiene referencias incompletas.", out error);
             if (txtTituloLeccion == null || sliderProgreso == null || txtProgreso == null ||
                 txtPorcentajeProgreso == null || btnAtras == null)
@@ -112,7 +112,7 @@ namespace Assets.Scripts.UI.LeccionBase
             if (actividadContainer == null)
                 return FallarValidacion("Falta el contenedor de actividades.", out error);
             if (pagePresentacion == null || pageSeleccionMultiple == null || pageEmparejamiento == null ||
-                pageMemoria == null || pageWordBank == null || pageASR == null)
+                pageMemoria == null || pageWordBank == null || pageEscritura == null || pageASR == null)
                 return FallarValidacion("Falta una o más Pages de actividad.", out error);
             if (feedbackOverlay == null || modalResultado == null || panelConfirmacionSalida == null ||
                 btnSeguirAprendiendo == null || btnConfirmarSalida == null)
@@ -141,18 +141,18 @@ namespace Assets.Scripts.UI.LeccionBase
         {
             float valorNormalizado = Mathf.Clamp01(progreso);
             if (sliderProgreso != null) sliderProgreso.value = valorNormalizado;
-            if (txtProgreso != null) txtProgreso.text = "Progreso";
             if (txtPorcentajeProgreso != null)
                 txtPorcentajeProgreso.text = $"{Mathf.RoundToInt(valorNormalizado * 100f)}%";
         }
 
         public void LimpiarActividadActual()
         {
-            foreach (GameObject page in new[] { pagePresentacion, pageSeleccionMultiple, pageEmparejamiento, pageMemoria, pageWordBank, pageASR })
+            foreach (GameObject page in new[] { pagePresentacion, pageSeleccionMultiple, pageEmparejamiento, pageMemoria, pageWordBank, pageEscritura, pageASR })
                 if (page != null) page.SetActive(false);
         }
 
         public ASRView InstanciarASR() => InstanciarActividad<ASRView>(pageASR);
+        public EscrituraView InstanciarEscritura() => InstanciarActividad<EscrituraView>(pageEscritura);
         public PresentacionFamiliaView InstanciarPresentacion()
         {
             return InstanciarActividad<PresentacionFamiliaView>(pagePresentacion);
@@ -212,6 +212,9 @@ namespace Assets.Scripts.UI.LeccionBase
                 {
                     feedbackOverlay.MostrarIncorrecto(detalle ?? correcta);
                 }
+                ActualizarEspacioActividad();
+                if (pageWordBank != null && pageWordBank.activeSelf)
+                    pageWordBank.GetComponent<WordBankView>()?.SolicitarMostrarRespuesta();
             }
         }
 
@@ -219,6 +222,7 @@ namespace Assets.Scripts.UI.LeccionBase
         {
             if (feedbackOverlay != null)
                 feedbackOverlay.Ocultar();
+            ActualizarEspacioActividad();
         }
 
         public void MostrarResultado(int aciertos, int total, double precision, int estrellas)
@@ -242,6 +246,7 @@ namespace Assets.Scripts.UI.LeccionBase
                 accion == AccionPrincipal.Finalizar ? iconoFinalizar : iconoContinuar;
             btnPrincipal.interactable = interactuable;
             btnPrincipal.gameObject.SetActive(visible);
+            ActualizarEspacioActividad();
         }
 
         public void MostrarDetenerGrabacion()
@@ -250,20 +255,37 @@ namespace Assets.Scripts.UI.LeccionBase
             iconoAccionPrincipal.sprite = iconoDetener;
             btnPrincipal.interactable = true;
             btnPrincipal.gameObject.SetActive(true);
+            ActualizarEspacioActividad();
         }
 
         public void EstablecerInteraccionDuranteGrabacion(bool grabando)
         {
             if (btnAtras != null) btnAtras.interactable = !grabando;
-            if (btnOmitirASR != null) btnOmitirASR.interactable = !grabando;
         }
 
-        public void MostrarOmitirASR(bool visible) => btnOmitirASR.gameObject.SetActive(visible);
-
-        public void ConfigurarTextoOmitirASR(string texto)
+        private void ActualizarEspacioActividad()
         {
-            TMP_Text etiqueta = btnOmitirASR.GetComponentInChildren<TMP_Text>();
-            if (etiqueta != null) etiqueta.text = texto;
+            if (actividadContainer == null || !(actividadContainer.parent is RectTransform safeArea)) return;
+            float margen = 28f;
+            foreach (RectTransform elemento in new[] {
+                feedbackOverlay != null ? feedbackOverlay.transform as RectTransform : null,
+                btnPrincipal != null ? btnPrincipal.transform as RectTransform : null })
+            {
+                if (elemento == null || !elemento.gameObject.activeSelf) continue;
+                Bounds bounds = RectTransformUtility.CalculateRelativeRectTransformBounds(safeArea, elemento);
+                margen = Mathf.Max(margen, bounds.max.y - safeArea.rect.yMin + 24f);
+            }
+            Vector2 offset = actividadContainer.offsetMin;
+            if (Mathf.Abs(offset.y - margen) < 1f) return;
+            offset.y = margen;
+            actividadContainer.offsetMin = offset;
+            foreach (ActividadLayoutController layout in actividadContainer.GetComponentsInChildren<ActividadLayoutController>())
+                layout.SolicitarReconstruccion();
+        }
+
+        public void MostrarSeccion(string seccion)
+        {
+            if (txtProgreso != null) txtProgreso.gameObject.SetActive(false);
         }
 
         private void NotificarAccionPrincipal() => OnAccionPrincipalClick?.Invoke();

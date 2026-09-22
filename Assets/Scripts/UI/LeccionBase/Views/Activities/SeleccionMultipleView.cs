@@ -110,6 +110,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             bool esAudio = tipo != null && tipo.StartsWith("audio_");
             if (panelTexto != null) panelTexto.SetActive(!esAudio && !esHueco);
             if (panelOracionHueco != null) panelOracionHueco.SetActive(esHueco);
+            if (panelTexto != null) panelTexto.transform.parent.gameObject.SetActive(!esAudio);
             if (txtOracionHueco != null) txtOracionHueco.text = prompt ?? "";
             _opcionSeleccionada = null;
             _indiceSeleccionado = -1;
@@ -124,10 +125,12 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 txtTextoPregunta.text = prompt ?? "";
             }
 
-            bool esTipoAudio = tipo != null && tipo.StartsWith("audio_");
             if (btnAudioPregunta != null)
             {
-                btnAudioPregunta.gameObject.SetActive(esTipoAudio || !string.IsNullOrEmpty(audioPalabraId));
+                btnAudioPregunta.gameObject.SetActive(esAudio || !string.IsNullOrEmpty(audioPalabraId));
+                TMP_Text etiquetaAudio = btnAudioPregunta.GetComponentInChildren<TMP_Text>(true);
+                if (etiquetaAudio != null)
+                    etiquetaAudio.text = tipo == "audio_a_es_oracion" ? "ESCUCHAR ORACIÓN" : "ESCUCHAR PALABRA";
             }
 
             // Configurar botones de opciones
@@ -174,6 +177,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 botonesOpcion[i].GetComponent<TarjetaSeleccionView>()?.MostrarSeleccion(i == _indiceSeleccionado);
 
             OnSeleccionCambiada?.Invoke();
+            GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
 
         public void ConfirmarRespuesta()
@@ -184,7 +188,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             OnRespuestaEnviada?.Invoke(_opcionSeleccionada);
         }
 
-        public void MostrarResultado(bool correcto)
+        public void MostrarResultado(bool correcto, string respuestaCorrecta = null)
         {
             if (_indiceSeleccionado < 0) return;
             Image fondo = fondosOpcion[_indiceSeleccionado];
@@ -193,6 +197,11 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 color = correcto ? UIThemeController.Theme.colorExito : UIThemeController.Theme.colorError;
             fondo.color = Color.Lerp(Color.white, color, .5f);
             botonesOpcion[_indiceSeleccionado].GetComponent<TarjetaSeleccionView>()?.MostrarResultado(correcto);
+            if (!correcto && !string.IsNullOrEmpty(respuestaCorrecta))
+                for (int i = 0; i < textosOpcion.Count; i++)
+                    if (botonesOpcion[i].gameObject.activeSelf && textosOpcion[i].text == respuestaCorrecta)
+                        botonesOpcion[i].GetComponent<TarjetaSeleccionView>()?.MostrarResultado(true);
+            GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
 
         private string ObtenerInstruccionPorTipo(string tipo)

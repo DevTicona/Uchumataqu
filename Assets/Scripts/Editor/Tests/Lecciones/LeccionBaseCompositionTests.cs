@@ -5,8 +5,11 @@ using System.Linq;
 using Assets.Scripts.Data.Corpus;
 using Assets.Scripts.Lecciones;
 using Assets.Scripts.Persistencia;
+using Assets.Scripts.Core.UI.Components;
+using Assets.Scripts.Core.UI.Theme;
 using Assets.Scripts.UI.LeccionBase;
 using Assets.Scripts.UI.LeccionBase.Actividades;
+using Assets.Scripts.UI.LeccionBase.Componentes;
 using NUnit.Framework;
 using TMPro;
 using UnityEditor;
@@ -20,6 +23,32 @@ namespace Assets.Scripts.Editor.Tests
 {
     public class LeccionBaseCompositionTests
     {
+        [Test]
+        public void Feedback_UsaPaletaDeTemaEnLosCuatroEstados()
+        {
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                FeedbackOverlayView feedback = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<FeedbackOverlayView>(true)).Single();
+                Image icono = Referencia<Image>(feedback, "imgEstado");
+                Image detalle = Referencia<Image>(feedback, "fondoDetalle");
+                TMP_Text titulo = Referencia<TMP_Text>(feedback, "txtTitulo");
+                TMP_Text mensaje = Referencia<TMP_Text>(feedback, "txtMensajeDetalle");
+                UIThemeModel tema = UIThemeController.Theme;
+
+                ValidarEstado(() => feedback.MostrarCorrecto(), ThemedGraphicView.RolColor.Exito,
+                    ThemedTextView.ColorTexto.Exito, tema.colorExito, icono, detalle, titulo, mensaje);
+                ValidarEstado(() => feedback.MostrarCasi(), ThemedGraphicView.RolColor.Advertencia,
+                    ThemedTextView.ColorTexto.Advertencia, tema.colorAdvertencia, icono, detalle, titulo, mensaje);
+                ValidarEstado(() => feedback.MostrarIncorrecto(), ThemedGraphicView.RolColor.Error,
+                    ThemedTextView.ColorTexto.Error, tema.colorError, icono, detalle, titulo, mensaje);
+                ValidarEstado(() => feedback.MostrarInformacion(), ThemedGraphicView.RolColor.Informacion,
+                    ThemedTextView.ColorTexto.Informacion, tema.colorInformacion, icono, detalle, titulo, mensaje);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
         [Test]
         public void BancoDePalabras_CentraFichasYConservaOrdenConTokensRepetidos()
         {
@@ -125,7 +154,7 @@ namespace Assets.Scripts.Editor.Tests
                 alternate.colorExito = new Color(0.2f, 0.4f, 0.8f);
                 alternate.escalaTextoGlobal = 1.2f;
                 Assets.Scripts.Core.UI.Theme.UIThemeController.SetTheme(alternate);
-                Assert.AreEqual(alternate.colorExito, option.transform.Find("Marco").GetComponent<Image>().color);
+                Assert.AreEqual(alternate.colorPrimario, option.transform.Find("Marco").GetComponent<Image>().color);
                 Assert.AreEqual(alternate.textoNormal * 1.2f, option.GetComponentInChildren<TMP_Text>().fontSize, 0.01f);
                 Assert.AreEqual(FontStyles.Bold, option.GetComponentInChildren<TMP_Text>().fontStyle);
                 Assert.AreSame(manualSprite, pairImage.sprite);
@@ -165,6 +194,148 @@ namespace Assets.Scripts.Editor.Tests
         public void Pages_CubrenCorpusYFormatosMoviles() => ValidarPages(false);
 
         [Test]
+        public void ASR_UsaPracticaLocalYReservaDetencionParaElFooter()
+        {
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                ASRView view = scene.GetRootGameObjects()
+                    .SelectMany(r => r.GetComponentsInChildren<ASRView>(true)).Single();
+                view.Configurar("Chhaq", true);
+                Button practicar = Referencia<Button>(view, "btnPracticar");
+                Assert.IsTrue(practicar.interactable);
+                foreach (ASRView.Estado estado in new[] { ASRView.Estado.Grabando, ASRView.Estado.Procesando })
+                {
+                    view.MostrarEstado(estado);
+                    Assert.IsFalse(Referencia<Button>(view, "btnAudioReferencia").interactable);
+                    Assert.IsFalse(practicar.interactable);
+                }
+                view.MostrarEstado(ASRView.Estado.Resultado);
+                Assert.IsTrue(Referencia<Button>(view, "btnAudioReferencia").interactable);
+                Assert.IsTrue(practicar.interactable);
+                Assert.AreEqual("PRACTICAR DE NUEVO", practicar.GetComponentInChildren<TMP_Text>().text);
+                Assert.IsFalse(view.GetComponentsInChildren<Transform>(true).Any(t =>
+                    t.name == "PanelResultado" || t.name == "TxtEstado" || t.name == "BtnMicrofono"));
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        [Test]
+        public void Presenter_ASR_UsaContinuarDelFooterYNoBotonOmitirSeparado()
+        {
+            using var scope = new PersistenciaTestScope();
+            Assert.IsTrue(CorpusRepository.Inicializar());
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                LeccionBasePresenter presenter = scene.GetRootGameObjects()
+                    .SelectMany(r => r.GetComponentsInChildren<LeccionBasePresenter>(true)).Single();
+                LeccionBaseView view = Referencia<LeccionBaseView>(presenter, "view");
+                var gestor = new GestorLeccion();
+                Assert.IsTrue(gestor.IniciarLeccion("L01"));
+                int indiceAsr = gestor.LeccionActual.pasos.FindIndex(p => TipoPasoLeccion.EsPracticaVoz(p.tipo));
+                while (gestor.IndicePasoActual < indiceAsr)
+                    Assert.IsTrue(gestor.AvanzarSiguientePaso());
+
+                var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+                typeof(LeccionBasePresenter).GetField("_gestorLeccion", flags).SetValue(presenter, gestor);
+                typeof(LeccionBasePresenter).GetMethod("RenderizarPasoActual", flags).Invoke(presenter, null);
+
+                Button principal = Referencia<Button>(view, "btnPrincipal");
+                Assert.IsTrue(principal.gameObject.activeSelf);
+                Assert.IsTrue(principal.interactable);
+                Assert.AreEqual("CONTINUAR", Referencia<TMP_Text>(view, "txtAccionPrincipal").text);
+                Assert.IsFalse(view.GetComponentsInChildren<Transform>(true)
+                    .Any(t => t.name == "OmitirASR"));
+                Assert.IsTrue(view.InstanciarASR().gameObject.activeSelf);
+
+                int indiceAntes = gestor.IndicePasoActual;
+                typeof(LeccionBasePresenter).GetMethod("EjecutarAccionPrincipal", flags).Invoke(presenter, null);
+                Assert.AreEqual(indiceAntes + 1, gestor.IndicePasoActual);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        [Test]
+        public void Presenter_BloqueaAvanceYSalidaMientrasProcesaVozYCompletaProgreso()
+        {
+            using var scope = new PersistenciaTestScope();
+            Assert.IsTrue(CorpusRepository.Inicializar());
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                LeccionBasePresenter presenter = scene.GetRootGameObjects()
+                    .SelectMany(r => r.GetComponentsInChildren<LeccionBasePresenter>(true)).Single();
+                LeccionBaseView view = Referencia<LeccionBaseView>(presenter, "view");
+                var gestor = new GestorLeccion();
+                Assert.IsTrue(gestor.IniciarLeccion("L01"));
+                var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+                typeof(LeccionBasePresenter).GetField("_gestorLeccion", flags).SetValue(presenter, gestor);
+                typeof(LeccionBasePresenter).GetField("_procesandoVoz", flags).SetValue(presenter, true);
+                view.MostrarConfirmacionSalida(false);
+                typeof(LeccionBasePresenter).GetMethod("AvanzarPaso", flags).Invoke(presenter, null);
+                typeof(LeccionBasePresenter).GetMethod("SolicitarSalida", flags).Invoke(presenter, null);
+                Assert.AreEqual(0, gestor.IndicePasoActual);
+                Assert.IsFalse(Referencia<GameObject>(view, "panelConfirmacionSalida").activeSelf);
+                typeof(LeccionBasePresenter).GetField("_procesandoVoz", flags).SetValue(presenter, false);
+                typeof(LeccionBasePresenter).GetMethod("SolicitarSalida", flags).Invoke(presenter, null);
+                Assert.IsTrue(Referencia<GameObject>(view, "panelConfirmacionSalida").activeSelf);
+                while (gestor.AvanzarSiguientePaso()) { }
+                typeof(LeccionBasePresenter).GetMethod("FinalizarLeccion", flags).Invoke(presenter, null);
+                Assert.IsTrue(gestor.UltimoGuardadoExitoso);
+                Assert.AreEqual(1f, Referencia<Slider>(view, "sliderProgreso").value);
+                Assert.AreEqual("100%", Referencia<TMP_Text>(view, "txtPorcentajeProgreso").text);
+                Assert.IsTrue(view.ModalResultado.gameObject.activeSelf);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        [Test]
+        public void Presenter_RespuestaEscritaIncorrecta_MuestraRefuerzoSinAvanzarNiDuplicarPuntaje()
+        {
+            using var scope = new PersistenciaTestScope();
+            Assert.IsTrue(CorpusRepository.Inicializar());
+            var configuracion = ConfiguracionRepository.Obtener();
+            configuracion.audio_automatico = false;
+            Assert.IsTrue(ConfiguracionRepository.Guardar(configuracion));
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                LeccionBasePresenter presenter = scene.GetRootGameObjects()
+                    .SelectMany(r => r.GetComponentsInChildren<LeccionBasePresenter>(true)).Single();
+                LeccionBaseView view = Referencia<LeccionBaseView>(presenter, "view");
+                var gestor = new GestorLeccion();
+                Assert.IsTrue(gestor.IniciarLeccion("L01"));
+
+                int indiceEscritura = gestor.LeccionActual.pasos.FindIndex(p => TipoPasoLeccion.EsEscritura(p.tipo));
+                Assert.GreaterOrEqual(indiceEscritura, 0);
+                while (gestor.IndicePasoActual < indiceEscritura)
+                    Assert.IsTrue(gestor.AvanzarSiguientePaso());
+
+                var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+                typeof(LeccionBasePresenter).GetField("_gestorLeccion", flags).SetValue(presenter, gestor);
+                typeof(LeccionBasePresenter).GetMethod("RenderizarPasoActual", flags).Invoke(presenter, null);
+
+                EscrituraView escritura = view.InstanciarEscritura();
+                TMP_InputField input = Referencia<TMP_InputField>(escritura, "inputRespuesta");
+                input.text = "respuesta deliberadamente incorrecta";
+                escritura.ConfirmarRespuesta();
+
+                Assert.AreEqual(1, gestor.Errores);
+                Assert.IsNotNull(typeof(LeccionBasePresenter).GetField("_refuerzoPendiente", flags).GetValue(presenter));
+                typeof(LeccionBasePresenter).GetMethod("AvanzarTrasFeedback", flags).Invoke(presenter, null);
+
+                Assert.AreEqual(indiceEscritura, gestor.IndicePasoActual, "El refuerzo no debe consumir otro paso del currículo.");
+                Assert.AreEqual(1, gestor.Errores, "El refuerzo no debe duplicar la puntuación del intento original.");
+                Assert.IsTrue((bool)typeof(LeccionBasePresenter).GetField("_renderizandoRefuerzo", flags).GetValue(presenter));
+                Assert.AreEqual("Refuerzo guiado · Progreso", Referencia<TMP_Text>(view, "txtProgreso").text);
+                Assert.AreEqual(1, Referencia<Transform>(view, "actividadContainer").Cast<Transform>().Count(p => p.gameObject.activeSelf));
+                Assert.IsFalse(escritura.gameObject.activeSelf);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        [Test]
         public void Footer_UnificaPresentacionYDespachaSoloAccionesHabilitadas()
         {
             Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
@@ -175,8 +346,11 @@ namespace Assets.Scripts.Editor.Tests
                 LeccionBasePresenter presenter = scene.GetRootGameObjects()
                     .SelectMany(r => r.GetComponentsInChildren<LeccionBasePresenter>(true)).Single();
                 Assert.IsTrue(view.ValidarConfiguracion(out string error), error);
+                view.OcultarFeedback();
+                view.ModalResultado.Ocultar();
+                view.MostrarConfirmacionSalida(false);
                 Button principal = Referencia<Button>(view, "btnPrincipal");
-                Assert.AreEqual(3, principal.transform.parent.childCount);
+                Assert.AreEqual(2, principal.transform.parent.childCount);
                 Assert.AreEqual(0, view.Feedback.GetComponentsInChildren<Button>(true).Length);
                 Assert.IsFalse(PrefabUtility.IsPartOfPrefabInstance(view.Feedback));
                 TMP_Text texto = Referencia<TMP_Text>(view, "txtAccionPrincipal");
@@ -208,10 +382,6 @@ namespace Assets.Scripts.Editor.Tests
                     presenter.enabled = true;
                     habilitado = false;
                 }
-                view.MostrarOmitirASR(true);
-                Assert.IsTrue(Referencia<Button>(view, "btnOmitirASR").gameObject.activeSelf);
-                view.MostrarOmitirASR(false);
-                Assert.IsFalse(Referencia<Button>(view, "btnOmitirASR").gameObject.activeSelf);
                 Assert.AreSame(principal.transform.parent, view.Feedback.transform.parent);
                 Assert.AreEqual(0, view.Feedback.transform.GetSiblingIndex());
                 view.Feedback.MostrarCorrecto();
@@ -229,7 +399,7 @@ namespace Assets.Scripts.Editor.Tests
         {
             Assert.IsTrue(CorpusRepository.Inicializar());
             var pasos = CorpusRepository.ObtenerTodasLecciones().SelectMany(l => l.pasos).ToList();
-            Assert.AreEqual(19, pasos.Select(p => p.tipo).Distinct().Count());
+            Assert.AreEqual(23, pasos.Select(p => p.tipo).Distinct().Count());
             foreach (PasoLeccionModel paso in pasos)
             {
                 Assert.IsTrue(TipoPasoLeccion.EsSoportado(paso.tipo));
@@ -241,6 +411,12 @@ namespace Assets.Scripts.Editor.Tests
                     if (paso.tipo == TipoPasoLeccion.TraduccionConstructiva)
                         Assert.AreEqual(CorpusRepository.ObtenerOracion(paso.oracion_id).uch, datos.Prompt);
                 }
+                if (TipoPasoLeccion.EsEscritura(paso.tipo))
+                {
+                    var datos = GestorActividadLeccion.CrearEscritura(paso);
+                    Assert.IsNotEmpty(datos.Consigna);
+                    Assert.IsNotEmpty(datos.RespuestaEsperada);
+                }
             }
             Scene preview = EditorSceneManager.OpenPreviewScene(ScenePath);
             RenderTexture target = null;
@@ -249,6 +425,9 @@ namespace Assets.Scripts.Editor.Tests
                 var roots = preview.GetRootGameObjects();
                 LeccionBaseView view = roots.SelectMany(r => r.GetComponentsInChildren<LeccionBaseView>(true)).Single();
                 Assert.IsTrue(view.ValidarConfiguracion(out string error), error);
+                view.OcultarFeedback();
+                view.ModalResultado.Ocultar();
+                view.MostrarConfirmacionSalida(false);
                 Canvas canvas = roots.SelectMany(r => r.GetComponentsInChildren<Canvas>(true)).Single();
                 Camera camera = roots.SelectMany(r => r.GetComponentsInChildren<Camera>(true)).Single();
                 camera.enabled = false; camera.scene = preview; camera.overrideSceneCullingMask = EditorSceneManager.GetSceneCullingMask(preview);
@@ -266,10 +445,17 @@ namespace Assets.Scripts.Editor.Tests
                     foreach (PasoLeccionModel paso in pasos.GroupBy(p => p.tipo).Select(g => g.Last()))
                     {
                         Configurar(view, paso);
+                        bool permiteContinuar = TipoPasoLeccion.EsPresentacion(paso.tipo) ||
+                            TipoPasoLeccion.EsPracticaVoz(paso.tipo);
+                        view.PresentarAccionPrincipal(permiteContinuar
+                            ? LeccionBaseView.AccionPrincipal.Continuar : LeccionBaseView.AccionPrincipal.Comprobar,
+                            permiteContinuar,
+                            permiteContinuar || TipoPasoLeccion.EsSeleccion(paso.tipo) ||
+                            TipoPasoLeccion.EsWordBank(paso.tipo) || TipoPasoLeccion.EsEscritura(paso.tipo));
                         Canvas.ForceUpdateCanvases();
                         RectTransform host = (RectTransform)new SerializedObject(view).FindProperty("actividadContainer").objectReferenceValue;
                         var pages = host.Cast<Transform>().ToArray();
-                        Assert.AreEqual(6, pages.Length);
+                        Assert.AreEqual(7, pages.Length);
                         Assert.AreEqual(1, pages.Count(p => p.gameObject.activeSelf), paso.tipo);
                         GameObject page = pages.Single(p => p.gameObject.activeSelf).gameObject;
                         for (int i = 0; i < 3; i++) page.GetComponent<ActividadLayoutController>().SolicitarReconstruccion();
@@ -278,26 +464,27 @@ namespace Assets.Scripts.Editor.Tests
                         Assert.Greater(scroll.viewport.rect.height, 100, paso.tipo);
                         foreach (TMP_Text text in page.GetComponentsInChildren<TMP_Text>())
                             Assert.Greater(text.rectTransform.rect.width, 0, paso.tipo + ": " + text.name);
-                        if (capturar && capturadas.Add(page.name + alto)) Capturar(camera, target, page.name + "-" + alto);
-                        if (capturar && capturadas.Add(page.name + alto + "-interaccion"))
+                        string captura = page.name + "-" + paso.tipo + "-" + alto;
+                        if (capturar && capturadas.Add(captura)) Capturar(camera, target, captura);
+                        if (capturar && capturadas.Add(captura + "-interaccion"))
                         {
                             if (page.TryGetComponent(out SeleccionMultipleView seleccion))
                             {
                                 page.GetComponentsInChildren<Button>().First(b => b.GetComponent<TarjetaSeleccionView>() != null).onClick.Invoke();
-                                Capturar(camera, target, page.name + "-seleccionada-" + alto);
+                                Capturar(camera, target, captura + "-seleccionada");
                             }
                             else if (page.TryGetComponent(out WordBankView banco))
                             {
                                 Transform origen = Referencia<Transform>(banco, "contenedorOrigen");
                                 foreach (Button ficha in origen.GetComponentsInChildren<Button>().Take(2).ToArray()) ficha.onClick.Invoke();
                                 page.GetComponent<ActividadLayoutController>().SolicitarReconstruccion();
-                                Capturar(camera, target, page.name + "-respuesta-" + alto);
+                                Capturar(camera, target, captura + "-respuesta");
                             }
                         }
                     }
                     camera.targetTexture = null; target.Release(); Object.DestroyImmediate(target); target = null;
                 }
-                return $"{pasos.Count} pasos validados; 19 tipos renderizados en 1080x1920 y 1080x2340; seis Pages y cinco prefabs.";
+                return $"{pasos.Count} pasos validados; 23 tipos renderizados en 1080x1920 y 1080x2340; siete Pages y cinco prefabs.";
             }
             finally
             {
@@ -312,7 +499,7 @@ namespace Assets.Scripts.Editor.Tests
             else if (TipoPasoLeccion.EsSeleccion(paso.tipo))
             {
                 var d = GestorActividadLeccion.CrearSeleccion(paso);
-                view.InstanciarSeleccionMultiple().Configurar(d.Tipo, d.Prompt, d.Opciones, d.AudioPalabraId);
+                view.InstanciarSeleccionMultiple().Configurar(d.Tipo, d.Prompt, d.Opciones, d.AudioPalabraId ?? d.AudioOracionId);
             }
             else if (paso.tipo == TipoPasoLeccion.MemoriaUchEspanol) view.InstanciarMemoria().Configurar(GestorActividadLeccion.CrearPares(paso));
             else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo))
@@ -322,7 +509,18 @@ namespace Assets.Scripts.Editor.Tests
                 var d = GestorActividadLeccion.CrearWordBank(paso);
                 view.InstanciarWordBank().Configurar(d.Tipo, d.Prompt, d.Tokens, d.AudioOracionId);
             }
-            else if (paso.tipo == TipoPasoLeccion.EscuchaYRepiteAsr) view.InstanciarASR().Configurar("Chhaq", false);
+            else if (TipoPasoLeccion.EsEscritura(paso.tipo))
+            {
+                var d = GestorActividadLeccion.CrearEscritura(paso);
+                view.InstanciarEscritura().Configurar(d.Consigna, d.UsaAudio);
+            }
+            else if (TipoPasoLeccion.EsPracticaVoz(paso.tipo))
+            {
+                string objetivo = paso.tipo == TipoPasoLeccion.EscuchaYRepiteOracionAsr
+                    ? CorpusRepository.ObtenerOracion(paso.oracion_id).uch
+                    : CorpusRepository.ObtenerPalabra(paso.objetivo_id).uch;
+                view.InstanciarASR().Configurar(objetivo, false);
+            }
             else Assert.Fail(paso.tipo);
         }
 
@@ -334,13 +532,15 @@ namespace Assets.Scripts.Editor.Tests
             {
                 SeleccionMultipleView seleccion = view.InstanciarSeleccionMultiple();
                 seleccion.Configurar("uch_a_es", "Chhaq", new List<string> { "Grande", "Pequeño" });
-                seleccion.OnRespuestaEnviada += _ => envios++;
+                Action<string> alEnviar = _ => envios++;
+                seleccion.OnRespuestaEnviada += alEnviar;
                 Button opcion = seleccion.GetComponentsInChildren<Button>().First(b => b.GetComponentInChildren<TMP_Text>().text == "Grande");
                 opcion.onClick.Invoke();
                 Assert.IsTrue(seleccion.PuedeEnviarRespuesta);
                 seleccion.ConfirmarRespuesta(); seleccion.ConfirmarRespuesta();
                 Assert.IsFalse(seleccion.PuedeEnviarRespuesta);
                 Assert.AreEqual(vuelta + 1, envios, "Sin eventos acumulados ni doble envío.");
+                seleccion.OnRespuestaEnviada -= alEnviar;
             }
             WordBankView banco = view.InstanciarWordBank();
             banco.Configurar("traduccion_constructiva", "Prueba", new List<string> { "la", "la", "casa" });
@@ -354,6 +554,17 @@ namespace Assets.Scripts.Editor.Tests
             banco.Comprobar(); banco.Comprobar();
             Assert.IsFalse(banco.PuedeEnviarRespuesta);
             CollectionAssert.AreEqual(new[] { "la", "la" }, respuesta);
+
+            EscrituraView escritura = view.InstanciarEscritura();
+            escritura.Configurar("Escribe en uchumataqu", false);
+            string textoEscrito = null;
+            escritura.OnRespuestaEnviada += texto => textoEscrito = texto;
+            TMP_InputField input = Referencia<TMP_InputField>(escritura, "inputRespuesta");
+            input.text = "Chhaq";
+            Assert.IsTrue(escritura.PuedeEnviarRespuesta);
+            escritura.ConfirmarRespuesta(); escritura.ConfirmarRespuesta();
+            Assert.AreEqual("Chhaq", textoEscrito);
+            Assert.IsFalse(escritura.PuedeEnviarRespuesta);
 
             EmparejamientoView pares = view.InstanciarEmparejamiento();
             pares.Configurar(new Dictionary<string, string> { ["Chhaq"] = "Grande" });
@@ -372,15 +583,40 @@ namespace Assets.Scripts.Editor.Tests
             Assert.IsTrue(completado);
 
             ASRView asr = view.InstanciarASR();
-            asr.Configurar("Chhaq", false);
-            bool omitido = false;
-            asr.OnOmitirClicked += () => omitido = true;
-            Referencia<Button>(asr, "btnOmitir").onClick.Invoke();
-            Assert.IsTrue(omitido);
+            asr.Configurar("Chhaq", true);
+            bool practicaSolicitada = false;
+            asr.OnPracticarClicked += () => practicaSolicitada = true;
+            Referencia<Button>(asr, "btnPracticar").onClick.Invoke();
+            Assert.IsTrue(practicaSolicitada);
         }
 
         private static T Referencia<T>(Component componente, string campo) where T : Object =>
             (T)new SerializedObject(componente).FindProperty(campo).objectReferenceValue;
+
+        private static void ValidarEstado(Action mostrar, ThemedGraphicView.RolColor rolEsperado,
+            ThemedTextView.ColorTexto tipoTituloEsperado, Color colorEstado, Image icono, Image detalle,
+            TMP_Text titulo, TMP_Text mensaje)
+        {
+            mostrar();
+
+            Assert.AreEqual(rolEsperado, icono.GetComponent<ThemedGraphicView>().Rol);
+            Assert.AreEqual(tipoTituloEsperado, titulo.GetComponent<ThemedTextView>().tipoColor);
+            Assert.IsFalse(titulo.GetComponent<ThemedTextView>().usarColorPersonalizado);
+            Assert.AreEqual(ThemedTextView.ColorTexto.Primario, mensaje.GetComponent<ThemedTextView>().tipoColor);
+            Assert.IsFalse(mensaje.GetComponent<ThemedTextView>().usarColorPersonalizado);
+            AssertColor(colorEstado, icono.color);
+            AssertColor(colorEstado, titulo.color);
+            AssertColor(new Color(colorEstado.r, colorEstado.g, colorEstado.b, 80f / 255f), detalle.color);
+            AssertColor(UIThemeController.Theme.colorTextoPrimario, mensaje.color);
+        }
+
+        private static void AssertColor(Color esperado, Color actual)
+        {
+            Assert.That(actual.r, Is.EqualTo(esperado.r).Within(.001f));
+            Assert.That(actual.g, Is.EqualTo(esperado.g).Within(.001f));
+            Assert.That(actual.b, Is.EqualTo(esperado.b).Within(.001f));
+            Assert.That(actual.a, Is.EqualTo(esperado.a).Within(.001f));
+        }
 
         private static void ValidarTransformaciones(GameObject root)
         {

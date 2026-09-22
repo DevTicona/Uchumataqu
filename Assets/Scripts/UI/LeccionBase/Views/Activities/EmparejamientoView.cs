@@ -130,6 +130,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                     botonesColumnaIzq[i].gameObject.SetActive(true);
                     botonesColumnaIzq[i].interactable = true;
                     textosColumnaIzq[i].text = audio ? $"Escuchar {i + 1}" : listaIzq[i];
+                    Transform icono = botonesColumnaIzq[i].transform.Find("IconoAudio");
+                    if (icono != null) icono.gameObject.SetActive(audio);
                     MostrarEstado(botonesColumnaIzq[i], ThemedButtonView.EstadoBoton.Normal);
                 }
                 else
@@ -158,7 +160,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private void SeleccionarIzq(int index)
         {
-            if (_indicesIzqResueltos.Contains(index)) return;
+            if (index < 0 || index >= _totalPares || _indicesIzqResueltos.Contains(index)) return;
 
             if (_audio) OnAudioClicked?.Invoke(_idsIzquierda[index]);
             _seleccionIzq = index;
@@ -169,7 +171,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private void SeleccionarDer(int index)
         {
-            if (_indicesDerResueltos.Contains(index)) return;
+            if (index < 0 || index >= _totalPares || _indicesDerResueltos.Contains(index)) return;
 
             _seleccionDer = index;
             ActualizarColoresColumna(botonesColumnaDer, _indicesDerResueltos, _seleccionDer);
@@ -225,8 +227,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private void RestaurarColoresNoResueltos()
         {
-            ActualizarColoresColumna(botonesColumnaIzq, _indicesIzqResueltos, -1);
-            ActualizarColoresColumna(botonesColumnaDer, _indicesDerResueltos, -1);
+            ActualizarColoresColumna(botonesColumnaIzq, _indicesIzqResueltos, _seleccionIzq);
+            ActualizarColoresColumna(botonesColumnaDer, _indicesDerResueltos, _seleccionDer);
         }
 
         private void ActualizarColoresColumna(List<Button> botones, HashSet<int> resueltos, int seleccionado)

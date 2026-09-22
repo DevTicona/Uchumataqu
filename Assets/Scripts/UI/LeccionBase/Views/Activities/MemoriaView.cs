@@ -21,6 +21,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private readonly List<Carta> _cartas = new List<Carta>();
         private Carta _primera;
         private bool _comparando;
+        private bool _ocultandoIncorrectas;
         private readonly UIEventSubscriptions _subscriptions = new UIEventSubscriptions();
 
         private void OnDestroy() => _subscriptions.Dispose();
@@ -30,6 +31,12 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         {
             StopAllCoroutines();
             CancelInvoke();
+            if (_primera != null && !_primera.Resuelta) _primera.Ocultar();
+            if (_segunda != null && !_segunda.Resuelta) _segunda.Ocultar();
+            _primera = null;
+            _segunda = null;
+            _comparando = false;
+            _ocultandoIncorrectas = false;
         }
 
         public void Configurar(IReadOnlyDictionary<string, string> pares)
@@ -44,7 +51,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 }
             _cartas.Clear();
             _primera = null;
+            _segunda = null;
             _comparando = false;
+            _ocultandoIncorrectas = false;
             _paresResueltos = 0;
 
             var datos = new List<(string texto, string pareja)>();
@@ -85,12 +94,13 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         public void MostrarResultadoPar(bool coinciden)
         {
             Carta carta = _segunda;
-            if (_primera == null || carta == null) return;
+            if (!_comparando || _ocultandoIncorrectas || _primera == null || carta == null) return;
             if (coinciden)
             {
                 _primera.Resolver();
                 carta.Resolver();
                 _primera = null;
+                _segunda = null;
                 _comparando = false;
                 _paresResueltos++;
                 if (_paresResueltos * 2 >= _cartas.Count)
@@ -98,6 +108,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             }
             else
             {
+                _ocultandoIncorrectas = true;
                 StartCoroutine(OcultarIncorrectas(_primera, carta));
             }
         }
@@ -108,7 +119,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             primera.Ocultar();
             segunda.Ocultar();
             _primera = null;
+            _segunda = null;
             _comparando = false;
+            _ocultandoIncorrectas = false;
         }
 
         private static void Barajar<T>(IList<T> elementos)
@@ -135,6 +148,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 Texto = texto;
                 Pareja = pareja;
                 _etiqueta = boton.GetComponentInChildren<TMP_Text>();
+                Ocultar();
             }
 
             public void Mostrar()

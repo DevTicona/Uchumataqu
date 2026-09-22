@@ -6,6 +6,7 @@ namespace Assets.Scripts.ASR
     public sealed class GrabacionVozService : IDisposable
     {
         private AudioClip _grabacion;
+        private float _inicioGrabacion;
         public bool EstaGrabando { get; private set; }
         public bool TieneDispositivo => Application.isMobilePlatform || Microphone.devices.Length > 0;
 
@@ -13,6 +14,7 @@ namespace Assets.Scripts.ASR
         {
             Dispose();
             _grabacion = Microphone.Start(null, false, 6, 16000);
+            _inicioGrabacion = Time.realtimeSinceStartup;
             return EstaGrabando = _grabacion != null;
         }
 
@@ -20,6 +22,10 @@ namespace Assets.Scripts.ASR
         {
             if (!EstaGrabando || _grabacion == null) return null;
             int muestras = Microphone.GetPosition(null);
+            // Al agotarse el buffer, Unity detiene el dispositivo y devuelve posición cero.
+            if (muestras <= 0 && !Microphone.IsRecording(null) &&
+                Time.realtimeSinceStartup - _inicioGrabacion >= _grabacion.length)
+                muestras = _grabacion.samples;
             Microphone.End(null);
             EstaGrabando = false;
             if (muestras <= 0) { Dispose(); return null; }

@@ -46,6 +46,15 @@ namespace Assets.Scripts.Editor
                 .Single(t => t.name == "ActividadHost");
             foreach (Transform page in host)
             {
+                Component view = page.GetComponent<SeleccionMultipleView>();
+                if (view != null) SepararBotonAudio(view, "btnAudioPregunta", "ESCUCHAR PALABRA");
+                view = page.GetComponent<WordBankView>();
+                if (view != null) SepararBotonAudio(view, "btnAudioPrompt", "ESCUCHAR ORACIÓN");
+                view = page.GetComponent<PresentacionFamiliaView>();
+                if (view != null) SepararBotonAudio(view, "btnAudio", "ESCUCHAR PALABRA");
+            }
+            foreach (Transform page in host)
+            {
                 if (page.name == "PagePresentacionFamilia") continue;
                 Transform content = page.Find("ScrollRect/Viewport/Content");
                 foreach (Transform block in content)
@@ -57,14 +66,27 @@ namespace Assets.Scripts.Editor
                     rect.gameObject.layer = LayerMask.NameToLayer("UI");
             }
             Transform seleccion = host.Find("PageSeleccionMultiple/ScrollRect/Viewport/Content");
-            seleccion.Find("OpcionesContainer").GetComponent<VerticalLayoutGroup>().spacing = 18f;
+            seleccion.Find("OpcionesContainer").GetComponent<VerticalLayoutGroup>().spacing = 24f;
             Transform asr = host.Find("PageASR/ScrollRect/Viewport/Content");
             foreach (Button button in asr.GetComponentsInChildren<Button>(true))
                 if (button.transform.Find("Icono") != null) button.transform.Find("Icono").GetComponent<Image>().sprite =
                     AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/" +
-                        (button.name == "BtnMicrofono" ? "Audio/icono_microfono.png" : "Audio/icono_audio.png"));
+                        (button.name == "BtnPracticar" ? "Audio/icono_microfono.png" : "Audio/icono_audio.png"));
             ConfigurarBanco(host.Find("PageWordBank").GetComponent<WordBankView>());
             foreach (Transform page in host) ConfigurarPage(page.gameObject);
+            foreach (Transform page in host)
+                foreach (Button button in page.Find("ScrollRect/Viewport/Content").GetComponentsInChildren<Button>(true))
+                    if (button.transform.parent.name == "Content" && button.transform.Find("Icono") != null)
+                    {
+                        LayoutElement element = button.GetComponent<LayoutElement>();
+                        element.minHeight = element.preferredHeight = 112f;
+                        element.minWidth = 280f;
+                        element.preferredWidth = 440f;
+                        TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+                        label.gameObject.SetActive(true);
+                        label.GetComponent<LayoutElement>().flexibleWidth = 0;
+                    }
+            ConfigurarAccionesPresentacion(host.Find("PagePresentacionFamilia").GetComponent<PresentacionFamiliaView>());
             var paths = new HashSet<string>();
             foreach (MonoBehaviour view in host.GetComponentsInChildren<MonoBehaviour>(true))
             {
@@ -84,6 +106,58 @@ namespace Assets.Scripts.Editor
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{BasePath}/{name}.png");
             if (sprite == null) throw new InvalidOperationException($"Falta el sprite {name}.");
             return sprite;
+        }
+
+        private static void SepararBotonAudio(Component view, string field, string texto)
+        {
+            Button button = (Button)new SerializedObject(view).FindProperty(field).objectReferenceValue;
+            Transform content = view.transform.Find("ScrollRect/Viewport/Content");
+            Transform card = content.Find(view is PresentacionFamiliaView ? "CardRaiz" :
+                view is ASRView ? "Referencia" : "EstimuloHost");
+            button.transform.SetParent(content, false);
+            button.transform.SetSiblingIndex(card.GetSiblingIndex() + 1);
+            if (view is SeleccionMultipleView) button.name = "BtnAudioPregunta";
+            TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+            label.gameObject.SetActive(true);
+            label.text = texto;
+            Image icon = button.transform.Find("Icono").GetComponent<Image>();
+            icon.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/Audio/icono_audio.png");
+            icon.preserveAspect = true;
+        }
+
+        private static void ConfigurarAccionesPresentacion(PresentacionFamiliaView view)
+        {
+            Transform content = view.transform.Find("ScrollRect/Viewport/Content");
+            Transform card = content.Find("CardRaiz");
+            LayoutElement cardElement = card.GetComponent<LayoutElement>();
+            cardElement.minHeight = cardElement.preferredHeight = -1f;
+            var cardLayout = card.GetComponent<VerticalLayoutGroup>();
+            cardLayout.padding = new RectOffset(24, 24, 24, 24);
+            cardLayout.spacing = 24;
+            Transform actions = content.Find("AccionesPresentacion");
+            if (actions == null) actions = Objeto("AccionesPresentacion", content).transform;
+            actions.SetSiblingIndex(card.GetSiblingIndex() + 1);
+            var layout = actions.GetComponent<HorizontalLayoutGroup>() ?? actions.gameObject.AddComponent<HorizontalLayoutGroup>();
+            layout.spacing = 16;
+            layout.childControlWidth = layout.childControlHeight = true;
+            layout.childForceExpandWidth = true;
+            layout.childForceExpandHeight = false;
+            layout.childAlignment = TextAnchor.MiddleCenter;
+            var serialized = new SerializedObject(view);
+            foreach (string field in new[] { "btnAudio", "btnPracticar" })
+            {
+                var button = (Button)serialized.FindProperty(field).objectReferenceValue;
+                button.transform.SetParent(actions, false);
+                button.transform.SetSiblingIndex(field == "btnAudio" ? 0 : 1);
+                var element = button.GetComponent<LayoutElement>();
+                element.minWidth = 0;
+                element.preferredWidth = 0;
+                element.flexibleWidth = 1;
+                element.minHeight = 112;
+                element.preferredHeight = -1;
+            }
+            Transform oldActions = card.Find("ContentBotones");
+            if (oldActions != null && oldActions.childCount == 0) oldActions.gameObject.SetActive(false);
         }
 
         private static void Panel(GameObject root, bool destacado, bool discontinuo = false)
@@ -208,7 +282,7 @@ namespace Assets.Scripts.Editor
                 horizontal.childAlignment = TextAnchor.MiddleCenter;
                 horizontal.childControlWidth = horizontal.childControlHeight = true;
                 horizontal.childForceExpandWidth = horizontal.childForceExpandHeight = false;
-                float height = name == "ficha_wordbank" ? 72 : name == "tarjeta_memoria" ? 140 : 104;
+                float height = name == "ficha_wordbank" ? 76 : name == "tarjeta_memoria" ? 164 : 128;
                 LayoutElement element = root.GetComponent<LayoutElement>();
                 element.minHeight = height;
                 element.preferredHeight = -1;
@@ -232,7 +306,9 @@ namespace Assets.Scripts.Editor
                     var selection = root.GetComponent<TarjetaSeleccionView>() ?? root.AddComponent<TarjetaSeleccionView>();
                     Asignar(selection, new Dictionary<string, UnityEngine.Object> {
                         ["fondo"] = root.GetComponent<Image>(), ["marco"] = frame, ["indicador"] = indicator,
-                        ["check"] = check, ["texto"] = text, ["circulo"] = Sprite("ui_circle"), ["aro"] = Sprite("ui_aro_circle") });
+                        ["check"] = check, ["texto"] = text, ["circulo"] = Sprite("ui_circle"), ["aro"] = Sprite("ui_aro_circle"),
+                        ["iconoCorrecto"] = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/Estados/icono_correcto.png"),
+                        ["iconoIncorrecto"] = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/Estados/icono_incorrecto.png") });
                     selection.MostrarSeleccion(false);
                 }
                 else
@@ -252,6 +328,14 @@ namespace Assets.Scripts.Editor
                     text.fontStyle = FontStyles.Normal;
                     text.alignment = TextAlignmentOptions.Center;
                     text.GetComponent<LayoutElement>().flexibleWidth = 0;
+                }
+                if (name == "item_emparejamiento")
+                {
+                    Image audio = Icono(root.transform, "IconoAudio",
+                        AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/Audio/icono_audio.png"), 56);
+                    IconoTema(audio, 56);
+                    audio.transform.SetAsFirstSibling();
+                    audio.gameObject.SetActive(false);
                 }
                 foreach (RectTransform rect in root.GetComponentsInChildren<RectTransform>(true))
                     rect.gameObject.layer = LayerMask.NameToLayer("UI");

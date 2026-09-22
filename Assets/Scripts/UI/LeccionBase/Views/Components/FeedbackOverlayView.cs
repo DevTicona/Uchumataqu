@@ -28,6 +28,21 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         [SerializeField] private Color colorCasi = new Color(0.85f, 0.68f, 0.20f, 0.95f);       // Amarillo cálido #D9AD33
         [SerializeField] private Color colorIncorrecto = new Color(0.82f, 0.25f, 0.25f, 0.95f);  // Rojo suave #D14040
 
+        private ThemedGraphicView.RolColor rolActivo;
+        private Color colorRespaldoActivo;
+        private bool tieneEstadoActivo;
+
+        private void OnEnable()
+        {
+            UIThemeController.OnThemeChanged += ActualizarPaletaActiva;
+            ActualizarPaletaActiva();
+        }
+
+        private void OnDisable()
+        {
+            UIThemeController.OnThemeChanged -= ActualizarPaletaActiva;
+        }
+
         public bool ValidarConfiguracion(out string error)
         {
             bool completa = fondoFeedback != null && imgEstado != null && txtTitulo != null &&
@@ -81,43 +96,89 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         private void ConfigurarVisual(ThemedGraphicView.RolColor rol, Color colorRespaldo,
             Sprite icono, string titulo, string detalle)
         {
-            if (fondoFeedback != null)
-            {
-                Color colorEstado = ObtenerColorEstado(rol, colorRespaldo);
-                fondoFeedback.color = Color.Lerp(Color.white, colorEstado, 0.30f);
-                if (fondoDetalle != null)
-                    fondoDetalle.color = new Color(colorEstado.r, colorEstado.g, colorEstado.b, 80f / 255f);
-            }
+            rolActivo = rol;
+            colorRespaldoActivo = colorRespaldo;
+            tieneEstadoActivo = true;
+
             if (imgEstado != null)
             {
                 imgEstado.sprite = icono;
-                imgEstado.color = ObtenerColorEstado(rol, colorRespaldo);
                 imgEstado.gameObject.SetActive(icono != null);
             }
-            Color colorTexto = ObtenerColorEstado(rol, colorRespaldo);
             if (txtTitulo != null)
             {
                 txtTitulo.text = titulo;
-                AplicarColorTexto(txtTitulo, colorTexto);
             }
             if (txtMensajeDetalle != null)
             {
                 txtMensajeDetalle.text = detalle;
-                AplicarColorTexto(txtMensajeDetalle, fondoDetalle != null && fondoDetalle.gameObject.activeInHierarchy
-                    ? UIThemeController.Theme != null ? UIThemeController.Theme.colorPrimario : colorTexto
-                    : colorTexto);
             }
+
+            ActualizarPaletaActiva();
         }
 
-        private static void AplicarColorTexto(TMP_Text texto, Color color)
+        private void ActualizarPaletaActiva()
         {
-            texto.color = color;
+            if (!tieneEstadoActivo) return;
+
+            Color colorEstado = ObtenerColorEstado(rolActivo, colorRespaldoActivo);
+            if (fondoFeedback != null)
+                fondoFeedback.color = Color.Lerp(Color.white, colorEstado, 0.30f);
+            if (fondoDetalle != null)
+                fondoDetalle.color = new Color(colorEstado.r, colorEstado.g, colorEstado.b, 80f / 255f);
+
+            AplicarColorEstado(imgEstado, rolActivo, colorEstado);
+            AplicarColorTitulo(txtTitulo, rolActivo, colorEstado);
+            AplicarColorDetalle(txtMensajeDetalle);
+        }
+
+        private static void AplicarColorEstado(Image imagen, ThemedGraphicView.RolColor rol, Color colorRespaldo)
+        {
+            if (imagen == null) return;
+
+            imagen.color = colorRespaldo;
+            ThemedGraphicView themed = imagen.GetComponent<ThemedGraphicView>();
+            if (themed != null) themed.Rol = rol;
+        }
+
+        private static void AplicarColorTitulo(TMP_Text texto, ThemedGraphicView.RolColor rol, Color colorRespaldo)
+        {
+            if (texto == null) return;
+
+            texto.color = colorRespaldo;
             ThemedTextView themed = texto.GetComponent<ThemedTextView>();
             if (themed == null) return;
 
-            themed.usarColorPersonalizado = true;
-            themed.colorPersonalizado = color;
+            themed.usarColorPersonalizado = false;
+            themed.tipoColor = ObtenerTipoColorTitulo(rol);
             themed.AplicarTema();
+        }
+
+        private static void AplicarColorDetalle(TMP_Text texto)
+        {
+            if (texto == null) return;
+
+            UIThemeModel theme = UIThemeController.Theme;
+            if (theme != null) texto.color = theme.colorTextoPrimario;
+
+            ThemedTextView themed = texto.GetComponent<ThemedTextView>();
+            if (themed == null) return;
+
+            themed.usarColorPersonalizado = false;
+            themed.tipoColor = ThemedTextView.ColorTexto.Primario;
+            themed.AplicarTema();
+        }
+
+        private static ThemedTextView.ColorTexto ObtenerTipoColorTitulo(ThemedGraphicView.RolColor rol)
+        {
+            switch (rol)
+            {
+                case ThemedGraphicView.RolColor.Exito: return ThemedTextView.ColorTexto.Exito;
+                case ThemedGraphicView.RolColor.Advertencia: return ThemedTextView.ColorTexto.Advertencia;
+                case ThemedGraphicView.RolColor.Error: return ThemedTextView.ColorTexto.Error;
+                case ThemedGraphicView.RolColor.Informacion: return ThemedTextView.ColorTexto.Informacion;
+                default: return ThemedTextView.ColorTexto.Primario;
+            }
         }
 
         private static Color ObtenerColorEstado(ThemedGraphicView.RolColor rol, Color respaldo)

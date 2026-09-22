@@ -16,6 +16,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         [SerializeField] private TMP_Text texto;
         [SerializeField] private Sprite circulo;
         [SerializeField] private Sprite aro;
+        [SerializeField] private Sprite iconoCorrecto;
+        [SerializeField] private Sprite iconoIncorrecto;
 
         private bool _seleccionada;
         private bool? _resultado;
@@ -46,17 +48,20 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             UIThemeModel theme = UIThemeController.Theme;
             if (theme == null || fondo == null || marco == null || indicador == null || check == null || texto == null) return;
             bool marcada = _seleccionada || _resultado.HasValue;
-            Color color = _resultado == false ? theme.colorError : theme.colorExito;
+            Color color = _resultado.HasValue ? (_resultado.Value ? theme.colorExito : theme.colorError) : theme.colorPrimario;
             fondo.color = marcada ? Color.Lerp(theme.colorSuperficie, color, 0.18f) : theme.colorSuperficie;
             marco.color = indicador.color = marcada ? color : theme.colorBorde;
             indicador.sprite = marcada ? circulo : aro;
             check.gameObject.SetActive(marcada);
+            Sprite icono = _resultado == false ? iconoIncorrecto : iconoCorrecto;
+            if (icono != null) check.sprite = icono;
             check.color = theme.colorTextoSobreColor;
             var themed = texto.GetComponent<ThemedTextView>();
             if (themed != null)
             {
                 themed.tipoColor = !marcada ? ThemedTextView.ColorTexto.Primario :
-                    _resultado == false ? ThemedTextView.ColorTexto.Error : ThemedTextView.ColorTexto.Exito;
+                    _resultado == false ? ThemedTextView.ColorTexto.Error :
+                    _resultado == true ? ThemedTextView.ColorTexto.Exito : ThemedTextView.ColorTexto.AcentoPrimario;
                 themed.AplicarTema();
             }
             texto.fontStyle = marcada ? FontStyles.Bold : FontStyles.Normal;

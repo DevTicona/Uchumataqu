@@ -630,7 +630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 104
+  m_MinHeight: 128
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
@@ -655,3 +655,5 @@ MonoBehaviour:
   texto: {fileID: 6606874732706100423}
   circulo: {fileID: 21300000, guid: 198ed81974ff2bf4b91a7c270cc9b0b0, type: 3}
   aro: {fileID: 21300000, guid: d2e82bbc0376ba44ea14ea8e19250ae1, type: 3}
+  iconoCorrecto: {fileID: 21300000, guid: 438dd8f213bc62848aae2b960cffd585, type: 3}
+  iconoIncorrecto: {fileID: 21300000, guid: a0e36b6a4c0a4184891ae360a534efa5, type: 3}

@@ -16,6 +16,12 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private void OnEnable() => SolicitarReconstruccion();
 
+        private void OnDisable()
+        {
+            if (_reconstruccionPendiente != null) StopCoroutine(_reconstruccionPendiente);
+            _reconstruccionPendiente = null;
+        }
+
         private void LateUpdate()
         {
             Vector2 tamano = ((RectTransform)transform).rect.size;
@@ -28,7 +34,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         {
             AjustarAlturaAlViewport();
             ReconstruirAhora();
-            if (!Application.isPlaying) return;
+            if (!Application.isPlaying || !isActiveAndEnabled) return;
 
             if (_reconstruccionPendiente != null)
                 StopCoroutine(_reconstruccionPendiente);

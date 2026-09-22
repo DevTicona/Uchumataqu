@@ -30,6 +30,10 @@ namespace Assets.Scripts.UI.LeccionBase
         private readonly IReconocedorVoz _reconocedorVoz = new SherpaOnnxReconocedorVoz();
         private readonly GrabacionVozService _grabacionVoz = new GrabacionVozService();
         private string _objetivoGrabacionPresentacion;
+        private bool _procesandoVoz;
+        private AudioClip _clipPronunciacion;
+        private PasoLeccionModel _refuerzoPendiente;
+        private bool _renderizandoRefuerzo;
 
         private async void Start()
         {
@@ -72,7 +76,6 @@ namespace Assets.Scripts.UI.LeccionBase
         {
             DesuscribirActividadActual();
             if (backHandler != null) backHandler.Configurar(null);
-            _grabacionVoz.Dispose();
             (_reconocedorVoz as IDisposable)?.Dispose();
             if (view == null) return;
             view.OnAtrasClick -= SolicitarSalida;
@@ -85,6 +88,13 @@ namespace Assets.Scripts.UI.LeccionBase
 
         private void DesuscribirActividadActual()
         {
+            StopAllCoroutines();
+            _grabacionVoz.Dispose();
+            if (_clipPronunciacion != null) Destroy(_clipPronunciacion);
+            _clipPronunciacion = null;
+            _procesandoVoz = false;
+            _objetivoGrabacionPresentacion = null;
+            if (view != null) view.EstablecerInteraccionDuranteGrabacion(false);
             foreach (Action unsubscribe in _activityUnsubscribe) unsubscribe();
             _activityUnsubscribe.Clear();
         }
@@ -108,7 +118,6 @@ namespace Assets.Scripts.UI.LeccionBase
 
         private void RenderizarPasoActual()
         {
-            DesuscribirActividadActual();
             PasoLeccionModel paso = _gestorLeccion.PasoActual;
             if (paso == null)
             {
@@ -116,11 +125,20 @@ namespace Assets.Scripts.UI.LeccionBase
                 return;
             }
 
+            _refuerzoPendiente = null;
+            RenderizarPaso(paso, false);
+        }
+
+        private void RenderizarPaso(PasoLeccionModel paso, bool esRefuerzo)
+        {
+            DesuscribirActividadActual();
+            _renderizandoRefuerzo = esRefuerzo;
+
             _esperandoFeedback = false;
             _ejecutarAccionPrincipal = null;
             _puedeEjecutarAccionPrincipal = null;
             view.PresentarAccionPrincipal(LeccionBaseView.AccionPrincipal.Continuar, false, false);
-            view.MostrarOmitirASR(false);
+            view.MostrarSeccion(esRefuerzo ? "refuerzo" : paso.seccion);
             view.ActualizarProgreso(_gestorLeccion.ProgresoNormalizado);
             view.OcultarFeedback();
 
@@ -136,33 +154,106 @@ namespace Assets.Scripts.UI.LeccionBase
             else if (paso.tipo == TipoPasoLeccion.MemoriaUchEspanol) RenderizarMemoria(paso);
             else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo)) RenderizarEmparejamiento(paso);
             else if (TipoPasoLeccion.EsWordBank(paso.tipo)) RenderizarWordBank(paso);
-            else if (paso.tipo == TipoPasoLeccion.EscuchaYRepiteAsr) RenderizarASR(paso);
+            else if (TipoPasoLeccion.EsEscritura(paso.tipo)) RenderizarEscritura(paso);
+            else if (TipoPasoLeccion.EsPracticaVoz(paso.tipo)) RenderizarASR(paso);
         }
 
         private void RenderizarASR(PasoLeccionModel paso)
         {
             DesuscribirActividadActual();
             var actividad = view.InstanciarASR();
-            PalabraModel palabra = CorpusRepository.ObtenerPalabra(paso.objetivo_id);
-            ConfigurarPracticaVoz(actividad, palabra, AvanzarPaso);
-            view.ConfigurarTextoOmitirASR("CONTINUAR SIN GRABAR");
+            if (!ValidarActividad(actividad, paso.tipo)) return;
+            string esperado;
+            Action reproducir;
+            if (paso.tipo == TipoPasoLeccion.EscuchaYRepiteOracionAsr)
+            {
+                OracionModel oracion = CorpusRepository.ObtenerOracion(paso.oracion_id);
+                if (oracion == null)
+                {
+                    DetenerPorPasoInvalido(paso, new InvalidOperationException($"No existe la oración '{paso.oracion_id}'."));
+                    return;
+                }
+                esperado = oracion.uch;
+                reproducir = () => ReproducirOracion(oracion.id);
+            }
+            else
+            {
+                PalabraModel palabra = CorpusRepository.ObtenerPalabra(paso.objetivo_id);
+                if (palabra == null)
+                {
+                    DetenerPorPasoInvalido(paso, new InvalidOperationException($"No existe la palabra '{paso.objetivo_id}'."));
+                    return;
+                }
+                esperado = palabra.uch;
+                reproducir = () => ReproducirPalabra(palabra.id);
+            }
+            ConfigurarPracticaVoz(actividad, esperado, reproducir,
+                paso.tipo == TipoPasoLeccion.EscuchaYRepiteOracionAsr);
         }
 
-        private void ConfigurarPracticaVoz(ASRView actividad, PalabraModel palabra, Action alOmitir)
+        private void ConfigurarPracticaVoz(ASRView actividad, string esperado, Action reproducir, bool esOracion)
         {
             bool microfonoDetectado = _grabacionVoz.TieneDispositivo;
             bool disponible = microfonoDetectado && _reconocedorVoz.EstaDisponible();
-            actividad.Configurar(palabra?.uch ?? string.Empty, disponible);
-            Action handlerOnAudioClicked = () => ReproducirPalabra(palabra?.id);
+            actividad.Configurar(esperado, disponible, esOracion);
+            Action handlerOnAudioClicked = reproducir;
             actividad.OnAudioClicked += handlerOnAudioClicked;
             _activityUnsubscribe.Add(() => actividad.OnAudioClicked -= handlerOnAudioClicked);
-            Action handlerOnMicrofonoClicked = () => AlternarGrabacion(actividad, palabra?.uch ?? string.Empty);
-            actividad.OnMicrofonoClicked += handlerOnMicrofonoClicked;
-            _activityUnsubscribe.Add(() => actividad.OnMicrofonoClicked -= handlerOnMicrofonoClicked);
-            Action handlerOnOmitirClicked = alOmitir;
-            actividad.OnOmitirClicked += handlerOnOmitirClicked;
-            _activityUnsubscribe.Add(() => actividad.OnOmitirClicked -= handlerOnOmitirClicked);
-            view.MostrarOmitirASR(true);
+            Action handlerOnPracticarClicked = () => IniciarGrabacionASR(actividad, esperado);
+            actividad.OnPracticarClicked += handlerOnPracticarClicked;
+            _activityUnsubscribe.Add(() => actividad.OnPracticarClicked -= handlerOnPracticarClicked);
+            ConfigurarAccionPrincipal(AccionAvance, AvanzarPaso,
+                () => !_procesandoVoz && !_grabacionVoz.EstaGrabando);
+
+            if (!disponible)
+                view.MostrarFeedback("informacion",
+                    "La práctica de voz no está disponible en este dispositivo. Puedes escuchar y continuar.");
+        }
+
+        private void RenderizarEscritura(PasoLeccionModel paso)
+        {
+            DesuscribirActividadActual();
+            EscrituraView actividad = view.InstanciarEscritura();
+            if (!ValidarActividad(actividad, paso.tipo)) return;
+
+            ActividadEscrituraModel datos;
+            try
+            {
+                datos = GestorActividadLeccion.CrearEscritura(paso);
+            }
+            catch (Exception ex)
+            {
+                DetenerPorPasoInvalido(paso, ex);
+                return;
+            }
+
+            actividad.Configurar(datos.Consigna, datos.UsaAudio);
+            Action handlerOnAudioClicked = () =>
+            {
+                if (!string.IsNullOrEmpty(datos.AudioOracionId)) ReproducirOracion(datos.AudioOracionId);
+                else ReproducirPalabra(datos.AudioPalabraId);
+            };
+            actividad.OnAudioClicked += handlerOnAudioClicked;
+            _activityUnsubscribe.Add(() => actividad.OnAudioClicked -= handlerOnAudioClicked);
+            Action<string> handlerOnRespuestaEnviada = respuesta =>
+            {
+                ResultadoEvaluacion resultado = MotorEvaluacion.EvaluarTexto(datos.RespuestaEsperada, respuesta, "texto");
+                _refuerzoPendiente = resultado.aprobado ? null : paso.refuerzo_al_fallar?.CrearPaso();
+                string detalle = resultado.aprobado
+                    ? "¡Escritura correcta!"
+                    : $"Respuesta esperada: {datos.RespuestaEsperada}";
+                RegistrarYMostrarFeedback(resultado, detalle);
+            };
+            actividad.OnRespuestaEnviada += handlerOnRespuestaEnviada;
+            _activityUnsubscribe.Add(() => actividad.OnRespuestaEnviada -= handlerOnRespuestaEnviada);
+            Action handlerOnRespuestaCambiada = ActualizarAccionPrincipal;
+            actividad.OnRespuestaCambiada += handlerOnRespuestaCambiada;
+            _activityUnsubscribe.Add(() => actividad.OnRespuestaCambiada -= handlerOnRespuestaCambiada);
+            ConfigurarAccionPrincipal(LeccionBaseView.AccionPrincipal.Comprobar,
+                actividad.ConfirmarRespuesta, () => actividad.PuedeEnviarRespuesta);
+
+            if (datos.UsaAudio && ConfiguracionRepository.Obtener().audio_automatico)
+                handlerOnAudioClicked();
         }
         private void RenderizarPresentacion(PasoLeccionModel paso)
         {
@@ -195,6 +286,7 @@ namespace Assets.Scripts.UI.LeccionBase
 
         private void AlternarGrabacionPresentacion(PresentacionFamiliaView actividad, string esperado)
         {
+            if (_procesandoVoz) return;
             if (_grabacionVoz.EstaGrabando)
             {
                 FinalizarGrabacionPresentacion(actividad);
@@ -230,27 +322,35 @@ namespace Assets.Scripts.UI.LeccionBase
             if (!_grabacionVoz.EstaGrabando) return;
 
             AudioClip clip = _grabacionVoz.Finalizar();
-            actividad.MostrarEstadoGrabacion(false);
-            view.EstablecerInteraccionDuranteGrabacion(false);
-            ConfigurarAccionPrincipal(AccionAvance, AvanzarPaso, () => true);
             if (clip == null)
             {
+                actividad.MostrarEstadoGrabacion(false);
+                view.EstablecerInteraccionDuranteGrabacion(false);
+                ConfigurarAccionPrincipal(AccionAvance, AvanzarPaso, () => true);
                 view.MostrarFeedback("informacion", "No se capturó audio. Inténtalo otra vez.");
                 return;
             }
 
-            StartCoroutine(ProcesarPronunciacionPresentacion(_objetivoGrabacionPresentacion, clip));
+            _procesandoVoz = true;
+            _clipPronunciacion = clip;
+            ConfigurarAccionPrincipal(AccionAvance, AvanzarPaso, () => !_procesandoVoz);
+            StartCoroutine(ProcesarPronunciacionPresentacion(actividad, _objetivoGrabacionPresentacion, clip));
             _objetivoGrabacionPresentacion = null;
         }
 
-        private IEnumerator ProcesarPronunciacionPresentacion(string esperado, AudioClip clip)
+        private IEnumerator ProcesarPronunciacionPresentacion(PresentacionFamiliaView actividad, string esperado, AudioClip clip)
         {
             view.MostrarFeedback("informacion", "Analizando pronunciación...");
             yield return null;
 
             ResultadoEvaluacion resultado = EvaluadorVoz.EvaluarPronunciacion(esperado, clip, _reconocedorVoz);
             Destroy(clip);
+            _clipPronunciacion = null;
+            _procesandoVoz = false;
             if (this == null || view == null) yield break;
+            actividad.MostrarEstadoGrabacion(false);
+            view.EstablecerInteraccionDuranteGrabacion(false);
+            ActualizarAccionPrincipal();
 
             if (!resultado.evaluado)
             {
@@ -269,48 +369,82 @@ namespace Assets.Scripts.UI.LeccionBase
                 resultado.porcentajeSimilitud, resultado.textoEsperado);
         }
 
-        private void AlternarGrabacion(ASRView actividad, string esperado)
+        private void IniciarGrabacionASR(ASRView actividad, string esperado)
         {
-            if (_grabacionVoz.EstaGrabando)
-            {
-                AudioClip clip = _grabacionVoz.Finalizar();
-                if (clip == null)
-                {
-                    actividad.MostrarEstado(ASRView.Estado.Error, "No se capturo audio. Intentalo otra vez.");
-                    return;
-                }
-                StartCoroutine(ProcesarPronunciacion(actividad, esperado, clip));
-                return;
-            }
+            if (_procesandoVoz || _grabacionVoz.EstaGrabando) return;
 
             if (!PermisoMicrofonoService.TienePermiso())
             {
                 PermisoMicrofonoService.SolicitarPermiso();
-                actividad.MostrarEstado(ASRView.Estado.Error, "Autoriza el microfono y vuelve a tocar PRACTICAR.");
+                actividad.MostrarEstado(ASRView.Estado.Error);
+                view.MostrarFeedback("informacion", "Autoriza el micrófono y vuelve a tocar PRACTICAR.");
                 return;
             }
 
             bool grabando = _grabacionVoz.Iniciar();
-            actividad.MostrarEstado(grabando ? ASRView.Estado.Grabando : ASRView.Estado.Error,
-                grabando ? "Pronuncia la palabra y toca DETENER." : "No se pudo iniciar el microfono.");
+            if (!grabando)
+            {
+                actividad.MostrarEstado(ASRView.Estado.Error);
+                view.MostrarFeedback("informacion", "No se pudo iniciar el micrófono.");
+                return;
+            }
+
+            actividad.MostrarEstado(ASRView.Estado.Grabando);
+            view.EstablecerInteraccionDuranteGrabacion(true);
+            ConfigurarAccionPrincipal(AccionAvance,
+                () => FinalizarGrabacionASR(actividad, esperado),
+                () => _grabacionVoz.EstaGrabando);
+            view.MostrarDetenerGrabacion();
+            view.MostrarFeedback("informacion", "Pronuncia “" + esperado + "” y toca DETENER al terminar.");
         }
 
-        private IEnumerator ProcesarPronunciacion(ASRView actividad, string esperado, AudioClip clip)
+        private void FinalizarGrabacionASR(ASRView actividad, string esperado)
         {
-            actividad.MostrarEstado(ASRView.Estado.Procesando, "Analizando pronunciacion...");
+            if (!_grabacionVoz.EstaGrabando) return;
+
+            AudioClip clip = _grabacionVoz.Finalizar();
+            if (clip == null)
+            {
+                actividad.MostrarEstado(ASRView.Estado.Error);
+                view.EstablecerInteraccionDuranteGrabacion(false);
+                ConfigurarAccionPrincipal(AccionAvance, AvanzarPaso, () => true);
+                view.MostrarFeedback("informacion", "No se capturó audio. Inténtalo otra vez.");
+                return;
+            }
+
+            _procesandoVoz = true;
+            _clipPronunciacion = clip;
+            actividad.MostrarEstado(ASRView.Estado.Procesando);
+            ConfigurarAccionPrincipal(AccionAvance, AvanzarPaso, () => !_procesandoVoz);
+            view.MostrarFeedback("informacion", "Analizando pronunciación...");
+            StartCoroutine(ProcesarPronunciacionASR(actividad, esperado, clip));
+        }
+
+        private IEnumerator ProcesarPronunciacionASR(ASRView actividad, string esperado, AudioClip clip)
+        {
             yield return null;
             ResultadoEvaluacion resultado = EvaluadorVoz.EvaluarPronunciacion(esperado, clip, _reconocedorVoz);
             Destroy(clip);
+            _clipPronunciacion = null;
+            _procesandoVoz = false;
+            if (view != null) view.EstablecerInteraccionDuranteGrabacion(false);
             if (actividad == null) yield break;
+            ConfigurarAccionPrincipal(AccionAvance, AvanzarPaso, () => true);
 
             if (!resultado.evaluado)
-                actividad.MostrarEstado(ASRView.Estado.Error, "No se pudo evaluar. Puedes volver a intentarlo.");
+            {
+                actividad.MostrarEstado(ASRView.Estado.Error);
+                view.MostrarFeedback("informacion", "No se pudo evaluar. Puedes volver a intentarlo.");
+            }
             else
             {
-                string mensaje = resultado.colorSemaforo == "verde" ? "Muy buena pronunciacion." :
-                    resultado.colorSemaforo == "amarillo" ? "Vas bien. Escucha e intentalo otra vez." :
-                    "Escucha con atencion e intentalo otra vez.";
-                actividad.MostrarResultado(resultado.textoIngresado, resultado.porcentajeSimilitud, mensaje);
+                actividad.MostrarEstado(ASRView.Estado.Resultado);
+                string mensaje = "Dijiste: “" + resultado.textoIngresado + "”. ";
+                mensaje += resultado.colorSemaforo == "verde" ? "Muy buena pronunciación." :
+                    resultado.colorSemaforo == "amarillo" ? "Vas bien. Escucha e inténtalo otra vez." :
+                    "Escucha con atención e inténtalo otra vez.";
+                view.MostrarFeedback(resultado.colorSemaforo, mensaje,
+                    resultado.porcentajeSimilitud, resultado.textoEsperado);
             }
         }
 
@@ -345,8 +479,8 @@ namespace Assets.Scripts.UI.LeccionBase
             Action<string> handlerOnRespuestaEnviada = respuesta =>
             {
                 ResultadoEvaluacion resultado = MotorEvaluacion.EvaluarSeleccionExacta(datos.RespuestaCorrecta, respuesta);
-                actividad.MostrarResultado(resultado.aprobado);
-                RegistrarYMostrarFeedback(resultado, resultado.aprobado ? "¡Correcto!" : "Revisa la opción correcta");
+                actividad.MostrarResultado(resultado.aprobado, datos.RespuestaCorrecta);
+                RegistrarYMostrarFeedback(resultado, resultado.aprobado ? "¡Correcto!" : "Respuesta correcta: " + datos.RespuestaCorrecta);
             };
             actividad.OnRespuestaEnviada += handlerOnRespuestaEnviada;
             _activityUnsubscribe.Add(() => actividad.OnRespuestaEnviada -= handlerOnRespuestaEnviada);
@@ -356,7 +490,8 @@ namespace Assets.Scripts.UI.LeccionBase
             ConfigurarAccionPrincipal(LeccionBaseView.AccionPrincipal.Comprobar,
                 actividad.ConfirmarRespuesta, () => actividad.PuedeEnviarRespuesta);
 
-            if (datos.Tipo.StartsWith("audio_", StringComparison.Ordinal))
+            if (datos.Tipo.StartsWith("audio_", StringComparison.Ordinal) &&
+                ConfiguracionRepository.Obtener().audio_automatico)
             {
                 if (!string.IsNullOrEmpty(datos.AudioOracionId)) ReproducirOracion(datos.AudioOracionId);
                 else if (!string.IsNullOrEmpty(datos.AudioPalabraId)) ReproducirPalabra(datos.AudioPalabraId);
@@ -431,7 +566,7 @@ namespace Assets.Scripts.UI.LeccionBase
                 ResultadoEvaluacion resultado = ValidadorOrden.EvaluarOrdenOracion(datos.RespuestaEsperada, respuesta);
                 RegistrarYMostrarFeedback(
                     resultado,
-                    resultado.aprobado ? "¡Oración ordenada correctamente!" : "El orden no es correcto.");
+                    resultado.aprobado ? "¡Oración ordenada correctamente!" : "Orden correcto: " + datos.RespuestaEsperada);
             };
             actividad.OnTokensComprobados += handlerOnTokensComprobados;
             _activityUnsubscribe.Add(() => actividad.OnTokensComprobados -= handlerOnTokensComprobados);
@@ -484,7 +619,8 @@ namespace Assets.Scripts.UI.LeccionBase
         private void RegistrarYMostrarFeedback(ResultadoEvaluacion resultado, string detalle)
         {
             if (_esperandoFeedback) return;
-            _gestorLeccion.RegistrarResultadoPaso(resultado.aprobado);
+            if (!_renderizandoRefuerzo)
+                _gestorLeccion.RegistrarResultadoPaso(resultado.aprobado);
             _esperandoFeedback = true;
             ConfigurarAccionPrincipal(AccionAvance, AvanzarTrasFeedback, () => _esperandoFeedback);
             view.MostrarFeedback(resultado.colorSemaforo, detalle, resultado.porcentajeSimilitud, resultado.textoEsperado);
@@ -494,11 +630,23 @@ namespace Assets.Scripts.UI.LeccionBase
         {
             if (!_esperandoFeedback) return;
             _esperandoFeedback = false;
+
+            if (_refuerzoPendiente != null)
+            {
+                PasoLeccionModel refuerzo = _refuerzoPendiente;
+                _refuerzoPendiente = null;
+                RenderizarPaso(refuerzo, true);
+                return;
+            }
+
+            if (_renderizandoRefuerzo)
+                _renderizandoRefuerzo = false;
             AvanzarPaso();
         }
 
         private void AvanzarPaso()
         {
+            if (_grabacionVoz.EstaGrabando || _procesandoVoz) return;
             if (_gestorLeccion.AvanzarSiguientePaso()) RenderizarPasoActual();
             else FinalizarLeccion();
         }
@@ -508,7 +656,6 @@ namespace Assets.Scripts.UI.LeccionBase
             _ejecutarAccionPrincipal = null;
             _puedeEjecutarAccionPrincipal = null;
             view.PresentarAccionPrincipal(LeccionBaseView.AccionPrincipal.Finalizar, false, false);
-            view.MostrarOmitirASR(false);
             if (!_gestorLeccion.FinalizarYGuardar())
             {
                 ConfigurarAccionPrincipal(LeccionBaseView.AccionPrincipal.Finalizar, FinalizarLeccion, () => true);
@@ -519,6 +666,7 @@ namespace Assets.Scripts.UI.LeccionBase
             int estrellas = precision >= MotorEvaluacion.UMBRAL_VERDE ? 3
                 : precision >= MotorEvaluacion.UMBRAL_AMARILLO ? 2 : 1;
             view.MostrarResultado(_gestorLeccion.Aciertos, total, precision, estrellas);
+            view.ActualizarProgreso(1f);
         }
 
         private LeccionBaseView.AccionPrincipal AccionAvance =>
@@ -553,7 +701,11 @@ namespace Assets.Scripts.UI.LeccionBase
             if (!string.IsNullOrEmpty(id)) AudioService.Instance.ReproducirOracion(id);
         }
 
-        private void SolicitarSalida() => view.MostrarConfirmacionSalida(true);
+        private void SolicitarSalida()
+        {
+            if (_grabacionVoz.EstaGrabando || _procesandoVoz) return;
+            view.MostrarConfirmacionSalida(true);
+        }
 
         private void CancelarSalida() => view.MostrarConfirmacionSalida(false);
 

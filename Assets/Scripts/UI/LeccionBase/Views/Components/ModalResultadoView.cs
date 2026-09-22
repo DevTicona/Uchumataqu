@@ -64,7 +64,7 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         public void Mostrar(int aciertos, int totalPasos, double precision, int estrellas)
         {
             if (txtTitulo != null)
-                txtTitulo.text = "✓ ¡Lección Completada!";
+                txtTitulo.text = "¡Lección Completada!";
 
             if (txtAciertos != null)
                 txtAciertos.text = $"{aciertos} / {totalPasos} aciertos";

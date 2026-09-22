@@ -13,9 +13,23 @@ namespace Assets.Scripts.Editor
         private const float IconoEncabezado = 96;
         private const float IconoBoton = 70;
 
+        public static void AplicarEscritura(EscrituraView escritura)
+        {
+            if (escritura != null) ConfigurarPage(escritura.gameObject);
+        }
+
+        public static void AplicarASR(ASRView asr)
+        {
+            if (asr != null) ConfigurarPage(asr.gameObject);
+        }
+
         private static void ConfigurarPage(GameObject page)
         {
             Transform content = page.transform.Find("ScrollRect/Viewport/Content");
+            var contentLayout = content.GetComponent<VerticalLayoutGroup>();
+            contentLayout.childControlHeight = true;
+            contentLayout.childForceExpandHeight = false;
+            contentLayout.spacing = EspaciadoVertical(page);
             foreach (TMP_Text text in page.GetComponentsInChildren<TMP_Text>(true))
             {
                 var themed = text.GetComponent<ThemedTextView>();
@@ -44,6 +58,11 @@ namespace Assets.Scripts.Editor
 
             if (page.TryGetComponent(out PresentacionFamiliaView presentacion))
             {
+                foreach (HorizontalOrVerticalLayoutGroup layout in content.GetComponentsInChildren<HorizontalOrVerticalLayoutGroup>(true))
+                {
+                    layout.childControlHeight = true;
+                    layout.childForceExpandHeight = false;
+                }
                 CampoTexto(presentacion, "txtRaizUch", ThemedTextView.TipoTexto.TituloGrande, ThemedTextView.ColorTexto.Primario, FontStyles.Bold);
                 CampoTexto(presentacion, "txtSignificadoEs", ThemedTextView.TipoTexto.Titulo, ThemedTextView.ColorTexto.Primario);
                 CampoTexto(presentacion, "txtTituloFormas", ThemedTextView.TipoTexto.Subtitulo, ThemedTextView.ColorTexto.Secundario);
@@ -74,15 +93,27 @@ namespace Assets.Scripts.Editor
                 TextoTema(content.Find("TxtBanco").GetComponent<TMP_Text>(),
                     ThemedTextView.TipoTexto.Subtitulo, ThemedTextView.ColorTexto.Secundario);
             }
+            else if (page.TryGetComponent(out EscrituraView escritura))
+            {
+                CampoTexto(escritura, "txtInstruccion", ThemedTextView.TipoTexto.Titulo,
+                    ThemedTextView.ColorTexto.Primario);
+            }
             else if (page.TryGetComponent(out ASRView asr))
             {
                 CampoTexto(asr, "txtObjetivo", ThemedTextView.TipoTexto.TituloGrande, ThemedTextView.ColorTexto.Primario, FontStyles.Bold);
-                CampoTexto(asr, "txtEstado", ThemedTextView.TipoTexto.Normal, ThemedTextView.ColorTexto.Secundario);
-                CampoTexto(asr, "txtTranscripcion", ThemedTextView.TipoTexto.Subtitulo, ThemedTextView.ColorTexto.Primario);
-                CampoTexto(asr, "txtPorcentaje", ThemedTextView.TipoTexto.Subtitulo, ThemedTextView.ColorTexto.Exito);
-                TextoTema(content.Find("PanelMicrofono/IndicadorGrabacion").GetComponent<TMP_Text>(),
+                TextoTema(content.Find("Referencia/EtiquetaUch")?.GetComponent<TMP_Text>(),
                     ThemedTextView.TipoTexto.Pequeño, ThemedTextView.ColorTexto.AcentoPrimario);
             }
+        }
+
+        private static float EspaciadoVertical(GameObject page)
+        {
+            if (page.TryGetComponent<SeleccionMultipleView>(out _)) return 28f;
+            if (page.TryGetComponent<WordBankView>(out _)) return 28f;
+            if (page.TryGetComponent<EscrituraView>(out _)) return 30f;
+            if (page.TryGetComponent<ASRView>(out _)) return 28f;
+            if (page.TryGetComponent<EmparejamientoView>(out _)) return 26f;
+            return 24f;
         }
 
         private static void ConfigurarFilaForma(GameObject root)

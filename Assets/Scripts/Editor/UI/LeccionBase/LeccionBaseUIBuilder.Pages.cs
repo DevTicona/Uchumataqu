@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Core.UI.Components;
+using Assets.Scripts.Core.UI.Theme;
 using Assets.Scripts.UI.LeccionBase;
 using Assets.Scripts.UI.LeccionBase.Actividades;
 using Assets.Scripts.UI.LeccionBase.Componentes;
@@ -58,8 +59,7 @@ namespace Assets.Scripts.Editor
             GameObject footer = CrearObjetoUI("FooterLeccion", safe);
             AnclarInferior((RectTransform)footer.transform, 0, 0, 0, 340);
             Button continuar = CrearBoton(footer.transform, "BtnPrincipal", "CONTINUAR", false, 88, "Lecciones/icono_continuar.png");
-            Button omitir = CrearBoton(footer.transform, "OmitirASR", "CONTINUAR SIN GRABAR", true, 88);
-            var acciones = new[] { continuar.gameObject, omitir.gameObject };
+            var acciones = new[] { continuar.gameObject };
             foreach (GameObject accion in acciones)
             {
                 AnclarInferior((RectTransform)accion.transform, 28, 28, 24, 88);
@@ -131,22 +131,9 @@ namespace Assets.Scripts.Editor
                 ["btnAudioPrompt"] = aw, ["contenedorOrigen"] = origen.transform, ["contenedorDestino"] = destino.transform,
                 ["prefabFichaToken"] = ficha });
 
-            ASRView asr = CrearPage<ASRView>(host.transform, "PageASR", out Transform ca);
-            CrearEncabezadoActividad(ca, "TxtInstruccion", "Escucha y repite · opcional", "Lecciones/icono_pronunciacion.png");
-            GameObject objetivo = Bloque(ca, "Referencia", ThemedGraphicView.RolColor.Superficie);
-            TMP_Text ta = Texto(objetivo.transform, "TxtObjetivo", "Chhaq", 48, 110);
-            Button aa = CrearBoton(objetivo.transform, "BtnAudioReferencia", "ESCUCHAR", true, 88, "Lecciones/icono_escuchar.png");
-            GameObject micro = Bloque(ca, "PanelMicrofono", ThemedGraphicView.RolColor.SuperficieSuave);
-            Button bm = CrearBoton(micro.transform, "BtnMicrofono", "PRACTICAR", true, 110, "Lecciones/icono_pronunciacion.png");
-            TMP_Text estado = Texto(micro.transform, "TxtEstado", "Práctica de voz opcional", 26, 140);
-            TMP_Text indicador = Texto(micro.transform, "IndicadorGrabacion", "Grabando…", 24, 48);
-            GameObject pr = Bloque(ca, "PanelResultado", ThemedGraphicView.RolColor.SuperficieSuave);
-            TMP_Text transcripcion = Texto(pr.transform, "TxtTranscripcion", "", 28, 90);
-            TMP_Text porcentaje = Texto(pr.transform, "TxtPorcentaje", "", 28, 54);
-            AsignarReferencias(asr, new Dictionary<string, UnityEngine.Object> { ["txtObjetivo"] = ta, ["txtEstado"] = estado,
-                ["txtTranscripcion"] = transcripcion, ["txtPorcentaje"] = porcentaje, ["panelResultado"] = pr,
-                ["indicadorGrabacion"] = indicador.gameObject, ["btnAudioReferencia"] = aa, ["btnMicrofono"] = bm, ["btnOmitir"] = omitir });
-            indicador.gameObject.SetActive(false); pr.SetActive(false);
+            EscrituraView escritura = CrearPageEscritura(host.transform);
+
+            ASRView asr = CrearPageASR(host.transform);
 
             FeedbackOverlayView feedback = CrearContenidoFeedback(footer.transform);
             Estirar((RectTransform)feedback.transform);
@@ -159,7 +146,7 @@ namespace Assets.Scripts.Editor
             AsignarReferencias(view, new Dictionary<string, UnityEngine.Object> { ["actividadContainer"] = host.transform,
                 ["pagePresentacion"] = presentacion.gameObject, ["pageSeleccionMultiple"] = seleccion.gameObject,
                 ["pageEmparejamiento"] = pares.gameObject, ["pageMemoria"] = memoria.gameObject,
-                ["pageWordBank"] = banco.gameObject, ["pageASR"] = asr.gameObject,
+                ["pageWordBank"] = banco.gameObject, ["pageEscritura"] = escritura.gameObject, ["pageASR"] = asr.gameObject,
                 ["feedbackOverlay"] = feedback, ["modalResultado"] = resultado, ["panelConfirmacionSalida"] = salida,
                 ["btnSeguirAprendiendo"] = salida.transform.Find("CardConfirmacion/BtnSeguirAprendiendo").GetComponent<Button>(),
                 ["btnConfirmarSalida"] = salida.transform.Find("CardConfirmacion/BtnConfirmarSalida").GetComponent<Button>() });
@@ -169,8 +156,7 @@ namespace Assets.Scripts.Editor
                 ["iconoAccionPrincipal"] = continuar.transform.Find("Icono").GetComponent<Image>(),
                 ["iconoContinuar"] = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/Lecciones/icono_continuar.png"),
                 ["iconoComprobar"] = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/Lecciones/icono_comprobar.png"),
-                ["iconoFinalizar"] = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/Estados/icono_completado.png"),
-                ["btnOmitirASR"] = omitir });
+                ["iconoFinalizar"] = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Icons/Estados/icono_completado.png") });
             feedback.gameObject.SetActive(false); resultado.gameObject.SetActive(false); salida.SetActive(false);
             presentacion.gameObject.SetActive(true); continuar.gameObject.SetActive(true);
             foreach (RectTransform rect in safe.GetComponentsInChildren<RectTransform>(true))
@@ -178,6 +164,196 @@ namespace Assets.Scripts.Editor
             LeccionActivityStyleUpdater.Aplicar(scene);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
+        }
+
+        [MenuItem("Uchumataqu/UI/Actualizar LeccionBase para contrato v3")]
+        public static void ActualizarContratoV3()
+        {
+            if (EditorApplication.isPlaying)
+                throw new InvalidOperationException("Sal del modo Play para actualizar la escena.");
+
+            _regularFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(RegularFontPath);
+            _boldFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BoldFontPath) ?? _regularFont;
+            _theme = AssetDatabase.LoadAssetAtPath<UIThemeModel>(ThemePath);
+            if (_regularFont == null || _theme == null)
+                throw new InvalidOperationException("No se encontraron la fuente o el tema requeridos.");
+            UIThemeController.SetTheme(_theme);
+
+            Scene scene = SceneManager.GetSceneByPath(ScenePath);
+            bool opened = !scene.IsValid() || !scene.isLoaded;
+            if (opened) scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Additive);
+            try
+            {
+                Transform host = BuscarEnEscena(scene, "ActividadHost");
+                if (host == null) throw new InvalidOperationException("No se encontró ActividadHost.");
+                Transform anterior = host.Find("PageEscritura");
+                if (anterior != null) UnityEngine.Object.DestroyImmediate(anterior.gameObject);
+
+                EscrituraView escritura = CrearPageEscritura(host);
+                LeccionBaseView view = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<LeccionBaseView>(true)).Single();
+                AsignarReferencias(view, new Dictionary<string, UnityEngine.Object>
+                {
+                    ["pageEscritura"] = escritura.gameObject
+                });
+                escritura.gameObject.SetActive(false);
+                EditorSceneManager.MarkSceneDirty(scene);
+                EditorSceneManager.SaveScene(scene);
+                AssetDatabase.SaveAssets();
+                Debug.Log("[LeccionBaseUIBuilder] Contrato v3 aplicado a 03_LeccionBase.");
+            }
+            finally
+            {
+                if (opened) EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+
+        [MenuItem("Uchumataqu/UI/Actualizar PageASR con footer")]
+        public static void ActualizarPageASRConFooter()
+        {
+            if (EditorApplication.isPlaying)
+                throw new InvalidOperationException("Sal del modo Play para actualizar la escena.");
+
+            _regularFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(RegularFontPath);
+            _boldFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BoldFontPath) ?? _regularFont;
+            _theme = AssetDatabase.LoadAssetAtPath<UIThemeModel>(ThemePath);
+            if (_regularFont == null || _theme == null)
+                throw new InvalidOperationException("No se encontraron la fuente o el tema requeridos.");
+            UIThemeController.SetTheme(_theme);
+
+            Scene scene = SceneManager.GetSceneByPath(ScenePath);
+            bool opened = !scene.IsValid() || !scene.isLoaded;
+            if (opened) scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Additive);
+            try
+            {
+                Transform host = BuscarEnEscena(scene, "ActividadHost");
+                if (host == null) throw new InvalidOperationException("No se encontró ActividadHost.");
+
+                Transform anterior = host.Find("PageASR");
+                if (anterior != null) UnityEngine.Object.DestroyImmediate(anterior.gameObject);
+                Transform omitirAnterior = BuscarEnEscena(scene, "OmitirASR");
+                if (omitirAnterior != null) UnityEngine.Object.DestroyImmediate(omitirAnterior.gameObject);
+
+                ASRView asr = CrearPageASR(host);
+                LeccionBaseView view = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<LeccionBaseView>(true)).Single();
+                AsignarReferencias(view, new Dictionary<string, UnityEngine.Object>
+                {
+                    ["pageASR"] = asr.gameObject
+                });
+                asr.gameObject.SetActive(false);
+                EditorSceneManager.MarkSceneDirty(scene);
+                EditorSceneManager.SaveScene(scene);
+                AssetDatabase.SaveAssets();
+                Debug.Log("[LeccionBaseUIBuilder] PageASR actualizada para usar el footer compartido.");
+            }
+            finally
+            {
+                if (opened) EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+
+        private static ASRView CrearPageASR(Transform host)
+        {
+            ASRView asr = CrearPage<ASRView>(host, "PageASR", out Transform content);
+            CrearEncabezadoActividad(content, "TxtInstruccion", "Escucha y repite · opcional",
+                "Lecciones/icono_pronunciacion.png");
+
+            GameObject referencia = Bloque(content, "Referencia", ThemedGraphicView.RolColor.Superficie);
+            Texto(referencia.transform, "EtiquetaUch", "UCHUMATAQU", 20, 34);
+            TMP_Text objetivo = Texto(referencia.transform, "TxtObjetivo", "Chhaq", 48, 110);
+
+            GameObject acciones = CrearObjetoUI("AccionesPronunciacion", content);
+            HorizontalLayoutGroup layout = acciones.AddComponent<HorizontalLayoutGroup>();
+            layout.spacing = 20f;
+            layout.childAlignment = TextAnchor.MiddleCenter;
+            layout.childControlHeight = true;
+            layout.childControlWidth = true;
+            layout.childForceExpandHeight = false;
+            layout.childForceExpandWidth = true;
+            acciones.AddComponent<LayoutElement>().minHeight = 112f;
+
+            Button audio = CrearBoton(acciones.transform, "BtnAudioReferencia", "ESCUCHAR PALABRA", true, 104,
+                "Audio/icono_audio.png");
+            Button practicar = CrearBoton(acciones.transform, "BtnPracticar", "PRACTICAR PRONUNCIACIÓN", true, 104,
+                "Audio/icono_microfono.png");
+            foreach (Button boton in new[] { audio, practicar })
+            {
+                LayoutElement elemento = boton.GetComponent<LayoutElement>();
+                elemento.minWidth = 0f;
+                elemento.preferredWidth = 0f;
+                elemento.flexibleWidth = 1f;
+            }
+
+            AsignarReferencias(asr, new Dictionary<string, UnityEngine.Object>
+            {
+                ["txtObjetivo"] = objetivo,
+                ["btnAudioReferencia"] = audio,
+                ["btnPracticar"] = practicar,
+                ["iconoPracticar"] = CargarIcono("Audio/icono_microfono.png"),
+                ["iconoGrabando"] = CargarIcono("Audio/icono_grabando.png")
+            });
+            LeccionActivityStyleUpdater.AplicarASR(asr);
+            return asr;
+        }
+
+        private static EscrituraView CrearPageEscritura(Transform host)
+        {
+            EscrituraView escritura = CrearPage<EscrituraView>(host, "PageEscritura", out Transform content);
+            CrearEncabezadoActividad(content, "TxtTituloEscritura", "Escribe la respuesta", "Lecciones/icono_escribir.png");
+            GameObject estimulo = Bloque(content, "EstimuloEscritura", ThemedGraphicView.RolColor.SuperficieSuave);
+            TMP_Text instruccion = Texto(estimulo.transform, "TxtInstruccion", "Escribe en uchumataqu", 30, 110);
+            instruccion.alignment = TextAlignmentOptions.MidlineLeft;
+            Button audio = CrearBoton(content, "BtnAudioReferencia", "ESCUCHAR", true, 96,
+                "Lecciones/icono_escuchar.png");
+            TMP_InputField input = CrearCampoEscritura(content);
+            AsignarReferencias(escritura, new Dictionary<string, UnityEngine.Object>
+            {
+                ["txtInstruccion"] = instruccion,
+                ["inputRespuesta"] = input,
+                ["btnAudioReferencia"] = audio
+            });
+            LeccionActivityStyleUpdater.AplicarEscritura(escritura);
+            return escritura;
+        }
+
+        private static TMP_InputField CrearCampoEscritura(Transform parent)
+        {
+            GameObject root = CrearObjetoUI("InputRespuesta", parent);
+            Image fondo = root.AddComponent<Image>();
+            fondo.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Content/UI/Base/ui_panel.png");
+            fondo.type = Image.Type.Sliced;
+            ConfigurarImagenTematizada(fondo, ThemedGraphicView.RolColor.Superficie);
+            LayoutElement layout = root.AddComponent<LayoutElement>();
+            layout.minHeight = 116f;
+
+            TMP_InputField input = root.AddComponent<TMP_InputField>();
+            input.targetGraphic = fondo;
+            input.contentType = TMP_InputField.ContentType.Standard;
+            input.lineType = TMP_InputField.LineType.SingleLine;
+            input.characterLimit = 200;
+            input.onFocusSelectAll = false;
+
+            GameObject area = CrearObjetoUI("Text Area", root.transform);
+            Estirar((RectTransform)area.transform, 28f, 18f);
+            area.AddComponent<RectMask2D>();
+
+            TextMeshProUGUI placeholder = CrearTexto(area.transform, "Placeholder", "Escribe tu respuesta…",
+                28f, FontStyles.Italic, MutedInk, 80f);
+            Estirar(placeholder.rectTransform);
+            placeholder.alignment = TextAlignmentOptions.MidlineLeft;
+            placeholder.GetComponent<LayoutElement>().ignoreLayout = true;
+
+            TextMeshProUGUI texto = CrearTexto(area.transform, "Text", string.Empty,
+                30f, FontStyles.Normal, Ink, 80f);
+            Estirar(texto.rectTransform);
+            texto.alignment = TextAlignmentOptions.MidlineLeft;
+            texto.GetComponent<LayoutElement>().ignoreLayout = true;
+
+            input.textViewport = (RectTransform)area.transform;
+            input.textComponent = texto;
+            input.placeholder = placeholder;
+            return input;
         }
 
         private static T CrearPage<T>(Transform host, string nombre, out Transform content) where T : Component

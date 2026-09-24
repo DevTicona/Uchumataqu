@@ -173,7 +173,7 @@ namespace Assets.Scripts.Editor
             EditorSceneManager.SaveScene(scene);
         }
 
-        [MenuItem("Uchumataqu/UI/Actualizar PageSeleccionMultiple")]
+        [MenuItem("Uchumataqu/Herramientas/Lecciones/Actualizar PageSeleccionMultiple")]
         public static void ActualizarPageSeleccionMultiple()
         {
             if (EditorApplication.isPlaying)
@@ -240,7 +240,7 @@ namespace Assets.Scripts.Editor
             }
         }
 
-        [MenuItem("Uchumataqu/UI/Actualizar LeccionBase para contrato v3")]
+        [MenuItem("Uchumataqu/Herramientas/Lecciones/Actualizar LeccionBase para contrato v3")]
         public static void ActualizarContratoV3()
         {
             if (EditorApplication.isPlaying)
@@ -282,7 +282,7 @@ namespace Assets.Scripts.Editor
             }
         }
 
-        [MenuItem("Uchumataqu/UI/Actualizar PageASR con footer")]
+        [MenuItem("Uchumataqu/Herramientas/Lecciones/Actualizar PageASR con footer")]
         public static void ActualizarPageASRConFooter()
         {
             if (EditorApplication.isPlaying)

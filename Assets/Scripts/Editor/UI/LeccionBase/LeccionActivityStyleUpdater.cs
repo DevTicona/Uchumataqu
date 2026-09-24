@@ -19,7 +19,7 @@ namespace Assets.Scripts.Editor
         private const string ScenePath = "Assets/Scenes/03_LeccionBase.unity";
         private const string BasePath = "Assets/Content/UI/Base";
 
-        [MenuItem("Uchumataqu/UI/Actualizar estilo de actividades")]
+        [MenuItem("Uchumataqu/Herramientas/Lecciones/Actualizar estilo de actividades")]
         public static void Actualizar()
         {
             if (EditorApplication.isPlaying) throw new InvalidOperationException("Sal del modo Play para actualizar el diseño.");

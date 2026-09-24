@@ -21,7 +21,7 @@ namespace Assets.Scripts.Editor
         private const string Folder = "Assets/Content/Prefabs/Logros";
         private const string ScenePath = "Assets/Scenes/02_Main.unity";
 
-        [MenuItem("Uchumataqu/UI/Migrar Logros a tarjetas reutilizables")]
+        [MenuItem("Uchumataqu/Herramientas/Main/Migrar Logros a tarjetas reutilizables")]
         public static void Migrar()
         {
             if (EditorApplication.isPlaying)

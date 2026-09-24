@@ -97,14 +97,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             _enviada = false;
             if (prefabOpcion != null)
             {
-                // Destruir instancias previas para reflejar siempre los cambios del prefab
-                for (int i = botonesOpcion.Count - 1; i >= 0; i--)
-                    if (botonesOpcion[i] != null)
-                        Destroy(botonesOpcion[i].gameObject);
-                botonesOpcion.Clear();
-                textosOpcion.Clear();
-                fondosOpcion.Clear();
-                _accionesOpciones.Clear();
+                LimpiarOpcionesDinamicas();
 
                 for (int i = 0; i < opcionesBarajadas.Count; i++)
                 {
@@ -163,6 +156,20 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             }
 
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
+        }
+
+        private void LimpiarOpcionesDinamicas()
+        {
+            DesregistrarListeners();
+            if (contenedorOpciones != null)
+            {
+                for (int indice = contenedorOpciones.childCount - 1; indice >= 0; indice--)
+                    RuntimeActividadUIFactory.Retirar(contenedorOpciones.GetChild(indice).gameObject);
+            }
+
+            botonesOpcion.Clear();
+            textosOpcion.Clear();
+            fondosOpcion.Clear();
         }
 
         private void SeleccionarOpcion(int indice)

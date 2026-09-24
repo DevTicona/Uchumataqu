@@ -39,7 +39,7 @@ namespace Assets.Scripts.Editor
         private static TMP_FontAsset _boldFont;
         private static UIThemeModel _theme;
 
-        [MenuItem("Uchumataqu/UI/Construir LeccionBase y actividades")]
+        [MenuItem("Uchumataqu/Herramientas/Lecciones/Construir LeccionBase y actividades")]
         public static void ConstruirTodo()
         {
             _regularFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(RegularFontPath);

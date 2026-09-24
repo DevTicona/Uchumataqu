@@ -15,6 +15,8 @@ namespace Assets.Scripts.PLN
         public string colorSemaforo; // "verde" (>=85%) | "amarillo" (60-84%) | "rojo" (<60%)
         public string textoEsperado;
         public string textoIngresado;
+        public string textoReconocido;
         public string origenEntrada; // "texto" | "voz" | "orden_oracion" | "morfologia" | "seleccion"
+        public string modoEvaluacion;
     }
 }

@@ -154,6 +154,29 @@ namespace Assets.Scripts.Editor.Tests
             Assert.IsTrue(resultado.aprobado);
             Assert.AreEqual(100f, resultado.porcentajeSimilitud);
             Assert.AreEqual("verde", resultado.colorSemaforo);
+            Assert.AreEqual("GreedyDirecto", resultado.modoEvaluacion);
+        }
+
+        [TestCase("T\u00ef wiyanichay wakpacha", "TIIWIYAICHAYAKPCHA")]
+        [TestCase("Thu\u00f1i seschay sits\u00f1i", "THNYISECHAYSITSNYI")]
+        public void AsrEnZonaDeCoarticulacion_ReconstruyeLaOracionConElLexico(string esperado, string prediccion)
+        {
+            var resultado = EvaluarConClip(esperado, new ReconocedorSimulado(true, prediccion));
+
+            Assert.IsTrue(resultado.aprobado);
+            Assert.AreEqual(100f, resultado.porcentajeSimilitud);
+            Assert.AreEqual("AsistidoPorLexico", resultado.modoEvaluacion);
+            Assert.AreEqual(esperado.ToLowerInvariant(), resultado.textoReconocido);
+        }
+
+        [TestCase("Wiyantam palitak", "HOLABUENOSDIASAMIGO")]
+        [TestCase("Wiyantam palitak", "")]
+        public void AsrConEntradaFueraDelUmbral_NoUsaLaCorreccionLexica(string esperado, string prediccion)
+        {
+            var resultado = EvaluarConClip(esperado, new ReconocedorSimulado(true, prediccion));
+
+            Assert.IsFalse(resultado.aprobado);
+            Assert.AreEqual("RechazoAcustico", resultado.modoEvaluacion);
         }
 
         [TestCase("Tï wiyanichay", "TIIWIYANICHAY")]
@@ -174,6 +197,13 @@ namespace Assets.Scripts.Editor.Tests
             Assert.AreEqual(100f, resultado.porcentajeSimilitud);
             Assert.AreEqual(esperado, resultado.textoEsperado);
             Assert.AreEqual(prediccion, resultado.textoIngresado);
+        }
+
+        [TestCase("Palitak", "PALITAK")]
+        [TestCase("Wiyantam palitak", "WIYANTAMPALITAK")]
+        public void AsrFonetico_DecodificaLaSalidaParaMostrarTextoLegible(string esperado, string prediccion)
+        {
+            Assert.AreEqual(esperado, DecodificadorFoneticoAsr.Decodificar(prediccion, esperado));
         }
 
         [Test]

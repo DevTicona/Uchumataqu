@@ -89,6 +89,17 @@ namespace Assets.Scripts.Editor.Tests
         }
 
         [Test]
+        public void AnalizadorErrorEscritura_DescribeLetraPalabraYExceso()
+        {
+            Assert.AreEqual("Te faltó la letra “a” en “pala”.",
+                AnalizadorErrorEscritura.Describir("pala", "pal"));
+            Assert.AreEqual("Te faltó la palabra “suma”.",
+                AnalizadorErrorEscritura.Describir("pala suma", "pala"));
+            Assert.AreEqual("La palabra “extra” está de más.",
+                AnalizadorErrorEscritura.Describir("pala", "pala extra"));
+        }
+
+        [Test]
         public void ValidadorOrden_ValidaSecuenciaTokens()
         {
             List<string> tokensCorrectos = new List<string> { "viru", "chaki", "khesay" };

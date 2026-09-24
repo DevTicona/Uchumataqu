@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Assets.Scripts.ASR
@@ -10,6 +11,12 @@ namespace Assets.Scripts.ASR
     /// </summary>
     public static class NormalizadorFoneticoAsr
     {
+        private static readonly string[] TokensFoneticosOrdenados =
+        {
+            "CH_EJ", "K_EJ", "P_EJ", "Q_EJ", "T_EJ",
+            "CHH", "AA", "EE", "II", "OO", "UU", "CH", "KH", "LL", "NY", "PH", "QH", "SH", "TH", "TS",
+            "A", "E", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "W", "X", "Y"
+        };
         private static readonly Regla[] Reglas =
         {
             new Regla("ch['’ʼ]", "CH_EJ"), new Regla("chh", "CHH"),
@@ -44,6 +51,48 @@ namespace Assets.Scripts.ASR
         {
             if (string.IsNullOrWhiteSpace(texto)) return string.Empty;
             return Regex.Replace(texto.ToUpperInvariant(), @"\s+", string.Empty);
+        }
+
+        /// <summary>
+        /// Separa la salida CTC continua en los tokens definidos por tokens.txt.
+        /// El modelo no emite separadores de palabra, por lo que se aplica la
+        /// coincidencia mas larga primero (por ejemplo, CH_EJ antes que CH).
+        /// </summary>
+        public static List<string> TextoAFonemas(string texto)
+        {
+            string secuencia = NormalizarPrediccionSherpa(texto);
+            var fonemas = new List<string>();
+
+            for (int indice = 0; indice < secuencia.Length;)
+            {
+                string encontrado = null;
+                foreach (string token in TokensFoneticosOrdenados)
+                {
+                    if (!CoincideEn(secuencia, indice, token)) continue;
+                    encontrado = token;
+                    break;
+                }
+
+                if (encontrado == null)
+                {
+                    // Conserva tokens no validos para que penalicen la metrica
+                    // y no puedan convertirse en una aprobacion asistida.
+                    fonemas.Add(secuencia[indice].ToString());
+                    indice++;
+                    continue;
+                }
+
+                fonemas.Add(encontrado);
+                indice += encontrado.Length;
+            }
+
+            return fonemas;
+        }
+
+        private static bool CoincideEn(string texto, int indice, string valor)
+        {
+            return indice + valor.Length <= texto.Length &&
+                string.Compare(texto, indice, valor, 0, valor.Length, StringComparison.Ordinal) == 0;
         }
 
         private readonly struct Regla

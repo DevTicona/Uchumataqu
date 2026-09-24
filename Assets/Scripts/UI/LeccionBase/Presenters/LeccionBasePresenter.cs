@@ -532,8 +532,7 @@ namespace Assets.Scripts.UI.LeccionBase
                 return;
             }
 
-            bool audio = paso.tipo == TipoPasoLeccion.EmparejarAudioUch;
-            actividad.Configurar(pares, audio);
+            actividad.Configurar(pares, paso.tipo, CrearAudiosEmparejamiento(paso));
             Action<string> handlerOnAudioClicked = ReproducirPalabra;
             actividad.OnAudioClicked += handlerOnAudioClicked;
             _activityUnsubscribe.Add(() => actividad.OnAudioClicked -= handlerOnAudioClicked);
@@ -548,6 +547,34 @@ namespace Assets.Scripts.UI.LeccionBase
             };
             actividad.OnEmparejamientoCompletado += handlerOnEmparejamientoCompletado;
             _activityUnsubscribe.Add(() => actividad.OnEmparejamientoCompletado -= handlerOnEmparejamientoCompletado);
+        }
+
+        private static Dictionary<string, string> CrearAudiosEmparejamiento(PasoLeccionModel paso)
+        {
+            var audios = new Dictionary<string, string>();
+            bool esEmparejamientoAudio = paso.tipo == TipoPasoLeccion.EmparejarAudioUch;
+
+            foreach (string id in paso.items_ids ?? new List<string>())
+            {
+                PalabraModel palabra = CorpusRepository.ObtenerPalabra(id);
+                if (palabra == null) continue;
+
+                string clave = esEmparejamientoAudio ? palabra.id : palabra.uch;
+                audios[clave] = palabra.id;
+            }
+
+            if (paso.tipo != TipoPasoLeccion.FamiliaCompleta) return audios;
+
+            PalabraModel raiz = CorpusRepository.ObtenerPalabra(paso.raiz_id);
+            if (raiz != null) audios[raiz.uch] = raiz.id;
+
+            foreach (string formaId in paso.formas_ids ?? new List<string>())
+            {
+                FormaModel forma = CorpusRepository.ObtenerForma(formaId);
+                if (forma != null) audios[forma.uch] = forma.id;
+            }
+
+            return audios;
         }
 
         private void RenderizarWordBank(PasoLeccionModel paso)

@@ -158,15 +158,8 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         {
             if (texto == null) return;
 
-            UIThemeModel theme = UIThemeController.Theme;
-            if (theme != null) texto.color = theme.colorTextoPrimario;
-
             ThemedTextView themed = texto.GetComponent<ThemedTextView>();
-            if (themed == null) return;
-
-            themed.usarColorPersonalizado = false;
-            themed.tipoColor = ThemedTextView.ColorTexto.Primario;
-            themed.AplicarTema();
+            if (themed != null) themed.AplicarTema();
         }
 
         private static ThemedTextView.ColorTexto ObtenerTipoColorTitulo(ThemedGraphicView.RolColor rol)

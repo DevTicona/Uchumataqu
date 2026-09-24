@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.Data.Corpus;
+using Assets.Scripts.Lecciones;
 using UnityEngine.Events;
 using Assets.Scripts.Core.UI.Components;
 
@@ -23,8 +24,10 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         [SerializeField] private GameObject prefabItem;
         public event Action<string, string> OnParPropuesto;
         public event Action<string> OnAudioClicked;
-        private bool _audio;
+        private bool _mostrarAudioComoEstimulo;
+        private bool _reproduceAudioAlSeleccionar;
         private List<string> _idsIzquierda = new List<string>();
+        private IReadOnlyDictionary<string, string> _audiosPorClaveIzquierda;
 
         private readonly List<Button> botonesColumnaIzq = new List<Button>();
         private readonly List<TMP_Text> textosColumnaIzq = new List<TMP_Text>();
@@ -90,19 +93,25 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             _accionesDerecha.Clear();
         }
 
-        public void Configurar(Dictionary<string, string> pares, bool audio = false)
+        public void Configurar(Dictionary<string, string> pares, string tipo,
+            IReadOnlyDictionary<string, string> audiosPorClaveIzquierda = null)
         {
             CancelInvoke();
-            _audio = audio;
+            _mostrarAudioComoEstimulo = tipo == TipoPasoLeccion.EmparejarAudioUch;
+            _reproduceAudioAlSeleccionar = tipo == TipoPasoLeccion.EmparejarUchEspanol ||
+                tipo == TipoPasoLeccion.FamiliaCompleta || _mostrarAudioComoEstimulo;
+            _audiosPorClaveIzquierda = audiosPorClaveIzquierda;
             _paresCorrectos = pares ?? new Dictionary<string, string>();
+            LimpiarItemsRegenerables();
             if (prefabItem != null)
             {
-                while (botonesColumnaIzq.Count < _paresCorrectos.Count)
+                for (int indice = 0; indice < _paresCorrectos.Count; indice++)
                 {
                     Button izq = Instantiate(prefabItem, columnaIzquierda, false).GetComponent<Button>();
                     Button der = Instantiate(prefabItem, columnaDerecha, false).GetComponent<Button>();
                     botonesColumnaIzq.Add(izq); textosColumnaIzq.Add(izq.GetComponentInChildren<TMP_Text>());
                     botonesColumnaDer.Add(der); textosColumnaDer.Add(der.GetComponentInChildren<TMP_Text>());
+                    ConfigurarEstiloColumnaDerecha(der);
                 }
                 RegistrarListeners();
             }
@@ -113,7 +122,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             _totalPares = _paresCorrectos.Count;
 
             if (txtInstruccion != null)
-                txtInstruccion.text = audio ? "Une cada audio con su palabra:" : "Empareja cada palabra con su significado:";
+                txtInstruccion.text = _mostrarAudioComoEstimulo
+                    ? "Une cada audio con su palabra:"
+                    : "Empareja cada palabra con su significado:";
 
             List<string> listaIzq = new List<string>(_paresCorrectos.Keys);
             List<string> listaDer = new List<string>(_paresCorrectos.Values);
@@ -129,9 +140,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 {
                     botonesColumnaIzq[i].gameObject.SetActive(true);
                     botonesColumnaIzq[i].interactable = true;
-                    textosColumnaIzq[i].text = audio ? $"Escuchar {i + 1}" : listaIzq[i];
+                    textosColumnaIzq[i].text = _mostrarAudioComoEstimulo ? "Escuchar" : listaIzq[i];
                     Transform icono = botonesColumnaIzq[i].transform.Find("IconoAudio");
-                    if (icono != null) icono.gameObject.SetActive(audio);
+                    if (icono != null) icono.gameObject.SetActive(_reproduceAudioAlSeleccionar);
                     MostrarEstado(botonesColumnaIzq[i], ThemedButtonView.EstadoBoton.Normal);
                 }
                 else
@@ -158,11 +169,62 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
 
+        public void Configurar(Dictionary<string, string> pares, bool audio = false)
+        {
+            Configurar(pares, audio ? TipoPasoLeccion.EmparejarAudioUch : TipoPasoLeccion.EmparejarUchEspanol);
+        }
+
+        private void LimpiarItemsRegenerables()
+        {
+            DesregistrarListeners();
+            LimpiarColumna(columnaIzquierda);
+            LimpiarColumna(columnaDerecha);
+            botonesColumnaIzq.Clear();
+            textosColumnaIzq.Clear();
+            botonesColumnaDer.Clear();
+            textosColumnaDer.Clear();
+        }
+
+        private static void LimpiarColumna(Transform columna)
+        {
+            if (columna == null) return;
+
+            for (int indice = columna.childCount - 1; indice >= 0; indice--)
+            {
+                GameObject item = columna.GetChild(indice).gameObject;
+                if (item.GetComponent<Button>() != null)
+                    RuntimeActividadUIFactory.Retirar(item);
+            }
+        }
+
+        private static void ConfigurarEstiloColumnaDerecha(Button item)
+        {
+            if (item == null) return;
+
+            ThemedTextView texto = item.GetComponentInChildren<ThemedTextView>(true);
+            if (texto != null)
+            {
+                texto.tipoColor = ThemedTextView.ColorTexto.Secundario;
+                texto.AplicarTema();
+            }
+
+            Transform iconoAudio = item.transform.Find("IconoAudio");
+            ThemedGraphicView icono = iconoAudio != null
+                ? iconoAudio.GetComponent<ThemedGraphicView>()
+                : null;
+            if (icono == null) return;
+
+            icono.Rol = ThemedGraphicView.RolColor.TextoSecundario;
+            icono.AplicarTema();
+        }
+
         private void SeleccionarIzq(int index)
         {
             if (index < 0 || index >= _totalPares || _indicesIzqResueltos.Contains(index)) return;
 
-            if (_audio) OnAudioClicked?.Invoke(_idsIzquierda[index]);
+            if (_reproduceAudioAlSeleccionar && _audiosPorClaveIzquierda != null &&
+                _audiosPorClaveIzquierda.TryGetValue(_idsIzquierda[index], out string audioId))
+                OnAudioClicked?.Invoke(audioId);
             _seleccionIzq = index;
             ActualizarColoresColumna(botonesColumnaIzq, _indicesIzqResueltos, _seleccionIzq);
 

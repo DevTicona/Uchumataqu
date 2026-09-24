@@ -1,5 +1,4 @@
 using TMPro;
-using Assets.Scripts.Core.UI.Components;
 using Assets.Scripts.Core.UI.Theme;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,15 +55,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             Sprite icono = _resultado == false ? iconoIncorrecto : iconoCorrecto;
             if (icono != null) check.sprite = icono;
             check.color = theme.colorTextoSobreColor;
-            var themed = texto.GetComponent<ThemedTextView>();
-            if (themed != null)
-            {
-                themed.tipoColor = !marcada ? ThemedTextView.ColorTexto.Primario :
-                    _resultado == false ? ThemedTextView.ColorTexto.Error :
-                    _resultado == true ? ThemedTextView.ColorTexto.Exito : ThemedTextView.ColorTexto.AcentoPrimario;
-                themed.AplicarTema();
-            }
-            texto.fontStyle = marcada ? FontStyles.Bold : FontStyles.Normal;
         }
     }
 }

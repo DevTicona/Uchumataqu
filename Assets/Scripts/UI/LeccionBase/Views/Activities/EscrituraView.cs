@@ -1,6 +1,5 @@
 using System;
 using Assets.Scripts.Core.UI.Components;
-using Assets.Scripts.Core.UI.Theme;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -55,9 +54,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             txtInstruccion.text = consigna ?? string.Empty;
             inputRespuesta.SetTextWithoutNotify(string.Empty);
             inputRespuesta.interactable = true;
-            inputRespuesta.contentType = TMP_InputField.ContentType.Standard;
-            inputRespuesta.lineType = TMP_InputField.LineType.SingleLine;
-            inputRespuesta.characterLimit = 200;
             MobileInputFieldStyle.Aplicar(inputRespuesta);
             OcultarRespuestaCorrecta();
             btnAudioReferencia.gameObject.SetActive(mostrarAudio);
@@ -133,7 +129,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             etiqueta.fontStyle = estilo;
             etiqueta.fontSize = tamanio;
             etiqueta.alignment = TextAlignmentOptions.MidlineLeft;
-            etiqueta.color = UIThemeController.Theme != null ? UIThemeController.Theme.colorTextoPrimario : Color.black;
+            etiqueta.color = inputRespuesta.textComponent.color;
             objeto.GetComponent<LayoutElement>().preferredHeight = alto;
             return etiqueta;
         }

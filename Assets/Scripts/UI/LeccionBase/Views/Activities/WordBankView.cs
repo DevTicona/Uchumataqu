@@ -16,6 +16,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         [SerializeField] private Transform contenedorDestino;
         [SerializeField] private Transform contenedorOrigen;
         [SerializeField] private GameObject prefabFichaToken;
+        [Header("Distribucion dinamica")]
+        [SerializeField, Min(0f)] private float separacionFichas = 12f;
+        [SerializeField] private TextAnchor alineacionFilas = TextAnchor.MiddleCenter;
         public bool PuedeEnviarRespuesta => !_enviada && _respuesta.Count > 0;
         public event Action OnRespuestaCambiada;
 
@@ -122,23 +125,26 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
 
-        private static void Distribuir(Transform contenedor, List<GameObject> fichas, List<RectTransform> filas)
+        private void Distribuir(Transform contenedor, List<GameObject> fichas, List<RectTransform> filas)
         {
             foreach (RectTransform anterior in filas) anterior.gameObject.SetActive(false);
             VerticalLayoutGroup vertical = contenedor.GetComponent<VerticalLayoutGroup>();
-            float ancho = Mathf.Max(120, ((RectTransform)contenedor).rect.width - vertical.padding.horizontal);
+            if (vertical == null) return;
+
+            float ancho = Mathf.Max(0f, ((RectTransform)contenedor).rect.width - vertical.padding.horizontal);
             RectTransform fila = null;
             int indiceFila = 0;
             float ocupado = 0;
             float altoFila = 0;
             foreach (GameObject ficha in fichas)
             {
-                TMP_Text texto = ficha.GetComponentInChildren<TMP_Text>();
-                float preferido = Mathf.Clamp(texto.GetPreferredValues(texto.text).x + 48, 108, ancho);
-                LayoutElement elemento = ficha.GetComponent<LayoutElement>();
-                elemento.minWidth = preferido; elemento.preferredWidth = preferido; elemento.flexibleWidth = 0;
-                elemento.minHeight = elemento.preferredHeight = Mathf.Max(72f, texto.preferredHeight + 16f);
-                if (fila == null || ocupado + 12f + preferido > ancho)
+                RectTransform rectFicha = ficha.transform as RectTransform;
+                float preferido = Mathf.Max(0f, LayoutUtility.GetPreferredWidth(rectFicha));
+                if (preferido <= 0f) preferido = rectFicha.rect.width;
+                float altoPreferido = Mathf.Max(0f, LayoutUtility.GetPreferredHeight(rectFicha));
+                if (altoPreferido <= 0f) altoPreferido = rectFicha.rect.height;
+
+                if (fila == null || ocupado + separacionFichas + preferido > ancho)
                 {
                     if (indiceFila == filas.Count)
                     {
@@ -146,8 +152,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                         row.layer = contenedor.gameObject.layer;
                         row.transform.SetParent(contenedor, false);
                         HorizontalLayoutGroup layout = row.GetComponent<HorizontalLayoutGroup>();
-                        layout.spacing = 12; layout.childControlWidth = layout.childControlHeight = true;
-                        layout.childAlignment = TextAnchor.MiddleCenter;
+                        layout.spacing = separacionFichas;
+                        layout.childControlWidth = layout.childControlHeight = true;
+                        layout.childAlignment = alineacionFilas;
                         layout.childForceExpandWidth = layout.childForceExpandHeight = false;
                         filas.Add((RectTransform)row.transform);
                     }
@@ -158,8 +165,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                     altoFila = 0;
                 }
                 ficha.transform.SetParent(fila, false);
-                ocupado += (ocupado > 0 ? 12f : 0f) + preferido;
-                altoFila = Mathf.Max(altoFila, elemento.preferredHeight);
+                ocupado += (ocupado > 0 ? separacionFichas : 0f) + preferido;
+                altoFila = Mathf.Max(altoFila, altoPreferido);
                 LayoutElement elementoFila = fila.GetComponent<LayoutElement>();
                 elementoFila.minHeight = elementoFila.preferredHeight = altoFila;
             }

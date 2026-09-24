@@ -115,7 +115,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             bool esAudio = tipo != null && tipo.StartsWith("audio_");
             if (panelTexto != null) panelTexto.SetActive(!esAudio && !esHueco);
             if (panelOracionHueco != null) panelOracionHueco.SetActive(esHueco);
-            if (panelTexto != null) panelTexto.transform.parent.gameObject.SetActive(!esAudio);
             if (txtOracionHueco != null) txtOracionHueco.text = prompt ?? "";
             _opcionSeleccionada = null;
             _indiceSeleccionado = -1;

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Core.UI.Components
 {
+    [ExecuteAlways]
     [RequireComponent(typeof(Image))]
     [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Assets.Scripts.Core.UI.Components", sourceAssembly: "Assembly-CSharp", sourceClassName: "ThemedGraphic")]
     public sealed class ThemedGraphicView : MonoBehaviour
@@ -51,6 +52,23 @@ namespace Assets.Scripts.Core.UI.Components
         }
 
         private void OnDisable() => UIThemeController.OnThemeChanged -= AplicarTema;
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            UnityEditor.EditorApplication.delayCall -= AplicarCambiosEnEditor;
+            UnityEditor.EditorApplication.delayCall += AplicarCambiosEnEditor;
+        }
+
+        private void AplicarCambiosEnEditor()
+        {
+            if (this == null) return;
+            AplicarTema();
+            UnityEditor.EditorUtility.SetDirty(this);
+            if (_imagen != null) UnityEditor.EditorUtility.SetDirty(_imagen);
+            UnityEditor.SceneView.RepaintAll();
+        }
+#endif
 
         public void AplicarTema()
         {

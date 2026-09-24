@@ -36,23 +36,20 @@ namespace Assets.Scripts.Core.UI.Components
         public ColorTexto tipoColor = ColorTexto.Primario;
 
         [Header("Opcional")]
-        public bool usarColorPersonalizado = false;
+        public bool usarColorPersonalizado;
         public Color colorPersonalizado;
 
         private TextMeshProUGUI texto;
-        private bool estaSuscrito = false;
+        private bool estaSuscrito;
 
         private void Awake()
         {
             texto = GetComponent<TextMeshProUGUI>();
-
             if (texto == null)
-            {
                 Debug.LogError($"[ThemedText] No se encontró TextMeshProUGUI en {gameObject.name}");
-            }
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void OnValidate()
         {
             UnityEditor.EditorApplication.delayCall -= AplicarCambiosEnEditor;
@@ -67,17 +64,15 @@ namespace Assets.Scripts.Core.UI.Components
             {
                 UIThemeModel theme = UnityEditor.AssetDatabase.LoadAssetAtPath<UIThemeModel>(
                     "Assets/Content/UI/UITheme.asset");
-                if (theme != null)
-                    UIThemeController.SetTheme(theme);
+                if (theme != null) UIThemeController.SetTheme(theme);
             }
 
             AplicarTema();
             UnityEditor.EditorUtility.SetDirty(this);
-            if (texto != null)
-                UnityEditor.EditorUtility.SetDirty(texto);
+            if (texto != null) UnityEditor.EditorUtility.SetDirty(texto);
             UnityEditor.SceneView.RepaintAll();
         }
-        #endif
+#endif
 
         private void OnEnable()
         {
@@ -85,15 +80,11 @@ namespace Assets.Scripts.Core.UI.Components
             if (UIThemeController.Theme != null) AplicarTema();
         }
 
-        private void OnDisable()
-        {
-            DesuscribirseEvento();
-        }
+        private void OnDisable() => DesuscribirseEvento();
 
         private void SuscribirseEvento()
         {
             if (estaSuscrito) return;
-
             UIThemeController.OnThemeChanged += AplicarTema;
             estaSuscrito = true;
         }
@@ -101,7 +92,6 @@ namespace Assets.Scripts.Core.UI.Components
         private void DesuscribirseEvento()
         {
             if (!estaSuscrito) return;
-
             UIThemeController.OnThemeChanged -= AplicarTema;
             estaSuscrito = false;
         }
@@ -111,61 +101,25 @@ namespace Assets.Scripts.Core.UI.Components
             if (texto == null) texto = GetComponent<TextMeshProUGUI>();
             if (texto == null) return;
 
-            var theme = UIThemeController.Theme;
+            UIThemeModel theme = UIThemeController.Theme;
             if (theme == null) return;
 
-            // =========================
-            // FUENTE (reactivada segura)
-            // =========================
-            if (theme.fuentePrincipal != null)
-                texto.font = theme.fuentePrincipal;
+            // The font asset, style and overflow remain static prefab settings.
+            // The assigned UITheme role controls only color and semantic text size.
+            texto.color = usarColorPersonalizado ? colorPersonalizado : ObtenerColor(theme);
+            texto.fontSize = UIThemeController.EscalarTexto(ObtenerTamano(theme));
+        }
 
-            // NotoSans-Regular SDF no incluye el glifo U+2026 (…). TMP intenta
-            // insertarlo al usar Ellipsis y emite una advertencia en cada render.
-            // Truncate conserva el mismo límite visual sin requerir dicho glifo.
-            if (texto.overflowMode == TextOverflowModes.Ellipsis)
-                texto.overflowMode = TextOverflowModes.Truncate;
-
-            // =========================
-            // COLOR
-            // =========================
-            texto.color = usarColorPersonalizado
-                ? colorPersonalizado
-                : ObtenerColor(theme);
-
-            // =========================
-            // TAMAÑO
-            // =========================
+        private float ObtenerTamano(UIThemeModel theme)
+        {
             switch (tipoTexto)
             {
-                case TipoTexto.TituloGrande:
-                    texto.fontSize = UIThemeController.EscalarTexto(theme.tituloGrande);
-                    break;
-
-                case TipoTexto.Titulo:
-                    texto.fontSize = UIThemeController.EscalarTexto(theme.titulo);
-                    break;
-
-                case TipoTexto.Subtitulo:
-                    texto.fontSize = UIThemeController.EscalarTexto(theme.subtitulo);
-                    break;
-
-                case TipoTexto.Normal:
-                    texto.fontSize = UIThemeController.EscalarTexto(theme.textoNormal);
-                    break;
-
-                case TipoTexto.Pequeño:
-                    texto.fontSize = UIThemeController.EscalarTexto(theme.textoPequeno);
-                    break;
-
-                default: return;
+                case TipoTexto.TituloGrande: return theme.tituloGrande;
+                case TipoTexto.Titulo: return theme.titulo;
+                case TipoTexto.Subtitulo: return theme.subtitulo;
+                case TipoTexto.Pequeño: return theme.textoPequeno;
+                default: return theme.textoNormal;
             }
-
-            // =========================
-            // FORZAR ACTUALIZACIÓN
-            // =========================
-            texto.ForceMeshUpdate();
-            Canvas.ForceUpdateCanvases();
         }
 
         private Color ObtenerColor(UIThemeModel theme)

@@ -8,18 +8,12 @@ namespace Assets.Scripts.Core.UI.Components
     /// </summary>
     public static class MobileInputFieldStyle
     {
-        private static readonly Color CaretColor = new Color(0.05f, 0.14f, 0.22f, 1f);
-
         public static void Aplicar(TMP_InputField input)
         {
             if (input == null) return;
 
             input.shouldHideMobileInput = true;
             input.shouldHideSoftKeyboard = false;
-            input.customCaretColor = true;
-            input.caretColor = CaretColor;
-            input.caretWidth = 3;
-            input.caretBlinkRate = 0.7f;
             input.ForceLabelUpdate();
         }
     }

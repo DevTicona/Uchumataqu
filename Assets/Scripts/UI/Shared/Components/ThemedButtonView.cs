@@ -65,8 +65,18 @@ namespace Assets.Scripts.Core.UI.Components
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (isActiveAndEnabled)
-                AplicarTema();
+            UnityEditor.EditorApplication.delayCall -= AplicarCambiosEnEditor;
+            UnityEditor.EditorApplication.delayCall += AplicarCambiosEnEditor;
+        }
+
+        private void AplicarCambiosEnEditor()
+        {
+            if (this == null) return;
+            AplicarTema();
+            UnityEditor.EditorUtility.SetDirty(this);
+            if (button != null && button.targetGraphic != null)
+                UnityEditor.EditorUtility.SetDirty(button.targetGraphic);
+            UnityEditor.SceneView.RepaintAll();
         }
 #endif
 

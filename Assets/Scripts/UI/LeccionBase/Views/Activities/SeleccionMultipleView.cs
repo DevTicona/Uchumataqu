@@ -67,10 +67,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 btnAudioPregunta.onClick.AddListener(NotificarAudioPregunta);
             }
 
-            for (int i = 0; i < _accionesOpciones.Count && i < botonesOpcion.Count; i++)
-                if (botonesOpcion[i] != null)
-                    botonesOpcion[i].onClick.RemoveListener(_accionesOpciones[i]);
-            _accionesOpciones.Clear();
+            DesregistrarListenersOpciones();
 
             for (int i = 0; i < botonesOpcion.Count; i++)
             {
@@ -85,9 +82,15 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private void OnDestroy()
         {
             if (btnAudioPregunta != null) btnAudioPregunta.onClick.RemoveListener(NotificarAudioPregunta);
+            DesregistrarListenersOpciones();
+        }
+
+        private void DesregistrarListenersOpciones()
+        {
             for (int i = 0; i < _accionesOpciones.Count && i < botonesOpcion.Count; i++)
                 if (botonesOpcion[i] != null)
                     botonesOpcion[i].onClick.RemoveListener(_accionesOpciones[i]);
+            _accionesOpciones.Clear();
         }
 
         private void NotificarAudioPregunta() => OnAudioPreguntaClicked?.Invoke();
@@ -160,7 +163,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private void LimpiarOpcionesDinamicas()
         {
-            DesregistrarListeners();
+            DesregistrarListenersOpciones();
             if (contenedorOpciones != null)
             {
                 for (int indice = contenedorOpciones.childCount - 1; indice >= 0; indice--)

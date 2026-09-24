@@ -126,8 +126,7 @@ namespace Assets.Scripts.Editor
 
             if (TipoPasoLeccion.EsEmparejamiento(paso.tipo))
             {
-                bool incluyeAudio = paso.tipo == TipoPasoLeccion.EmparejarAudioUch;
-                vista.InstanciarEmparejamiento().Configurar(GestorActividadLeccion.CrearPares(paso), incluyeAudio);
+                vista.InstanciarEmparejamiento().Configurar(GestorActividadLeccion.CrearPares(paso), paso.tipo);
                 return;
             }
 

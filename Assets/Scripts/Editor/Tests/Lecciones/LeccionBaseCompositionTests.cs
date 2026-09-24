@@ -142,6 +142,8 @@ namespace Assets.Scripts.Editor.Tests
                 option = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"{ElementsPath}/opcion_respuesta.prefab"));
                 pair = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"{ElementsPath}/item_emparejamiento.prefab"));
                 var selection = option.GetComponent<TarjetaSeleccionView>();
+                TMP_Text textoOpcion = option.GetComponentInChildren<TMP_Text>();
+                FontStyles estiloOriginal = textoOpcion.fontStyle;
                 selection.MostrarSeleccion(true);
                 var themed = pair.GetComponent<Assets.Scripts.Core.UI.Components.ThemedButtonView>();
                 Image pairImage = pair.GetComponent<Image>();
@@ -155,8 +157,8 @@ namespace Assets.Scripts.Editor.Tests
                 alternate.escalaTextoGlobal = 1.2f;
                 Assets.Scripts.Core.UI.Theme.UIThemeController.SetTheme(alternate);
                 Assert.AreEqual(alternate.colorPrimario, option.transform.Find("Marco").GetComponent<Image>().color);
-                Assert.AreEqual(alternate.textoNormal * 1.2f, option.GetComponentInChildren<TMP_Text>().fontSize, 0.01f);
-                Assert.AreEqual(FontStyles.Bold, option.GetComponentInChildren<TMP_Text>().fontStyle);
+                Assert.AreEqual(alternate.textoNormal * 1.2f, textoOpcion.fontSize, 0.01f);
+                Assert.AreEqual(estiloOriginal, textoOpcion.fontStyle);
                 Assert.AreSame(manualSprite, pairImage.sprite);
                 Assert.AreEqual(Image.Type.Simple, pairImage.type);
                 Assert.AreEqual(3f, pairImage.pixelsPerUnitMultiplier);
@@ -503,7 +505,7 @@ namespace Assets.Scripts.Editor.Tests
             }
             else if (paso.tipo == TipoPasoLeccion.MemoriaUchEspanol) view.InstanciarMemoria().Configurar(GestorActividadLeccion.CrearPares(paso));
             else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo))
-                view.InstanciarEmparejamiento().Configurar(GestorActividadLeccion.CrearPares(paso), paso.tipo == TipoPasoLeccion.EmparejarAudioUch);
+                view.InstanciarEmparejamiento().Configurar(GestorActividadLeccion.CrearPares(paso), paso.tipo);
             else if (TipoPasoLeccion.EsWordBank(paso.tipo))
             {
                 var d = GestorActividadLeccion.CrearWordBank(paso);
@@ -602,12 +604,12 @@ namespace Assets.Scripts.Editor.Tests
             Assert.AreEqual(rolEsperado, icono.GetComponent<ThemedGraphicView>().Rol);
             Assert.AreEqual(tipoTituloEsperado, titulo.GetComponent<ThemedTextView>().tipoColor);
             Assert.IsFalse(titulo.GetComponent<ThemedTextView>().usarColorPersonalizado);
-            Assert.AreEqual(ThemedTextView.ColorTexto.Primario, mensaje.GetComponent<ThemedTextView>().tipoColor);
+            Assert.AreEqual(ThemedTextView.ColorTexto.Secundario, mensaje.GetComponent<ThemedTextView>().tipoColor);
             Assert.IsFalse(mensaje.GetComponent<ThemedTextView>().usarColorPersonalizado);
             AssertColor(colorEstado, icono.color);
             AssertColor(colorEstado, titulo.color);
             AssertColor(new Color(colorEstado.r, colorEstado.g, colorEstado.b, 80f / 255f), detalle.color);
-            AssertColor(UIThemeController.Theme.colorTextoPrimario, mensaje.color);
+            AssertColor(UIThemeController.Theme.colorTextoSecundario, mensaje.color);
         }
 
         private static void AssertColor(Color esperado, Color actual)

@@ -108,14 +108,13 @@ namespace Assets.Scripts.Editor
                 ThemedGraphicView.RolColor.Primario).gameObject;
             GameObject estrella3 = CrearIcono(estrellas.transform, "Estrella3", "Logros/icono_estrella.png", 72f,
                 ThemedGraphicView.RolColor.Primario).gameObject;
-            Button continuar = CrearBoton(card.transform, "BtnContinuar", "CONTINUAR", false, 76f, "Lecciones/icono_continuar.png");
             Button mapa = CrearBoton(card.transform, "BtnVolverMapa", "VOLVER AL MAPA", true, 72f, "Lecciones/icono_volver_mapa.png");
             ModalResultadoView view = root.AddComponent<ModalResultadoView>();
             AsignarReferencias(view, new Dictionary<string, UnityEngine.Object>
             {
                 ["txtTitulo"] = titulo, ["txtAciertos"] = aciertos, ["txtPrecision"] = precision,
                 ["estrella1"] = estrella1, ["estrella2"] = estrella2, ["estrella3"] = estrella3,
-                ["btnContinuar"] = continuar, ["btnVolverMapa"] = mapa
+                ["btnVolverMapa"] = mapa
             });
             return GuardarPrefab(root, $"{LessonPath}/ModalResultado.prefab");
         }

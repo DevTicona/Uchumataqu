@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Assets.Scripts.Core.UI.Components;
 using Assets.Scripts.UI.LeccionBase.Componentes;
 using Assets.Scripts.UI.LeccionBase.Actividades;
 
@@ -54,7 +55,6 @@ namespace Assets.Scripts.UI.LeccionBase
 
         public event Action OnAtrasClick;
         public event Action OnVolverAlMapaClick;
-        public event Action OnContinuarLeccionClick;
         public event Action OnConfirmarSalidaClick;
         public event Action OnCancelarSalidaClick;
 
@@ -70,7 +70,6 @@ namespace Assets.Scripts.UI.LeccionBase
 
             if (modalResultado != null)
             {
-                modalResultado.OnContinuarClicked += NotificarContinuarLeccion;
                 modalResultado.OnVolverMapaClicked += NotificarVolverAlMapa;
                 modalResultado.Ocultar();
             }
@@ -92,7 +91,6 @@ namespace Assets.Scripts.UI.LeccionBase
             if (btnAtras != null) btnAtras.onClick.RemoveListener(NotificarAtras);
             if (modalResultado != null)
             {
-                modalResultado.OnContinuarClicked -= NotificarContinuarLeccion;
                 modalResultado.OnVolverMapaClicked -= NotificarVolverAlMapa;
             }
             if (btnSeguirAprendiendo != null)
@@ -244,8 +242,9 @@ namespace Assets.Scripts.UI.LeccionBase
                 accion == AccionPrincipal.Finalizar ? "FINALIZAR" : "CONTINUAR";
             iconoAccionPrincipal.sprite = accion == AccionPrincipal.Comprobar ? iconoComprobar :
                 accion == AccionPrincipal.Finalizar ? iconoFinalizar : iconoContinuar;
-            btnPrincipal.interactable = interactuable;
             btnPrincipal.gameObject.SetActive(visible);
+            btnPrincipal.interactable = interactuable;
+            btnPrincipal.GetComponent<ThemedButtonView>()?.AplicarTema();
             ActualizarEspacioActividad();
         }
 
@@ -253,8 +252,9 @@ namespace Assets.Scripts.UI.LeccionBase
         {
             txtAccionPrincipal.text = "DETENER";
             iconoAccionPrincipal.sprite = iconoDetener;
-            btnPrincipal.interactable = true;
             btnPrincipal.gameObject.SetActive(true);
+            btnPrincipal.interactable = true;
+            btnPrincipal.GetComponent<ThemedButtonView>()?.AplicarTema();
             ActualizarEspacioActividad();
         }
 
@@ -285,13 +285,16 @@ namespace Assets.Scripts.UI.LeccionBase
 
         public void MostrarSeccion(string seccion)
         {
-            if (txtProgreso != null) txtProgreso.gameObject.SetActive(false);
+            if (txtProgreso == null) return;
+
+            bool esRefuerzo = string.Equals(seccion, "refuerzo", StringComparison.OrdinalIgnoreCase);
+            txtProgreso.text = esRefuerzo ? "Refuerzo guiado · Progreso" : "Progreso";
+            txtProgreso.gameObject.SetActive(true);
         }
 
         private void NotificarAccionPrincipal() => OnAccionPrincipalClick?.Invoke();
         private void NotificarAtras() => OnAtrasClick?.Invoke();
         private void NotificarVolverAlMapa() => OnVolverAlMapaClick?.Invoke();
-        private void NotificarContinuarLeccion() => OnContinuarLeccionClick?.Invoke();
         private void NotificarConfirmarSalida() => OnConfirmarSalidaClick?.Invoke();
         private void NotificarCancelarSalida() => OnCancelarSalidaClick?.Invoke();
     }

@@ -91,10 +91,17 @@ namespace Assets.Scripts.Editor
             TMP_Text hueco = Texto(panelHueco.transform, "TxtOracion", "", 34, 120);
             Button audioPregunta = CrearBoton(estimulo.transform, "PanelAudio", "ESCUCHAR AUDIO", true, 108, "Lecciones/icono_escuchar.png");
             GameObject opciones = Vertical("OpcionesContainer", cs);
+            // TxtAyudaOpciones: texto guía visible sobre las opciones
+            TMP_Text ayuda = Texto(opciones.transform, "TxtAyudaOpciones", "Selecciona una opción", 24, 48);
+            ayuda.alignment = TextAlignmentOptions.Center;
+            // Items: contenedor directo de las instancias de opcion_respuesta.
+            // childControlHeight=false → la altura la dicta el RectTransform del prefab (no el LayoutGroup).
+            // childControlWidth=true + childForceExpandWidth=true → el ancho se estira para llenar el contenedor.
+            GameObject items = CrearContenedor("Items", opciones.transform, 12, new RectOffset());
             AsignarReferencias(seleccion, new Dictionary<string, UnityEngine.Object> {
                 ["txtInstruccion"] = instruccion, ["txtTextoPregunta"] = pregunta, ["txtOracionHueco"] = hueco,
                 ["panelTexto"] = panelTexto, ["panelOracionHueco"] = panelHueco, ["btnAudioPregunta"] = audioPregunta,
-                ["contenedorOpciones"] = opciones.transform, ["prefabOpcion"] = opcion });
+                ["contenedorOpciones"] = items.transform, ["prefabOpcion"] = opcion });
 
             EmparejamientoView pares = CrearPage<EmparejamientoView>(host.transform, "PageEmparejamiento", out Transform ce);
             TMP_Text ip = CrearEncabezadoActividad(ce, "TxtInstruccion", "Une cada pareja", "Lecciones/icono_emparejar.png");
@@ -164,6 +171,73 @@ namespace Assets.Scripts.Editor
             LeccionActivityStyleUpdater.Aplicar(scene);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
+        }
+
+        [MenuItem("Uchumataqu/UI/Actualizar PageSeleccionMultiple")]
+        public static void ActualizarPageSeleccionMultiple()
+        {
+            if (EditorApplication.isPlaying)
+                throw new InvalidOperationException("Sal del modo Play para actualizar la escena.");
+
+            _regularFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(RegularFontPath);
+            _boldFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BoldFontPath) ?? _regularFont;
+            _theme = AssetDatabase.LoadAssetAtPath<UIThemeModel>(ThemePath);
+            if (_regularFont == null || _theme == null)
+                throw new InvalidOperationException("No se encontraron la fuente o el tema requeridos.");
+            UIThemeController.SetTheme(_theme);
+
+            // Cargar prefab de opcion_respuesta actualizado desde disco
+            GameObject opcion = AssetDatabase.LoadAssetAtPath<GameObject>($"{ElementsPath}/opcion_respuesta.prefab");
+            if (opcion == null)
+                throw new InvalidOperationException($"No se encontró el prefab {ElementsPath}/opcion_respuesta.prefab.");
+
+            Scene scene = SceneManager.GetSceneByPath(ScenePath);
+            bool opened = !scene.IsValid() || !scene.isLoaded;
+            if (opened) scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Additive);
+            try
+            {
+                Transform host = BuscarEnEscena(scene, "ActividadHost");
+                if (host == null) throw new InvalidOperationException("No se encontró ActividadHost.");
+
+                // Eliminar la page anterior y recrearla completamente
+                Transform anterior = host.Find("PageSeleccionMultiple");
+                if (anterior != null) UnityEngine.Object.DestroyImmediate(anterior.gameObject);
+
+                SeleccionMultipleView seleccion = CrearPage<SeleccionMultipleView>(host, "PageSeleccionMultiple", out Transform cs);
+                TMP_Text instruccion = CrearEncabezadoActividad(cs, "TxtInstruccion", "Selecciona la respuesta correcta", "Lecciones/icono_seleccion.png");
+                GameObject estimulo = Bloque(cs, "EstimuloHost", ThemedGraphicView.RolColor.SuperficieSuave);
+                GameObject panelTexto = Vertical("PanelTexto", estimulo.transform);
+                TMP_Text pregunta = Texto(panelTexto.transform, "TxtEstimulo", "¿Cuál es la traducción?", 36, 120);
+                GameObject panelHueco = Vertical("PanelOracionHueco", estimulo.transform);
+                TMP_Text hueco = Texto(panelHueco.transform, "TxtOracion", "", 34, 120);
+                Button audioPregunta = CrearBoton(estimulo.transform, "PanelAudio", "ESCUCHAR AUDIO", true, 108, "Lecciones/icono_escuchar.png");
+                GameObject opciones = Vertical("OpcionesContainer", cs);
+                TMP_Text ayuda = Texto(opciones.transform, "TxtAyudaOpciones", "Selecciona una opción", 24, 48);
+                ayuda.alignment = TextAlignmentOptions.Center;
+                GameObject items = CrearContenedor("Items", opciones.transform, 12, new RectOffset());
+                AsignarReferencias(seleccion, new Dictionary<string, UnityEngine.Object> {
+                    ["txtInstruccion"] = instruccion, ["txtTextoPregunta"] = pregunta, ["txtOracionHueco"] = hueco,
+                    ["panelTexto"] = panelTexto, ["panelOracionHueco"] = panelHueco, ["btnAudioPregunta"] = audioPregunta,
+                    ["contenedorOpciones"] = items.transform, ["prefabOpcion"] = opcion });
+
+                // Actualizar la referencia en LeccionBaseView
+                LeccionBaseView view = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<LeccionBaseView>(true)).Single();
+                AsignarReferencias(view, new Dictionary<string, UnityEngine.Object>
+                {
+                    ["pageSeleccionMultiple"] = seleccion.gameObject
+                });
+
+                seleccion.gameObject.SetActive(false);
+                EditorSceneManager.MarkSceneDirty(scene);
+                EditorSceneManager.SaveScene(scene);
+                AssetDatabase.SaveAssets();
+                Debug.Log("[LeccionBaseUIBuilder] PageSeleccionMultiple actualizada con contenedor Items correcto.");
+            }
+            finally
+            {
+                if (opened) EditorSceneManager.CloseScene(scene, true);
+            }
         }
 
         [MenuItem("Uchumataqu/UI/Actualizar LeccionBase para contrato v3")]
@@ -333,6 +407,7 @@ namespace Assets.Scripts.Editor
             input.lineType = TMP_InputField.LineType.SingleLine;
             input.characterLimit = 200;
             input.onFocusSelectAll = false;
+            MobileInputFieldStyle.Aplicar(input);
 
             GameObject area = CrearObjetoUI("Text Area", root.transform);
             Estirar((RectTransform)area.transform, 28f, 18f);
@@ -413,10 +488,11 @@ namespace Assets.Scripts.Editor
         {
             Button button = CrearBoton(null, nombre, nombre == "tarjeta_memoria" ? "?" : "Palabra", true, altura,
                 null, ThemedButtonView.EstiloBoton.Suave);
-            button.GetComponent<LayoutElement>().preferredHeight = -1;
+            // Mantener preferredHeight = altura (fijado en CrearBoton) para que el LayoutElement
+            // declare la altura deseada. La altura real la controla el RectTransform del prefab
+            // cuando el padre tiene childControlHeight = false (caso de Items en SeleccionMultiple).
             ((RectTransform)button.transform).sizeDelta = new Vector2(320, altura);
             TMP_Text label = button.GetComponentInChildren<TMP_Text>();
-            label.GetComponent<LayoutElement>().preferredHeight = -1;
             if (nombre == "ficha_wordbank") label.textWrappingMode = TextWrappingModes.NoWrap;
             return GuardarPrefab(button.gameObject, $"{ElementsPath}/{nombre}.prefab");
         }

@@ -77,7 +77,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281606935
-  m_fontColor: {r: 0.09019608, g: 0.1372549, b: 0.20392157, a: 1}
+  m_fontColor: {r: 0.5647059, g: 0.3019608, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 9012152798103808520}
   - component: {fileID: 4289126523313234379}
   - component: {fileID: 413779630506955602}
-  - component: {fileID: 2960801173617293840}
+  - component: {fileID: 8156048187081961764}
   m_Layer: 5
   m_Name: ficha_wordbank
   m_TagString: Untagged
@@ -457,7 +457,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &2960801173617293840
+--- !u!114 &8156048187081961764
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

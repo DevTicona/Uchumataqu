@@ -190,7 +190,7 @@ namespace Assets.Scripts.Editor
             Stretch((RectTransform)root.transform);
             (root.GetComponent<LayoutElement>() ?? root.AddComponent<LayoutElement>()).ignoreLayout = true;
             var themed = root.GetComponent<ThemedGraphicView>() ?? root.AddComponent<ThemedGraphicView>();
-            themed.Rol = discontinuo ? ThemedGraphicView.RolColor.TextoSecundario : ThemedGraphicView.RolColor.Borde;
+            themed.Rol = ThemedGraphicView.RolColor.Borde;
             root.transform.SetAsLastSibling();
             return image;
         }

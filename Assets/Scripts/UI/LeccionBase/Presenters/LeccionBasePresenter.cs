@@ -19,6 +19,7 @@ namespace Assets.Scripts.UI.LeccionBase
     {
         [SerializeField] private LeccionBaseView view;
         [SerializeField] private NavegacionAtrasView backHandler;
+        [SerializeField] private AppInitializer appInitializer;
 
         private readonly System.Random _random = new System.Random();
         private GestorLeccion _gestorLeccion;
@@ -37,7 +38,7 @@ namespace Assets.Scripts.UI.LeccionBase
 
         private async void Start()
         {
-            if (view == null || backHandler == null)
+            if (view == null || backHandler == null || appInitializer == null)
             {
                 Debug.LogError("[LeccionBasePresenter] Faltan referencias de composición de la escena.");
                 enabled = false;
@@ -51,6 +52,18 @@ namespace Assets.Scripts.UI.LeccionBase
                 return;
             }
 
+            try
+            {
+                await appInitializer.InicializarAsync();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError($"[LeccionBasePresenter] No se pudo inicializar la aplicacion: {exception.Message}");
+                enabled = false;
+                return;
+            }
+
+            if (this == null) return;
             bool corpusInicializado = await CorpusRepository.InicializarAsync();
             if (this == null) return;
 
@@ -65,7 +78,6 @@ namespace Assets.Scripts.UI.LeccionBase
             view.OnAtrasClick += SolicitarSalida;
             view.OnAccionPrincipalClick += EjecutarAccionPrincipal;
             view.OnVolverAlMapaClick += VolverAlMapa;
-            view.OnContinuarLeccionClick += VolverAlMapa;
             view.OnConfirmarSalidaClick += ConfirmarSalida;
             view.OnCancelarSalidaClick += CancelarSalida;
 
@@ -81,7 +93,6 @@ namespace Assets.Scripts.UI.LeccionBase
             view.OnAtrasClick -= SolicitarSalida;
             view.OnAccionPrincipalClick -= EjecutarAccionPrincipal;
             view.OnVolverAlMapaClick -= VolverAlMapa;
-            view.OnContinuarLeccionClick -= VolverAlMapa;
             view.OnConfirmarSalidaClick -= ConfirmarSalida;
             view.OnCancelarSalidaClick -= CancelarSalida;
         }

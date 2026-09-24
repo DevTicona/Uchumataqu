@@ -97,7 +97,16 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             _enviada = false;
             if (prefabOpcion != null)
             {
-                while (botonesOpcion.Count < opcionesBarajadas.Count)
+                // Destruir instancias previas para reflejar siempre los cambios del prefab
+                for (int i = botonesOpcion.Count - 1; i >= 0; i--)
+                    if (botonesOpcion[i] != null)
+                        Destroy(botonesOpcion[i].gameObject);
+                botonesOpcion.Clear();
+                textosOpcion.Clear();
+                fondosOpcion.Clear();
+                _accionesOpciones.Clear();
+
+                for (int i = 0; i < opcionesBarajadas.Count; i++)
                 {
                     Button boton = Instantiate(prefabOpcion, contenedorOpciones, false).GetComponent<Button>();
                     botonesOpcion.Add(boton);

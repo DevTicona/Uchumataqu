@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
+    [ExecuteAlways]
     public sealed class PresentacionFamiliaView : MonoBehaviour
     {
         [SerializeField] private TMP_Text txtBadge;
@@ -29,6 +30,59 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private readonly List<GameObject> _filas = new List<GameObject>();
         private readonly UIEventSubscriptions _formaSubscriptions = new UIEventSubscriptions();
         private Button _botonPracticaActivo;
+
+#if UNITY_EDITOR
+        private int _firmaFilasEditor = int.MinValue;
+
+        private void OnValidate()
+        {
+            if (Application.isPlaying || UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) return;
+            _firmaFilasEditor = int.MinValue;
+            UnityEditor.EditorApplication.delayCall -= ActualizarAltoFormasEnEditor;
+            UnityEditor.EditorApplication.delayCall += ActualizarAltoFormasEnEditor;
+        }
+
+        private void OnDisable()
+        {
+            UnityEditor.EditorApplication.delayCall -= ActualizarAltoFormasEnEditor;
+        }
+
+        private void Update()
+        {
+            if (!Application.isPlaying)
+                ActualizarAltoFormasEnEditor();
+        }
+
+        private void ActualizarAltoFormasEnEditor()
+        {
+            if (Application.isPlaying || UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) return;
+            if (contenedorFormas == null || items == null) return;
+
+            int firmaActual = CalcularFirmaFilasEditor();
+            if (firmaActual == _firmaFilasEditor) return;
+
+            _firmaFilasEditor = firmaActual;
+            ActualizarAltoFormas();
+            UnityEditor.EditorUtility.SetDirty(contenedorFormas);
+        }
+
+        private int CalcularFirmaFilasEditor()
+        {
+            unchecked
+            {
+                int firma = items.childCount;
+                foreach (Transform fila in items)
+                {
+                    LayoutElement elemento = fila.GetComponent<LayoutElement>();
+                    firma = (firma * 397) ^ fila.GetSiblingIndex();
+                    firma = (firma * 397) ^ (fila.name?.GetHashCode() ?? 0);
+                    firma = (firma * 397) ^ Mathf.RoundToInt(LayoutUtility.GetPreferredHeight(fila as RectTransform));
+                    firma = (firma * 397) ^ Mathf.RoundToInt(elemento != null ? elemento.minHeight : 0f);
+                }
+                return firma;
+            }
+        }
+#endif
 
         private void Awake()
         {

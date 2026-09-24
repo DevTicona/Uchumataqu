@@ -22,17 +22,15 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         [SerializeField] private GameObject estrella3;
 
         [Header("Botones")]
-        [SerializeField] private Button btnContinuar;
         [SerializeField] private Button btnVolverMapa;
 
-        public event Action OnContinuarClicked;
         public event Action OnVolverMapaClicked;
 
         public bool ValidarConfiguracion(out string error)
         {
             bool completa = txtTitulo != null && txtAciertos != null && txtPrecision != null &&
                 estrella1 != null && estrella2 != null && estrella3 != null &&
-                btnContinuar != null && btnVolverMapa != null;
+                btnVolverMapa != null;
             error = completa ? null : "Faltan referencias obligatorias del modal de resultados en el Inspector.";
             return completa;
         }
@@ -45,20 +43,15 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
                 enabled = false;
                 return;
             }
-            if (btnContinuar != null)
-                btnContinuar.onClick.AddListener(NotificarContinuar);
-
             if (btnVolverMapa != null)
                 btnVolverMapa.onClick.AddListener(NotificarVolverMapa);
         }
 
         private void OnDestroy()
         {
-            if (btnContinuar != null) btnContinuar.onClick.RemoveListener(NotificarContinuar);
             if (btnVolverMapa != null) btnVolverMapa.onClick.RemoveListener(NotificarVolverMapa);
         }
 
-        private void NotificarContinuar() => OnContinuarClicked?.Invoke();
         private void NotificarVolverMapa() => OnVolverMapaClicked?.Invoke();
 
         public void Mostrar(int aciertos, int totalPasos, double precision, int estrellas)

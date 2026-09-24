@@ -169,8 +169,6 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         [Header("Separadores de Región")]
         [SerializeField] private GameObject prefabSeparadorSeccion;
-        [SerializeField] private Color colorSeparadorRegion = new Color(0.40f, 0.22f, 0.06f, 1f);
-
         private void CrearEncabezadoRegion(string titulo)
         {
             string textoSeccion = titulo;
@@ -179,7 +177,6 @@ namespace Assets.Scripts.UI.Main.Paginas
             separador.name = $"Region_{titulo}";
             var vistaSeparador = separador.GetComponent<SeparadorSeccionView>();
             vistaSeparador.Configurar(textoSeccion);
-            vistaSeparador.ConfigurarColorLineas(colorSeparadorRegion);
             _elementosInstanciados.Add(separador);
         }
 

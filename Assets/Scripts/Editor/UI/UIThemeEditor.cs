@@ -54,6 +54,8 @@ namespace Assets.Scripts.Editor
             {
                 graphic.AplicarTema();
                 EditorUtility.SetDirty(graphic);
+                if (graphic.TryGetComponent(out UnityEngine.UI.Image imagen))
+                    EditorUtility.SetDirty(imagen);
             }
 
             if (EditorSceneManager.GetActiveScene().IsValid())

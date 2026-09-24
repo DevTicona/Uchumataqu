@@ -76,7 +76,7 @@ namespace Assets.Scripts.UI.Main.Paginas
                 {
                     EstadoLogro.Obtenido => ThemedGraphicView.RolColor.Exito,
                     EstadoLogro.EnProgreso => ThemedGraphicView.RolColor.Primario,
-                    _ => ThemedGraphicView.RolColor.TextoSecundario
+                    _ => ThemedGraphicView.RolColor.SobreColor
                 });
             }
             if (rellenoProgreso != null)

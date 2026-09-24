@@ -11,17 +11,19 @@ namespace Assets.Scripts.Core.UI.Theme
 
         [Header("Marca")]
         public Color colorPrimario = new Color(0.85098039f, 0.47058824f, 0f, 1f);
+        public Color colorSecundario = new Color(0.54901961f, 0.29019608f, 0.03137255f, 1f);
 
         [Header("Superficies")]
         public Color colorSuperficie = new Color(1f, 0.99215686f, 0.96862745f, 1f);
         public Color colorSuperficieSuave = new Color(1f, 0.95686275f, 0.83921569f, 1f);
-        public Color colorBorde = new Color(0.86666667f, 0.83137255f, 0.76470588f, 1f);
+        public Color colorBorde = new Color(0.85882353f, 0.76078431f, 0.69019608f, 1f);
+        public Color colorBordeSecundario = new Color(0.78823529f, 0.65882353f, 0.54901961f, 1f);
 
         [Header("Texto")]
         [FormerlySerializedAs("colorTexto")]
-        public Color colorTextoPrimario = new Color(0.09019608f, 0.1372549f, 0.20392157f, 1f);
-        public Color colorTextoSecundario = new Color(0.34901961f, 0.38823529f, 0.43137255f, 1f);
-        public Color colorTextoTerciario = new Color(0.54117647f, 0.56078431f, 0.58823529f, 1f);
+        public Color colorTextoPrimario = new Color(0.56470588f, 0.30196078f, 0f, 1f);
+        public Color colorTextoSecundario = new Color(0.09019608f, 0.1372549f, 0.20392157f, 1f);
+        public Color colorTextoTerciario = new Color(0.34901961f, 0.38823529f, 0.43137255f, 1f);
         [FormerlySerializedAs("colorTextoSobreOscuro")]
         [FormerlySerializedAs("colorTextoSobrePrimario")]
         public Color colorTextoSobreColor = new Color(1f, 1f, 1f, 1f);
@@ -36,7 +38,7 @@ namespace Assets.Scripts.Core.UI.Theme
 
         [Header("Controles")]
         [FormerlySerializedAs("colorBotonSuave")]
-        public Color colorControlSuave = new Color(1f, 0.94117647f, 0.8f, 1f);
+        public Color colorControlSuave = new Color(1f, 0.90980392f, 0.72156863f, 1f);
         public Color colorDeshabilitado = new Color(0.85098039f, 0.85098039f, 0.85098039f, 1f);
         public Color colorScrim = new Color(0f, 0f, 0f, 0.6f);
 

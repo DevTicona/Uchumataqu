@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Core.UI.Components
 {
-    [ExecuteAlways]
     [RequireComponent(typeof(Image))]
     [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Assets.Scripts.Core.UI.Components", sourceAssembly: "Assembly-CSharp", sourceClassName: "ThemedGraphic")]
     public sealed class ThemedGraphicView : MonoBehaviour
@@ -14,7 +13,9 @@ namespace Assets.Scripts.Core.UI.Components
             Superficie = 1,
             SuperficieSuave = 2,
             Borde = 3,
+            BordeSecundario = 17,
             Primario = 4,
+            Secundario = 15,
             ControlSuave = 5,
             Exito = 6,
             Advertencia = 7,
@@ -51,26 +52,6 @@ namespace Assets.Scripts.Core.UI.Components
 
         private void OnDisable() => UIThemeController.OnThemeChanged -= AplicarTema;
 
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            UnityEditor.EditorApplication.delayCall -= AplicarTemaEnEditor;
-            UnityEditor.EditorApplication.delayCall += AplicarTemaEnEditor;
-        }
-
-        private void AplicarTemaEnEditor()
-        {
-            if (this == null) return;
-            if (UIThemeController.Theme == null)
-            {
-                UIThemeModel theme = UnityEditor.AssetDatabase.LoadAssetAtPath<UIThemeModel>(
-                    "Assets/Content/UI/UITheme.asset");
-                if (theme != null) UIThemeController.SetTheme(theme);
-            }
-            AplicarTema();
-        }
-#endif
-
         public void AplicarTema()
         {
             UIThemeModel theme = UIThemeController.Theme;
@@ -88,7 +69,9 @@ namespace Assets.Scripts.Core.UI.Components
             {
                 case RolColor.SuperficieSuave: return theme.colorSuperficieSuave;
                 case RolColor.Borde: return theme.colorBorde;
+                case RolColor.BordeSecundario: return theme.colorBordeSecundario;
                 case RolColor.Primario: return theme.colorPrimario;
+                case RolColor.Secundario: return theme.colorSecundario;
                 case RolColor.ControlSuave: return theme.colorControlSuave;
                 case RolColor.Exito: return theme.colorExito;
                 case RolColor.Advertencia: return theme.colorAdvertencia;
@@ -98,8 +81,8 @@ namespace Assets.Scripts.Core.UI.Components
                 case RolColor.SobreColor: return theme.colorTextoSobreColor;
                 case RolColor.ProgresoFondo: return theme.colorProgresoFondo;
                 case RolColor.TextoSecundario: return theme.colorTextoSecundario;
-                case RolColor.TextoTerciario: return theme.colorTextoTerciario;
                 case RolColor.Deshabilitado: return theme.colorDeshabilitado;
+                case RolColor.TextoTerciario: return theme.colorTextoTerciario;
                 default: return theme.colorSuperficie;
             }
         }

@@ -29,16 +29,11 @@ namespace Assets.Scripts.UI.Main.Paginas
                 textoRegion.alignment = TextAlignmentOptions.Center;
                 textoRegion.textWrappingMode = TextWrappingModes.NoWrap;
                 textoRegion.overflowMode = TextOverflowModes.Overflow;
+                textoRegion.ForceMeshUpdate();
             }
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
         }
 
-        public void ConfigurarColorLineas(Color colorSeparador)
-        {
-            if (separadorSuperior != null)
-                separadorSuperior.color = colorSeparador;
-
-            if (separadorInferior != null)
-                separadorInferior.color = colorSeparador;
-        }
     }
 }

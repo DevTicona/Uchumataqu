@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c768d7b9e146d184d95d962fdda895fb, type: 3}
   m_Name: UITheme
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Theme.UIThemeModel
-  colorPrimario: {r: 0.8509804, g: 0.4745098, b: 0, a: 1}
+  colorPrimario: {r: 0.8509804, g: 0.47058824, b: 0, a: 1}
+  colorSecundario: {r: 0.54901963, g: 0.2901961, b: 0.03137255, a: 1}
   colorSuperficie: {r: 1, g: 0.99215686, b: 0.96862745, a: 1}
   colorSuperficieSuave: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   colorBorde: {r: 0.85882354, g: 0.7607843, b: 0.6901961, a: 1}
-  colorTextoPrimario: {r: 0.09019608, g: 0.1372549, b: 0.20392157, a: 1}
-  colorTextoSecundario: {r: 0.34901962, g: 0.3882353, b: 0.43137255, a: 1}
-  colorTextoTerciario: {r: 0.020612193, g: 0.7283019, b: 0.6988769, a: 1}
+  colorBordeSecundario: {r: 0.7882353, g: 0.65882355, b: 0.54901963, a: 1}
+  colorTextoPrimario: {r: 0.5647059, g: 0.3019608, b: 0, a: 1}
+  colorTextoSecundario: {r: 0.09019608, g: 0.1372549, b: 0.20392157, a: 1}
+  colorTextoTerciario: {r: 0.34901962, g: 0.3882353, b: 0.43137255, a: 1}
   colorTextoSobreColor: {r: 1, g: 1, b: 1, a: 1}
   colorExito: {r: 0.18039216, g: 0.54509807, b: 0.34117648, a: 1}
   colorError: {r: 0.8627451, g: 0.22745098, b: 0.22745098, a: 1}
   colorAdvertencia: {r: 0.8980392, g: 0.627451, b: 0, a: 1}
   colorInformacion: {r: 0.14509805, g: 0.5372549, b: 0.7882353, a: 1}
-  colorControlSuave: {r: 1, g: 0.9411765, b: 0.8, a: 1}
+  colorControlSuave: {r: 1, g: 0.9098039, b: 0.72156864, a: 1}
   colorDeshabilitado: {r: 0.8509804, g: 0.8509804, b: 0.8509804, a: 1}
   colorScrim: {r: 0, g: 0, b: 0, a: 0.6}
   colorProgresoFondo: {r: 0.89411765, g: 0.88235295, b: 0.8509804, a: 1}

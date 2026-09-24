@@ -102,7 +102,8 @@ namespace Assets.Scripts.Core.UI.Components
                 // un primario naranja hasta que parece rojo.
                 button.targetGraphic.color = Color.white;
                 button.targetGraphic.SetAllDirty();
-                button.targetGraphic.CrossFadeColor(normal, 0f, true, true);
+                Color colorActual = button.interactable ? normal : colors.disabledColor;
+                button.targetGraphic.CrossFadeColor(colorActual, 0f, true, true);
             }
         }
 

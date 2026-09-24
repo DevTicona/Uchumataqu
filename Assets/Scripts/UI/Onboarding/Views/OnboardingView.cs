@@ -204,6 +204,7 @@ namespace Assets.Scripts.UI.Onboarding
             inputNombre.characterLimit = 30;
             inputNombre.lineType = TMP_InputField.LineType.SingleLine;
             inputNombre.onFocusSelectAll = false;
+            MobileInputFieldStyle.Aplicar(inputNombre);
         }
 
         private void NotificarComienzo() => OnComenzarClick?.Invoke();

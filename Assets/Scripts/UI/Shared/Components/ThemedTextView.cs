@@ -120,6 +120,12 @@ namespace Assets.Scripts.Core.UI.Components
             if (theme.fuentePrincipal != null)
                 texto.font = theme.fuentePrincipal;
 
+            // NotoSans-Regular SDF no incluye el glifo U+2026 (…). TMP intenta
+            // insertarlo al usar Ellipsis y emite una advertencia en cada render.
+            // Truncate conserva el mismo límite visual sin requerir dicho glifo.
+            if (texto.overflowMode == TextOverflowModes.Ellipsis)
+                texto.overflowMode = TextOverflowModes.Truncate;
+
             // =========================
             // COLOR
             // =========================

@@ -15,18 +15,31 @@ namespace Assets.Scripts.UI.Main
     {
         [SerializeField] private MainView view;
         [SerializeField] private NavegacionAtrasView backHandler;
+        [SerializeField] private AppInitializer appInitializer;
 
         private PaginaMain _paginaActual = PaginaMain.Inicio;
 
         private async void Start()
         {
-            if (view == null || backHandler == null)
+            if (view == null || backHandler == null || appInitializer == null)
             {
                 Debug.LogError("[MainPresenter] Faltan referencias de composición de la escena.");
                 enabled = false;
                 return;
             }
 
+            try
+            {
+                await appInitializer.InicializarAsync();
+            }
+            catch (System.Exception exception)
+            {
+                Debug.LogError($"[MainPresenter] No se pudo inicializar la aplicacion: {exception.Message}");
+                enabled = false;
+                return;
+            }
+
+            if (this == null) return;
             if (!CorpusRepository.EstaInicializado && !await CorpusRepository.InicializarAsync())
             {
                 Debug.LogError("[MainPresenter] No se pudo inicializar el corpus para mostrar la escena Main.");

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Core.UI;
+using Assets.Scripts.Core.UI.Components;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -66,6 +67,7 @@ namespace Assets.Scripts.UI.Main.Paginas
 
         private void Awake()
         {
+            MobileInputFieldStyle.Aplicar(inputNombreModal);
             InicializarBotonesAvatarModal();
 
             if (btnEditarPerfil != null)
@@ -172,7 +174,10 @@ namespace Assets.Scripts.UI.Main.Paginas
                 modalEditarPerfil.SetActive(true);
 
             if (inputNombreModal != null)
+            {
                 inputNombreModal.text = _nombreActual;
+                MobileInputFieldStyle.Aplicar(inputNombreModal);
+            }
 
             _avatarModalSeleccionado = _avatarActual;
             ActualizarSeleccionAvatarModal(_avatarModalSeleccionado);

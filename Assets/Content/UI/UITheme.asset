@@ -33,7 +33,7 @@ MonoBehaviour:
   fuentePrincipal: {fileID: 11400000, guid: cac2546b7b3c3154e89adc062af451a2, type: 2}
   escalaTextoGlobal: 1
   tituloGrande: 72
-  titulo: 56
-  subtitulo: 42
-  textoNormal: 36
-  textoPequeno: 28
+  titulo: 60
+  subtitulo: 46
+  textoNormal: 40
+  textoPequeno: 32

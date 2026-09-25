@@ -5,8 +5,7 @@ using Assets.Scripts.PLN;
 namespace Assets.Scripts.ASR
 {
     /// <summary>
-    /// Evaluador de práctica oral que consume IReconocedorVoz y delega al MotorEvaluacion.
-    /// Modalidad complementaria y no bloqueante.
+    /// Evaluador de pronunciación que consume IReconocedorVoz y aplica asistencia léxica Viterbi.
     /// Especificado en Docs/Specifications/02-modulo-asr-voz.md (Sección 7 y 8).
     /// </summary>
     public static class EvaluadorVoz
@@ -66,11 +65,11 @@ namespace Assets.Scripts.ASR
             return new ResultadoEvaluacion
             {
                 evaluado = false,
-                aprobado = true,
+                aprobado = false,
                 porcentajeSimilitud = 0f,
                 colorSemaforo = "neutral",
                 textoEsperado = esperado,
-                textoIngresado = "(Práctica no evaluada / ASR opcional)",
+                textoIngresado = "(No se pudo evaluar la pronunciación)",
                 origenEntrada = "voz"
             };
         }

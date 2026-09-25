@@ -15,6 +15,16 @@ namespace Assets.Scripts.Core.UI.Components
             input.shouldHideMobileInput = true;
             input.shouldHideSoftKeyboard = false;
             input.ForceLabelUpdate();
+
+            AplicarTema(input.textComponent);
+            AplicarTema(input.placeholder as TMP_Text);
+        }
+
+        private static void AplicarTema(TMP_Text texto)
+        {
+            if (texto == null) return;
+            texto.GetComponent<ThemedTextView>()?.AplicarTema();
+            texto.SetVerticesDirty();
         }
     }
 }

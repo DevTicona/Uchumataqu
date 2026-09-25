@@ -30,6 +30,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private readonly List<GameObject> _filas = new List<GameObject>();
         private readonly UIEventSubscriptions _formaSubscriptions = new UIEventSubscriptions();
         private Button _botonPracticaActivo;
+        private TMP_Text _etiquetaGrabacion;
+        private string _textoAntesGrabacion;
 
 #if UNITY_EDITOR
         private int _firmaFilasEditor = int.MinValue;
@@ -100,6 +102,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         public void Configurar(PasoLeccionModel paso, PalabraModel palabra)
         {
+            RestaurarTextoPracticar();
+            _botonPracticaActivo = null;
             _formaSubscriptions.Dispose();
             Transform contenedorItems = items != null ? items : contenedorFormas.transform;
             for (int i = contenedorItems.childCount - 1; i >= 0; i--)
@@ -145,17 +149,45 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         public void MostrarEstadoGrabacion(bool grabando)
         {
+            ActualizarTextoPracticar(grabando);
             foreach (Button boton in BotonesPresentacion())
             {
                 bool esActivo = boton == _botonPracticaActivo;
                 boton.interactable = !grabando;
                 if (!esActivo) continue;
 
-                EstablecerTextoBoton(boton, grabando
-                    ? "GRABANDO"
-                    : boton == btnPracticar ? "PRACTICAR\nPRONUNCIACIÓN" : "PRACTICAR");
                 EstablecerIconoBoton(boton, grabando ? iconoGrabando : iconoPracticar);
             }
+        }
+
+        private void ActualizarTextoPracticar(bool grabando)
+        {
+            if (!grabando)
+            {
+                RestaurarTextoPracticar();
+                return;
+            }
+
+            if (_botonPracticaActivo == null) return;
+            TMP_Text etiqueta = _botonPracticaActivo.GetComponentInChildren<TMP_Text>(true);
+            if (etiqueta == null) return;
+
+            if (_etiquetaGrabacion != etiqueta)
+            {
+                RestaurarTextoPracticar();
+                _etiquetaGrabacion = etiqueta;
+                _textoAntesGrabacion = etiqueta.text;
+            }
+
+            etiqueta.text = "GRABANDO";
+        }
+
+        private void RestaurarTextoPracticar()
+        {
+            if (_etiquetaGrabacion != null)
+                _etiquetaGrabacion.text = _textoAntesGrabacion;
+            _etiquetaGrabacion = null;
+            _textoAntesGrabacion = null;
         }
 
         private IEnumerable<Button> BotonesPresentacion()
@@ -169,13 +201,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 if (escuchar != null) yield return escuchar;
                 if (practicar != null) yield return practicar;
             }
-        }
-
-        private static void EstablecerTextoBoton(Button boton, string texto)
-        {
-            if (boton == null) return;
-            TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>();
-            if (etiqueta != null) etiqueta.text = texto;
         }
 
         private static void EstablecerIconoBoton(Button boton, Sprite icono)

@@ -46,6 +46,7 @@ namespace Assets.Scripts.Data.Corpus
         public bool opcional;
         public string respuesta_esperada_uch;
         public string consigna;
+        public string pista_es;
         public string fuente_estimulo;
         public string seccion;
         public RefuerzoPasoModel refuerzo_al_fallar;

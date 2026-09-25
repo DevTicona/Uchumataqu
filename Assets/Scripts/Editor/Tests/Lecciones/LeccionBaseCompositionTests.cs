@@ -32,19 +32,122 @@ namespace Assets.Scripts.Editor.Tests
                 FeedbackOverlayView feedback = scene.GetRootGameObjects()
                     .SelectMany(root => root.GetComponentsInChildren<FeedbackOverlayView>(true)).Single();
                 Image icono = Referencia<Image>(feedback, "imgEstado");
-                Image detalle = Referencia<Image>(feedback, "fondoDetalle");
+                ThemedGraphicView bordeDetalle = Referencia<ThemedGraphicView>(feedback, "bordeDetalle");
                 TMP_Text titulo = Referencia<TMP_Text>(feedback, "txtTitulo");
                 TMP_Text mensaje = Referencia<TMP_Text>(feedback, "txtMensajeDetalle");
                 UIThemeModel tema = UIThemeController.Theme;
 
                 ValidarEstado(() => feedback.MostrarCorrecto(), ThemedGraphicView.RolColor.Exito,
-                    ThemedTextView.ColorTexto.Exito, tema.colorExito, icono, detalle, titulo, mensaje);
+                    ThemedTextView.ColorTexto.Exito, tema.colorExito, feedback, icono, bordeDetalle, titulo, mensaje);
                 ValidarEstado(() => feedback.MostrarCasi(), ThemedGraphicView.RolColor.Advertencia,
-                    ThemedTextView.ColorTexto.Advertencia, tema.colorAdvertencia, icono, detalle, titulo, mensaje);
+                    ThemedTextView.ColorTexto.Advertencia, tema.colorAdvertencia, feedback, icono, bordeDetalle, titulo, mensaje);
                 ValidarEstado(() => feedback.MostrarIncorrecto(), ThemedGraphicView.RolColor.Error,
-                    ThemedTextView.ColorTexto.Error, tema.colorError, icono, detalle, titulo, mensaje);
+                    ThemedTextView.ColorTexto.Error, tema.colorError, feedback, icono, bordeDetalle, titulo, mensaje);
                 ValidarEstado(() => feedback.MostrarInformacion(), ThemedGraphicView.RolColor.Informacion,
-                    ThemedTextView.ColorTexto.Informacion, tema.colorInformacion, icono, detalle, titulo, mensaje);
+                    ThemedTextView.ColorTexto.Informacion, tema.colorInformacion, feedback, icono, bordeDetalle, titulo, mensaje);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        [Test]
+        public void Presentacion_MuestraGrabandoYRecuperaTextoManualDelBotonPracticar()
+        {
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                PresentacionFamiliaView presentacion = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<PresentacionFamiliaView>(true)).Single();
+                Button boton = Referencia<Button>(presentacion, "btnPracticar");
+                TMP_Text etiqueta = boton.GetComponentInChildren<TMP_Text>(true);
+                string textoManual = etiqueta.text;
+                bool pulsado = false;
+                presentacion.OnPronunciacionClicked += () => pulsado = true;
+
+                boton.onClick.Invoke();
+                Assert.IsTrue(pulsado);
+                presentacion.MostrarEstadoGrabacion(true);
+                Assert.AreEqual("GRABANDO", etiqueta.text);
+                presentacion.MostrarEstadoGrabacion(true);
+                Assert.AreEqual("GRABANDO", etiqueta.text);
+                presentacion.MostrarEstadoGrabacion(false);
+                Assert.AreEqual(textoManual, etiqueta.text);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        [Test]
+        public void Escritura_MuestraBordesDeEstadoYRespuestaEsperada()
+        {
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                EscrituraView escritura = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<EscrituraView>(true)).Single();
+                TMP_InputField input = Referencia<TMP_InputField>(escritura, "inputRespuesta");
+                ThemedGraphicView bordeInput = Referencia<ThemedGraphicView>(escritura, "bordeInputRespuesta");
+                GameObject tarjetaCorrecta = Referencia<GameObject>(escritura, "panelRespuestaCorrecta");
+                TMP_Text textoCorrecto = Referencia<TMP_Text>(escritura, "txtRespuestaCorrecta");
+                ThemedGraphicView bordeCorrecto = Referencia<ThemedGraphicView>(escritura, "bordeRespuestaCorrecta");
+
+                Assert.IsNull(tarjetaCorrecta.GetComponent<TMP_InputField>());
+                Assert.AreEqual(input.GetComponent<LayoutElement>().preferredHeight,
+                    tarjetaCorrecta.GetComponent<LayoutElement>().preferredHeight);
+
+                escritura.Configurar(TipoPasoLeccion.EscribirPalabra, "Casa");
+                Assert.AreEqual(ThemedGraphicView.RolColor.Borde, bordeInput.Rol);
+                Assert.IsFalse(tarjetaCorrecta.activeSelf);
+
+                escritura.MostrarResultado("amarillo", "Chhaq");
+                Assert.AreEqual(ThemedGraphicView.RolColor.Advertencia, bordeInput.Rol);
+                Assert.AreEqual(ThemedGraphicView.RolColor.Exito, bordeCorrecto.Rol);
+                Assert.AreEqual("Chhaq", textoCorrecto.text);
+                Assert.IsTrue(tarjetaCorrecta.activeSelf);
+
+                escritura.MostrarResultado("rojo", "Chhaq");
+                Assert.AreEqual(ThemedGraphicView.RolColor.Error, bordeInput.Rol);
+                Assert.IsTrue(tarjetaCorrecta.activeSelf);
+
+                escritura.MostrarResultado("verde", "Chhaq");
+                Assert.AreEqual(ThemedGraphicView.RolColor.Exito, bordeInput.Rol);
+                Assert.IsFalse(tarjetaCorrecta.activeSelf);
+
+                escritura.Configurar(TipoPasoLeccion.EscribirPalabra, "Casa");
+                Assert.AreEqual(ThemedGraphicView.RolColor.Borde, bordeInput.Rol);
+                Assert.IsFalse(tarjetaCorrecta.activeSelf);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        [Test]
+        public void CompletarOracion_MuestraLaPistaEspanolaDelJsonEnElTitulo()
+        {
+            Assert.IsTrue(CorpusRepository.Inicializar());
+            PasoLeccionModel paso = CorpusRepository.ObtenerTodasLasLecciones()
+                .SelectMany(leccion => leccion.pasos)
+                .First(p => p.tipo == TipoPasoLeccion.CompletarOracion);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(paso.pista_es));
+
+            ActividadSeleccionModel datos = GestorActividadLeccion.CrearSeleccion(paso);
+            Assert.AreEqual(paso.pista_es, datos.PistaEs);
+
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                SeleccionMultipleView seleccion = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<SeleccionMultipleView>(true)).Single();
+                seleccion.Configurar(datos.Tipo, datos.Prompt, datos.Opciones, null, datos.PistaEs);
+
+                Assert.AreEqual($"Completa la oración:\n«{datos.PistaEs}»",
+                    Referencia<TMP_Text>(seleccion, "txtInstruccion").text);
+                Assert.AreEqual(datos.Prompt, Referencia<TMP_Text>(seleccion, "txtOracionHueco").text);
+                TMP_Text titulo = Referencia<TMP_Text>(seleccion, "txtInstruccion");
+                LayoutElement encabezado = titulo.transform.parent.GetComponent<LayoutElement>();
+                Assert.GreaterOrEqual(encabezado.minHeight,
+                    titulo.GetPreferredValues(titulo.text, titulo.rectTransform.rect.width, 0f).y);
+
+                seleccion.Configurar("uch_a_es", "Prueba", new List<string> { "Uno", "Dos" });
+                Assert.AreEqual(96f, encabezado.minHeight);
+                Assert.AreEqual(-1f, encabezado.preferredHeight);
             }
             finally { EditorSceneManager.ClosePreviewScene(scene); }
         }
@@ -130,7 +233,7 @@ namespace Assets.Scripts.Editor.Tests
         }
 
         [Test]
-        public void Tarjetas_ConservanSeleccionYResultadoAlCambiarTema()
+        public void Tarjetas_RespetanLosRolesDeTemaConfiguradosEnElPrefab()
         {
             var original = AssetDatabase.LoadAssetAtPath<Assets.Scripts.Core.UI.Theme.UIThemeModel>("Assets/Content/UI/UITheme.asset");
             var previo = Assets.Scripts.Core.UI.Theme.UIThemeController.Theme;
@@ -156,15 +259,22 @@ namespace Assets.Scripts.Editor.Tests
                 alternate.colorExito = new Color(0.2f, 0.4f, 0.8f);
                 alternate.escalaTextoGlobal = 1.2f;
                 Assets.Scripts.Core.UI.Theme.UIThemeController.SetTheme(alternate);
+                Assert.AreEqual(alternate.colorSuperficie, option.GetComponent<Image>().color);
                 Assert.AreEqual(alternate.colorPrimario, option.transform.Find("Marco").GetComponent<Image>().color);
-                Assert.AreEqual(alternate.textoNormal * 1.2f, textoOpcion.fontSize, 0.01f);
+                Assert.AreEqual(40f, textoOpcion.fontSize, 0.01f);
                 Assert.AreEqual(estiloOriginal, textoOpcion.fontStyle);
                 Assert.AreSame(manualSprite, pairImage.sprite);
                 Assert.AreEqual(Image.Type.Simple, pairImage.type);
                 Assert.AreEqual(3f, pairImage.pixelsPerUnitMultiplier);
                 Assert.AreEqual(Color.Lerp(alternate.colorSuperficie, alternate.colorExito, 0.18f), pair.GetComponent<Button>().colors.disabledColor);
+                selection.MostrarResultado(true);
+                Assert.AreEqual(alternate.colorExito, option.transform.Find("Marco").GetComponent<Image>().color);
+                Assert.AreEqual(alternate.colorExito,
+                    option.transform.Find("IndicadorSeleccion/Check").GetComponent<Image>().color);
                 selection.MostrarResultado(false);
                 Assert.AreEqual(alternate.colorError, option.transform.Find("Marco").GetComponent<Image>().color);
+                Assert.AreEqual(alternate.colorError,
+                    option.transform.Find("IndicadorSeleccion/Check").GetComponent<Image>().color);
                 selection.MostrarSeleccion(false);
                 Assert.AreEqual(alternate.colorBorde, option.transform.Find("Marco").GetComponent<Image>().color);
             }
@@ -204,18 +314,23 @@ namespace Assets.Scripts.Editor.Tests
                 ASRView view = scene.GetRootGameObjects()
                     .SelectMany(r => r.GetComponentsInChildren<ASRView>(true)).Single();
                 view.Configurar("Chhaq", true);
+                Button escuchar = Referencia<Button>(view, "btnAudioReferencia");
                 Button practicar = Referencia<Button>(view, "btnPracticar");
+                Assert.AreEqual("ESCUCHAR", escuchar.GetComponentInChildren<TMP_Text>().text);
+                Assert.AreEqual("REPETIR", practicar.GetComponentInChildren<TMP_Text>().text);
                 Assert.IsTrue(practicar.interactable);
                 foreach (ASRView.Estado estado in new[] { ASRView.Estado.Grabando, ASRView.Estado.Procesando })
                 {
                     view.MostrarEstado(estado);
-                    Assert.IsFalse(Referencia<Button>(view, "btnAudioReferencia").interactable);
+                    Assert.IsFalse(escuchar.interactable);
                     Assert.IsFalse(practicar.interactable);
+                    Assert.AreEqual(UIThemeController.Theme.colorDeshabilitado, escuchar.colors.disabledColor);
+                    Assert.AreEqual(UIThemeController.Theme.colorDeshabilitado, practicar.colors.disabledColor);
                 }
                 view.MostrarEstado(ASRView.Estado.Resultado);
-                Assert.IsTrue(Referencia<Button>(view, "btnAudioReferencia").interactable);
+                Assert.IsTrue(escuchar.interactable);
                 Assert.IsTrue(practicar.interactable);
-                Assert.AreEqual("PRACTICAR DE NUEVO", practicar.GetComponentInChildren<TMP_Text>().text);
+                Assert.AreEqual("REPETIR", practicar.GetComponentInChildren<TMP_Text>().text);
                 Assert.IsFalse(view.GetComponentsInChildren<Transform>(true).Any(t =>
                     t.name == "PanelResultado" || t.name == "TxtEstado" || t.name == "BtnMicrofono"));
             }
@@ -324,6 +439,10 @@ namespace Assets.Scripts.Editor.Tests
                 escritura.ConfirmarRespuesta();
 
                 Assert.AreEqual(1, gestor.Errores);
+                Assert.AreEqual(ThemedGraphicView.RolColor.Error,
+                    Referencia<ThemedGraphicView>(escritura, "bordeInputRespuesta").Rol);
+                Assert.IsTrue(Referencia<GameObject>(escritura, "panelRespuestaCorrecta").activeSelf);
+                Assert.IsFalse(string.IsNullOrWhiteSpace(Referencia<TMP_Text>(escritura, "txtRespuestaCorrecta").text));
                 Assert.IsNotNull(typeof(LeccionBasePresenter).GetField("_refuerzoPendiente", flags).GetValue(presenter));
                 typeof(LeccionBasePresenter).GetMethod("AvanzarTrasFeedback", flags).Invoke(presenter, null);
 
@@ -501,7 +620,8 @@ namespace Assets.Scripts.Editor.Tests
             else if (TipoPasoLeccion.EsSeleccion(paso.tipo))
             {
                 var d = GestorActividadLeccion.CrearSeleccion(paso);
-                view.InstanciarSeleccionMultiple().Configurar(d.Tipo, d.Prompt, d.Opciones, d.AudioPalabraId ?? d.AudioOracionId);
+                view.InstanciarSeleccionMultiple().Configurar(d.Tipo, d.Prompt, d.Opciones,
+                    d.AudioPalabraId ?? d.AudioOracionId, d.PistaEs);
             }
             else if (paso.tipo == TipoPasoLeccion.MemoriaUchEspanol) view.InstanciarMemoria().Configurar(GestorActividadLeccion.CrearPares(paso));
             else if (TipoPasoLeccion.EsEmparejamiento(paso.tipo))
@@ -514,7 +634,7 @@ namespace Assets.Scripts.Editor.Tests
             else if (TipoPasoLeccion.EsEscritura(paso.tipo))
             {
                 var d = GestorActividadLeccion.CrearEscritura(paso);
-                view.InstanciarEscritura().Configurar(d.Consigna, d.UsaAudio);
+                view.InstanciarEscritura().Configurar(d.Tipo, d.Estimulo);
             }
             else if (TipoPasoLeccion.EsPracticaVoz(paso.tipo))
             {
@@ -558,7 +678,7 @@ namespace Assets.Scripts.Editor.Tests
             CollectionAssert.AreEqual(new[] { "la", "la" }, respuesta);
 
             EscrituraView escritura = view.InstanciarEscritura();
-            escritura.Configurar("Escribe en uchumataqu", false);
+            escritura.Configurar(TipoPasoLeccion.EscribirPalabra, "Casa");
             string textoEscrito = null;
             escritura.OnRespuestaEnviada += texto => textoEscrito = texto;
             TMP_InputField input = Referencia<TMP_InputField>(escritura, "inputRespuesta");
@@ -596,7 +716,8 @@ namespace Assets.Scripts.Editor.Tests
             (T)new SerializedObject(componente).FindProperty(campo).objectReferenceValue;
 
         private static void ValidarEstado(Action mostrar, ThemedGraphicView.RolColor rolEsperado,
-            ThemedTextView.ColorTexto tipoTituloEsperado, Color colorEstado, Image icono, Image detalle,
+            ThemedTextView.ColorTexto tipoTituloEsperado, Color colorEstado, FeedbackOverlayView feedback,
+            Image icono, ThemedGraphicView bordeDetalle,
             TMP_Text titulo, TMP_Text mensaje)
         {
             mostrar();
@@ -608,8 +729,14 @@ namespace Assets.Scripts.Editor.Tests
             Assert.IsFalse(mensaje.GetComponent<ThemedTextView>().usarColorPersonalizado);
             AssertColor(colorEstado, icono.color);
             AssertColor(colorEstado, titulo.color);
-            AssertColor(new Color(colorEstado.r, colorEstado.g, colorEstado.b, 80f / 255f), detalle.color);
+            Assert.AreEqual(rolEsperado, bordeDetalle.Rol);
+            AssertColor(colorEstado, bordeDetalle.GetComponent<Image>().color);
+            Assert.AreSame(feedback.transform.Find("ContentDetalle").gameObject, bordeDetalle.gameObject);
+            Assert.IsTrue(bordeDetalle.GetComponent<Image>().enabled);
+            AssertColor(Color.Lerp(UIThemeController.Theme.colorSuperficie, colorEstado, 0.16f),
+                feedback.GetComponent<Image>().color);
             AssertColor(UIThemeController.Theme.colorTextoSecundario, mensaje.color);
+            Assert.IsFalse(string.Equals(titulo.text, mensaje.text, StringComparison.OrdinalIgnoreCase));
         }
 
         private static void AssertColor(Color esperado, Color actual)

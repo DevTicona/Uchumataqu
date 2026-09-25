@@ -114,7 +114,7 @@ namespace Assets.Scripts.Editor
                 ActividadSeleccionModel datos = GestorActividadLeccion.CrearSeleccion(paso);
                 vista.InstanciarSeleccionMultiple().Configurar(
                     datos.Tipo, datos.Prompt, new List<string>(datos.Opciones),
-                    datos.AudioPalabraId ?? datos.AudioOracionId);
+                    datos.AudioPalabraId ?? datos.AudioOracionId, datos.PistaEs);
                 return;
             }
 
@@ -141,7 +141,7 @@ namespace Assets.Scripts.Editor
             if (TipoPasoLeccion.EsEscritura(paso.tipo))
             {
                 ActividadEscrituraModel datos = GestorActividadLeccion.CrearEscritura(paso);
-                vista.InstanciarEscritura().Configurar(datos.Consigna, datos.UsaAudio);
+                vista.InstanciarEscritura().Configurar(datos.Tipo, datos.Estimulo);
                 return;
             }
 

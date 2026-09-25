@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Core.UI.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,8 +13,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         [SerializeField] private TMP_Text txtObjetivo;
         [SerializeField] private Button btnAudioReferencia;
         [SerializeField] private Button btnPracticar;
-        [SerializeField] private Sprite iconoPracticar;
-        [SerializeField] private Sprite iconoGrabando;
 
         public event Action OnAudioClicked;
         public event Action OnPracticarClicked;
@@ -38,7 +37,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         public void Configurar(string objetivo, bool disponible, bool esOracion = false)
         {
             txtObjetivo.text = objetivo ?? string.Empty;
-            EstablecerTexto(btnAudioReferencia, esOracion ? "ESCUCHAR ORACIÓN" : "ESCUCHAR PALABRA");
             MostrarEstado(disponible ? Estado.Listo : Estado.NoDisponible);
         }
 
@@ -50,21 +48,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
             btnAudioReferencia.interactable = !grabando && !procesando;
             btnPracticar.interactable = disponible && !grabando && !procesando;
-            EstablecerTexto(btnPracticar, grabando ? "GRABANDO" : procesando ? "ANALIZANDO" :
-                estado == Estado.Resultado ? "PRACTICAR DE NUEVO" : "PRACTICAR PRONUNCIACIÓN");
-            EstablecerIcono(btnPracticar, grabando || procesando ? iconoGrabando : iconoPracticar);
-        }
-
-        private static void EstablecerTexto(Button boton, string texto)
-        {
-            TMP_Text etiqueta = boton != null ? boton.GetComponentInChildren<TMP_Text>(true) : null;
-            if (etiqueta != null) etiqueta.text = texto;
-        }
-
-        private static void EstablecerIcono(Button boton, Sprite icono)
-        {
-            Image imagen = boton != null ? boton.transform.Find("Icono")?.GetComponent<Image>() : null;
-            if (imagen != null && icono != null) imagen.sprite = icono;
+            btnAudioReferencia.GetComponent<ThemedButtonView>()?.AplicarTema();
+            btnPracticar.GetComponent<ThemedButtonView>()?.AplicarTema();
         }
 
         private void NotificarAudio() => OnAudioClicked?.Invoke();

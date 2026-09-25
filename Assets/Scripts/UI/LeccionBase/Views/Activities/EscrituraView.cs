@@ -1,18 +1,20 @@
 using System;
 using Assets.Scripts.Core.UI.Components;
+using Assets.Scripts.Lecciones;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
     public sealed class EscrituraView : MonoBehaviour
     {
+        [SerializeField] private TMP_Text txtTituloEscritura;
         [SerializeField] private TMP_Text txtInstruccion;
         [SerializeField] private TMP_InputField inputRespuesta;
-        [SerializeField] private Button btnAudioReferencia;
+        [SerializeField] private ThemedGraphicView bordeInputRespuesta;
         [SerializeField] private GameObject panelRespuestaCorrecta;
         [SerializeField] private TMP_Text txtRespuestaCorrecta;
+        [SerializeField] private ThemedGraphicView bordeRespuestaCorrecta;
 
         private bool _enviada;
 
@@ -21,25 +23,19 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         public event Action OnRespuestaCambiada;
         public event Action<string> OnRespuestaEnviada;
-        public event Action OnAudioClicked;
 
         private void Awake()
         {
-            CrearPanelRespuestaCorrectaSiFalta();
             OcultarRespuestaCorrecta();
             MobileInputFieldStyle.Aplicar(inputRespuesta);
             if (inputRespuesta != null)
                 inputRespuesta.onValueChanged.AddListener(NotificarCambio);
-            if (btnAudioReferencia != null)
-                btnAudioReferencia.onClick.AddListener(NotificarAudio);
         }
 
         private void OnDestroy()
         {
             if (inputRespuesta != null)
                 inputRespuesta.onValueChanged.RemoveListener(NotificarCambio);
-            if (btnAudioReferencia != null)
-                btnAudioReferencia.onClick.RemoveListener(NotificarAudio);
         }
 
         private void OnDisable()
@@ -48,16 +44,27 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 inputRespuesta.DeactivateInputField();
         }
 
-        public void Configurar(string consigna, bool mostrarAudio)
+        public void Configurar(string tipo, string estimulo)
         {
             _enviada = false;
-            txtInstruccion.text = consigna ?? string.Empty;
+            txtTituloEscritura.text = ObtenerTitulo(tipo);
+            txtInstruccion.text = estimulo ?? string.Empty;
             inputRespuesta.SetTextWithoutNotify(string.Empty);
             inputRespuesta.interactable = true;
             MobileInputFieldStyle.Aplicar(inputRespuesta);
+            if (bordeInputRespuesta != null)
+                bordeInputRespuesta.Rol = ThemedGraphicView.RolColor.Borde;
             OcultarRespuestaCorrecta();
-            btnAudioReferencia.gameObject.SetActive(mostrarAudio);
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
+        }
+
+        private static string ObtenerTitulo(string tipo)
+        {
+            if (tipo == TipoPasoLeccion.EscribirPalabra)
+                return "Escribe en uchumataqu la siguiente palabra:";
+            if (tipo == TipoPasoLeccion.EscribirForma)
+                return "Escribe en uchumataqu la siguiente forma:";
+            return "Escribe en uchumataqu la siguiente oración:";
         }
 
         public void ConfirmarRespuesta()
@@ -68,12 +75,25 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             OnRespuestaEnviada?.Invoke(inputRespuesta.text);
         }
 
-        public void MostrarRespuestaCorrecta(string respuesta)
+        public void MostrarResultado(string semaforo, string respuestaCorrecta)
         {
-            CrearPanelRespuestaCorrectaSiFalta();
-            if (panelRespuestaCorrecta == null || txtRespuestaCorrecta == null) return;
+            if (bordeInputRespuesta != null)
+                bordeInputRespuesta.Rol = semaforo == "verde"
+                    ? ThemedGraphicView.RolColor.Exito
+                    : semaforo == "amarillo"
+                        ? ThemedGraphicView.RolColor.Advertencia
+                        : ThemedGraphicView.RolColor.Error;
 
-            txtRespuestaCorrecta.text = respuesta ?? string.Empty;
+            if (semaforo == "verde")
+            {
+                OcultarRespuestaCorrecta();
+                return;
+            }
+
+            if (panelRespuestaCorrecta == null || txtRespuestaCorrecta == null) return;
+            txtRespuestaCorrecta.text = respuestaCorrecta ?? string.Empty;
+            if (bordeRespuestaCorrecta != null)
+                bordeRespuestaCorrecta.Rol = ThemedGraphicView.RolColor.Exito;
             panelRespuestaCorrecta.SetActive(true);
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
@@ -86,52 +106,10 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         }
 
         private void NotificarCambio(string _) => OnRespuestaCambiada?.Invoke();
-        private void NotificarAudio() => OnAudioClicked?.Invoke();
-
         private void OcultarRespuestaCorrecta()
         {
             if (panelRespuestaCorrecta != null) panelRespuestaCorrecta.SetActive(false);
         }
 
-        private void CrearPanelRespuestaCorrectaSiFalta()
-        {
-            if (panelRespuestaCorrecta != null || inputRespuesta == null || inputRespuesta.transform.parent == null) return;
-
-            GameObject panel = new GameObject("RespuestaCorrecta", typeof(RectTransform), typeof(Image),
-                typeof(VerticalLayoutGroup), typeof(LayoutElement));
-            panel.transform.SetParent(inputRespuesta.transform.parent, false);
-            panel.transform.SetSiblingIndex(inputRespuesta.transform.GetSiblingIndex() + 1);
-            panel.GetComponent<LayoutElement>().preferredHeight = 106f;
-
-            var layout = panel.GetComponent<VerticalLayoutGroup>();
-            layout.padding = new RectOffset(22, 22, 14, 14);
-            layout.spacing = 2f;
-            layout.childControlWidth = true;
-            layout.childControlHeight = false;
-            layout.childForceExpandHeight = false;
-
-            ThemedGraphicView fondo = panel.AddComponent<ThemedGraphicView>();
-            fondo.Rol = ThemedGraphicView.RolColor.ControlSuave;
-
-            CrearTextoCorreccion(panel.transform, "Etiqueta", "RESPUESTA CORRECTA", 18f, FontStyles.Bold, 28f);
-            txtRespuestaCorrecta = CrearTextoCorreccion(panel.transform, "Texto", string.Empty, 26f, FontStyles.Normal, 48f);
-            panelRespuestaCorrecta = panel;
-        }
-
-        private TMP_Text CrearTextoCorreccion(Transform parent, string nombre, string texto, float tamanio,
-            FontStyles estilo, float alto)
-        {
-            GameObject objeto = new GameObject(nombre, typeof(RectTransform), typeof(TextMeshProUGUI), typeof(LayoutElement));
-            objeto.transform.SetParent(parent, false);
-            var etiqueta = objeto.GetComponent<TextMeshProUGUI>();
-            etiqueta.text = texto;
-            etiqueta.font = inputRespuesta.textComponent.font;
-            etiqueta.fontStyle = estilo;
-            etiqueta.fontSize = tamanio;
-            etiqueta.alignment = TextAlignmentOptions.MidlineLeft;
-            etiqueta.color = inputRespuesta.textComponent.color;
-            objeto.GetComponent<LayoutElement>().preferredHeight = alto;
-            return etiqueta;
-        }
     }
 }

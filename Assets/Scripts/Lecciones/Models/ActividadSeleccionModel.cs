@@ -12,6 +12,7 @@ namespace Assets.Scripts.Lecciones
     {
         public string Tipo { get; set; }
         public string Prompt { get; set; }
+        public string PistaEs { get; set; }
         public string RespuestaCorrecta { get; set; }
         public string AudioPalabraId { get; set; }
         public string AudioOracionId { get; set; }

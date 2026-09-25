@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Assets.Scripts.Data.Corpus;
 
 namespace Assets.Scripts.Lecciones
 {
@@ -79,5 +80,8 @@ namespace Assets.Scripts.Lecciones
 
         public static bool EsPracticaVoz(string tipo) =>
             tipo == EscuchaYRepiteAsr || tipo == EscuchaYRepiteOracionAsr;
+
+        public static bool EsObligatorio(PasoLeccionModel paso) =>
+            paso != null && (!paso.opcional || EsPracticaVoz(paso.tipo));
     }
 }

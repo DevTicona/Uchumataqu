@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.Data.Corpus;
 using UnityEngine.Events;
-using Assets.Scripts.Core.UI.Theme;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
@@ -29,13 +28,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private readonly List<Button> botonesOpcion = new List<Button>();
         private readonly List<TMP_Text> textosOpcion = new List<TMP_Text>();
-        private readonly List<Image> fondosOpcion = new List<Image>();
-
-        [Header("Colores de Selección")]
-        [SerializeField] private Color colorNormal = new Color(0.96f, 0.96f, 0.96f, 1f);
-        [SerializeField] private Color colorSeleccionado = new Color(0.92f, 0.76f, 0.35f, 1f); // Tierra cálido
-        [SerializeField] private Color colorCorrecto = new Color(0.40f, 0.73f, 0.42f, 1f);
-        [SerializeField] private Color colorIncorrecto = new Color(0.90f, 0.35f, 0.35f, 1f);
 
         public bool PuedeEnviarRespuesta => !_enviada && !string.IsNullOrEmpty(_opcionSeleccionada);
         public event Action OnSeleccionCambiada;
@@ -47,6 +39,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private string _opcionSeleccionada;
         private int _indiceSeleccionado = -1;
         private readonly List<UnityAction> _accionesOpciones = new List<UnityAction>();
+        private LayoutElement _encabezadoInstruccion;
+        private float _altoMinimoEncabezado;
+        private float _altoPreferidoEncabezado;
 
         private void OnDisable()
         {
@@ -95,7 +90,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private void NotificarAudioPregunta() => OnAudioPreguntaClicked?.Invoke();
 
-        public void Configurar(string tipo, string prompt, List<string> opcionesBarajadas, string audioPalabraId = null)
+        public void Configurar(string tipo, string prompt, List<string> opcionesBarajadas,
+            string audioPalabraId = null, string pistaEs = null)
         {
             _enviada = false;
             if (prefabOpcion != null)
@@ -107,7 +103,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                     Button boton = Instantiate(prefabOpcion, contenedorOpciones, false).GetComponent<Button>();
                     botonesOpcion.Add(boton);
                     textosOpcion.Add(boton.GetComponentInChildren<TMP_Text>());
-                    fondosOpcion.Add(boton.GetComponent<Image>());
                 }
                 RegistrarListeners();
             }
@@ -121,7 +116,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
             if (txtInstruccion != null)
             {
-                txtInstruccion.text = ObtenerInstruccionPorTipo(tipo);
+                txtInstruccion.text = ObtenerInstruccionPorTipo(tipo, pistaEs);
+                AjustarAltoEncabezado(esHueco);
             }
 
             if (txtTextoPregunta != null)
@@ -147,8 +143,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                     if (i < textosOpcion.Count && textosOpcion[i] != null)
                         textosOpcion[i].text = opcionesBarajadas[i];
 
-                    if (i < fondosOpcion.Count && fondosOpcion[i] != null)
-                        fondosOpcion[i].color = ObtenerColorNormal();
                     botonesOpcion[i].GetComponent<TarjetaSeleccionView>()?.MostrarSeleccion(false);
                 }
                 else
@@ -171,7 +165,29 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
             botonesOpcion.Clear();
             textosOpcion.Clear();
-            fondosOpcion.Clear();
+        }
+
+        private void AjustarAltoEncabezado(bool esHueco)
+        {
+            if (_encabezadoInstruccion == null)
+            {
+                _encabezadoInstruccion = txtInstruccion.transform.parent.GetComponent<LayoutElement>();
+                if (_encabezadoInstruccion == null) return;
+                _altoMinimoEncabezado = _encabezadoInstruccion.minHeight;
+                _altoPreferidoEncabezado = _encabezadoInstruccion.preferredHeight;
+            }
+
+            _encabezadoInstruccion.minHeight = _altoMinimoEncabezado;
+            _encabezadoInstruccion.preferredHeight = _altoPreferidoEncabezado;
+            if (!esHueco) return;
+
+            HorizontalLayoutGroup grupo = _encabezadoInstruccion.GetComponent<HorizontalLayoutGroup>();
+            float margenVertical = grupo != null ? grupo.padding.top + grupo.padding.bottom : 0f;
+            float anchoTexto = txtInstruccion.rectTransform.rect.width;
+            float altoTexto = txtInstruccion.GetPreferredValues(txtInstruccion.text, anchoTexto, 0f).y;
+            float altoNecesario = Mathf.Max(_altoMinimoEncabezado, Mathf.Ceil(altoTexto + margenVertical));
+            _encabezadoInstruccion.minHeight = altoNecesario;
+            _encabezadoInstruccion.preferredHeight = altoNecesario;
         }
 
         private void SeleccionarOpcion(int indice)
@@ -180,16 +196,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
             _indiceSeleccionado = indice;
             _opcionSeleccionada = textosOpcion[indice].text;
-
-            for (int i = 0; i < fondosOpcion.Count; i++)
-            {
-                if (fondosOpcion[i] != null)
-                {
-                    fondosOpcion[i].color = (i == _indiceSeleccionado)
-                        ? ObtenerColorSeleccionado()
-                        : ObtenerColorNormal();
-                }
-            }
 
             for (int i = 0; i < botonesOpcion.Count; i++)
                 botonesOpcion[i].GetComponent<TarjetaSeleccionView>()?.MostrarSeleccion(i == _indiceSeleccionado);
@@ -209,11 +215,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         public void MostrarResultado(bool correcto, string respuestaCorrecta = null)
         {
             if (_indiceSeleccionado < 0) return;
-            Image fondo = fondosOpcion[_indiceSeleccionado];
-            Color color = correcto ? colorCorrecto : colorIncorrecto;
-            if (UIThemeController.Theme != null)
-                color = correcto ? UIThemeController.Theme.colorExito : UIThemeController.Theme.colorError;
-            fondo.color = Color.Lerp(Color.white, color, .5f);
             botonesOpcion[_indiceSeleccionado].GetComponent<TarjetaSeleccionView>()?.MostrarResultado(correcto);
             if (!correcto && !string.IsNullOrEmpty(respuestaCorrecta))
                 for (int i = 0; i < textosOpcion.Count; i++)
@@ -222,7 +223,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
 
-        private string ObtenerInstruccionPorTipo(string tipo)
+        private string ObtenerInstruccionPorTipo(string tipo, string pistaEs)
         {
             switch (tipo)
             {
@@ -246,7 +247,9 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 case "audio_a_forma":
                     return "Escucha y selecciona la forma correcta:";
                 case "completar_oracion":
-                    return "Completa la oración:";
+                    return string.IsNullOrWhiteSpace(pistaEs)
+                        ? "Completa la oración:"
+                        : $"Completa la oración:\n«{pistaEs.Trim().Trim('«', '»')}»";
                 case "audio_a_es_oracion":
                     return "Escucha y selecciona la traducción de la oración:";
                 default:
@@ -254,12 +257,5 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             }
         }
 
-        private Color ObtenerColorNormal() => UIThemeController.Theme != null
-            ? UIThemeController.Theme.colorSuperficie
-            : colorNormal;
-
-        private Color ObtenerColorSeleccionado() => UIThemeController.Theme != null
-            ? Color.Lerp(UIThemeController.Theme.colorControlSuave, UIThemeController.Theme.colorPrimario, 0.28f)
-            : colorSeleccionado;
     }
 }

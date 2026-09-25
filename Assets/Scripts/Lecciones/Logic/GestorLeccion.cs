@@ -20,16 +20,17 @@ namespace Assets.Scripts.Lecciones
         public int Errores { get; private set; }
         public bool UltimoGuardadoExitoso { get; private set; } = true;
         public int TotalPasos => LeccionActual?.pasos?.Count ?? 0;
-        public int TotalPasosObligatorios => LeccionActual?.pasos?.Count(p => !p.opcional) ?? 0;
+        public int TotalPasosObligatorios => LeccionActual?.pasos?.Count(TipoPasoLeccion.EsObligatorio) ?? 0;
         public int PasoObligatorioActual => LeccionActual?.pasos?
             .Take(IndicePasoActual + 1)
-            .Count(p => !p.opcional) ?? 0;
+            .Count(TipoPasoLeccion.EsObligatorio) ?? 0;
         public float ProgresoNormalizado
         {
             get
             {
                 if (TotalPasosObligatorios == 0) return 0f;
-                int completados = LeccionActual.pasos.Take(IndicePasoActual).Count(p => !p.opcional);
+                int completados = LeccionActual.pasos.Take(IndicePasoActual)
+                    .Count(TipoPasoLeccion.EsObligatorio);
                 return (float)completados / TotalPasosObligatorios;
             }
         }

@@ -11,7 +11,6 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
     {
         [SerializeField] private TMP_Text txtInstruccion;
         [SerializeField] private TMP_Text txtPromptEs;
-        [SerializeField] private TMP_Text txtRespuestaVacia;
         [SerializeField] private Button btnAudioPrompt;
         [SerializeField] private Transform contenedorDestino;
         [SerializeField] private Transform contenedorOrigen;
@@ -64,6 +63,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         {
             _tokenSubscriptions.Dispose();
             Limpiar(_banco); Limpiar(_respuesta);
+            LimpiarFilasGeneradas(contenedorOrigen, _filasBanco);
+            LimpiarFilasGeneradas(contenedorDestino, _filasRespuesta);
             _enviada = false;
             _mostrarRespuestaPendiente = false;
             txtInstruccion.text = tipo == "dictado_word_bank" ? "Escucha y construye la oración" :
@@ -74,7 +75,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             txtPromptEs.transform.parent.gameObject.SetActive(!string.IsNullOrEmpty(promptEs));
             foreach (string token in tokensDisponibles)
             {
-                GameObject ficha = Instantiate(prefabFichaToken, contenedorOrigen, false);
+                GameObject ficha = RuntimeActividadUIFactory.Instanciar(prefabFichaToken, contenedorOrigen);
                 ficha.GetComponentInChildren<TMP_Text>().text = token;
                 _tokenSubscriptions.Add(ficha.GetComponent<Button>(), () => Mover(ficha));
                 _banco.Add(ficha);
@@ -114,6 +115,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private void ReconstruirFilas()
         {
+            _banco.RemoveAll(ficha => ficha == null);
+            _respuesta.RemoveAll(ficha => ficha == null);
             _ultimoAncho = ((RectTransform)contenedorOrigen).rect.width;
             _ultimoAnchoDestino = ((RectTransform)contenedorDestino).rect.width;
             // Conserva las fichas y reutiliza las filas al cambiar la respuesta.
@@ -121,12 +124,12 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             foreach (GameObject ficha in _respuesta) ficha.transform.SetParent(contenedorDestino, false);
             Distribuir(contenedorOrigen, _banco, _filasBanco);
             Distribuir(contenedorDestino, _respuesta, _filasRespuesta);
-            if (txtRespuestaVacia != null) txtRespuestaVacia.gameObject.SetActive(_respuesta.Count == 0);
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
 
         private void Distribuir(Transform contenedor, List<GameObject> fichas, List<RectTransform> filas)
         {
+            filas.RemoveAll(fila => fila == null);
             foreach (RectTransform anterior in filas) anterior.gameObject.SetActive(false);
             VerticalLayoutGroup vertical = contenedor.GetComponent<VerticalLayoutGroup>();
             if (vertical == null) return;
@@ -160,6 +163,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                     }
                     fila = filas[indiceFila++];
                     fila.gameObject.SetActive(true);
+                    fila.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ancho);
                     fila.SetAsLastSibling();
                     ocupado = 0;
                     altoFila = 0;
@@ -185,8 +189,22 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         private static void Limpiar(List<GameObject> fichas)
         {
-            foreach (GameObject ficha in fichas) { ficha.SetActive(false); RuntimeActividadUIFactory.Retirar(ficha); }
+            foreach (GameObject ficha in fichas)
+            {
+                if (ficha != null) RuntimeActividadUIFactory.Retirar(ficha);
+            }
             fichas.Clear();
+        }
+
+        private static void LimpiarFilasGeneradas(Transform contenedor, List<RectTransform> filas)
+        {
+            for (int indice = contenedor.childCount - 1; indice >= 0; indice--)
+            {
+                Transform hijo = contenedor.GetChild(indice);
+                if (hijo.name == "Row" && hijo.GetComponent<HorizontalLayoutGroup>() != null)
+                    RuntimeActividadUIFactory.Retirar(hijo.gameObject);
+            }
+            filas.Clear();
         }
 
         private void Audio() => OnAudioPromptClicked?.Invoke();

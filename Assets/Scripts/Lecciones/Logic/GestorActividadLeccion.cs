@@ -93,15 +93,14 @@ namespace Assets.Scripts.Lecciones
                     $"La fuente de estímulo '{paso.fuente_estimulo}' no es válida para '{paso.tipo}'.");
 
             string canonica;
-            string audioPalabraId = null;
-            string audioOracionId = null;
+            string estimulo;
 
             if (paso.tipo == TipoPasoLeccion.EscribirPalabra)
             {
                 PalabraModel palabra = CorpusRepository.ObtenerPalabra(paso.objetivo_id)
                     ?? throw new InvalidOperationException($"No existe la palabra '{paso.objetivo_id}'.");
                 canonica = palabra.uch;
-                audioPalabraId = palabra.id;
+                estimulo = AlternativaNatural(palabra.es);
             }
             else if (paso.tipo == TipoPasoLeccion.EscribirForma)
             {
@@ -110,14 +109,14 @@ namespace Assets.Scripts.Lecciones
                 if (CorpusRepository.ObtenerPalabra(paso.raiz_id) == null)
                     throw new InvalidOperationException($"No existe la raíz '{paso.raiz_id}'.");
                 canonica = forma.uch;
-                audioPalabraId = forma.id;
+                estimulo = AlternativaNatural(forma.es);
             }
             else
             {
                 OracionModel oracion = CorpusRepository.ObtenerOracion(paso.oracion_id)
                     ?? throw new InvalidOperationException($"No existe la oración '{paso.oracion_id}'.");
                 canonica = oracion.uch;
-                audioOracionId = oracion.id;
+                estimulo = AlternativaNatural(oracion.es);
             }
 
             if (!string.Equals(
@@ -127,15 +126,13 @@ namespace Assets.Scripts.Lecciones
                 throw new InvalidOperationException(
                     $"La respuesta compilada de '{paso.tipo}' no coincide con el corpus para '{paso.objetivo_id ?? paso.forma_id ?? paso.oracion_id}'.");
 
-            bool usaAudio = paso.fuente_estimulo == "audio";
             return new ActividadEscrituraModel
             {
                 Tipo = paso.tipo,
                 Consigna = paso.consigna,
+                Estimulo = estimulo,
                 RespuestaEsperada = canonica,
-                FuenteEstimulo = paso.fuente_estimulo,
-                AudioPalabraId = usaAudio ? audioPalabraId : null,
-                AudioOracionId = usaAudio ? audioOracionId : null
+                FuenteEstimulo = paso.fuente_estimulo
             };
         }
 
@@ -242,6 +239,9 @@ namespace Assets.Scripts.Lecciones
             {
                 Tipo = paso.tipo,
                 Prompt = prompt,
+                PistaEs = string.IsNullOrWhiteSpace(paso.pista_es)
+                    ? AlternativaNatural(oracion.es)
+                    : paso.pista_es.Trim(),
                 RespuestaCorrecta = textoOculto,
                 Opciones = ResolverOpcionesPalabraOForma(paso.opciones_ids, textoOculto)
             };

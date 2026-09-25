@@ -243,7 +243,9 @@ namespace Assets.Scripts.Editor.Tests
                     {
                         Assert.IsTrue(TipoPasoLeccion.EsPracticaVoz(paso.tipo));
                         Assert.IsTrue(principal.gameObject.activeSelf);
-                        Assert.IsTrue(principal.interactable);
+                        Button practicar = Referencia<Button>(page.GetComponent<ASRView>(), "btnPracticar");
+                        Assert.AreEqual(!practicar.interactable, principal.interactable,
+                            "PageASR solo permite continuar sin repetir cuando ASR no está disponible.");
                         Assert.AreEqual("CONTINUAR", Referencia<TMP_Text>(view, "txtAccionPrincipal").text);
                         Assert.IsFalse(view.GetComponentsInChildren<Transform>(true)
                             .Any(t => t.name == "OmitirASR"));

@@ -1,60 +1,84 @@
-using TMPro;
+using Assets.Scripts.Core.UI.Components;
 using Assets.Scripts.Core.UI.Theme;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
-    [ExecuteAlways, DisallowMultipleComponent]
+    [DisallowMultipleComponent]
     public sealed class TarjetaSeleccionView : MonoBehaviour
     {
-        [SerializeField] private Image fondo;
-        [SerializeField] private Image marco;
         [SerializeField] private Image indicador;
         [SerializeField] private Image check;
-        [SerializeField] private TMP_Text texto;
-        [SerializeField] private Sprite circulo;
         [SerializeField] private Sprite aro;
         [SerializeField] private Sprite iconoCorrecto;
         [SerializeField] private Sprite iconoIncorrecto;
 
         private bool _seleccionada;
         private bool? _resultado;
+        private ThemedGraphicView _borde;
 
         private void OnEnable()
         {
-            UIThemeController.OnThemeChanged += AplicarTema;
-            AplicarTema();
+            UIThemeController.OnThemeChanged += ActualizarEstadoVisual;
+            ActualizarEstadoVisual();
         }
 
-        private void OnDisable() => UIThemeController.OnThemeChanged -= AplicarTema;
+        private void OnDisable() => UIThemeController.OnThemeChanged -= ActualizarEstadoVisual;
 
         public void MostrarSeleccion(bool seleccionada)
         {
             _seleccionada = seleccionada;
             _resultado = null;
-            AplicarTema();
+            ActualizarEstadoVisual();
         }
 
         public void MostrarResultado(bool correcto)
         {
             _resultado = correcto;
-            AplicarTema();
+            ActualizarEstadoVisual();
         }
 
-        public void AplicarTema()
+        private void ActualizarEstadoVisual()
         {
-            UIThemeModel theme = UIThemeController.Theme;
-            if (theme == null || fondo == null || marco == null || indicador == null || check == null || texto == null) return;
             bool marcada = _seleccionada || _resultado.HasValue;
-            Color color = _resultado.HasValue ? (_resultado.Value ? theme.colorExito : theme.colorError) : theme.colorPrimario;
-            fondo.color = marcada ? Color.Lerp(theme.colorSuperficie, color, 0.18f) : theme.colorSuperficie;
-            marco.color = indicador.color = marcada ? color : theme.colorBorde;
-            indicador.sprite = marcada ? circulo : aro;
-            check.gameObject.SetActive(marcada);
-            Sprite icono = _resultado == false ? iconoIncorrecto : iconoCorrecto;
-            if (icono != null) check.sprite = icono;
-            check.color = theme.colorTextoSobreColor;
+            // El indicador conserva siempre el aro definido por el prefab. El estado se
+            // representa con el icono interior, no reemplazando el aro por un círculo sólido.
+            if (indicador != null && aro != null) indicador.sprite = aro;
+            if (check != null)
+            {
+                check.gameObject.SetActive(marcada);
+                Sprite icono = _resultado == false ? iconoIncorrecto : iconoCorrecto;
+                if (icono != null) check.sprite = icono;
+            }
+
+            UIThemeModel tema = UIThemeController.Theme;
+            if (tema == null) return;
+
+            ThemedGraphicView.RolColor rolBorde = ObtenerRolBorde();
+            if (_borde == null)
+                _borde = transform.Find("Marco")?.GetComponent<ThemedGraphicView>();
+            if (_borde != null) _borde.Rol = rolBorde;
+
+            Color colorEstado = ObtenerColorEstado(tema);
+            if (indicador != null) indicador.color = colorEstado;
+            if (check != null) check.color = colorEstado;
+        }
+
+        private ThemedGraphicView.RolColor ObtenerRolBorde()
+        {
+            if (_resultado == true) return ThemedGraphicView.RolColor.Exito;
+            if (_resultado == false) return ThemedGraphicView.RolColor.Error;
+            return _seleccionada
+                ? ThemedGraphicView.RolColor.Primario
+                : ThemedGraphicView.RolColor.Borde;
+        }
+
+        private Color ObtenerColorEstado(UIThemeModel tema)
+        {
+            if (_resultado == true) return tema.colorExito;
+            if (_resultado == false) return tema.colorError;
+            return _seleccionada ? tema.colorPrimario : tema.colorBorde;
         }
     }
 }

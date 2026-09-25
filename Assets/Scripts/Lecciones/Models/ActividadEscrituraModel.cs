@@ -4,11 +4,8 @@ namespace Assets.Scripts.Lecciones
     {
         public string Tipo { get; set; }
         public string Consigna { get; set; }
+        public string Estimulo { get; set; }
         public string RespuestaEsperada { get; set; }
         public string FuenteEstimulo { get; set; }
-        public string AudioPalabraId { get; set; }
-        public string AudioOracionId { get; set; }
-
-        public bool UsaAudio => FuenteEstimulo == "audio";
     }
 }

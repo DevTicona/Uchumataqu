@@ -331,6 +331,14 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         private static void MostrarEstado(Button boton, ThemedButtonView.EstadoBoton estado)
         {
             boton.GetComponent<ThemedButtonView>()?.MostrarEstado(estado);
+
+            ThemedGraphicView borde = boton.transform.Find("Marco")?.GetComponent<ThemedGraphicView>();
+            if (borde == null) return;
+            borde.Rol = estado == ThemedButtonView.EstadoBoton.Correcto
+                ? ThemedGraphicView.RolColor.Exito
+                : estado == ThemedButtonView.EstadoBoton.Incorrecto
+                    ? ThemedGraphicView.RolColor.Error
+                    : ThemedGraphicView.RolColor.Borde;
         }
     }
 }

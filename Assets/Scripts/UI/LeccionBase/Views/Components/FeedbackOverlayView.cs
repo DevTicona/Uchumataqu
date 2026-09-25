@@ -14,7 +14,7 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
     {
         [Header("Elementos de UI")]
         [SerializeField] private Image fondoFeedback;
-        [SerializeField] private Image fondoDetalle;
+        [SerializeField] private ThemedGraphicView bordeDetalle;
         [SerializeField] private Image imgEstado;
         [SerializeField] private Sprite iconoCorrecto;
         [SerializeField] private Sprite iconoAdvertencia;
@@ -45,7 +45,7 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
 
         public bool ValidarConfiguracion(out string error)
         {
-            bool completa = fondoFeedback != null && imgEstado != null && txtTitulo != null &&
+            bool completa = fondoFeedback != null && bordeDetalle != null && imgEstado != null && txtTitulo != null &&
                 txtMensajeDetalle != null && iconoCorrecto != null && iconoAdvertencia != null && iconoIncorrecto != null;
             error = completa ? null : "El contenido de feedback tiene referencias incompletas.";
             return completa;
@@ -54,14 +54,14 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         public void MostrarCorrecto(string detalle = null)
         {
             ConfigurarVisual(ThemedGraphicView.RolColor.Exito, colorCorrecto, iconoCorrecto,
-                "¡Correcto!", detalle ?? "¡Muy bien!");
+                "¡Correcto!", detalle ?? "Resolviste la actividad. Continúa con el siguiente paso.");
             gameObject.SetActive(true);
         }
 
         public void MostrarCasi(string detalle = null, double similitud = 0)
         {
             string msg = string.IsNullOrEmpty(detalle)
-                ? $"Casi exacto ({similitud:F0}% de similitud). ¡Sigue practicando!"
+                ? "Estás cerca de la respuesta esperada. Revisa los detalles y vuelve a intentarlo."
                 : detalle;
 
             ConfigurarVisual(ThemedGraphicView.RolColor.Advertencia, colorCasi, iconoAdvertencia,
@@ -72,7 +72,7 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         public void MostrarIncorrecto(string respuestaCorrecta = null)
         {
             string msg = string.IsNullOrEmpty(respuestaCorrecta)
-                ? "Revisa la respuesta para la próxima vez."
+                ? "Revisa la respuesta esperada y úsala en el siguiente intento."
                 : respuestaCorrecta;
 
             ConfigurarVisual(ThemedGraphicView.RolColor.Error, colorIncorrecto, iconoIncorrecto,
@@ -84,7 +84,7 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         {
             ConfigurarVisual(ThemedGraphicView.RolColor.Informacion, Color.clear,
                 iconoInformacion != null ? iconoInformacion : iconoAdvertencia,
-                "Práctica de pronunciación", detalle ?? "Sigue las indicaciones para practicar.");
+                "Información", detalle ?? "Sigue las indicaciones para continuar con la actividad.");
             gameObject.SetActive(true);
         }
 
@@ -123,9 +123,13 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
 
             Color colorEstado = ObtenerColorEstado(rolActivo, colorRespaldoActivo);
             if (fondoFeedback != null)
-                fondoFeedback.color = Color.Lerp(Color.white, colorEstado, 0.30f);
-            if (fondoDetalle != null)
-                fondoDetalle.color = new Color(colorEstado.r, colorEstado.g, colorEstado.b, 80f / 255f);
+            {
+                UIThemeModel tema = UIThemeController.Theme;
+                Color superficie = tema != null ? tema.colorSuperficie : Color.white;
+                fondoFeedback.color = Color.Lerp(superficie, colorEstado, 0.16f);
+            }
+            if (bordeDetalle != null)
+                bordeDetalle.Rol = rolActivo;
 
             AplicarColorEstado(imgEstado, rolActivo, colorEstado);
             AplicarColorTitulo(txtTitulo, rolActivo, colorEstado);

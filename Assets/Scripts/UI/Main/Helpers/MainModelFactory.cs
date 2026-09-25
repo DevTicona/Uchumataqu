@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Data.Corpus;
 using Assets.Scripts.Data.Persistencia;
+using Assets.Scripts.Lecciones;
 
 namespace Assets.Scripts.UI.Main
 {
@@ -98,11 +99,11 @@ namespace Assets.Scripts.UI.Main
             if (progresoLeccion == null || leccion?.pasos == null || leccion.pasos.Count == 0)
                 return 0;
 
-            int totalObligatorios = leccion.pasos.Count(paso => !paso.opcional);
+            int totalObligatorios = leccion.pasos.Count(TipoPasoLeccion.EsObligatorio);
             if (totalObligatorios == 0) return 0;
 
             int pasoActual = Math.Max(0, Math.Min(progresoLeccion.paso_actual, leccion.pasos.Count));
-            int completados = leccion.pasos.Take(pasoActual).Count(paso => !paso.opcional);
+            int completados = leccion.pasos.Take(pasoActual).Count(TipoPasoLeccion.EsObligatorio);
             return (int)Math.Round((double)completados / totalObligatorios * 100d);
         }
 

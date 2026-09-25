@@ -3,6 +3,7 @@ using Assets.Scripts.Core.UI.Theme;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using TMPro;
 
 namespace Assets.Scripts.Editor
 {
@@ -40,6 +41,11 @@ namespace Assets.Scripts.Editor
             {
                 texto.AplicarTema();
                 EditorUtility.SetDirty(texto);
+                if (texto.TryGetComponent(out TMP_Text componenteTexto))
+                {
+                    componenteTexto.SetVerticesDirty();
+                    EditorUtility.SetDirty(componenteTexto);
+                }
             }
 
             foreach (ThemedButtonView boton in Object.FindObjectsByType<ThemedButtonView>(

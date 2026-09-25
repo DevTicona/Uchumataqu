@@ -221,7 +221,8 @@ namespace Assets.Scripts.UI.Main.Paginas
         private static void AsignarTexto(Transform padre, string ruta, string valor)
         {
             TMP_Text texto = padre?.Find(ruta)?.GetComponent<TMP_Text>();
-            if (texto != null) texto.text = valor;
+            if (texto == null) return;
+            texto.SetText(valor);
         }
 
         public static void ConfigurarRelleno(Image imagen, float ratio)

@@ -389,10 +389,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.9098039, b: 0.72156864, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.91882354, b: 0.74941176, a: 1}
-    m_PressedColor: {r: 0.88, g: 0.80062747, b: 0.6349804, a: 1}
-    m_SelectedColor: {r: 1, g: 0.91882354, b: 0.74941176, a: 1}
+    m_NormalColor: {r: 1, g: 0.99215686, b: 0.96862745, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.9929412, b: 0.9717647, a: 1}
+    m_PressedColor: {r: 0.88, g: 0.873098, b: 0.85239214, a: 1}
+    m_SelectedColor: {r: 1, g: 0.9929412, b: 0.9717647, a: 1}
     m_DisabledColor: {r: 0.8509804, g: 0.8509804, b: 0.8509804, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024694d7eb181644885ceed1fbb50278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedButtonView
-  estilo: 1
+  estilo: 4
 --- !u!1 &8979743132273134842
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 4088872561428827935}
   - component: {fileID: 3099351386884603073}
   - component: {fileID: 2131065618539659833}
+  - component: {fileID: 6534208692736737637}
   m_Layer: 5
   m_Name: Marco
   m_TagString: Untagged
@@ -530,7 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8784314, g: 0.65882355, b: 0.40784314, a: 1}
+  m_Color: {r: 0.85882354, g: 0.7607843, b: 0.6901961, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -567,3 +568,17 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &6534208692736737637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8979743132273134842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e367e22e1322046ae68aa90705d2f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphicView
+  rol: 3
+  multiplicadorAlpha: 1

@@ -60,7 +60,8 @@ namespace Assets.Scripts.ASR
         /// </summary>
         public static List<string> TextoAFonemas(string texto)
         {
-            string secuencia = NormalizarPrediccionSherpa(texto);
+            if (string.IsNullOrWhiteSpace(texto)) return new List<string>();
+            string secuencia = texto.Trim().ToUpperInvariant();
             var fonemas = new List<string>();
 
             for (int indice = 0; indice < secuencia.Length;)

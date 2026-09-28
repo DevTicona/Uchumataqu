@@ -1,19 +1,19 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.PLN;
 
 namespace Assets.Scripts.ASR
 {
     /// <summary>
-    /// Evaluador de pronunciación que consume IReconocedorVoz y aplica asistencia léxica Viterbi.
+    /// Evaluador de pronunciación que consume IReconocedorVoz y compara
+    /// la transcripción fonética del modelo CTC contra la forma esperada.
+    /// La comparación opera a nivel de fonemas (token a token) para mayor
+    /// precisión que la comparación carácter a carácter sobre la cadena CTC.
     /// Especificado en Docs/Specifications/02-modulo-asr-voz.md (Sección 7 y 8).
     /// </summary>
     public static class EvaluadorVoz
     {
-        private const float UmbralAprobacionDirecta = 85f;
-        private const float UmbralMinimoAsistencia = 70f;
-        private static readonly DecodificadorLexicoViterbi DecodificadorLexico = CrearDecodificadorLexico();
-
         public static ResultadoEvaluacion EvaluarPronunciacion(string esperado, AudioClip audioUsuario, IReconocedorVoz asr)
         {
             if (asr == null || audioUsuario == null)
@@ -22,36 +22,32 @@ namespace Assets.Scripts.ASR
             try
             {
                 if (!asr.EstaDisponible()) return CrearResultadoNoEvaluado(esperado);
+
                 string prediccionFonetica = NormalizadorFoneticoAsr.NormalizarPrediccionSherpa(
                     asr.TranscribirAudio(audioUsuario));
-                var fonemasEsperados = NormalizadorFoneticoAsr.TextoAFonemas(
-                    NormalizadorFoneticoAsr.ConvertirEsperado(esperado));
+                string esperadoFonetico = NormalizadorFoneticoAsr.ConvertirEsperado(esperado);
+
+                var fonemasEsperados = NormalizadorFoneticoAsr.TextoAFonemas(esperadoFonetico);
                 var fonemasPredichos = NormalizadorFoneticoAsr.TextoAFonemas(prediccionFonetica);
-                float precisionCruda = CalcularSimilitudFonetica(fonemasEsperados, fonemasPredichos);
+                float precision = CalcularSimilitudFonetica(fonemasEsperados, fonemasPredichos);
 
-                if (precisionCruda >= UmbralAprobacionDirecta)
-                    return CrearResultado(esperado, prediccionFonetica, precisionCruda, true, "GreedyDirecto");
+                bool aprobado = precision >= MotorEvaluacion.UMBRAL_VERDE;
+                string semaforo = precision >= MotorEvaluacion.UMBRAL_VERDE ? "verde" :
+                    (precision >= MotorEvaluacion.UMBRAL_AMARILLO ? "amarillo" : "rojo");
 
-                if (precisionCruda < UmbralMinimoAsistencia)
-                    return CrearResultado(esperado, prediccionFonetica, precisionCruda, false, "RechazoAcustico");
+                string textoReconocido = DecodificadorFoneticoAsr.Decodificar(prediccionFonetica, esperado);
 
-                DecodificadorLexicoViterbi.ResultadoDecodificacion reconstruccion =
-                    DecodificadorLexico.DecodificarConRestricciones(fonemasPredichos);
-                if (reconstruccion.EsExitoso)
+                return new ResultadoEvaluacion
                 {
-                    float precisionAsistida = CalcularSimilitudFonetica(
-                        fonemasEsperados, reconstruccion.FonemasReconstruidos);
-                    if (precisionAsistida >= UmbralAprobacionDirecta)
-                    {
-                        ResultadoEvaluacion resultado = CrearResultado(
-                            esperado, prediccionFonetica, precisionAsistida, true, "AsistidoPorLexico");
-                        resultado.textoReconocido = string.Join(" ", reconstruccion.PalabrasReconocidas);
-                        Debug.Log($"[EvaluadorVoz] Correccion lexica: {resultado.textoReconocido}");
-                        return resultado;
-                    }
-                }
-
-                return CrearResultado(esperado, prediccionFonetica, precisionCruda, false, "Rechazado");
+                    evaluado = true,
+                    aprobado = aprobado,
+                    porcentajeSimilitud = precision,
+                    colorSemaforo = semaforo,
+                    textoEsperado = esperado,
+                    textoIngresado = prediccionFonetica,
+                    textoReconocido = textoReconocido,
+                    origenEntrada = "voz"
+                };
             }
             catch (Exception ex)
             {
@@ -65,49 +61,22 @@ namespace Assets.Scripts.ASR
             return new ResultadoEvaluacion
             {
                 evaluado = false,
-                aprobado = false,
+                aprobado = true,
                 porcentajeSimilitud = 0f,
                 colorSemaforo = "neutral",
                 textoEsperado = esperado,
-                textoIngresado = "(No se pudo evaluar la pronunciación)",
+                textoIngresado = "(Práctica no evaluada / ASR opcional)",
                 origenEntrada = "voz"
             };
         }
 
-        private static DecodificadorLexicoViterbi CrearDecodificadorLexico()
-        {
-            var decodificador = new DecodificadorLexicoViterbi();
-            TextAsset lexico = Resources.Load<TextAsset>("Sherpa/lexicon");
-            if (lexico == null)
-            {
-                Debug.LogWarning("[EvaluadorVoz] No se encontro el lexico ASR; la asistencia lexica se omitira.");
-                return decodificador;
-            }
-
-            decodificador.CargarLexiconDesdeTexto(lexico.text);
-            return decodificador;
-        }
-
-        private static ResultadoEvaluacion CrearResultado(
-            string esperado, string prediccionFonetica, float precision, bool aprobado, string modo)
-        {
-            return new ResultadoEvaluacion
-            {
-                evaluado = true,
-                aprobado = aprobado,
-                porcentajeSimilitud = precision,
-                colorSemaforo = precision >= UmbralAprobacionDirecta ? "verde" :
-                    (precision >= MotorEvaluacion.UMBRAL_AMARILLO ? "amarillo" : "rojo"),
-                textoEsperado = esperado,
-                textoIngresado = prediccionFonetica,
-                origenEntrada = "voz",
-                modoEvaluacion = modo
-            };
-        }
-
+        /// <summary>
+        /// Distancia Levenshtein normalizada a porcentaje sobre listas de fonemas.
+        /// Compara token a token (cada fonema es un token), lo que da mayor
+        /// precisión que comparar carácter a carácter sobre la cadena fonética.
+        /// </summary>
         private static float CalcularSimilitudFonetica(
-            System.Collections.Generic.IList<string> esperado,
-            System.Collections.Generic.IList<string> predicho)
+            IList<string> esperado, IList<string> predicho)
         {
             int longitudEsperada = esperado == null ? 0 : esperado.Count;
             int longitudPredicha = predicho == null ? 0 : predicho.Count;

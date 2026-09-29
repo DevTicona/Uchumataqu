@@ -1674,13 +1674,13 @@
     {
       "id": "uchumik",
       "uch": "Uchumik",
-      "es": "Nosotros (excluyente)",
+      "es": "Nosotros (Excl)",
       "categoria_gramatical": "pronombre"
     },
     {
       "id": "uchums",
       "uch": "Uchums",
-      "es": "Nuestro (Exclusivo)",
+      "es": "Nuestro (Excl)",
       "categoria_gramatical": "determinante_posesivo"
     },
     {
@@ -1817,13 +1817,13 @@
     {
       "id": "wisnaks",
       "uch": "Wisnaks",
-      "es": "Nuestro (Inclusivo)",
+      "es": "Nuestro (Incl)",
       "categoria_gramatical": "determinante_posesivo"
     },
     {
       "id": "wisnakti",
       "uch": "Wisnakti",
-      "es": "Nosotros (incluyente)",
+      "es": "Nosotros (Incl)",
       "categoria_gramatical": "pronombre"
     },
     {

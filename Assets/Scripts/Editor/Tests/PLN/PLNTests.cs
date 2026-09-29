@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using Assets.Scripts.PLN;
+using Assets.Scripts.Util;
 
 namespace Assets.Scripts.Editor.Tests
 {
@@ -86,6 +87,41 @@ namespace Assets.Scripts.Editor.Tests
             var resIncorrecto = MotorEvaluacion.EvaluarTexto("grande", "pequeño");
             Assert.IsFalse(resIncorrecto.aprobado);
             Assert.AreEqual("rojo", resIncorrecto.colorSemaforo);
+        }
+
+        [Test]
+        public void EvaluarEscritura_ExigeCoincidenciaOrtograficaCompleta()
+        {
+            Assert.IsTrue(MotorEvaluacion.EvaluarEscritura("Ch'isi", "  chʼisi  ").aprobado);
+            Assert.IsTrue(MotorEvaluacion.EvaluarEscritura("thuñi", "thun\u0303i").aprobado);
+
+            ResultadoEvaluacion casi = MotorEvaluacion.EvaluarEscritura("sitsñinakachay", "sitsñinakachah");
+            Assert.IsFalse(casi.aprobado);
+            Assert.AreEqual("amarillo", casi.colorSemaforo);
+            Assert.Less(casi.porcentajeSimilitud, 100f);
+
+            Assert.IsFalse(MotorEvaluacion.EvaluarEscritura("chhaq", "chaq").aprobado);
+            Assert.IsFalse(MotorEvaluacion.EvaluarEscritura("aa", "ä").aprobado);
+        }
+
+        [Test]
+        public void DiffGrafemas_RespetaUnidadesYLlevaMarcasDeError()
+        {
+            CollectionAssert.AreEqual(new[] { "chh", "a", "q" }, DiffGrafemas.Tokenizar("chhaq"));
+            CollectionAssert.AreEqual(new[] { "a", "t", "sh", "a" }, DiffGrafemas.Tokenizar("atsha"));
+            CollectionAssert.AreEqual(new[] { "ch'", "i", "s", "i" }, DiffGrafemas.Tokenizar("ch’isi"));
+
+            var sustitucion = DiffGrafemas.Comparar("chaq", "chhaq");
+            StringAssert.Contains("<color=#D32F2F>ch</color>", sustitucion.usuario);
+            StringAssert.Contains("<color=#E08A00><b><u>chh</u></b></color>", sustitucion.correcta);
+
+            var faltante = DiffGrafemas.Comparar("uchumi", "uchumik");
+            StringAssert.Contains("<color=#E08A00>_</color>", faltante.usuario);
+            StringAssert.Contains("<color=#E08A00><b><u>k</u></b></color>", faltante.correcta);
+
+            var sobrante = DiffGrafemas.Comparar("uchumikk", "uchumik");
+            StringAssert.EndsWith("<color=#D32F2F><s>k</s></color>", sobrante.usuario);
+            Assert.IsFalse(DiffGrafemas.Comparar("<chaq>", "chhaq").usuario.Contains("<chaq>"));
         }
 
         [Test]

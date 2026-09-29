@@ -84,7 +84,9 @@ namespace Assets.Scripts.Editor.Tests
                 EscrituraView escritura = scene.GetRootGameObjects()
                     .SelectMany(root => root.GetComponentsInChildren<EscrituraView>(true)).Single();
                 TMP_InputField input = Referencia<TMP_InputField>(escritura, "inputRespuesta");
+                ThemedGraphicView superficieInput = input.GetComponent<ThemedGraphicView>();
                 ThemedGraphicView bordeInput = Referencia<ThemedGraphicView>(escritura, "bordeInputRespuesta");
+                TMP_Text textoUsuario = Referencia<TMP_Text>(escritura, "_textoResultadoUsuario");
                 GameObject tarjetaCorrecta = Referencia<GameObject>(escritura, "panelRespuestaCorrecta");
                 TMP_Text textoCorrecto = Referencia<TMP_Text>(escritura, "txtRespuestaCorrecta");
                 ThemedGraphicView bordeCorrecto = Referencia<ThemedGraphicView>(escritura, "bordeRespuestaCorrecta");
@@ -94,25 +96,34 @@ namespace Assets.Scripts.Editor.Tests
                     tarjetaCorrecta.GetComponent<LayoutElement>().preferredHeight);
 
                 escritura.Configurar(TipoPasoLeccion.EscribirPalabra, "Casa");
+                Assert.AreEqual(ThemedGraphicView.RolColor.Superficie, superficieInput.Rol);
+                Assert.AreEqual(UnityEngine.UI.Selectable.Transition.None, input.transition);
                 Assert.AreEqual(ThemedGraphicView.RolColor.Borde, bordeInput.Rol);
                 Assert.IsFalse(tarjetaCorrecta.activeSelf);
 
+                input.SetTextWithoutNotify("Chaq");
                 escritura.MostrarResultado("amarillo", "Chhaq");
+                Assert.AreEqual(ThemedGraphicView.RolColor.Superficie, superficieInput.Rol);
                 Assert.AreEqual(ThemedGraphicView.RolColor.Advertencia, bordeInput.Rol);
                 Assert.AreEqual(ThemedGraphicView.RolColor.Exito, bordeCorrecto.Rol);
-                Assert.AreEqual("Chhaq", textoCorrecto.text);
+                Assert.IsTrue(textoUsuario.gameObject.activeSelf);
+                StringAssert.Contains("<color=#D32F2F>Ch</color>", textoUsuario.text);
+                StringAssert.Contains("<color=#E08A00><b><u>Chh</u></b></color>", textoCorrecto.text);
                 Assert.IsTrue(tarjetaCorrecta.activeSelf);
 
                 escritura.MostrarResultado("rojo", "Chhaq");
                 Assert.AreEqual(ThemedGraphicView.RolColor.Error, bordeInput.Rol);
                 Assert.IsTrue(tarjetaCorrecta.activeSelf);
 
+                input.SetTextWithoutNotify("Chhaq");
                 escritura.MostrarResultado("verde", "Chhaq");
+                Assert.AreEqual(ThemedGraphicView.RolColor.Superficie, superficieInput.Rol);
                 Assert.AreEqual(ThemedGraphicView.RolColor.Exito, bordeInput.Rol);
                 Assert.IsFalse(tarjetaCorrecta.activeSelf);
 
                 escritura.Configurar(TipoPasoLeccion.EscribirPalabra, "Casa");
                 Assert.AreEqual(ThemedGraphicView.RolColor.Borde, bordeInput.Rol);
+                Assert.IsFalse(textoUsuario.gameObject.activeSelf);
                 Assert.IsFalse(tarjetaCorrecta.activeSelf);
             }
             finally { EditorSceneManager.ClosePreviewScene(scene); }
@@ -187,6 +198,65 @@ namespace Assets.Scripts.Editor.Tests
             }
             finally { EditorSceneManager.ClosePreviewScene(scene); }
         }
+
+        [Test]
+        public void BancoDePalabras_DistribuyeFichasLargasSinRecortarBancoNiCaja()
+        {
+            Scene scene = EditorSceneManager.OpenPreviewScene(ScenePath);
+            try
+            {
+                WordBankView view = scene.GetRootGameObjects()
+                    .SelectMany(r => r.GetComponentsInChildren<WordBankView>(true)).Single();
+                Transform origen = Referencia<Transform>(view, "contenedorOrigen");
+                Transform destino = Referencia<Transform>(view, "contenedorDestino");
+                Canvas.ForceUpdateCanvases();
+                view.Configurar("traduccion_constructiva", "Prueba",
+                    new List<string> { "yo", "de", "del", "pueblo", "vengo", "guaqui" });
+                Canvas.ForceUpdateCanvases();
+
+                ValidarFilasWordBank(origen);
+                Button[] fichas = origen.GetComponentsInChildren<Button>().ToArray();
+                foreach (Button ficha in fichas) ficha.onClick.Invoke();
+                Canvas.ForceUpdateCanvases();
+
+                ValidarFilasWordBank(destino);
+                LayoutElement caja = destino.parent.GetComponent<LayoutElement>();
+                LayoutElement contenido = destino.parent.parent.GetComponent<LayoutElement>();
+                Assert.GreaterOrEqual(caja.preferredHeight,
+                    destino.GetComponent<LayoutElement>().preferredHeight +
+                    destino.parent.GetComponent<VerticalLayoutGroup>().padding.vertical);
+                Assert.GreaterOrEqual(contenido.preferredHeight,
+                    caja.preferredHeight + ((RectTransform)destino.parent.parent.GetChild(0)).rect.height +
+                    destino.parent.parent.GetComponent<VerticalLayoutGroup>().spacing);
+
+                view.Configurar("ordenar_oracion", "", new List<string>
+                    { "yo", "de", "del", "pueblo", "vengo", "guaqui", "otra" });
+                Canvas.ForceUpdateCanvases();
+                ValidarFilasWordBank(origen);
+                Assert.AreEqual(3, origen.Cast<Transform>()
+                    .Count(t => t.gameObject.activeSelf && t.name == "Row"));
+                LayoutElement banco = origen.GetComponent<LayoutElement>();
+                Assert.Greater(banco.preferredHeight, banco.minHeight);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        private static void ValidarFilasWordBank(Transform contenedor)
+        {
+            Transform[] filas = contenedor.Cast<Transform>()
+                .Where(t => t.gameObject.activeSelf && t.name == "Row").ToArray();
+            Assert.That(filas.Length, Is.InRange(2, 3));
+            foreach (Transform fila in filas)
+            {
+                Button[] fichas = fila.GetComponentsInChildren<Button>();
+                Assert.That(fichas.Length, Is.InRange(1, 3));
+                float anchoFichas = fichas.Sum(f => f.GetComponent<LayoutElement>().preferredWidth);
+                float separacion = fila.GetComponent<HorizontalLayoutGroup>().spacing * (fichas.Length - 1);
+                Assert.LessOrEqual(anchoFichas + separacion,
+                    ((RectTransform)fila).rect.width + 1f);
+            }
+        }
+
         [Test]
         public void PagesYPrefabs_TienenTipografiaIconosYBotonesTematizados()
         {
@@ -449,7 +519,7 @@ namespace Assets.Scripts.Editor.Tests
                 Assert.AreEqual(indiceEscritura, gestor.IndicePasoActual, "El refuerzo no debe consumir otro paso del currículo.");
                 Assert.AreEqual(1, gestor.Errores, "El refuerzo no debe duplicar la puntuación del intento original.");
                 Assert.IsTrue((bool)typeof(LeccionBasePresenter).GetField("_renderizandoRefuerzo", flags).GetValue(presenter));
-                Assert.AreEqual("Refuerzo guiado · Progreso", Referencia<TMP_Text>(view, "txtProgreso").text);
+                Assert.AreEqual("Progreso", Referencia<TMP_Text>(view, "txtProgreso").text);
                 Assert.AreEqual(1, Referencia<Transform>(view, "actividadContainer").Cast<Transform>().Count(p => p.gameObject.activeSelf));
                 Assert.IsFalse(escritura.gameObject.activeSelf);
             }

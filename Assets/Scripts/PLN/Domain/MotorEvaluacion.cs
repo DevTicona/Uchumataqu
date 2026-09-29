@@ -81,6 +81,27 @@ namespace Assets.Scripts.PLN
             };
         }
 
+        public static ResultadoEvaluacion EvaluarEscritura(string esperado, string respuesta)
+        {
+            string textoEsperado = NormalizadorTexto.NormalizarEscritura(esperado);
+            string textoIngresado = NormalizadorTexto.NormalizarEscritura(respuesta);
+            bool aprobado = string.Equals(textoEsperado, textoIngresado, StringComparison.OrdinalIgnoreCase);
+            int largoMaximo = Math.Max(textoEsperado.Length, textoIngresado.Length);
+            float similitud = largoMaximo == 0 ? 100f : Math.Max(0f,
+                (1f - (float)DistanciaLevenshtein(
+                    textoEsperado.ToLowerInvariant(), textoIngresado.ToLowerInvariant()) / largoMaximo) * 100f);
+
+            return new ResultadoEvaluacion
+            {
+                aprobado = aprobado,
+                porcentajeSimilitud = similitud,
+                colorSemaforo = aprobado ? "verde" : similitud >= UMBRAL_AMARILLO ? "amarillo" : "rojo",
+                textoEsperado = esperado,
+                textoIngresado = respuesta,
+                origenEntrada = "texto"
+            };
+        }
+
         public static List<string> Tokenizar(string oracion)
         {
             if (string.IsNullOrWhiteSpace(oracion)) return new List<string>();

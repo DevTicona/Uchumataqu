@@ -247,7 +247,7 @@ namespace Assets.Scripts.UI.LeccionBase
             actividad.Configurar(datos.Tipo, datos.Estimulo);
             Action<string> handlerOnRespuestaEnviada = respuesta =>
             {
-                ResultadoEvaluacion resultado = MotorEvaluacion.EvaluarTexto(datos.RespuestaEsperada, respuesta, "texto");
+                ResultadoEvaluacion resultado = MotorEvaluacion.EvaluarEscritura(datos.RespuestaEsperada, respuesta);
                 actividad.MostrarResultado(resultado.colorSemaforo, datos.RespuestaEsperada);
                 _refuerzoPendiente = resultado.aprobado ? null : paso.refuerzo_al_fallar?.CrearPaso();
                 string detalle = ObtenerDetalleResultado(resultado,

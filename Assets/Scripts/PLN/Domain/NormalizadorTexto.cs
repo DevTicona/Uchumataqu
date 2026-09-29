@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Assets.Scripts.PLN
@@ -9,6 +10,19 @@ namespace Assets.Scripts.PLN
     /// </summary>
     public static class NormalizadorTexto
     {
+        public static string NormalizarEscritura(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto)) return string.Empty;
+
+            string normalizado = texto.Normalize(NormalizationForm.FormC)
+                .Replace('’', '\'')
+                .Replace('ʼ', '\'')
+                .Replace("<", string.Empty)
+                .Replace(">", string.Empty)
+                .Trim();
+            return Regex.Replace(normalizado, @"\s+", " ");
+        }
+
         public static string Normalizar(string texto)
         {
             if (string.IsNullOrWhiteSpace(texto)) return string.Empty;

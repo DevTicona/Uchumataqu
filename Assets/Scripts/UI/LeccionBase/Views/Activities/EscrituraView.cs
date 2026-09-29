@@ -1,8 +1,10 @@
 using System;
 using Assets.Scripts.Core.UI.Components;
 using Assets.Scripts.Lecciones;
+using Assets.Scripts.Util;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
@@ -17,6 +19,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         [SerializeField] private ThemedGraphicView bordeRespuestaCorrecta;
 
         private bool _enviada;
+        private TMP_Text _textoResultadoUsuario;
 
         public bool PuedeEnviarRespuesta => !_enviada &&
             inputRespuesta != null && !string.IsNullOrWhiteSpace(inputRespuesta.text);
@@ -28,6 +31,13 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         {
             OcultarRespuestaCorrecta();
             MobileInputFieldStyle.Aplicar(inputRespuesta);
+            if (inputRespuesta != null && inputRespuesta.textComponent != null)
+            {
+                TMP_Text textoOriginal = inputRespuesta.textComponent;
+                _textoResultadoUsuario = Instantiate(textoOriginal, textoOriginal.transform.parent, false);
+                _textoResultadoUsuario.name = "TextoResultadoUsuario";
+                _textoResultadoUsuario.gameObject.SetActive(false);
+            }
             if (inputRespuesta != null)
                 inputRespuesta.onValueChanged.AddListener(NotificarCambio);
         }
@@ -49,8 +59,15 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             _enviada = false;
             txtTituloEscritura.text = ObtenerTitulo(tipo);
             txtInstruccion.text = estimulo ?? string.Empty;
+            if (inputRespuesta.textComponent != null)
+                inputRespuesta.textComponent.gameObject.SetActive(true);
+            if (_textoResultadoUsuario != null)
+                _textoResultadoUsuario.gameObject.SetActive(false);
             inputRespuesta.SetTextWithoutNotify(string.Empty);
             inputRespuesta.interactable = true;
+            inputRespuesta.transition = Selectable.Transition.None;
+            ThemedGraphicView superficie = inputRespuesta.GetComponent<ThemedGraphicView>();
+            if (superficie != null) superficie.Rol = ThemedGraphicView.RolColor.Superficie;
             MobileInputFieldStyle.Aplicar(inputRespuesta);
             if (bordeInputRespuesta != null)
                 bordeInputRespuesta.Rol = ThemedGraphicView.RolColor.Borde;
@@ -77,6 +94,17 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
         public void MostrarResultado(string semaforo, string respuestaCorrecta)
         {
+            ThemedGraphicView superficie = inputRespuesta.GetComponent<ThemedGraphicView>();
+            if (superficie != null) superficie.Rol = ThemedGraphicView.RolColor.Superficie;
+            var diferencia = DiffGrafemas.Comparar(inputRespuesta.text, respuestaCorrecta);
+            if (_textoResultadoUsuario != null)
+            {
+                _textoResultadoUsuario.richText = true;
+                _textoResultadoUsuario.text = diferencia.usuario;
+                _textoResultadoUsuario.gameObject.SetActive(true);
+                inputRespuesta.textComponent.gameObject.SetActive(false);
+            }
+
             if (bordeInputRespuesta != null)
                 bordeInputRespuesta.Rol = semaforo == "verde"
                     ? ThemedGraphicView.RolColor.Exito
@@ -91,7 +119,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             }
 
             if (panelRespuestaCorrecta == null || txtRespuestaCorrecta == null) return;
-            txtRespuestaCorrecta.text = respuestaCorrecta ?? string.Empty;
+            txtRespuestaCorrecta.richText = true;
+            txtRespuestaCorrecta.text = diferencia.correcta;
             if (bordeRespuestaCorrecta != null)
                 bordeRespuestaCorrecta.Rol = ThemedGraphicView.RolColor.Exito;
             panelRespuestaCorrecta.SetActive(true);

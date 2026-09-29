@@ -287,8 +287,7 @@ namespace Assets.Scripts.UI.LeccionBase
         {
             if (txtProgreso == null) return;
 
-            bool esRefuerzo = string.Equals(seccion, "refuerzo", StringComparison.OrdinalIgnoreCase);
-            txtProgreso.text = esRefuerzo ? "Refuerzo guiado · Progreso" : "Progreso";
+            txtProgreso.text = "Progreso";
             txtProgreso.gameObject.SetActive(true);
         }
 

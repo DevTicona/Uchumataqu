@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "escenarios": [
     {
       "id": "ra_encuentro_comunicacion",
@@ -12,8 +12,89 @@
         "L05",
         "L06"
       ],
-      "objetos": [],
-      "avatar_requerido": false
+      "prefab_key": "ra/escenario/encuentro_comunicacion",
+      "escala_base": 1,
+      "avatar_requerido": true,
+      "objetos": [
+        {
+          "id": "obj_amigo",
+          "palabra_id": "palitak",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_profesor",
+          "palabra_id": "sitsni",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_pueblo",
+          "palabra_id": "watha",
+          "prioridad": "P0"
+        },
+        {
+          "id": "hotspot_manana",
+          "palabra_id": "wiyantam",
+          "prioridad": "P0"
+        },
+        {
+          "id": "hotspot_tarde",
+          "palabra_id": "thuni_seschay",
+          "prioridad": "P0"
+        },
+        {
+          "id": "hotspot_noche",
+          "palabra_id": "ti_wiyanichay",
+          "prioridad": "P0"
+        },
+        {
+          "id": "hotspot_bienvenida",
+          "palabra_id": "chhuni_pichuchay",
+          "prioridad": "P1"
+        },
+        {
+          "id": "hotspot_despedida",
+          "palabra_id": "salskama",
+          "prioridad": "P1"
+        }
+      ],
+      "mision": {
+        "id": "mision_llegada_comunidad",
+        "fases": [
+          {
+            "id": "mision_guiada",
+            "pasos": [
+              {
+                "id": "p01",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_001",
+                "objetivo_objeto_id": "hotspot_manana"
+              },
+              {
+                "id": "p02",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_003",
+                "objetivo_objeto_id": "obj_profesor"
+              },
+              {
+                "id": "p03",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_016",
+                "objetivo_objeto_id": "obj_pueblo"
+              },
+              {
+                "id": "p04",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_002",
+                "objetivo_objeto_id": "hotspot_noche"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "ra_familia_vestimenta",
@@ -25,8 +106,104 @@
         "L10",
         "L11"
       ],
-      "objetos": [],
-      "avatar_requerido": false
+      "prefab_key": "ra/escenario/familia_vestimenta",
+      "escala_base": 1,
+      "avatar_requerido": true,
+      "objetos": [
+        {
+          "id": "obj_mama",
+          "palabra_id": "ataluy",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_papa",
+          "palabra_id": "apay",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_abuelo",
+          "palabra_id": "achichay",
+          "prioridad": "P1"
+        },
+        {
+          "id": "obj_abuela",
+          "palabra_id": "apichuy",
+          "prioridad": "P1"
+        },
+        {
+          "id": "obj_poncho",
+          "palabra_id": "ira",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_vestido",
+          "palabra_id": "urkhu",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_sombrero",
+          "palabra_id": "eskhara",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_abarca",
+          "palabra_id": "chhata",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_faja",
+          "palabra_id": "chhasi",
+          "prioridad": "P1"
+        }
+      ],
+      "mision": {
+        "id": "mision_reconocer_preparar_vestimenta",
+        "fases": [
+          {
+            "id": "mision_guiada",
+            "pasos": [
+              {
+                "id": "p01",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_024",
+                "objetivo_objeto_id": "obj_mama"
+              },
+              {
+                "id": "p02",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_025",
+                "objetivo_objeto_id": "obj_papa"
+              },
+              {
+                "id": "p03",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "palabra",
+                "estimulo_id": "eskhara",
+                "objetivo_objeto_id": "obj_sombrero",
+                "destino_id": "dst_cabeza"
+              },
+              {
+                "id": "p04",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "palabra",
+                "estimulo_id": "ira",
+                "objetivo_objeto_id": "obj_poncho",
+                "destino_id": "dst_torso"
+              },
+              {
+                "id": "p05",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "palabra",
+                "estimulo_id": "chhata",
+                "objetivo_objeto_id": "obj_abarca",
+                "destino_id": "dst_pies"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "ra_casa_objetos",
@@ -37,8 +214,160 @@
         "L14",
         "L15"
       ],
-      "objetos": [],
-      "avatar_requerido": false
+      "prefab_key": "ra/escenario/casa_objetos",
+      "escala_base": 1,
+      "avatar_requerido": false,
+      "objetos": [
+        {
+          "id": "obj_ventana",
+          "palabra_id": "pheta",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_cama",
+          "palabra_id": "chusi",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_almohada",
+          "palabra_id": "achasi",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_mesa",
+          "palabra_id": "chimay",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_silla",
+          "palabra_id": "julsni",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_mochila",
+          "palabra_id": "kuskuts",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_lapiz",
+          "palabra_id": "chhikhits",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_puerta",
+          "palabra_id": "sana",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_escoba",
+          "palabra_id": "chhiqha",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_cuaderno",
+          "palabra_id": "kuwarerno",
+          "prioridad": "P0"
+        }
+      ],
+      "mision": {
+        "id": "mision_casa_y_mochila",
+        "fases": [
+          {
+            "id": "explorar",
+            "tipo": "exploracion_libre",
+            "objetivos_objeto_ids": [
+              "obj_ventana",
+              "obj_cama",
+              "obj_almohada",
+              "obj_mesa",
+              "obj_silla",
+              "obj_mochila",
+              "obj_lapiz",
+              "obj_puerta",
+              "obj_escoba",
+              "obj_cuaderno"
+            ],
+            "contador_primera_interaccion": true
+          },
+          {
+            "id": "encontrar",
+            "pasos": [
+              {
+                "id": "p01",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_048",
+                "objetivo_objeto_id": "obj_ventana",
+                "reaccion_id": "ventana_abrir"
+              },
+              {
+                "id": "p02",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_049",
+                "objetivo_objeto_id": "obj_cama",
+                "reaccion_id": "cama_pulso"
+              },
+              {
+                "id": "p03",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_058",
+                "objetivo_objeto_id": "obj_almohada",
+                "reaccion_id": "almohada_rebotar"
+              },
+              {
+                "id": "p04",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_055",
+                "objetivo_objeto_id": "obj_mesa",
+                "reaccion_id": "mesa_limpieza_brillo"
+              },
+              {
+                "id": "p05",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_056",
+                "objetivo_objeto_id": "obj_silla",
+                "reaccion_id": "silla_giro_suave"
+              }
+            ]
+          },
+          {
+            "id": "preparar_mochila",
+            "pasos": [
+              {
+                "id": "p06",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_062",
+                "objetivo_objeto_id": "obj_mochila",
+                "reaccion_id": "mochila_abrir"
+              },
+              {
+                "id": "p07",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_060",
+                "objetivo_objeto_id": "obj_lapiz",
+                "destino_id": "dst_mochila",
+                "reaccion_id": "lapiz_escribir_linea"
+              },
+              {
+                "id": "p08",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_059",
+                "objetivo_objeto_id": "obj_cuaderno",
+                "destino_id": "dst_mochila"
+              }
+            ],
+            "resultado_audio_palabra_id": "salskama",
+            "reaccion_al_completar": "mochila_lista"
+          }
+        ]
+      }
     },
     {
       "id": "ra_cocina_alimentos",
@@ -49,8 +378,100 @@
         "L18",
         "L19"
       ],
-      "objetos": [],
-      "avatar_requerido": false
+      "prefab_key": "ra/escenario/cocina_alimentos",
+      "escala_base": 1,
+      "avatar_requerido": false,
+      "objetos": [
+        {
+          "id": "obj_olla",
+          "palabra_id": "maska",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_plato",
+          "palabra_id": "chuwa",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_cuchara",
+          "palabra_id": "khirchula",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_vaso",
+          "palabra_id": "qeru",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_quinua",
+          "palabra_id": "kula",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_pan",
+          "palabra_id": "xawariski",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_cantaro",
+          "palabra_id": "lusi",
+          "prioridad": "P1"
+        },
+        {
+          "id": "obj_batan",
+          "palabra_id": "xalsmasi",
+          "prioridad": "P1"
+        }
+      ],
+      "mision": {
+        "id": "mision_preparar_mesa",
+        "fases": [
+          {
+            "id": "mision_guiada",
+            "pasos": [
+              {
+                "id": "p01",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_063",
+                "objetivo_objeto_id": "obj_olla"
+              },
+              {
+                "id": "p02",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_064",
+                "objetivo_objeto_id": "obj_plato",
+                "destino_id": "dst_plato"
+              },
+              {
+                "id": "p03",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_065",
+                "objetivo_objeto_id": "obj_cuchara",
+                "destino_id": "dst_cuchara"
+              },
+              {
+                "id": "p04",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_072",
+                "objetivo_objeto_id": "obj_vaso",
+                "destino_id": "dst_vaso"
+              },
+              {
+                "id": "p05",
+                "tipo": "seleccionar_colocar",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_069",
+                "objetivo_objeto_id": "obj_quinua",
+                "destino_id": "dst_alimento"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "ra_animales_ecosistema",
@@ -62,8 +483,91 @@
         "L23",
         "L24"
       ],
-      "objetos": [],
-      "avatar_requerido": false
+      "prefab_key": "ra/escenario/animales_ecosistema",
+      "escala_base": 1,
+      "avatar_requerido": false,
+      "objetos": [
+        {
+          "id": "obj_perro",
+          "palabra_id": "paku",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_llama",
+          "palabra_id": "xala",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_vicuna",
+          "palabra_id": "xalwari",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_flamenco",
+          "palabra_id": "parina",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_pejerrey",
+          "palabra_id": "chiwqeri",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_pato",
+          "palabra_id": "soqna",
+          "prioridad": "P1"
+        },
+        {
+          "id": "obj_pez",
+          "palabra_id": "qeri",
+          "prioridad": "P1"
+        }
+      ],
+      "mision": {
+        "id": "mision_reconocer_ecosistema",
+        "fases": [
+          {
+            "id": "mision_guiada",
+            "pasos": [
+              {
+                "id": "p01",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_081",
+                "objetivo_objeto_id": "obj_perro"
+              },
+              {
+                "id": "p02",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_089",
+                "objetivo_objeto_id": "obj_llama"
+              },
+              {
+                "id": "p03",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_094",
+                "objetivo_objeto_id": "obj_vicuna"
+              },
+              {
+                "id": "p04",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_095",
+                "objetivo_objeto_id": "obj_flamenco"
+              },
+              {
+                "id": "p05",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_100",
+                "objetivo_objeto_id": "obj_pejerrey"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "ra_naturaleza_orientacion",
@@ -73,8 +577,116 @@
         "L26",
         "L27"
       ],
-      "objetos": [],
-      "avatar_requerido": false
+      "prefab_key": "ra/escenario/naturaleza_orientacion",
+      "escala_base": 1,
+      "avatar_requerido": false,
+      "objetos": [
+        {
+          "id": "obj_totora",
+          "palabra_id": "juwa",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_sol",
+          "palabra_id": "thuni",
+          "prioridad": "P0"
+        },
+        {
+          "id": "marcador_este",
+          "palabra_id": "tuncharku",
+          "prioridad": "P0"
+        },
+        {
+          "id": "marcador_oeste",
+          "palabra_id": "taxacharku",
+          "prioridad": "P0"
+        },
+        {
+          "id": "marcador_norte",
+          "palabra_id": "chiyacharku",
+          "prioridad": "P0"
+        },
+        {
+          "id": "marcador_sur",
+          "palabra_id": "xanacharku",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_balsa",
+          "palabra_id": "thosa",
+          "prioridad": "P0"
+        },
+        {
+          "id": "obj_paja",
+          "palabra_id": "phiki",
+          "prioridad": "P1"
+        },
+        {
+          "id": "obj_canawa",
+          "palabra_id": "qanawi",
+          "prioridad": "P1"
+        },
+        {
+          "id": "obj_luna",
+          "palabra_id": "yis",
+          "prioridad": "P1"
+        },
+        {
+          "id": "obj_bote",
+          "palabra_id": "ochapara",
+          "prioridad": "P1"
+        },
+        {
+          "id": "obj_vela",
+          "palabra_id": "qachina",
+          "prioridad": "P1"
+        }
+      ],
+      "mision": {
+        "id": "mision_seguir_referencias",
+        "fases": [
+          {
+            "id": "mision_guiada",
+            "pasos": [
+              {
+                "id": "p01",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_106",
+                "objetivo_objeto_id": "obj_totora"
+              },
+              {
+                "id": "p02",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_109",
+                "objetivo_objeto_id": "obj_sol"
+              },
+              {
+                "id": "p03",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_114",
+                "objetivo_objeto_id": "marcador_este"
+              },
+              {
+                "id": "p04",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_116",
+                "objetivo_objeto_id": "marcador_norte"
+              },
+              {
+                "id": "p05",
+                "tipo": "buscar_objeto",
+                "estimulo_tipo": "oracion",
+                "estimulo_id": "O_117",
+                "objetivo_objeto_id": "marcador_sur"
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }

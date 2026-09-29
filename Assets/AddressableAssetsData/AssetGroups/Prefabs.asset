@@ -45,6 +45,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60fb5f9747222154989696f6cb612842
+    m_Address: prefab/ra_casa_objetos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - prefab
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a024d319b50479143b1e078231bd6ab9
     m_Address: prefab/confirmacionsalida
     m_ReadOnly: 0

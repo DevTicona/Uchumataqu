@@ -15,8 +15,68 @@ MonoBehaviour:
   m_GroupName: RA
   m_GUID: 2d713a3b5c99683479c8a3b93b2bf838
   m_SerializeEntries:
-  - m_GUID: e75c557bc2ae589428407de22ea99030
-    m_Address: personaje_base
+  - m_GUID: 18ee720c256e34c4cabe3b7f49b4dac1
+    m_Address: ra/modelo/mdl_ra3_chimay_mesa
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 280c2f7a1ffeb6b45b2e1d8a43bc8bc1
+    m_Address: ra/modelo/mdl_ra3_sana_puerta
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3506dbb9d2cbeb649a758b9fd25a61aa
+    m_Address: ra/modelo/mdl_ra3_chhiqha_escoba
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6edac4e6b24f1bb4fb1d7bc60e3d3336
+    m_Address: ra/modelo/mdl_ra3_chusi_cama
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 734a3dbb3de36014a9408ea481424732
+    m_Address: ra/modelo/mdl_ra3_pheta_ventana
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83494f272a0b6e6498044f8511ced582
+    m_Address: ra/modelo/mdl_ra3_kuwarerno_cuaderno
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91d72b0372343524693f4589c8f780f7
+    m_Address: ra/modelo/mdl_ra3_chhikhits_lapiz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99221730a44dd224ab0b293ce4c0435b
+    m_Address: ra/modelo/mdl_ra3_julsni_silla
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1396fc4d0ff96647bce66180b560386
+    m_Address: ra/modelo/mdl_ra3_kuskuts_mochila
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4a5f6546d30668409837b137b65e129
+    m_Address: ra/modelo/mdl_ra3_rincon_abierto
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ra
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dfb2adf59d591ef4a9c47af6d5524121
+    m_Address: ra/modelo/mdl_ra3_achasi_almohada
     m_ReadOnly: 0
     m_SerializedLabels:
     - ra

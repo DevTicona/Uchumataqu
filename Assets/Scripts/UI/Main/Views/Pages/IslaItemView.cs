@@ -112,6 +112,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         private void ActualizarEstadoVisual()
         {
             bool bloqueada = _estadoActual == EstadoIsla.Bloqueada;
+            GetComponent<Assets.Scripts.Core.UI.Components.FlotacionUI>()?.EstablecerActivo(false);
 
             if (btnIsla != null)
                 btnIsla.interactable = !bloqueada;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.PLN
 {
@@ -18,5 +19,9 @@ namespace Assets.Scripts.PLN
         public string textoReconocido;
         public string origenEntrada; // "texto" | "voz" | "orden_oracion" | "morfologia" | "seleccion"
         public string modoEvaluacion;
+        public bool consultaMorfologicaRealizada;
+        public List<AnalisisTokenModel> analisisEsperado;
+        public List<AnalisisTokenModel> analisisIngresado;
+        public string detalleLinguistico;
     }
 }

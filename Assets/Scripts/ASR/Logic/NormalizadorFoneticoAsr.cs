@@ -41,6 +41,8 @@ namespace Assets.Scripts.ASR
 
             string resultado = texto.Trim().ToLowerInvariant();
             resultado = Regex.Replace(resultado, @"[¡!¿?,.;:()\""«»\-—\s]", string.Empty);
+            // Las grafías compuestas se convierten antes que las simples (ch' -> CH_EJ, ñ -> NY).
+            // Los reemplazos en mayúsculas evitan que reglas posteriores vuelvan a transformar la salida.
             foreach (Regla regla in Reglas)
                 resultado = regla.Patron.Replace(resultado, regla.Reemplazo);
 

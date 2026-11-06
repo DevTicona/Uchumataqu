@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Assets.Scripts.PLN;
 
@@ -14,6 +15,27 @@ namespace Assets.Scripts.ASR
     /// </summary>
     public static class EvaluadorVoz
     {
+        public static async Task<ResultadoEvaluacion> EvaluarPronunciacionAsync(
+            string esperado, AudioClip audioUsuario, SherpaOnnxReconocedorVoz asr)
+        {
+            if (asr == null || audioUsuario == null) return CrearResultadoNoEvaluado(esperado);
+            try
+            {
+                // El servicio copia las muestras antes de ceder el control; inicializa y decodifica en su trabajador.
+                string transcripcion = await asr.TranscribirAudioAsync(audioUsuario);
+                var resultado = EvaluarTranscripcion(esperado, transcripcion);
+#if UNITY_ANDROID && (DEVELOPMENT_BUILD || UCHUMATAQU_VALIDACION) && !UNITY_EDITOR
+                DiagnosticoAsrAndroid.RegistrarPronunciacion(audioUsuario, resultado);
+#endif
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[EvaluadorVoz] La práctica no pudo evaluarse: {ex.Message}");
+                return CrearResultadoNoEvaluado(esperado);
+            }
+        }
+
         public static ResultadoEvaluacion EvaluarPronunciacion(string esperado, AudioClip audioUsuario, IReconocedorVoz asr)
         {
             if (asr == null || audioUsuario == null)
@@ -23,31 +45,7 @@ namespace Assets.Scripts.ASR
             {
                 if (!asr.EstaDisponible()) return CrearResultadoNoEvaluado(esperado);
 
-                string prediccionFonetica = NormalizadorFoneticoAsr.NormalizarPrediccionSherpa(
-                    asr.TranscribirAudio(audioUsuario));
-                string esperadoFonetico = NormalizadorFoneticoAsr.ConvertirEsperado(esperado);
-
-                var fonemasEsperados = NormalizadorFoneticoAsr.TextoAFonemas(esperadoFonetico);
-                var fonemasPredichos = NormalizadorFoneticoAsr.TextoAFonemas(prediccionFonetica);
-                float precision = CalcularSimilitudFonetica(fonemasEsperados, fonemasPredichos);
-
-                bool aprobado = precision >= MotorEvaluacion.UMBRAL_VERDE;
-                string semaforo = precision >= MotorEvaluacion.UMBRAL_VERDE ? "verde" :
-                    (precision >= MotorEvaluacion.UMBRAL_AMARILLO ? "amarillo" : "rojo");
-
-                string textoReconocido = DecodificadorFoneticoAsr.Decodificar(prediccionFonetica, esperado);
-
-                return new ResultadoEvaluacion
-                {
-                    evaluado = true,
-                    aprobado = aprobado,
-                    porcentajeSimilitud = precision,
-                    colorSemaforo = semaforo,
-                    textoEsperado = esperado,
-                    textoIngresado = prediccionFonetica,
-                    textoReconocido = textoReconocido,
-                    origenEntrada = "voz"
-                };
+                return EvaluarTranscripcion(esperado, asr.TranscribirAudio(audioUsuario));
             }
             catch (Exception ex)
             {
@@ -56,16 +54,63 @@ namespace Assets.Scripts.ASR
             }
         }
 
+        public static ResultadoEvaluacion EvaluarTranscripcion(string esperado, string transcripcion,
+            bool compararPrefijo = false, string textoVisible = null, string prefijoValido = null)
+        {
+            string prediccionFonetica = NormalizadorFoneticoAsr.NormalizarPrediccionSherpa(transcripcion);
+            string esperadoFonetico = NormalizadorFoneticoAsr.ConvertirEsperado(esperado);
+
+            // Lleva referencia y predicción al mismo inventario: CH_EJ cuenta como un fonema, no cinco letras.
+            var fonemasEsperados = NormalizadorFoneticoAsr.TextoAFonemas(esperadoFonetico);
+            var fonemasPredichos = NormalizadorFoneticoAsr.TextoAFonemas(prediccionFonetica);
+            var prefijo = NormalizadorFoneticoAsr.TextoAFonemas(
+                NormalizadorFoneticoAsr.ConvertirEsperado(prefijoValido));
+            bool coincidePrefijo = compararPrefijo && prefijo.Count > 0 &&
+                ComienzaCon(fonemasEsperados, prefijo) && ComienzaCon(fonemasPredichos, prefijo);
+            // Las presentaciones personales evalúan la frase fija, sin el nombre ajeno al léxico.
+            if (compararPrefijo && fonemasPredichos.Count > fonemasEsperados.Count)
+                fonemasPredichos = fonemasPredichos.GetRange(0, fonemasEsperados.Count);
+            // Un prefijo explícito evalúa únicamente los fonemas exigidos en ese turno.
+            float precision = coincidePrefijo ? 100f : CalcularSimilitudFonetica(fonemasEsperados, fonemasPredichos);
+
+            bool aprobado = precision >= MotorEvaluacion.UMBRAL_VERDE;
+            string semaforo = precision >= MotorEvaluacion.UMBRAL_VERDE ? "verde" :
+                (precision >= MotorEvaluacion.UMBRAL_AMARILLO ? "amarillo" : "rojo");
+
+            // La reconstrucción ortográfica es para mostrar el resultado; la puntuación ya se calculó con fonemas.
+            string textoReconocido = DecodificadorFoneticoAsr.Decodificar(prediccionFonetica, textoVisible ?? esperado);
+
+            return new ResultadoEvaluacion
+            {
+                evaluado = true,
+                aprobado = aprobado,
+                porcentajeSimilitud = precision,
+                colorSemaforo = semaforo,
+                textoEsperado = esperado,
+                textoIngresado = prediccionFonetica,
+                textoReconocido = textoReconocido,
+                origenEntrada = "voz"
+            };
+        }
+
+        private static bool ComienzaCon(IList<string> fonemas, IList<string> prefijo)
+        {
+            if (fonemas.Count < prefijo.Count) return false;
+            for (int i = 0; i < prefijo.Count; i++)
+                if (fonemas[i] != prefijo[i]) return false;
+            return true;
+        }
+
         private static ResultadoEvaluacion CrearResultadoNoEvaluado(string esperado)
         {
             return new ResultadoEvaluacion
             {
                 evaluado = false,
-                aprobado = true,
+                aprobado = false,
                 porcentajeSimilitud = 0f,
                 colorSemaforo = "neutral",
                 textoEsperado = esperado,
-                textoIngresado = "(Práctica no evaluada / ASR opcional)",
+                textoIngresado = "(ASR no evaluado por fallo técnico)",
                 origenEntrada = "voz"
             };
         }
@@ -95,6 +140,7 @@ namespace Assets.Scripts.ASR
                 }
             }
 
+            // Similitud fonética = (1 - distancia / longitud máxima) * 100; no es una probabilidad del modelo.
             int mayorLongitud = Math.Max(longitudEsperada, longitudPredicha);
             return mayorLongitud == 0 ? 100f : Math.Max(0f,
                 (1f - (float)matriz[longitudEsperada, longitudPredicha] / mayorLongitud) * 100f);

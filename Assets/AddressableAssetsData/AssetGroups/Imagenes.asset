@@ -16,49 +16,48 @@ MonoBehaviour:
   m_GUID: 37748ff2ea1b7804ca5b608609f33e76
   m_SerializeEntries:
   - m_GUID: 048003bca24deb440b4bf9b04afeab4b
-    m_Address: imagen/isla/l05
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - islands
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0d7682fefb6171a43b3dc577374a6ecd
-    m_Address: imagen/isla/l25
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - islands
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0ff8853f2732d4a4095e113f0c195923
-    m_Address: imagen/isla/l27
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - islands
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1ad93371b1cab19468d4d2fe66eda560
     m_Address: imagen/isla/l04
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d7682fefb6171a43b3dc577374a6ecd
+    m_Address: imagen/isla/l24
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - islands
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ff8853f2732d4a4095e113f0c195923
+    m_Address: imagen/isla/l26
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - islands
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ad93371b1cab19468d4d2fe66eda560
+    m_Address: imagen/archivo/l04_bienestar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ca5fe1529d60f44b99a946a92f16cf6
-    m_Address: imagen/isla/l15
+    m_Address: imagen/isla/l14
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 44133bbda61b9cf42b3316edc0f191cb
-    m_Address: imagen/isla/l21
+    m_Address: imagen/isla/l20
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 49d739ffe259bb240b72cb49dc4e0048
-    m_Address: imagen/isla/l19
+    m_Address: imagen/isla/l18
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52d2b9d4abc19cd4c85f2d8909bea3e9
-    m_Address: imagen/isla/l13
+    m_Address: imagen/isla/l12
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -70,13 +69,13 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 55b19778b01b73641a6d7d87cdd428aa
-    m_Address: imagen/isla/l06
+    m_Address: imagen/isla/l05
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b379fd06a4a78a47abaad7648e292e3
-    m_Address: imagen/isla/l09
+    m_Address: imagen/isla/l08
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -88,37 +87,37 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60b63b409800ac84898f8b0a924f45f0
-    m_Address: imagen/isla/l10
+    m_Address: imagen/isla/l09
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60c1533e9456e3545ad3fac08505b322
-    m_Address: imagen/isla/l26
+    m_Address: imagen/isla/l25
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78ce41b96c2372f419c322dace8abe1f
-    m_Address: imagen/isla/l22
+    m_Address: imagen/isla/l21
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7b16c6daa8ae2ae4aab0acdbdb5fb98e
-    m_Address: imagen/isla/l17
+    m_Address: imagen/isla/l16
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8a462f522a426d54f9e72f0d5ca948df
-    m_Address: imagen/isla/l18
+    m_Address: imagen/isla/l17
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8d985d015cbb5ae478822cbacc31779e
-    m_Address: imagen/isla/l24
+    m_Address: imagen/isla/l23
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -130,7 +129,7 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9293fd9d74cc81f4186bbb932627d3da
-    m_Address: imagen/isla/l07
+    m_Address: imagen/isla/l06
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -142,7 +141,7 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a58d05623c1e4e944bfe204d3bcab046
-    m_Address: imagen/isla/l20
+    m_Address: imagen/isla/l19
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -154,19 +153,19 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aff9bd13b1b130d41a7b410f1564918c
-    m_Address: imagen/isla/l12
+    m_Address: imagen/isla/l11
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c5b16e8e0609e0940986aca1f607315c
-    m_Address: imagen/isla/l14
+    m_Address: imagen/isla/l13
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c92e9aee28ad2424091cfb9f5cf7c21e
-    m_Address: imagen/isla/l16
+    m_Address: imagen/isla/l15
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -184,13 +183,13 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d70f4292ca20e444bbcf72c59322c2f2
-    m_Address: imagen/isla/l11
+    m_Address: imagen/isla/l10
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: db66e623a6366b64dae415136022f256
-    m_Address: imagen/isla/l23
+    m_Address: imagen/isla/l22
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands
@@ -202,7 +201,7 @@ MonoBehaviour:
     - islands
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ec7df2b1cba72fd49b884b0eaf9863dd
-    m_Address: imagen/isla/l08
+    m_Address: imagen/isla/l07
     m_ReadOnly: 0
     m_SerializedLabels:
     - islands

@@ -13,11 +13,14 @@ namespace Assets.Scripts.PLN
         public const float UMBRAL_VERDE = 85.0f;
         public const float UMBRAL_AMARILLO = 60.0f;
 
+        // Programación dinámica: dp[i,j] es el mínimo de ediciones entre los prefijos a[0..i) y b[0..j).
+        // Tiempo y memoria O(m*n); esta versión compara caracteres, no fonemas ni grafemas compuestos.
         public static int DistanciaLevenshtein(string a, string b)
         {
             if (a == null) a = string.Empty;
             if (b == null) b = string.Empty;
 
+            // Comparar un prefijo con la cadena vacía requiere tantas inserciones o borrados como su longitud.
             int[,] dp = new int[a.Length + 1, b.Length + 1];
             for (int i = 0; i <= a.Length; i++) dp[i, 0] = i;
             for (int j = 0; j <= b.Length; j++) dp[0, j] = j;
@@ -26,6 +29,7 @@ namespace Assets.Scripts.PLN
             {
                 for (int j = 1; j <= b.Length; j++)
                 {
+                    // Cada celda elige entre borrar, insertar o sustituir; conservar un carácter cuesta cero.
                     int costo = a[i - 1] == b[j - 1] ? 0 : 1;
                     dp[i, j] = Math.Min(
                         Math.Min(dp[i - 1, j] + 1, dp[i, j - 1] + 1),
@@ -45,6 +49,7 @@ namespace Assets.Scripts.PLN
             int distancia = DistanciaLevenshtein(a, b);
             int largoMax = Math.Max(a.Length, b.Length);
 
+            // Rama de caja blanca CB03/CB04: evita dividir entre cero cuando ambos textos quedan vacíos.
             if (largoMax == 0) return 100f;
             return Math.Max(0f, (1f - (float)distancia / largoMax) * 100f);
         }
@@ -81,17 +86,23 @@ namespace Assets.Scripts.PLN
             };
         }
 
-        public static ResultadoEvaluacion EvaluarEscritura(string esperado, string respuesta)
+        /// <summary>
+        /// Aprueba solo la igualdad ortográfica normalizada. La distancia orienta el feedback;
+        /// el análisis morfológico agrega contexto sin cambiar el resultado.
+        /// </summary>
+        public static ResultadoEvaluacion EvaluarEscritura(string esperado, string respuesta,
+            AnalizadorMorfologico analizador = null)
         {
             string textoEsperado = NormalizadorTexto.NormalizarEscritura(esperado);
             string textoIngresado = NormalizadorTexto.NormalizarEscritura(respuesta);
+            // En escritura, una similitud alta no basta: se exige igualdad tras normalizar, sin distinguir mayúsculas.
             bool aprobado = string.Equals(textoEsperado, textoIngresado, StringComparison.OrdinalIgnoreCase);
             int largoMaximo = Math.Max(textoEsperado.Length, textoIngresado.Length);
             float similitud = largoMaximo == 0 ? 100f : Math.Max(0f,
                 (1f - (float)DistanciaLevenshtein(
                     textoEsperado.ToLowerInvariant(), textoIngresado.ToLowerInvariant()) / largoMaximo) * 100f);
 
-            return new ResultadoEvaluacion
+            var resultado = new ResultadoEvaluacion
             {
                 aprobado = aprobado,
                 porcentajeSimilitud = similitud,
@@ -100,12 +111,16 @@ namespace Assets.Scripts.PLN
                 textoIngresado = respuesta,
                 origenEntrada = "texto"
             };
+            // La consulta morfológica explica formas documentadas; no modifica la aprobación ortográfica.
+            analizador?.CompletarEvaluacion(resultado);
+            return resultado;
         }
 
-        public static List<string> Tokenizar(string oracion)
+        public static List<string> Tokenizar(string oracion, bool conservarMayusculas = false)
         {
+            // Rama de caja blanca CB05/CB06: retorno vacío frente a preparación y separación de palabras.
             if (string.IsNullOrWhiteSpace(oracion)) return new List<string>();
-            return NormalizadorTexto.Normalizar(oracion)
+            return NormalizadorTexto.PrepararTokens(oracion, conservarMayusculas)
                 .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
         }

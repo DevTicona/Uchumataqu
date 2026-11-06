@@ -10,7 +10,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
     /// <summary>
     /// Vista para actividades de selección múltiple (UCH->ES, ES->UCH, Audio->UCH/ES, Forma->Raiz, etc.)
-    /// Especificación: Docs/UI/04-escena-leccion-base.md §9
+    /// Especificación: Docs/Specifications/04-flujo-leccion-app.md.
     /// </summary>
     public class SeleccionMultipleView : MonoBehaviour
     {
@@ -127,7 +127,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
             if (btnAudioPregunta != null)
             {
-                btnAudioPregunta.gameObject.SetActive(esAudio || !string.IsNullOrEmpty(audioPalabraId));
+                btnAudioPregunta.gameObject.SetActive(esAudio || (tipo != "uch_a_es" && !string.IsNullOrEmpty(audioPalabraId)));
                 TMP_Text etiquetaAudio = btnAudioPregunta.GetComponentInChildren<TMP_Text>(true);
                 if (etiquetaAudio != null)
                     etiquetaAudio.text = tipo == "audio_a_es_oracion" ? "ESCUCHAR ORACIÓN" : "ESCUCHAR PALABRA";

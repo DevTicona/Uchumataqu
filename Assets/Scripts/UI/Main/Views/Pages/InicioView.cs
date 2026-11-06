@@ -23,6 +23,9 @@ namespace Assets.Scripts.UI.Main.Paginas
         [SerializeField] private TMP_Text txtPorcentajeContinuar;
         [SerializeField] private Slider sliderProgresoContinuar;
         [SerializeField] private Button btnContinuarLeccion;
+        [SerializeField] private Image iconoAccion;
+        [SerializeField] private Sprite iconoComenzar;
+        [SerializeField] private Sprite iconoContinuar;
 
         [Header("Resumen Rápido")]
         [SerializeField] private TMP_Text txtContadorLecciones;
@@ -66,7 +69,7 @@ namespace Assets.Scripts.UI.Main.Paginas
                 txtSaludoUsuario.text = $"¡Hola, {nombre}!";
 
             if (txtContadorLecciones != null)
-                txtContadorLecciones.text = $"{datos.LeccionesCompletadas} / 27";
+                txtContadorLecciones.text = $"{datos.LeccionesCompletadas} / {datos.TotalLecciones}";
 
             if (txtContadorRA != null)
                 txtContadorRA.text = $"{datos.EscenariosVisitados} / 6";
@@ -92,9 +95,11 @@ namespace Assets.Scripts.UI.Main.Paginas
             if (etiquetaBoton != null)
             {
                 etiquetaBoton.text = datos.CurriculoCompletado
-                    ? "REPASAR LECCIÓN 27"
-                    : porcentaje > 0 ? "CONTINUAR" : "EMPEZAR";
+                    ? $"REPASAR LECCIÓN {datos.TotalLecciones}"
+                    : porcentaje > 0 ? "CONTINUAR" : "COMENZAR";
             }
+            if (iconoAccion != null)
+                iconoAccion.sprite = porcentaje > 0 || datos.CurriculoCompletado ? iconoContinuar : iconoComenzar;
         }
 
         private void OnContinuarLeccionClicked()

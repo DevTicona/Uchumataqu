@@ -63,9 +63,13 @@ namespace Assets.Scripts.Core.UI.Components
         private void AplicarCambiosEnEditor()
         {
             if (this == null) return;
+            if (_imagen == null) _imagen = GetComponent<Image>();
+            if (_imagen == null) return;
+            Color colorAnterior = _imagen.color;
             AplicarTema();
-            UnityEditor.EditorUtility.SetDirty(this);
-            if (_imagen != null) UnityEditor.EditorUtility.SetDirty(_imagen);
+            if (colorAnterior == _imagen.color) return;
+
+            UnityEditor.EditorUtility.SetDirty(_imagen);
             UnityEditor.SceneView.RepaintAll();
         }
 #endif
@@ -75,8 +79,11 @@ namespace Assets.Scripts.Core.UI.Components
             UIThemeModel theme = UIThemeController.Theme;
             if (theme == null) return;
             if (_imagen == null) _imagen = GetComponent<Image>();
+            if (_imagen == null) return;
             Color color = ObtenerColor(theme);
             color.a *= multiplicadorAlpha;
+            if (_imagen.color == color) return;
+
             _imagen.color = color;
             _imagen.SetAllDirty();
         }

@@ -39,6 +39,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - global_data
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf95077e573d61247aab9fef7538f71a
+    m_Address: json_analyses
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - global_data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6659b786d1785e4b84db8e4a69fe90e
+    m_Address: json_lookup_index
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - global_data
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 30c16aa3f6c5c784694e0dbfc06d3dec, type: 2}
   m_SchemaSet:

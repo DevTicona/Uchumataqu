@@ -8,7 +8,7 @@ namespace Assets.Scripts.UI.Main
 {
     /// <summary>
     /// Vista contenedora de las 5 páginas internas de la escena 02_Main.
-    /// Especificado en Docs/UI/03-escena-main.md.
+    /// Especificado en Docs/UI/00-arquitectura-ui-ux-general.md.
     /// </summary>
     public class MainView : MonoBehaviour
     {
@@ -24,6 +24,9 @@ namespace Assets.Scripts.UI.Main
 
         [Header("Modal Salida")]
         [SerializeField] private GameObject dialogoSalida;
+
+        [SerializeField] private Assets.Scripts.Core.UI.Ayuda.AyudaContextualView ayudaContextual;
+        public Assets.Scripts.Core.UI.Ayuda.AyudaContextualView Ayuda => ayudaContextual;
 
         public BottomNavigationView BottomNav => bottomNavigation;
         public InicioView Inicio => pageInicio != null ? pageInicio.GetComponent<InicioView>() : null;
@@ -73,6 +76,8 @@ namespace Assets.Scripts.UI.Main
 
         public void MostrarDialogoSalida(bool mostrar)
         {
+            ayudaContextual?.PermitirAyuda(!mostrar);
+
             if (dialogoSalida != null)
                 dialogoSalida.SetActive(mostrar);
         }

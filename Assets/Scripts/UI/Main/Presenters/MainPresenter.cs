@@ -53,6 +53,9 @@ namespace Assets.Scripts.UI.Main
             PaginaMain paginaDestino = ContextoNavegacionModel.PaginaDestino;
             ContextoNavegacionModel.PaginaDestino = PaginaMain.Inicio;
             CambiarPagina(paginaDestino);
+#if UNITY_ANDROID && UCHUMATAQU_VALIDACION && !UNITY_EDITOR
+            Assets.Scripts.Core.Diagnostics.MedicionAndroid.PantallaLista();
+#endif
         }
 
         private void OnDestroy()
@@ -139,21 +142,22 @@ namespace Assets.Scripts.UI.Main
             view.Inicio.Mostrar(MainModelFactory.CrearInicio(
                 perfil,
                 progreso,
-                CorpusRepository.ObtenerTodasLecciones(),
-                CorpusRepository.ObtenerTodosEscenariosRa()));
+                CorpusRepository.ObtenerTodasLasLecciones(),
+                CorpusRepository.ObtenerTodosLosEscenariosRA()));
         }
 
         private void RefrescarMapa()
         {
             if (view.MapaLecciones == null) return;
-            List<LeccionCompiladaModel> lecciones = CorpusRepository.ObtenerTodasLecciones();
-            List<EscenarioRAModel> escenarios = CorpusRepository.ObtenerTodosEscenariosRa();
+            List<LeccionCompiladaModel> lecciones = CorpusRepository.ObtenerTodasLasLecciones();
+            List<EscenarioRAModel> escenarios = CorpusRepository.ObtenerTodosLosEscenariosRA();
             ProgresoUsuarioModel progreso = ProgresoRepository.ObtenerProgreso();
 
-            List<IslaMapaModel> mapa = MapaLeccionesModelFactory.Crear(lecciones, escenarios, progreso);
+            List<IslaMapaModel> mapa = MapaLeccionesModelFactory.Crear(
+                lecciones, escenarios, progreso, AppConfigRepository.AccesoLibrePruebas);
             view.MapaLecciones.MostrarResumen(
-                mapa.FindAll(isla => !isla.EsHitoRa && isla.Estado == EstadoIsla.Completada).Count,
-                mapa.FindAll(isla => !isla.EsHitoRa).Count);
+                mapa.FindAll(isla => isla.Estado == EstadoIsla.Completada).Count,
+                mapa.Count);
             view.MapaLecciones.Mostrar(mapa);
         }
 
@@ -165,6 +169,7 @@ namespace Assets.Scripts.UI.Main
 
         private void RefrescarAjustes()
         {
+            view.Ajustes?.SetVersion(Application.version);
             PerfilUsuarioModel perfil = PerfilRepository.CargarPerfil();
             var configuracion = ConfiguracionRepository.Obtener();
             view.Ajustes?.Mostrar(
@@ -193,7 +198,11 @@ namespace Assets.Scripts.UI.Main
                 return;
             }
 
-            if (!PerfilRepository.GuardarPerfil(perfil)) return;
+            if (!PerfilRepository.GuardarPerfil(perfil))
+            {
+                view.Ajustes?.MostrarErrorPerfil("No se pudo guardar el nombre. Inténtalo de nuevo.");
+                return;
+            }
             view.Ajustes?.MostrarPerfilGuardado();
             RefrescarAjustes();
             RefrescarInicio();
@@ -254,6 +263,8 @@ namespace Assets.Scripts.UI.Main
 
         private void OnBackPresionado()
         {
+            if (view.Ayuda != null && view.Ayuda.CerrarSiAbierta()) return;
+
             if (view.DialogoSalidaVisible) view.MostrarDialogoSalida(false);
             else if (_paginaActual != PaginaMain.Inicio) CambiarPagina(PaginaMain.Inicio);
             else view.MostrarDialogoSalida(true);

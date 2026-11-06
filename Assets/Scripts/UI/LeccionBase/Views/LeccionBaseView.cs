@@ -11,7 +11,7 @@ namespace Assets.Scripts.UI.LeccionBase
 {
     /// <summary>
     /// Vista principal de la escena 03_LeccionBase.
-    /// Especificado en Docs/UI/04-escena-leccion-base.md.
+    /// Especificado en Docs/Specifications/04-flujo-leccion-app.md.
     /// </summary>
     public class LeccionBaseView : MonoBehaviour
     {
@@ -43,7 +43,7 @@ namespace Assets.Scripts.UI.LeccionBase
         [SerializeField] private Sprite iconoFinalizar;
         [SerializeField] private Sprite iconoDetener;
 
-        public enum AccionPrincipal { Continuar, Comprobar, Finalizar }
+        public enum AccionPrincipal { Continuar, Comprobar, Finalizar, Siguiente }
         public event Action OnAccionPrincipalClick;
 
         [Header("Overlays")]
@@ -52,11 +52,15 @@ namespace Assets.Scripts.UI.LeccionBase
         [SerializeField] private GameObject panelConfirmacionSalida;
         [SerializeField] private Button btnSeguirAprendiendo;
         [SerializeField] private Button btnConfirmarSalida;
+        private Vector2 ultimoTamanoFeedback;
 
         public event Action OnAtrasClick;
         public event Action OnVolverAlMapaClick;
         public event Action OnConfirmarSalidaClick;
         public event Action OnCancelarSalidaClick;
+
+        [SerializeField] private Assets.Scripts.Core.UI.Ayuda.AyudaContextualView ayudaContextual;
+        public Assets.Scripts.Core.UI.Ayuda.AyudaContextualView Ayuda => ayudaContextual;
 
         public FeedbackOverlayView Feedback => feedbackOverlay;
         public ModalResultadoView ModalResultado => modalResultado;
@@ -194,6 +198,7 @@ namespace Assets.Scripts.UI.LeccionBase
         {
             if (feedbackOverlay != null)
             {
+                feedbackOverlay.ReproducirSonidoRespuesta(semaforo);
                 if (semaforo == "verde")
                 {
                     feedbackOverlay.MostrarCorrecto(detalle);
@@ -225,6 +230,8 @@ namespace Assets.Scripts.UI.LeccionBase
 
         public void MostrarResultado(int aciertos, int total, double precision, int estrellas)
         {
+            ayudaContextual?.PermitirAyuda(false);
+
             if (modalResultado != null)
             {
                 modalResultado.Mostrar(aciertos, total, precision, estrellas);
@@ -233,13 +240,23 @@ namespace Assets.Scripts.UI.LeccionBase
 
         public void MostrarConfirmacionSalida(bool mostrar)
         {
+            ayudaContextual?.PermitirAyuda(!mostrar);
+
             if (panelConfirmacionSalida != null) panelConfirmacionSalida.SetActive(mostrar);
+        }
+
+        public void MostrarFeedbackRespuesta(FeedbackRespuesta respuesta)
+        {
+            if (feedbackOverlay == null) return;
+            feedbackOverlay.ReproducirSonidoRespuesta(respuesta.Semaforo);
+            feedbackOverlay.MostrarRespuesta(respuesta);
+            ActualizarEspacioActividad();
         }
 
         public void PresentarAccionPrincipal(AccionPrincipal accion, bool interactuable, bool visible = true)
         {
             txtAccionPrincipal.text = accion == AccionPrincipal.Comprobar ? "COMPROBAR" :
-                accion == AccionPrincipal.Finalizar ? "FINALIZAR" : "CONTINUAR";
+                accion == AccionPrincipal.Finalizar ? "FINALIZAR" : "SIGUIENTE";
             iconoAccionPrincipal.sprite = accion == AccionPrincipal.Comprobar ? iconoComprobar :
                 accion == AccionPrincipal.Finalizar ? iconoFinalizar : iconoContinuar;
             btnPrincipal.gameObject.SetActive(visible);
@@ -261,11 +278,26 @@ namespace Assets.Scripts.UI.LeccionBase
         public void EstablecerInteraccionDuranteGrabacion(bool grabando)
         {
             if (btnAtras != null) btnAtras.interactable = !grabando;
+            ayudaContextual?.PermitirAyuda(!grabando);
+
+        }
+
+        private void LateUpdate()
+        {
+            if (feedbackOverlay != null && feedbackOverlay.isActiveAndEnabled &&
+                feedbackOverlay.transform is RectTransform rect && rect.rect.size != ultimoTamanoFeedback)
+                ActualizarEspacioActividad();
         }
 
         private void ActualizarEspacioActividad()
         {
             if (actividadContainer == null || !(actividadContainer.parent is RectTransform safeArea)) return;
+            if (feedbackOverlay != null && feedbackOverlay.isActiveAndEnabled &&
+                feedbackOverlay.transform is RectTransform rect)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+                ultimoTamanoFeedback = rect.rect.size;
+            }
             float margen = 28f;
             foreach (RectTransform elemento in new[] {
                 feedbackOverlay != null ? feedbackOverlay.transform as RectTransform : null,

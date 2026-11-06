@@ -7,7 +7,7 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
 {
     /// <summary>
     /// Modal de resultado final de lección completada.
-    /// Especificación: Docs/UI/04-escena-leccion-base.md §12
+    /// Especificación: Docs/Specifications/04-flujo-leccion-app.md.
     /// </summary>
     public class ModalResultadoView : MonoBehaviour
     {

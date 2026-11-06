@@ -8,13 +8,19 @@ namespace Assets.Scripts.Core.Assets
     /// <summary>
     /// Servicio técnico de reproducción de clips y efectos locales mediante AudioSource.
     /// Delega la carga a AddressablesService y recibe el volumen desde la composición de la app.
-    /// Especificado en Docs/UI/04-escena-leccion-base.md (Sección 13).
+    /// Especificado en Docs/Specifications/05-guia-corpus-datos.md.
     /// </summary>
     [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Assets.Scripts.Core.Services", sourceAssembly: "Assembly-CSharp", sourceClassName: "AudioService")]
     public class AudioService : MonoBehaviour
     {
         private static AudioService _instance;
         private AudioSource _audioSource;
+        private AudioSource _efectosSource;
+        private int versionReproduccion;
+        private int versionEfecto;
+        private float gananciaVoz = 1f;
+        private RecursoAddressable<AudioClip> vozCargada;
+        private RecursoAddressable<AudioClip> efectoCargado;
 
         public static AudioService Instance
         {
@@ -44,6 +50,10 @@ namespace Assets.Scripts.Core.Assets
             _audioSource = gameObject.AddComponent<AudioSource>();
             _audioSource.playOnAwake = false;
             _audioSource.spatialBlend = 0f; // 2D UI Audio
+            _efectosSource = gameObject.AddComponent<AudioSource>();
+            _efectosSource.playOnAwake = false;
+            _efectosSource.spatialBlend = 0f;
+            _efectosSource.volume = 1f;
         }
 
         public void ConfigurarVolumen(float volumen)
@@ -51,24 +61,42 @@ namespace Assets.Scripts.Core.Assets
             _audioSource.volume = Mathf.Clamp01(volumen);
         }
 
+        public void ConfigurarVolumenEfectos(float volumen)
+        {
+            _efectosSource.volume = Mathf.Clamp01(volumen);
+        }
+
+        public void ConfigurarGananciaVoz(float ganancia)
+        {
+            gananciaVoz = Mathf.Clamp(ganancia, 1f, 1.4f);
+        }
+
         public async Task ReproducirPorKeyAsync(string addressableKey)
         {
             if (string.IsNullOrEmpty(addressableKey)) return;
 
+            RecursoAddressable<AudioClip> recurso = null;
             try
             {
-                Detener();
-                var clip = await AddressablesService.CargarAssetAsync<AudioClip>(addressableKey);
-                if (clip != null && _audioSource != null)
+                DetenerVoz();
+                int version = versionReproduccion;
+
+                recurso = await AddressablesService.CargarTemporalAsync<AudioClip>(addressableKey);
+                var clip = recurso.Asset;
+                if (this != null && version == versionReproduccion && clip != null && _audioSource != null)
                 {
+                    vozCargada = recurso;
+                    recurso = null;
+                    // El clip activo queda identificable para repetir y diagnosticar el estímulo.
                     _audioSource.clip = clip;
-                    _audioSource.Play();
+                    _audioSource.PlayOneShot(clip, gananciaVoz);
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogWarning($"[AudioService] No se pudo reproducir audio '{addressableKey}': {ex.Message}");
             }
+            finally { recurso?.Dispose(); }
         }
 
         public async Task ReproducirPalabraAsync(string palabraId)
@@ -93,19 +121,75 @@ namespace Assets.Scripts.Core.Assets
 
         public void ReproducirEfecto(string nombreEfecto)
         {
-            // Efectos de interfaz básicos sin bloquear
-            _ = ReproducirPorKeyAsync($"sfx_{nombreEfecto}");
+            if (!string.IsNullOrWhiteSpace(nombreEfecto))
+                _ = CargarEfectoAsync($"sfx_{nombreEfecto}", ++versionEfecto);
+        }
+
+        private async Task CargarEfectoAsync(string key, int version)
+        {
+            RecursoAddressable<AudioClip> recurso = null;
+            try
+            {
+                recurso = await AddressablesService.CargarTemporalAsync<AudioClip>(key);
+                if (version == versionEfecto && this != null)
+                {
+                    ReproducirEfecto(recurso.Asset);
+                    efectoCargado = recurso;
+                    recurso = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[AudioService] No se pudo reproducir efecto '{key}': {ex.Message}");
+            }
+            finally { recurso?.Dispose(); }
+        }
+
+        public void ReproducirEfecto(AudioClip clip)
+        {
+            if (clip == null || _efectosSource == null) return;
+            versionEfecto++;
+            _efectosSource.Stop();
+            efectoCargado?.Dispose();
+            efectoCargado = null;
+            _efectosSource.PlayOneShot(clip);
         }
 
         public void Detener()
         {
-            if (_audioSource != null && _audioSource.isPlaying)
+            DetenerVoz();
+            versionEfecto++;
+            if (_efectosSource != null) _efectosSource.Stop();
+            efectoCargado?.Dispose();
+            efectoCargado = null;
+        }
+
+        private void DetenerVoz()
+        {
+            versionReproduccion++;
+
+            if (_audioSource != null)
             {
                 _audioSource.Stop();
+                _audioSource.clip = null;
             }
+            vozCargada?.Dispose();
+            vozCargada = null;
+        }
+
+        private void OnDestroy()
+        {
+            if (_instance != this) return;
+            Detener();
+            _instance = null;
         }
 
         public bool EstaReproduciendo => _audioSource != null && _audioSource.isPlaying;
+
+        public static void DetenerSiExiste()
+        {
+            if (_instance != null) _instance.Detener();
+        }
     }
 }
 

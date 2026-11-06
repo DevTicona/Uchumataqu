@@ -9,7 +9,7 @@ namespace Assets.Scripts.RA
 {
     /// <summary>
     /// Gestor principal de la escena 04_RealidadAumentada.
-    /// Especificado en Docs/Specifications/03-modulo-ra.md y Docs/UI/05-escena-realidad-aumentada.md.
+    /// Especificado en Docs/Specifications/03-modulo-ra.md y Docs/RA/03-2-implementacion-tecnica-ra.md.
     /// </summary>
     [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Assets.Scripts.RA", sourceAssembly: "Assembly-CSharp", sourceClassName: "GestorEscenaRA")]
     public class GestorEscenarioRA : MonoBehaviour
@@ -31,7 +31,8 @@ namespace Assets.Scripts.RA
         public bool EstaDesbloqueado()
         {
             if (EscenarioActual == null) return false;
-            return GestorProgreso.EstaEscenarioDesbloqueado(EscenarioActual.id);
+            return AppConfigRepository.AccesoLibrePruebas ||
+                GestorProgreso.EstaEscenarioDesbloqueado(EscenarioActual.id);
         }
 
         public bool RegistrarVisita()

@@ -1,10 +1,21 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Persistencia
 {
     public static class GestorProgreso
     {
+        public static bool EstaLeccionDesbloqueada(string leccionId)
+        {
+            var lecciones = CorpusRepository.ObtenerTodasLasLecciones().OrderBy(l => l.orden).ToList();
+            int indice = lecciones.FindIndex(l => l.id == leccionId);
+            if (indice < 0) return false;
+            var progreso = ProgresoRepository.ObtenerProgreso();
+            return progreso.LeccionCompletada(leccionId) || indice == 0 ||
+                progreso.LeccionCompletada(lecciones[indice - 1].id);
+        }
+
         public static bool EstaEscenarioDesbloqueado(string escenarioId)
         {
             var escenario = CorpusRepository.ObtenerEscenarioRA(escenarioId);
@@ -34,6 +45,7 @@ namespace Assets.Scripts.Persistencia
             lecc.veces_completada++;
             lecc.fecha_ultima_completada = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:sszzz");
             lecc.paso_actual = 0;
+            lecc.sesion_en_progreso = false;
 
             progreso.ultima_leccion_id = leccionId;
             return ProgresoRepository.Guardar();
@@ -44,16 +56,19 @@ namespace Assets.Scripts.Persistencia
             return CompletarLeccion(leccionId, aciertos, errores, totalActividades);
         }
 
-        public static bool GuardarLeccionEnProgreso(string leccionId, int pasoActual, int aciertos, int errores)
+        public static bool GuardarLeccionEnProgreso(string leccionId, int pasoActual, int aciertos, int errores,
+            string revisionContenido = null)
         {
             if (string.IsNullOrWhiteSpace(leccionId)) return false;
             var progreso = ProgresoRepository.ObtenerProgreso();
             var leccion = progreso.ObtenerOCrearLeccion(leccionId);
-            if (leccion.estado == "completada") return true;
-            leccion.estado = "en_progreso";
+            // Una repetición también se reanuda sin perder los desbloqueos obtenidos.
+            if (leccion.estado != "completada") leccion.estado = "en_progreso";
+            leccion.sesion_en_progreso = true;
             leccion.paso_actual = Mathf.Max(0, pasoActual);
             leccion.aciertos = Mathf.Max(0, aciertos);
             leccion.errores = Mathf.Max(0, errores);
+            if (revisionContenido != null) leccion.revision_contenido = revisionContenido;
             progreso.ultima_leccion_id = leccionId;
             return ProgresoRepository.Guardar();
         }

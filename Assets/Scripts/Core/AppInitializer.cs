@@ -34,10 +34,12 @@ namespace Assets.Scripts.Core.Sistema
             if (config == null)
                 throw new InvalidOperationException("No se encontró AppConfig en Resources.");
 
-            Debug.unityLogger.logEnabled = config.enableDebugLogs;
+            Debug.unityLogger.logEnabled = config.enableDebugLogs || Debug.isDebugBuild;
             OrientacionPantallaService.ConfigurarInicial();
             AudioListener.volume = ConfiguracionRepository.Obtener().volumen_general;
             AudioService.Instance.ConfigurarVolumen(config.defaultWordVolume);
+            AudioService.Instance.ConfigurarGananciaVoz(config.defaultVoiceGain);
+            AudioService.Instance.ConfigurarVolumenEfectos(config.defaultSFXVolume);
             // Se conserva el handle hasta consultar su estado. InitializeAsync() usa
             // autoReleaseHandle=true por defecto y en dispositivos puede invalidarlo
             // justo antes de que continúe este await.

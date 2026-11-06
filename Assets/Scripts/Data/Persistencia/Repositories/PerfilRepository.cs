@@ -1,12 +1,13 @@
 using System;
 
 using Assets.Scripts.Data.Persistencia;
+using Assets.Scripts.Util;
 
 namespace Assets.Scripts.Persistencia
 {
     /// <summary>
     /// Repositorio de guardado y carga local del perfil del usuario.
-    /// Especificado en Docs/UI/02-escena-onboarding.md (Sección 7) y 08-perfil-logros-ajustes-acerca.md.
+    /// Persistencia definida por la arquitectura y el flujo vigente de la aplicación.
     /// </summary>
     public static class PerfilRepository
     {
@@ -33,6 +34,12 @@ namespace Assets.Scripts.Persistencia
                 if (perfil != null)
                 {
                     perfil.version = 2;
+                    string nombre = FormatoTexto.ConInicialMayuscula(perfil.nombre?.Trim());
+                    if (perfil.nombre != nombre)
+                    {
+                        perfil.nombre = nombre;
+                        GuardarPerfil(perfil);
+                    }
                     return perfil;
                 }
             }
@@ -47,6 +54,7 @@ namespace Assets.Scripts.Persistencia
         public static bool GuardarPerfil(PerfilUsuarioModel perfil)
         {
             if (perfil == null) throw new ArgumentNullException(nameof(perfil));
+            perfil.nombre = FormatoTexto.ConInicialMayuscula(perfil.nombre?.Trim());
 
             try
             {

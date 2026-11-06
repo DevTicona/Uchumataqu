@@ -13,5 +13,6 @@ namespace Assets.Scripts.Data.Corpus
         public List<string> familias_repaso = new List<string>();
         public List<string> oraciones_ids = new List<string>();
         public List<PasoLeccionModel> pasos = new List<PasoLeccionModel>();
+        [NonSerialized] public string RevisionContenido;
     }
 }

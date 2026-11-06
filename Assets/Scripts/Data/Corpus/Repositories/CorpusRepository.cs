@@ -2,18 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Assets.Scripts.Core;
 using Assets.Scripts.Core.Services;
 using Assets.Scripts.Data.Corpus;
 using Assets.Scripts.Utils;
+using Assets.Scripts.PLN;
 
 namespace Assets.Scripts.Persistencia
 {
     /// <summary>
     /// Repositorio central en memoria para el corpus validado de Uchumataqu.
-    /// Carga palabras.json, oraciones.json, lecciones_compiladas.json y escenarios_ra.json.
+    /// Carga el currículo activo, los escenarios y el índice morfológico local.
     /// </summary>
     public static class CorpusRepository
     {
@@ -29,8 +32,10 @@ namespace Assets.Scripts.Persistencia
         private static Dictionary<string, EscenarioRAModel> _escenariosDict;
         private static List<LeccionCompiladaModel> _leccionesOrdenadas;
         private static List<EscenarioRAModel> _escenariosList;
+        public static AnalizadorMorfologico Morfologia { get; private set; }
 
-        public static bool EstaInicializado => _palabrasDict != null && _leccionesDict != null && _palabrasDict.Count > 0;
+        public static bool EstaInicializado => _palabrasDict?.Count > 0 && _formasDict != null &&
+            _oracionesDict?.Count > 0 && _leccionesDict?.Count > 0 && _escenariosDict?.Count > 0 && Morfologia != null;
 
         public static bool Inicializar()
         {
@@ -41,12 +46,16 @@ namespace Assets.Scripts.Persistencia
             {
                 ProcesarPalabrasJson(CorpusJsonService.LeerJsonDirecto("palabras.json"));
                 ProcesarOracionesJson(CorpusJsonService.LeerJsonDirecto("oraciones.json"));
-                ProcesarLeccionesJson(CorpusJsonService.LeerJsonDirecto("lecciones_compiladas.json"));
+                ProcesarLeccionesJson(CorpusJsonService.LeerJsonDirecto(ContentAddress.ArchivoLecciones));
                 ProcesarEscenariosJson(CorpusJsonService.LeerJsonDirecto("escenarios_ra.json"));
-                return true;
+                Morfologia = MorfologiaJsonService.CrearAnalizador(
+                    CorpusJsonService.LeerJsonDirecto("PLN/analyses.json"),
+                    CorpusJsonService.LeerJsonDirecto("PLN/lookup-index.json"));
+                return EstaInicializado;
             }
             catch (Exception ex)
             {
+                LimpiarCache();
                 JsonUtilityHelper.LogError($"[CorpusRepository] Error inicializando corpus directo: {ex.Message}");
                 return false;
             }
@@ -66,12 +75,14 @@ namespace Assets.Scripts.Persistencia
                 var taskOraciones = CargarOracionesAsync();
                 var taskLecciones = CargarLeccionesCompiladasAsync();
                 var taskEscenarios = CargarEscenariosRAAsync();
+                var taskMorfologia = CargarMorfologiaAsync();
 
-                await Task.WhenAll(taskPalabras, taskOraciones, taskLecciones, taskEscenarios);
-                return true;
+                await Task.WhenAll(taskPalabras, taskOraciones, taskLecciones, taskEscenarios, taskMorfologia);
+                return EstaInicializado;
             }
             catch (Exception ex)
             {
+                LimpiarCache();
                 JsonUtilityHelper.LogError($"[CorpusRepository] Error inicializando corpus async: {ex.Message}");
                 return false;
             }
@@ -127,8 +138,16 @@ namespace Assets.Scripts.Persistencia
 
         private static async Task CargarLeccionesCompiladasAsync()
         {
-            var json = await CargarJsonTextoAsync(KEY_LECCIONES, "lecciones_compiladas.json");
+            var json = await CargarJsonTextoAsync(KEY_LECCIONES, ContentAddress.ArchivoLecciones);
             ProcesarLeccionesJson(json);
+        }
+
+        private static async Task CargarMorfologiaAsync()
+        {
+            var analisis = CargarJsonTextoAsync(ContentAddress.DatosAnalisisMorfologicos, "PLN/analyses.json");
+            var indice = CargarJsonTextoAsync(ContentAddress.DatosIndiceMorfologico, "PLN/lookup-index.json");
+            await Task.WhenAll(analisis, indice);
+            Morfologia = MorfologiaJsonService.CrearAnalizador(await analisis, await indice);
         }
 
         private static void ProcesarLeccionesJson(string json)
@@ -136,7 +155,7 @@ namespace Assets.Scripts.Persistencia
             var wrapper = JsonUtilityHelper.FromJson<LeccionesCompiladasCorpusModel>(json);
             if (wrapper == null || (wrapper.version != 3 && wrapper.version != 4))
                 throw new InvalidDataException(
-                    $"Se esperaba lecciones_compiladas.json versión 3 o 4 y se recibió '{wrapper?.version.ToString() ?? "sin versión"}'.");
+                    $"Se esperaba {ContentAddress.ArchivoLecciones} versión 3 o 4 y se recibió '{wrapper?.version.ToString() ?? "sin versión"}'.");
             _leccionesDict = new Dictionary<string, LeccionCompiladaModel>();
             _leccionesOrdenadas = new List<LeccionCompiladaModel>();
 
@@ -145,6 +164,10 @@ namespace Assets.Scripts.Persistencia
                 _leccionesOrdenadas = wrapper.lecciones.OrderBy(l => l.orden).ToList();
                 foreach (var l in _leccionesOrdenadas)
                 {
+                    if (l.pasos == null || l.pasos.Count == 0 || l.pasos.Any(p => p == null || !Lecciones.TipoPasoLeccion.EsSoportado(p.tipo)))
+                        throw new InvalidDataException($"La lección '{l.id}' contiene pasos vacíos o no soportados.");
+                    using (var hash = SHA256.Create())
+                        l.RevisionContenido = Convert.ToBase64String(hash.ComputeHash(Encoding.UTF8.GetBytes(JsonUtility.ToJson(l))));
                     _leccionesDict[l.id] = l;
                 }
             }
@@ -280,16 +303,6 @@ namespace Assets.Scripts.Persistencia
 
         public static List<EscenarioRAModel> ObtenerTodosLosEscenariosRA() => _escenariosList ?? new List<EscenarioRAModel>();
 
-        // Aliases de conveniencia
-        public static PalabraModel ObtenerPalabraPorId(string id) => ObtenerPalabra(id);
-        public static List<PalabraModel> ObtenerTodasPalabras() => ObtenerTodasLasPalabras();
-        public static OracionModel ObtenerOracionPorId(string id) => ObtenerOracion(id);
-        public static List<OracionModel> ObtenerTodasOraciones() => ObtenerTodasLasOraciones();
-        public static LeccionCompiladaModel ObtenerLeccionPorId(string id) => ObtenerLeccion(id);
-        public static List<LeccionCompiladaModel> ObtenerTodasLecciones() => ObtenerTodasLasLecciones();
-        public static EscenarioRAModel ObtenerEscenarioRaPorId(string id) => ObtenerEscenarioRA(id);
-        public static List<EscenarioRAModel> ObtenerTodosEscenariosRa() => ObtenerTodosLosEscenariosRA();
-
         public static void LimpiarCache()
         {
             _palabrasDict = null;
@@ -299,6 +312,7 @@ namespace Assets.Scripts.Persistencia
             _escenariosDict = null;
             _leccionesOrdenadas = null;
             _escenariosList = null;
+            Morfologia = null;
         }
     }
 }

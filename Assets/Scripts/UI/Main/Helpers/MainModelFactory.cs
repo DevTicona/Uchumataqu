@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.Scripts.Data.Corpus;
 using Assets.Scripts.Data.Persistencia;
 using Assets.Scripts.Lecciones;
+using Assets.Scripts.Persistencia;
 
 namespace Assets.Scripts.UI.Main
 {
@@ -47,6 +48,7 @@ namespace Assets.Scripts.UI.Main
                 EsContinuacion = porcentajeLeccionActual > 0,
                 CurriculoCompletado = curriculoCompletado,
                 LeccionesCompletadas = progreso.TotalLeccionesCompletadas,
+                TotalLecciones = leccionesOrdenadas.Count,
                 EscenariosVisitados = progreso.TotalEscenariosVisitados,
                 ProximoRaTitulo = proximoRa?.titulo,
                 ProximoRaCompletadas = completadasRa,
@@ -59,16 +61,19 @@ namespace Assets.Scripts.UI.Main
             progreso ??= new ProgresoUsuarioModel();
             int lecciones = progreso.TotalLeccionesCompletadas;
             int escenarios = progreso.TotalEscenariosVisitados;
+            int totalLecciones = CorpusRepository.ObtenerTodasLasLecciones().Count;
+            if (totalLecciones == 0)
+                throw new InvalidOperationException("No existen lecciones para construir los logros.");
 
             return new List<LogroModel>
             {
                 CrearLogro("lecciones_1", "Primer paso", "Completa tu primera lección.", "icono_logro_primer_paso", lecciones, 1),
-                CrearLogro("lecciones_5", "Caminante del lago", "Completa 5 lecciones.", "icono_logro_caminante_lago", lecciones, 5),
-                CrearLogro("lecciones_14", "Guardián de la palabra", "Completa 14 lecciones.", "icono_logro_guardian_palabra", lecciones, 14),
-                CrearLogro("lecciones_27", "Heredero de la lengua", "Completa las 27 lecciones.", "icono_logro_heredero_lengua", lecciones, 27),
-                CrearLogro("ra_1", "Primera exploración", "Visita tu primer escenario RA.", "icono_logro_primera_exploracion", escenarios, 1),
+                CrearLogro("lecciones_5", "Caminante", "Completa 5 lecciones.", "icono_logro_caminante_lago", lecciones, 5),
+                CrearLogro("lecciones_14", "Guardián", "Completa 14 lecciones.", "icono_logro_guardian_palabra", lecciones, 14),
+                CrearLogro($"lecciones_{totalLecciones}", "Heredero", $"Completa las {totalLecciones} lecciones.", "icono_logro_heredero_lengua", lecciones, totalLecciones),
+                CrearLogro("ra_1", "Primera visita", "Visita tu primer escenario RA.", "icono_logro_primera_exploracion", escenarios, 1),
                 CrearLogro("ra_3", "Explorador Uru", "Visita 3 escenarios RA.", "icono_logro_explorador_uru", escenarios, 3),
-                CrearLogro("ra_6", "Guía de los seis territorios", "Visita los 6 escenarios RA.", "icono_logro_guia_territorios", escenarios, 6)
+                CrearLogro("ra_6", "Guía Uru", "Visita los 6 escenarios RA.", "icono_logro_guia_territorios", escenarios, 6)
             };
         }
 
@@ -81,12 +86,13 @@ namespace Assets.Scripts.UI.Main
             if (!string.IsNullOrWhiteSpace(progreso.ultima_leccion_id))
             {
                 ProgresoLeccionModel ultima = progreso.lecciones.FirstOrDefault(item =>
-                    item.leccion_id == progreso.ultima_leccion_id && item.estado == "en_progreso");
+                    item.leccion_id == progreso.ultima_leccion_id &&
+                    (item.estado == "en_progreso" || item.sesion_en_progreso));
                 if (ultima != null && lecciones.Any(leccion => leccion.id == ultima.leccion_id)) return ultima;
             }
 
             return progreso.lecciones
-                .Where(item => item.estado == "en_progreso" &&
+                .Where(item => (item.estado == "en_progreso" || item.sesion_en_progreso) &&
                     lecciones.Any(leccion => leccion.id == item.leccion_id))
                 .OrderBy(item => lecciones.First(leccion => leccion.id == item.leccion_id).orden)
                 .FirstOrDefault();

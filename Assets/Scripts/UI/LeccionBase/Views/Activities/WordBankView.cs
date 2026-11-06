@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Core.UI;
+using Assets.Scripts.Core.UI.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -254,6 +255,18 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             foreach (GameObject ficha in _banco) ficha.GetComponent<Button>().interactable = false;
             foreach (GameObject ficha in _respuesta) ficha.GetComponent<Button>().interactable = false;
             OnTokensComprobados?.Invoke(tokens);
+        }
+
+        public void MostrarResultado(string semaforo)
+        {
+            var estado = semaforo switch
+            {
+                "verde" => ThemedButtonView.EstadoBoton.Correcto,
+                "amarillo" => ThemedButtonView.EstadoBoton.Casi,
+                _ => ThemedButtonView.EstadoBoton.Incorrecto
+            };
+            foreach (GameObject ficha in _respuesta)
+                ficha.GetComponent<ThemedButtonView>().MostrarEstado(estado);
         }
 
         private static void Limpiar(List<GameObject> fichas)

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3953232415336453636}
   - component: {fileID: 1935639312579655988}
   - component: {fileID: 7840243542112647554}
+  - component: {fileID: 704969225767371785}
   m_Layer: 5
   m_Name: BtnEscuchar
   m_TagString: Untagged
@@ -136,6 +137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedButtonView
   estilo: 1
+  bordeEstado: {fileID: 0}
+  intensidadFondoEstado: 0.18
 --- !u!114 &7840243542112647554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +159,21 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &704969225767371785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184465019071072404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e87315b3fca5a14fa11f327ffc09ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.MovimientoUI
+  animarEntrada: 0
+  animarPulsacion: 1
+  duracion: 0.22
 --- !u!1 &959499310378927195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,6 +1098,7 @@ GameObject:
   - component: {fileID: 1820649338238689094}
   - component: {fileID: 7501992813817923337}
   - component: {fileID: 6672383035816856401}
+  - component: {fileID: 229585848790345372}
   m_Layer: 5
   m_Name: BtnPracticar
   m_TagString: Untagged
@@ -1202,6 +1221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedButtonView
   estilo: 1
+  bordeEstado: {fileID: 0}
+  intensidadFondoEstado: 0.18
 --- !u!114 &6672383035816856401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,3 +1243,18 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &229585848790345372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7728880538094342686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e87315b3fca5a14fa11f327ffc09ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.MovimientoUI
+  animarEntrada: 0
+  animarPulsacion: 1
+  duracion: 0.22

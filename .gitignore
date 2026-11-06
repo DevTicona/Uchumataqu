@@ -7,6 +7,9 @@
 /[Uu]ser[Ss]ettings/
 /.utmp/
 /UnityAuditTemp/
+/ProfilerCaptures/
+/evidencias_cap4/
+/pruebas_caja_blanca/
 
 # Archivos de memoria y crash
 MemoryCaptures/
@@ -33,13 +36,39 @@ Thumbs.db
 
 # Archivos compilados (APK, EXE)
 *.apk
+*.apk.part-*
 *.unitypackage
 # Ignorar carpetas de respaldo de compilación IL2CPP
 *BackUpThisFolder_ButDontShipItWithYourGame/
 # Ignorar depuración de Burst y carpetas de recuperación
 *BurstDebugInformation_DoNotShip/
 Assets/_Recovery/
+Assets/_Recovery.meta
 
 # Documentación de trabajo local; no se publica en el repositorio.
 /Docs/
+/*.md
+!/README.md
+!/MANUAL_USUARIO.md
+!/MANUAL_TECNICO.md
 *.slnx
+
+# Entornos Python locales (se conservan en disco).
+.venv/
+__pycache__/
+*.py[cod]
+
+# Herramientas y escenas de revisión local.
+/Assets/Scenes/RevisionTemporalCodex.unity*
+/Assets/Scripts/Editor/RevisionTemporalCodex.cs*
+/Assets/Scripts/Editor/CapturasManualEditor.cs*
+/Assets/Scripts/Editor/Assets/DistribucionEditor.cs*
+/Assets/Scripts/Editor/Assets/InformeSnapshotRendimiento.cs*
+/Assets/Scripts/Editor/Assets/RendimientoAndroidEditor.cs*
+/Assets/Scripts/Editor/Tests/Infrastructure/RendimientoRecursosTests.cs*
+/Assets/Scripts/Editor/Tests/Integration/DistribucionTests.cs*
+/scripts/capturar_pantalla_manual.ps1
+/scripts/ejecutar_serie_rendimiento_android.ps1
+/scripts/medir_rendimiento_android.ps1
+/scripts/probar_asr_rendimiento_android.ps1
+/scripts/resumir_rendimiento_android.mjs

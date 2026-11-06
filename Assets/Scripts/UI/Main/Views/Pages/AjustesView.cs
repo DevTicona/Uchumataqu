@@ -13,7 +13,7 @@ namespace Assets.Scripts.UI.Main.Paginas
 {
     /// <summary>
     /// Vista de la pestaña de Ajustes en 02_Main.
-    /// Especificado en Docs/UI/08-perfil-logros-ajustes-acerca.md §4.
+    /// Sigue Docs/UI/00-arquitectura-ui-ux-general.md y Docs/UI/06-design-system.md.
     /// </summary>
     public class AjustesView : MonoBehaviour
     {
@@ -38,6 +38,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         [SerializeField] private Slider sliderVolumenGeneral;
         [SerializeField] private Toggle toggleAudioAutomatico;
         [SerializeField] private Toggle toggleVibracion;
+        [SerializeField] private TMP_Text txtVersionApp;
 
         [Header("Zona de Peligro")]
         [SerializeField] private Button btnReiniciarProgreso;
@@ -58,6 +59,12 @@ namespace Assets.Scripts.UI.Main.Paginas
         private string _avatarModalSeleccionado = "avatar_01";
         private readonly UIEventSubscriptions _subscriptions = new UIEventSubscriptions();
         private readonly UIEventSubscriptions _avatarSubscriptions = new UIEventSubscriptions();
+
+        public void SetVersion(string version)
+        {
+            if (txtVersionApp != null)
+                txtVersionApp.text = $"Uchumataqu · Versión {version} · Sin conexión";
+        }
 
         private void OnDestroy()
         {

@@ -6,7 +6,7 @@ namespace Assets.Scripts.UI.Main.Paginas
 {
     /// <summary>
     /// Vista de la página "Acerca de" dentro de la escena 02_Main.
-    /// Especificado en Docs/instrucciones_implementar_page_acerca_uchumataqu.md.
+    /// El contenido y el diseño se mantienen en la escena; la versión procede de PlayerSettings.
     /// </summary>
     public class AcercaView : MonoBehaviour
     {

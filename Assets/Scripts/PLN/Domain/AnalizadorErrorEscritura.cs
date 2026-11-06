@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Assets.Scripts.PLN
 {
@@ -29,13 +30,21 @@ namespace Assets.Scripts.PLN
 
         private static string DescribirPalabra(string esperada, string recibida)
         {
-            int indice = PrimerIndiceDiferente(esperada, recibida);
-            if (indice == recibida.Length && indice < esperada.Length)
-                return $"Te faltó la letra “{esperada[indice]}” en “{esperada}”.";
-            if (indice == esperada.Length && indice < recibida.Length)
-                return $"La letra “{recibida[indice]}” está de más en “{recibida}”.";
-            if (indice < esperada.Length && indice < recibida.Length && esperada.Length == recibida.Length)
-                return $"La letra “{recibida[indice]}” debe ser “{esperada[indice]}” en “{esperada}”.";
+            var cambios = AlineadorEscritura.Comparar(esperada, recibida, conservarUnidades: false)
+                .Where(cambio => cambio.Tipo != TipoCambioEscritura.Igual).ToArray();
+            if (cambios.Length == 1)
+            {
+                var cambio = cambios[0];
+                switch (cambio.Tipo)
+                {
+                    case TipoCambioEscritura.Faltante:
+                        return $"Te faltó la letra “{cambio.Esperado}” en “{esperada}”.";
+                    case TipoCambioEscritura.Sobrante:
+                        return $"La letra “{cambio.Recibido}” está de más en “{recibida}”.";
+                    case TipoCambioEscritura.Sustitucion:
+                        return $"La letra “{cambio.Recibido}” debe ser “{cambio.Esperado}” en “{esperada}”.";
+                }
+            }
 
             return $"La palabra “{recibida}” debe ser “{esperada}”.";
         }
@@ -51,12 +60,5 @@ namespace Assets.Scripts.PLN
             return limite;
         }
 
-        private static int PrimerIndiceDiferente(string esperada, string recibida)
-        {
-            int limite = Math.Min(esperada.Length, recibida.Length);
-            for (int i = 0; i < limite; i++)
-                if (esperada[i] != recibida[i]) return i;
-            return limite;
-        }
     }
 }

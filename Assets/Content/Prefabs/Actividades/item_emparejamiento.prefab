@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 4278413896456709795}
   - component: {fileID: 5015985287471630430}
   - component: {fileID: 6124069801514456489}
+  - component: {fileID: 64583963834345178}
   m_Layer: 5
   m_Name: item_emparejamiento
   m_TagString: Untagged
@@ -471,6 +472,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedButtonView
   estilo: 4
+  bordeEstado: {fileID: 0}
+  intensidadFondoEstado: 0.18
+--- !u!114 &64583963834345178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664646708294709043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e87315b3fca5a14fa11f327ffc09ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.MovimientoUI
+  animarEntrada: 0
+  animarPulsacion: 1
+  duracion: 0.22
 --- !u!1 &8979743132273134842
 GameObject:
   m_ObjectHideFlags: 0

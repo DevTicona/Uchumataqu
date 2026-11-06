@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 4289126523313234379}
   - component: {fileID: 413779630506955602}
   - component: {fileID: 8156048187081961764}
+  - component: {fileID: 5811615999405684980}
   m_Layer: 5
   m_Name: ficha_wordbank
   m_TagString: Untagged
@@ -470,3 +471,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedButtonView
   estilo: 4
+  bordeEstado: {fileID: 7719034098495276308}
+  intensidadFondoEstado: 0.16
+--- !u!114 &5811615999405684980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8591033424354500886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e87315b3fca5a14fa11f327ffc09ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.MovimientoUI
+  animarEntrada: 0
+  animarPulsacion: 1
+  duracion: 0.22

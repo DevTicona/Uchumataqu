@@ -29,7 +29,28 @@ namespace Assets.Scripts.Core.Services
         // HANDLES ACTIVOS
         // =========================================
 
-        private static readonly List<AsyncOperationHandle> activeHandles = new();
+        private static readonly Dictionary<(string, Type), AsyncOperationHandle> cachedHandles = new();
+        private static readonly Dictionary<GameObject, AsyncOperationHandle<GameObject>> instanceHandles = new();
+        private static int resourceVersion;
+
+        /// <summary>Carga con propiedad explícita, independiente de la caché compartida.</summary>
+        public static async Task<RecursoAddressable<T>> CargarTemporalAsync<T>(string key) where T : UnityEngine.Object
+        {
+            ValidarKey(key);
+            var handle = Addressables.LoadAssetAsync<T>(key);
+            try
+            {
+                var asset = await handle.Task;
+                if (handle.Status != AsyncOperationStatus.Succeeded || asset == null)
+                    throw new InvalidOperationException($"Error cargando asset temporal: {key}");
+                return new RecursoAddressable<T>(handle, asset);
+            }
+            catch
+            {
+                if (handle.IsValid()) Addressables.Release(handle);
+                throw;
+            }
+        }
 
         // =========================================
         // VALIDACIÓN
@@ -67,17 +88,21 @@ namespace Assets.Scripts.Core.Services
             var task = CargarInterno<T>(key, cacheKey);
             loadingTasks[cacheKey] = task;
 
-            var result = (T)await task;
-
-            loadingTasks.Remove(cacheKey);
-
-            return result;
+            try
+            {
+                return (T)await task;
+            }
+            finally
+            {
+                if (loadingTasks.TryGetValue(cacheKey, out var current) && current == task)
+                    loadingTasks.Remove(cacheKey);
+            }
         }
 
         private static async Task<object> CargarInterno<T>(string key, (string, Type) cacheKey)
         {
             var handle = Addressables.LoadAssetAsync<T>(key);
-            activeHandles.Add(handle);
+            int version = resourceVersion;
 
             try
             {
@@ -88,12 +113,17 @@ namespace Assets.Scripts.Core.Services
                     throw new Exception($"Error cargando asset: {key}");
                 }
 
+                if (version != resourceVersion)
+                    throw new OperationCanceledException("Los recursos se liberaron durante la carga.");
+
                 cache[cacheKey] = result;
+                cachedHandles[cacheKey] = handle;
 
                 return result;
             }
             catch (Exception ex)
             {
+                if (handle.IsValid()) Addressables.Release(handle);
                 Debug.LogError($"[AddressablesService] {ex.Message}");
                 throw;
             }
@@ -107,39 +137,39 @@ namespace Assets.Scripts.Core.Services
             ValidarKey(label);
 
             var dict = new Dictionary<string, T>();
+            int version = resourceVersion;
 
             var locationsHandle = Addressables.LoadResourceLocationsAsync(label, typeof(T));
-            activeHandles.Add(locationsHandle);
-
-            var locations = await locationsHandle.Task;
-
-            if (locations == null || locations.Count == 0)
+            try
             {
-                Debug.LogWarning($"[AddressablesService] No se encontraron assets para label: {label}");
-                return dict;
-            }
+                var locations = await locationsHandle.Task;
+                if (version != resourceVersion) throw new OperationCanceledException("Se liberaron los recursos.");
 
-            foreach (var loc in locations)
-            {
-                var handle = Addressables.LoadAssetAsync<T>(loc);
-                activeHandles.Add(handle);
-
-                try
+                if (locations == null || locations.Count == 0)
                 {
-                    var asset = await handle.Task;
+                    Debug.LogWarning($"[AddressablesService] No se encontraron assets para label: {label}");
+                    return dict;
+                }
 
-                    if (handle.Status == AsyncOperationStatus.Succeeded && asset != null)
+                foreach (var loc in locations)
+                {
+                    try
                     {
-                        dict[loc.PrimaryKey] = asset;
+                        dict[loc.PrimaryKey] = await CargarAssetAsync<T>(loc.PrimaryKey);
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"[AddressablesService] Error cargando {loc.PrimaryKey}: {ex.Message}");
                     }
                 }
-                catch (Exception ex)
-                {
-                    Debug.LogError($"[AddressablesService] Error cargando {loc.PrimaryKey}: {ex.Message}");
-                }
-            }
 
-            return dict;
+                return dict;
+            }
+            finally
+            {
+                if (locationsHandle.IsValid()) Addressables.Release(locationsHandle);
+            }
         }
         /// <summary>
         /// Instancia un prefab UI dentro de un contenedor (LayoutGroup, Panel, etc.)
@@ -154,7 +184,7 @@ namespace Assets.Scripts.Core.Services
                 throw new ArgumentNullException(nameof(parent), "[AddressablesService] Parent UI es null.");
 
             var handle = Addressables.InstantiateAsync(key, parent);
-            activeHandles.Add(handle);
+            int version = resourceVersion;
 
             try
             {
@@ -164,6 +194,10 @@ namespace Assets.Scripts.Core.Services
                 {
                     throw new Exception($"Error instanciando UI prefab: {key}");
                 }
+
+                if (version != resourceVersion)
+                    throw new OperationCanceledException("Los recursos se liberaron durante la carga.");
+                instanceHandles[instance] = handle;
 
                 // Ajuste importante para UI
                 var rect = instance.GetComponent<RectTransform>();
@@ -177,6 +211,7 @@ namespace Assets.Scripts.Core.Services
             }
             catch (Exception ex)
             {
+                LiberarHandleInstancia(handle);
                 Debug.LogError($"[AddressablesService] {ex.Message}");
                 throw;
             }
@@ -194,7 +229,7 @@ namespace Assets.Scripts.Core.Services
             ValidarKey(key);
 
             var handle = Addressables.InstantiateAsync(key, posicion, rotacion, parent);
-            activeHandles.Add(handle);
+            int version = resourceVersion;
 
             try
             {
@@ -205,10 +240,15 @@ namespace Assets.Scripts.Core.Services
                     throw new Exception($"Error instanciando prefab mundo: {key}");
                 }
 
+                if (version != resourceVersion)
+                    throw new OperationCanceledException("Los recursos se liberaron durante la carga.");
+                instanceHandles[instance] = handle;
+
                 return instance;
             }
             catch (Exception ex)
             {
+                LiberarHandleInstancia(handle);
                 Debug.LogError($"[AddressablesService] {ex.Message}");
                 throw;
             }
@@ -240,9 +280,10 @@ namespace Assets.Scripts.Core.Services
         {
             var cacheKey = (key, typeof(T));
 
-            if (cache.TryGetValue(cacheKey, out var asset))
+            if (cachedHandles.TryGetValue(cacheKey, out var handle))
             {
-                Addressables.Release(asset);
+                if (handle.IsValid()) Addressables.Release(handle);
+                cachedHandles.Remove(cacheKey);
                 cache.Remove(cacheKey);
             }
         }
@@ -253,13 +294,18 @@ namespace Assets.Scripts.Core.Services
 
         public static void LiberarInstancia(GameObject instance)
         {
-            if (instance == null)
+            // Unity puede haber destruido el objeto antes de liberar su handle.
+            if (ReferenceEquals(instance, null))
             {
                 Debug.LogWarning("[AddressablesService] Intento de liberar instancia null.");
                 return;
             }
 
-            Addressables.ReleaseInstance(instance);
+            if (instanceHandles.TryGetValue(instance, out var handle))
+            {
+                instanceHandles.Remove(instance);
+                LiberarHandleInstancia(handle);
+            }
         }
 
         // =========================================
@@ -268,11 +314,12 @@ namespace Assets.Scripts.Core.Services
 
         public static void LimpiarCacheCompleto()
         {
-            foreach (var kvp in cache)
+            foreach (var handle in cachedHandles.Values)
             {
-                Addressables.Release(kvp.Value);
+                if (handle.IsValid()) Addressables.Release(handle);
             }
 
+            cachedHandles.Clear();
             cache.Clear();
         }
 
@@ -282,17 +329,42 @@ namespace Assets.Scripts.Core.Services
 
         public static void LiberarRecursos()
         {
-            foreach (var handle in activeHandles)
-            {
-                if (handle.IsValid())
-                {
-                    Addressables.Release(handle);
-                }
-            }
-
-            activeHandles.Clear();
+            resourceVersion++;
+            foreach (var handle in instanceHandles.Values) LiberarHandleInstancia(handle);
+            instanceHandles.Clear();
             LimpiarCacheCompleto();
             loadingTasks.Clear();
+        }
+
+        private static void LiberarHandleInstancia(AsyncOperationHandle<GameObject> handle)
+        {
+            if (!handle.IsValid()) return;
+            if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
+                Addressables.ReleaseInstance(handle);
+            else
+                Addressables.Release(handle);
+        }
+    }
+
+    public sealed class RecursoAddressable<T> : IDisposable where T : UnityEngine.Object
+    {
+        private AsyncOperationHandle<T> handle;
+        private bool liberado;
+        public T Asset { get; private set; }
+
+        internal RecursoAddressable(AsyncOperationHandle<T> handle, T asset)
+        {
+            this.handle = handle;
+            Asset = asset;
+        }
+
+        public void Dispose()
+        {
+            if (liberado) return;
+            liberado = true;
+            Asset = null;
+            if (handle.IsValid()) Addressables.Release(handle);
+            handle = default;
         }
     }
 }
@@ -304,6 +376,9 @@ namespace Assets.Scripts.Core
         public const string DatosPalabras = "json_palabras";
         public const string DatosOraciones = "json_oraciones";
         public const string DatosLecciones = "json_lecciones";
+        public const string ArchivoLecciones = "lecciones_compiladas.json";
+        public const string DatosAnalisisMorfologicos = "json_analyses";
+        public const string DatosIndiceMorfologico = "json_lookup_index";
         public const string DatosEscenariosRa = "json_escenarios_ra";
         public const string PersonajeBase = "personaje_base";
 

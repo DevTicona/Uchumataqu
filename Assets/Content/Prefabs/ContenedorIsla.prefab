@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 900000000000000101}
   - component: {fileID: 900000000000000102}
   - component: {fileID: 900000000000000103}
+  - component: {fileID: 2872205620267939776}
   m_Layer: 0
   m_Name: ContenedorIsla
   m_TagString: Untagged
@@ -133,6 +134,22 @@ MonoBehaviour:
   iconoBloqueado: {fileID: 21300000, guid: 119638e3aa59b5846918cb264da91aa7, type: 3}
   iconoActual: {fileID: 21300000, guid: 7002d298cd661f443aeb0cb9e9ce06d5, type: 3}
   iconoCompletado: {fileID: 21300000, guid: 263a7ead482fae24a99d0a6b6a7b2745, type: 3}
+--- !u!114 &2872205620267939776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3065785605997044057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308cc998036b05c4392909cb5a16d7a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.FlotacionUI
+  objetivo: {fileID: 1048690016948104965}
+  amplitud: 4
+  periodo: 5
+  desplazar: 1
 --- !u!1 &4475795830281055348
 GameObject:
   m_ObjectHideFlags: 0

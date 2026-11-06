@@ -59,17 +59,13 @@ namespace Assets.Scripts.Core.UI.Components
         private void AplicarCambiosEnEditor()
         {
             if (this == null) return;
-
-            if (UIThemeController.Theme == null)
-            {
-                UIThemeModel theme = UnityEditor.AssetDatabase.LoadAssetAtPath<UIThemeModel>(
-                    "Assets/Content/UI/UITheme.asset");
-                if (theme != null) UIThemeController.SetTheme(theme);
-            }
-
+            if (texto == null) texto = GetComponent<TextMeshProUGUI>();
+            Color colorAnterior = texto.color;
+            float tamanoAnterior = texto.fontSize;
             AplicarTema();
-            UnityEditor.EditorUtility.SetDirty(this);
-            if (texto != null) UnityEditor.EditorUtility.SetDirty(texto);
+            if (colorAnterior == texto.color && Mathf.Approximately(tamanoAnterior, texto.fontSize)) return;
+
+            UnityEditor.EditorUtility.SetDirty(texto);
             UnityEditor.SceneView.RepaintAll();
         }
 #endif
@@ -104,10 +100,10 @@ namespace Assets.Scripts.Core.UI.Components
             UIThemeModel theme = UIThemeController.Theme;
             if (theme == null) return;
 
-            // The font asset, style and overflow remain static prefab settings.
-            // The assigned UITheme role controls only color and semantic text size.
-            texto.color = usarColorPersonalizado ? colorPersonalizado : ObtenerColor(theme);
-            texto.fontSize = UIThemeController.EscalarTexto(ObtenerTamano(theme));
+            Color color = usarColorPersonalizado ? colorPersonalizado : ObtenerColor(theme);
+            float tamano = UIThemeController.EscalarTexto(ObtenerTamano(theme));
+            if (texto.color != color) texto.color = color;
+            if (!Mathf.Approximately(texto.fontSize, tamano)) texto.fontSize = tamano;
         }
 
         private float ObtenerTamano(UIThemeModel theme)

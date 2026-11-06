@@ -1,0 +1,61 @@
+{
+    "version": 1,
+    "recursos": [
+        {
+            "archivo": "palabras.json",
+            "ruta": "Assets/Content/Data/palabras.json",
+            "direccion": "json_palabras",
+            "bytes": 40932,
+            "sha256": "8ae33d355010e9a871235a3856712ed4748b82c858833808a355677e89388595"
+        },
+        {
+            "archivo": "oraciones.json",
+            "ruta": "Assets/Content/Data/oraciones.json",
+            "direccion": "json_oraciones",
+            "bytes": 16085,
+            "sha256": "0823cb212a2c4420bd63167120a1e4df585c9339d100c9b4edbd8e2aa4ec6268"
+        },
+        {
+            "archivo": "lecciones_compiladas.json",
+            "ruta": "Assets/Content/Data/lecciones_compiladas.json",
+            "direccion": "json_lecciones",
+            "bytes": 343255,
+            "sha256": "32de0381c2fe441cff17045008e649a783192144f27e12307edfbc97030c5ec1"
+        },
+        {
+            "archivo": "escenarios_ra.json",
+            "ruta": "Assets/Content/Data/escenarios_ra.json",
+            "direccion": "json_escenarios_ra",
+            "bytes": 61056,
+            "sha256": "bb66f5b3bb554204e707a007fbf9521d0bde1c477dbf31799aec2a3403b3c55d"
+        },
+        {
+            "archivo": "PLN/analyses.json",
+            "ruta": "Assets/Content/Data/PLN/analyses.json",
+            "direccion": "json_analyses",
+            "bytes": 152819,
+            "sha256": "0533ede6a5262e7f6719afbd900b307384cdb7703e43182a520a98120705e70f"
+        },
+        {
+            "archivo": "PLN/lookup-index.json",
+            "ruta": "Assets/Content/Data/PLN/lookup-index.json",
+            "direccion": "json_lookup_index",
+            "bytes": 17041,
+            "sha256": "bdf278933b16955809b10a804dacaf59cfe0380f0be260f494ee186f40d0d90c"
+        },
+        {
+            "archivo": "sherpa/tokens.txt",
+            "ruta": "Assets/StreamingAssets/sherpa/tokens.txt",
+            "direccion": "sherpa/tokens.txt",
+            "bytes": 252,
+            "sha256": "f48ecf95f55d2b10367d3e858c75a131731422f7af34c308a0d8e05b42bf6de7"
+        },
+        {
+            "archivo": "sherpa/model.int8.bin",
+            "ruta": "Assets/StreamingAssets/sherpa/model.int8.bin",
+            "direccion": "sherpa/model.int8.bin",
+            "bytes": 72584427,
+            "sha256": "8ba2c671a6a7d088b6334e4b71aa782c99b0102cafa0b76af63b33bcf0a2b286"
+        }
+    ]
+}

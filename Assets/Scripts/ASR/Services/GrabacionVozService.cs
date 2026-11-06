@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Core.Assets;
 using UnityEngine;
 
 namespace Assets.Scripts.ASR
@@ -8,12 +9,15 @@ namespace Assets.Scripts.ASR
         private AudioClip _grabacion;
         private float _inicioGrabacion;
         public bool EstaGrabando { get; private set; }
+        public bool TieneMuestras => EstaGrabando && Microphone.GetPosition(null) > 0;
         public bool TieneDispositivo => Application.isMobilePlatform || Microphone.devices.Length > 0;
 
-        public bool Iniciar()
+        public bool Iniciar(int duracionMaxima = 6)
         {
             Dispose();
-            _grabacion = Microphone.Start(null, false, 6, 16000);
+            AudioService.DetenerSiExiste();
+            // Captura a 16 kHz, sin repetir el buffer; Finalizar conserva únicamente las muestras grabadas.
+            _grabacion = Microphone.Start(null, false, Mathf.Clamp(duracionMaxima, 1, 30), 16000);
             _inicioGrabacion = Time.realtimeSinceStartup;
             return EstaGrabando = _grabacion != null;
         }
@@ -24,7 +28,7 @@ namespace Assets.Scripts.ASR
             int muestras = Microphone.GetPosition(null);
             // Al agotarse el buffer, Unity detiene el dispositivo y devuelve posición cero.
             if (muestras <= 0 && !Microphone.IsRecording(null) &&
-                Time.realtimeSinceStartup - _inicioGrabacion >= _grabacion.length)
+                Time.realtimeSinceStartup - _inicioGrabacion >= _grabacion.length - 0.1f)
                 muestras = _grabacion.samples;
             Microphone.End(null);
             EstaGrabando = false;

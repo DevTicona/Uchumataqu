@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Assets.Scripts.Persistencia;
 
 namespace Assets.Scripts.Core.Services
 {
@@ -49,22 +50,29 @@ namespace Assets.Scripts.Core.Services
 
         private static bool _cargando = false;
 
-        private static void CargarEscena(string nombreEscena)
+        private static void CargarEscena(string nombreEscena, Action prepararContexto = null)
         {
             if (_cargando) return;
-            _cargando = true;
-
             string escenaFinal = ResolverNombreEscena(nombreEscena);
-            Debug.Log($"[NavigationService] Cargando escena: {escenaFinal} (Objetivo: {nombreEscena})");
-
-            var op = SceneManager.LoadSceneAsync(escenaFinal);
-            if (op != null)
+            if (!Application.CanStreamedLevelBeLoaded(escenaFinal))
             {
-                op.completed += _ => _cargando = false;
+                Debug.LogError($"[NavigationService] La escena '{escenaFinal}' no está disponible en la compilación.");
+                return;
             }
-            else
+
+            _cargando = true;
+            try
+            {
+                prepararContexto?.Invoke();
+                Debug.Log($"[NavigationService] Cargando escena: {escenaFinal} (Objetivo: {nombreEscena})");
+                var operacion = SceneManager.LoadSceneAsync(escenaFinal);
+                if (operacion != null) operacion.completed += _ => _cargando = false;
+                else _cargando = false;
+            }
+            catch (Exception exception)
             {
                 _cargando = false;
+                Debug.LogError($"[NavigationService] No se pudo cargar '{escenaFinal}': {exception.Message}");
             }
         }
 
@@ -80,22 +88,23 @@ namespace Assets.Scripts.Core.Services
 
         public static void IrAMain(PaginaMain pagina = PaginaMain.Inicio)
         {
-            ContextoNavegacionModel.PaginaDestino = pagina;
-            CargarEscena(SCENE_MAIN);
+            CargarEscena(SCENE_MAIN, () => ContextoNavegacionModel.PaginaDestino = pagina);
         }
 
         public static void IrALeccion(string leccionId)
         {
             if (string.IsNullOrEmpty(leccionId)) return;
-            ContextoNavegacionModel.LeccionId = leccionId;
-            CargarEscena(SCENE_LECCION_BASE);
+            if (!AppConfigRepository.AccesoLibrePruebas &&
+                !GestorProgreso.EstaLeccionDesbloqueada(leccionId)) return;
+            CargarEscena(SCENE_LECCION_BASE, () => ContextoNavegacionModel.LeccionId = leccionId);
         }
 
         public static void IrARealidadAumentada(string escenarioRaId)
         {
             if (string.IsNullOrEmpty(escenarioRaId)) return;
-            ContextoNavegacionModel.EscenarioRaId = escenarioRaId;
-            CargarEscena(SCENE_REALIDAD_AUMENTADA);
+            if (!AppConfigRepository.AccesoLibrePruebas &&
+                !GestorProgreso.EstaEscenarioDesbloqueado(escenarioRaId)) return;
+            CargarEscena(SCENE_REALIDAD_AUMENTADA, () => ContextoNavegacionModel.EscenarioRaId = escenarioRaId);
         }
     }
 }

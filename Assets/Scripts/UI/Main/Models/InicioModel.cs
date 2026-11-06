@@ -12,6 +12,7 @@ namespace Assets.Scripts.UI.Main
         public bool EsContinuacion { get; set; }
         public bool CurriculoCompletado { get; set; }
         public int LeccionesCompletadas { get; set; }
+        public int TotalLecciones { get; set; }
         public int EscenariosVisitados { get; set; }
         public string ProximoRaTitulo { get; set; }
         public int ProximoRaCompletadas { get; set; }

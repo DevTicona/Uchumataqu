@@ -64,8 +64,8 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             if (firmaActual == _firmaFilasEditor) return;
 
             _firmaFilasEditor = firmaActual;
-            ActualizarAltoFormas();
-            UnityEditor.EditorUtility.SetDirty(contenedorFormas);
+            if (ActualizarAltoFormas())
+                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
         }
 
         private int CalcularFirmaFilasEditor()
@@ -131,6 +131,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 
                 ActualizarAltoFormas();
             }
+            GetComponent<Assets.Scripts.Core.UI.Ayuda.GuiaPantalla>()?.ConfigurarFormas(palabra);
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
 
@@ -210,41 +211,69 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             if (imagen != null) imagen.sprite = icono;
         }
 
-        private void ActualizarAltoFormas()
+        private bool ActualizarAltoFormas()
         {
             RectTransform rect = contenedorFormas.GetComponent<RectTransform>();
             VerticalLayoutGroup layout = contenedorFormas.GetComponent<VerticalLayoutGroup>();
             LayoutElement element = contenedorFormas.GetComponent<LayoutElement>();
-            if (rect == null || layout == null || element == null) return;
+            if (rect == null || layout == null || element == null) return false;
 
-            ActualizarAltoItems();
+            bool cambio = ActualizarAltoItems();
             LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
             float alto = CalcularAlto(layout, rect);
 
-            element.minHeight = alto;
-            element.preferredHeight = alto;
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, alto);
+            if (!Mathf.Approximately(element.minHeight, alto))
+            {
+                element.minHeight = alto;
+                cambio = true;
+            }
+            if (!Mathf.Approximately(element.preferredHeight, alto))
+            {
+                element.preferredHeight = alto;
+                cambio = true;
+            }
+            if (!Mathf.Approximately(rect.rect.height, alto))
+            {
+                rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, alto);
+                cambio = true;
+            }
+            if (!cambio) return false;
+
             LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
             Canvas.ForceUpdateCanvases();
-
             for (RectTransform padre = rect.parent as RectTransform; padre != null; padre = padre.parent as RectTransform)
                 LayoutRebuilder.ForceRebuildLayoutImmediate(padre);
+            return true;
         }
 
-        private void ActualizarAltoItems()
+        private bool ActualizarAltoItems()
         {
-            if (items == null) return;
+            if (items == null) return false;
 
             RectTransform rectItems = items as RectTransform;
             VerticalLayoutGroup layoutItems = items.GetComponent<VerticalLayoutGroup>();
             LayoutElement elementoItems = items.GetComponent<LayoutElement>();
-            if (rectItems == null || layoutItems == null || elementoItems == null) return;
+            if (rectItems == null || layoutItems == null || elementoItems == null) return false;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(rectItems);
             float alto = CalcularAlto(layoutItems, rectItems);
-            elementoItems.minHeight = alto;
-            elementoItems.preferredHeight = alto;
-            rectItems.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, alto);
+            bool cambio = false;
+            if (!Mathf.Approximately(elementoItems.minHeight, alto))
+            {
+                elementoItems.minHeight = alto;
+                cambio = true;
+            }
+            if (!Mathf.Approximately(elementoItems.preferredHeight, alto))
+            {
+                elementoItems.preferredHeight = alto;
+                cambio = true;
+            }
+            if (!Mathf.Approximately(rectItems.rect.height, alto))
+            {
+                rectItems.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, alto);
+                cambio = true;
+            }
+            return cambio;
         }
 
         private static float CalcularAlto(VerticalLayoutGroup layout, RectTransform contenedor)

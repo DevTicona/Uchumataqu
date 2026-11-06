@@ -12,7 +12,8 @@ namespace Assets.Scripts.UI.Main
         public static List<IslaMapaModel> Crear(
             IReadOnlyList<LeccionCompiladaModel> lecciones,
             IReadOnlyList<EscenarioRAModel> escenarios,
-            ProgresoUsuarioModel progreso)
+            ProgresoUsuarioModel progreso,
+            bool accesoLibre = false)
         {
             var hitos = escenarios
                 .Where(e => e.lecciones_asociadas != null && e.lecciones_asociadas.Count > 0)
@@ -31,7 +32,7 @@ namespace Assets.Scripts.UI.Main
             {
                 LeccionCompiladaModel leccion = leccionesOrdenadas[i];
                 bool completada = progreso != null && progreso.LeccionCompletada(leccion.id);
-                bool disponible = i == 0 || progreso != null && progreso.LeccionCompletada(leccionesOrdenadas[i - 1].id);
+                bool disponible = accesoLibre || i == 0 || progreso != null && progreso.LeccionCompletada(leccionesOrdenadas[i - 1].id);
                 bool esActual = !actualAsignada && disponible && !completada;
                 if (esActual) actualAsignada = true;
 
@@ -48,7 +49,7 @@ namespace Assets.Scripts.UI.Main
                 });
 
                 if (!hitos.TryGetValue(leccion.id, out EscenarioRAModel escenario)) continue;
-                bool desbloqueado = escenario.lecciones_asociadas.All(id => progreso != null && progreso.LeccionCompletada(id));
+                bool desbloqueado = accesoLibre || escenario.lecciones_asociadas.All(id => progreso != null && progreso.LeccionCompletada(id));
                 bool visitado = progreso != null && progreso.EscenarioVisitado(escenario.id);
                 resultado.Add(new IslaMapaModel
                 {

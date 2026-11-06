@@ -6,6 +6,8 @@ namespace Assets.Scripts.Core
     {
         private static AppConfigModel _cache;
 
+        public static bool AccesoLibrePruebas => Obtener() != null && Obtener().AccesoLibrePruebas;
+
         public static AppConfigModel Obtener()
         {
             if (_cache != null) return _cache;

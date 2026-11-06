@@ -71,7 +71,7 @@ namespace Assets.Scripts.Lecciones
 
             bool traduccion = paso.tipo == TipoPasoLeccion.TraduccionConstructiva;
             string respuesta = traduccion ? AlternativaNatural(oracion.es) : oracion.uch;
-            var tokens = MotorEvaluacion.Tokenizar(respuesta);
+            var tokens = MotorEvaluacion.Tokenizar(respuesta, conservarMayusculas: true);
             return new ActividadWordBankModel
             {
                 Tipo = paso.tipo,
@@ -140,14 +140,8 @@ namespace Assets.Scripts.Lecciones
         {
             if (string.IsNullOrWhiteSpace(traduccion)) return string.Empty;
             string texto = traduccion.Trim();
-            int separador = texto.IndexOf('/');
-            if (separador < 0) return texto;
-
-            string primera = texto.Substring(0, separador).Trim();
-            string resto = texto.Substring(separador + 1).Trim();
-            int primerEspacio = resto.IndexOf(' ');
-            string sufijo = primerEspacio >= 0 ? resto.Substring(primerEspacio) : string.Empty;
-            return (primera + sufijo).Trim();
+            // Cada barra separa variantes de una palabra; conserva la puntuación envolvente.
+            return Regex.Replace(texto, @"\s*/\s*[\p{L}\p{M}]+", string.Empty);
         }
 
         private static ActividadSeleccionModel CrearSeleccionPalabra(PasoLeccionModel paso)

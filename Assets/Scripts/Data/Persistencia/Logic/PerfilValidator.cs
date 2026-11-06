@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Data.Persistencia;
+using Assets.Scripts.Util;
 
 namespace Assets.Scripts.Data.Persistencia.Validation
 {
@@ -56,7 +57,7 @@ namespace Assets.Scripts.Data.Persistencia.Validation
             ResultadoValidacionPerfilModel validacion = ValidarPerfilCompleto(nombre, avatarId);
             if (!validacion.Valido) return validacion;
 
-            perfil.nombre = nombre.Trim();
+            perfil.nombre = FormatoTexto.ConInicialMayuscula(nombre.Trim());
             perfil.avatar_id = avatarId;
             return ResultadoValidacionPerfilModel.Exito();
         }

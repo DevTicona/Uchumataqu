@@ -15,7 +15,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private Transform contenedorIslas;
 
-        [Header("Resumen de lecciones")]
+        [Header("Resumen de islas: lecciones y RA")]
         [SerializeField] private TMP_Text txtCantidad;
         [SerializeField] private TMP_Text txtLeccionesCompletadas;
 
@@ -23,7 +23,7 @@ namespace Assets.Scripts.UI.Main.Paginas
         {
             total = Mathf.Max(0, total);
             if (txtCantidad != null) txtCantidad.text = $"{Mathf.Clamp(completadas, 0, total)}/{total}";
-            if (txtLeccionesCompletadas != null) txtLeccionesCompletadas.text = "Completadas";
+            if (txtLeccionesCompletadas != null) txtLeccionesCompletadas.text = "islas completadas";
         }
 
         [Header("Prefabs")]
@@ -184,9 +184,17 @@ namespace Assets.Scripts.UI.Main.Paginas
         {
             yield return null;
             Canvas.ForceUpdateCanvases();
-            if (scrollRect == null || _elementosInstanciados.Count <= 1) yield break;
-            float posicion = 1f - (float)indice / (_elementosInstanciados.Count - 1);
-            scrollRect.verticalNormalizedPosition = Mathf.Clamp01(posicion);
+            if (scrollRect == null || indice < 0 || indice >= _elementosInstanciados.Count) yield break;
+            var content = scrollRect.content;
+            var viewport = scrollRect.viewport != null ? scrollRect.viewport : (RectTransform)scrollRect.transform;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(content);
+            var objetivo = (RectTransform)_elementosInstanciados[indice].transform;
+            Bounds limites = RectTransformUtility.CalculateRelativeRectTransformBounds(viewport, objetivo);
+            float recorrido = content.rect.height - viewport.rect.height;
+            scrollRect.StopMovement();
+            if (recorrido > 0f)
+                scrollRect.verticalNormalizedPosition = Mathf.Clamp01(scrollRect.verticalNormalizedPosition +
+                    (limites.center.y - viewport.rect.center.y) / recorrido);
         }
 
         private void NotificarLeccion(string id) => OnLeccionSeleccionada?.Invoke(id);

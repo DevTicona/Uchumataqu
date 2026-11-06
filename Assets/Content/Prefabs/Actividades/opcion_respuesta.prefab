@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 8156565777627530145}
   - component: {fileID: 7183285846384485501}
   - component: {fileID: 7018632375458820061}
+  - component: {fileID: 3483248283164791185}
   m_Layer: 5
   m_Name: opcion_respuesta
   m_TagString: Untagged
@@ -662,3 +663,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.ThemedGraphicView
   rol: 1
   multiplicadorAlpha: 1
+--- !u!114 &3483248283164791185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8804426294879439738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e87315b3fca5a14fa11f327ffc09ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UI.Components.MovimientoUI
+  animarEntrada: 0
+  animarPulsacion: 1
+  duracion: 0.22

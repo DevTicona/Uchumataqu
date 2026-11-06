@@ -1,80 +1,56 @@
 # Uchumataqu
 
-Aplicación móvil educativa offline desarrollada en Unity para el aprendizaje progresivo del idioma Uchumataqu mediante 27 lecciones, práctica oral opcional y seis experiencias de Realidad Aumentada.
+Actualizado: 5 de noviembre de 2026 (America/La_Paz).
 
-## Fuentes de verdad
+Aplicación educativa Android en Unity 6000.5.9f1, con contenido local, práctica de escritura, reconocimiento de voz y seis experiencias de realidad aumentada.
 
-Cuando dos documentos difieran, se aplica este orden:
+Está diseñada para el aprendizaje de la lengua indígena **Uchumataqu**. El proyecto cuenta con el respaldo y la colaboración de **FUNPROEIB Andes**.
 
-1. Los JSON compilados de `Assets/Content/Data/` definen IDs, contenido y tipos de pasos.
-2. `Docs/Specifications/04-flujo-leccion-app.md` define la secuencia pedagógica continua, sin bloques A/B.
-3. `Docs/Specifications/03-modulo-ra.md`, `03-1-diseno-escenarios-ra.md` y `escenarios_ra.json` definen los hitos RA.
-4. `Docs/Specifications/08-patron-arquitectonico-mvp.md` define dependencias y responsabilidades de código.
-5. `Docs/Specifications/07-cronograma-implementacion.md` organiza el trabajo, pero no redefine contratos técnicos.
+El corpus ejecutable contiene **26 lecciones, 879 pasos de lección, 11 tipos activos y 88 pasos RA**. Las cantidades se obtienen de los JSON actuales; no representan una nueva ejecución de toda la suite de pruebas.
 
-## Arquitectura
+## Instalación en Android
 
-El proyecto utiliza MVP (Model–View–Presenter) con Services/Gestores, Repositories y Motores puros.
+1. Descarga el [APK de producción](https://github.com/DevTicona/Uchumataqu/releases/download/v1.0.0/Uchumataqu-1.0.11-produccion.apk) desde el [release v1.0.0](https://github.com/DevTicona/Uchumataqu/releases/tag/v1.0.0).
+2. En un dispositivo Android 9 o superior, con arquitectura ARM64, abre el APK y autoriza la instalación desde la aplicación que utilizaste para descargarlo.
+3. Concede acceso al micrófono para practicar con voz y a la cámara para las actividades de realidad aumentada. Estas actividades requieren un dispositivo compatible con ARCore y Google Play Services for AR.
 
-```text
-View -> Presenter -> Service/Gestor -> Repository
-                     |
-                     +-> Motor
-```
+El tag de distribución es `v1.0.0`; el APK precompilado conserva su versión interna `1.0.11` (código 12). El repositorio es privado: los enlaces requieren acceso autorizado a GitHub.
 
-- View: presentación e interacción; recibe datos y emite eventos.
-- Presenter: coordina la View y los casos de uso.
-- Service/Gestor: concentra lógica de aplicación reutilizable.
-- Repository: centraliza lectura y escritura de datos.
-- Motor: implementa algoritmos determinísticos reutilizables.
+## Compilación
 
-Las reglas completas están en [08-patron-arquitectonico-mvp.md](Docs/Specifications/08-patron-arquitectonico-mvp.md).
+1. Clona el repositorio y abre su carpeta raíz desde Unity Hub con **Unity 6000.5.9f1**. Instala el módulo **Android Build Support**, incluidos Android SDK, NDK y OpenJDK.
+2. Espera a que Unity restaure los paquetes de `Packages/manifest.json` e importe los recursos.
+3. En **File > Build Profiles**, selecciona Android y activa ese perfil. Conserva las cinco escenas habilitadas de `ProjectSettings/EditorBuildSettings.asset`, empezando por `00_Bootstrap`.
+4. Compila los Addressables desde **Window > Asset Management > Addressables > Groups > Build > New Build > Default Build Script**.
+5. En el perfil Android, desactiva **Build App Bundle** y usa **Build** para generar un APK en `Builds/Android/`. Para distribuir actualizaciones instalables sobre la versión publicada, configura la misma clave de firma en **Player Settings > Publishing Settings**; las claves y sus contraseñas se gestionan fuera del repositorio.
 
-## Escenas oficiales
+Los APK son artefactos de distribución: `*.apk` está excluido mediante `.gitignore` y los binarios se publican como assets de Releases.
 
-1. `00_Bootstrap`
-2. `01_Onboarding`
-3. `02_Main`
-4. `03_LeccionBase`
-5. `04_RealidadAumentada`
+### Distribución con conexión inestable
 
-No se crea una escena por lección ni por escenario RA.
+El workflow manual **Ensamblar APK de Release** permite reunir en GitHub partes de un APK ya compilado. Las partes se adjuntan a un release en borrador con nombres consecutivos como `Uchumataqu-1.0.11-produccion.apk.part-001`, `.part-002`, etc. Los binarios y sus partes se mantienen fuera del código versionado.
 
-## Flujo pedagógico
+En **Actions**, ejecuta el workflow indicando el identificador del borrador, el nombre del APK, su tamaño original en bytes y su SHA-256. El script `scripts/ensamblar_apk_release.py` comprueba la secuencia, el tamaño y las huellas antes de adjuntar el APK completo. Retira las partes temporales después de que GitHub confirme el digest del asset final. El release permanece en borrador para revisar el tag y publicar la distribución.
 
-Cada lección consume su secuencia de `pasos` desde `lecciones_compiladas.json`. No existen bloques A/B ni agrupaciones rígidas de cuatro palabras. Presentaciones, actividades léxicas, actividades de oración y práctica oral opcional forman una secuencia continua.
+El script también admite `--local-parts` y `--output` para comprobar el ensamblado localmente; `--help` muestra sus parámetros. El workflow usa el token del repositorio y minutos de GitHub Actions.
 
-Una lección se completa al recorrer todos sus pasos obligatorios. La precisión se registra como desempeño, pero no bloquea la finalización ni el desbloqueo de RA. La práctica ASR es opcional y no bloqueante.
+## Documentación vigente
 
-## Hitos de Realidad Aumentada
+- Manual de usuario: [MANUAL_USUARIO.md](MANUAL_USUARIO.md).
 
-| Escenario | Lecciones requeridas | Posición |
-|---|---|---|
-| Encuentro y comunicación | L01–L06 | después de L06 |
-| Familia y vestimenta | L07–L11 | después de L11 |
-| Casa y objetos cotidianos | L12–L15 | después de L15 |
-| Cocina y alimentos | L16–L19 | después de L19 |
-| Animales y ecosistema | L20–L24 | después de L24 |
-| Naturaleza y orientación | L25–L27 | después de L27 |
+El material académico ampliado está en `Docs` dentro de este entorno de trabajo.
+Esa carpeta está excluida de Git y no forma parte de una copia nueva del repositorio.
 
-La posición se deriva de la última entrada de `lecciones_asociadas`; no se hardcodea en UI.
+## Proyecto
 
-## Datos y recursos offline
+Las escenas son `00_Bootstrap`, `01_Onboarding`, `02_Main`, `03_LeccionBase` y `04_RealidadAumentada`, bajo `Assets/Scenes`. Las lecciones comparten una escena y los escenarios RA se instancian como prefabs Addressables.
 
-- Corpus: `Assets/Content/Data/`
-- Audio de palabras y formas: `Assets/Content/Audio/Palabras/`
-- Audio de oraciones: `Assets/Content/Audio/Oraciones/`
-- Claves canónicas: `audio_palabra/{id}` y `audio_oracion/{id}`
-- Todos los recursos de runtime se resuelven mediante Addressables.
-- La persistencia del usuario se guarda bajo `Application.persistentDataPath`.
+`Assets/Content/Data` contiene los datos compilados; `Assets/Scripts` contiene la implementación. Las referencias fijas de interfaz están serializadas y los recursos dinámicos se cargan mediante Addressables. El modelo ASR local está en `Assets/StreamingAssets/sherpa`.
 
-## Validación mínima
+La presentación utiliza MVP; los gestores mantienen reglas de sesión, los repositorios acceden a datos y los motores implementan la evaluación. El progreso del usuario se guarda en `Application.persistentDataPath`.
 
-1. Compilar sin errores.
-2. Ejecutar Edit Mode Tests.
-3. Validar integridad del corpus y contrato de tipos de pasos.
-4. Revisar referencias críticas y duplicados de las cinco escenas.
-5. Probar en Play Mode al menos L01 y una lección afectada.
-6. Para cambios móviles, validar en Android real y modo avión.
+`Docs` y `Logs` son carpetas locales ignoradas por Git según la configuración existente. Los Word y el expediente académico se conservan en `Docs`; esta limpieza no modifica esos archivos.
 
-La guía detallada está en `Docs/Specifications/guia-pruebas-validacion.md`.
+## Licencia
+
+El código original del proyecto se distribuye bajo la [licencia MIT](LICENSE). Los paquetes, modelos, tipografías y demás recursos de terceros conservan sus propias licencias y atribuciones.

@@ -16,5 +16,7 @@ namespace Assets.Scripts.Data.Persistencia
         public int veces_completada;
         public string fecha_ultima_completada;
         public int paso_actual;
+        public string revision_contenido;
+        public bool sesion_en_progreso;
     }
 }

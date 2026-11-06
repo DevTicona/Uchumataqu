@@ -1,0 +1,46 @@
+name: Ensamblar APK de Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: Identificador del release en borrador
+        required: true
+        type: string
+      asset_name:
+        description: Nombre del APK final
+        required: true
+        type: string
+      expected_size:
+        description: Tamaño esperado en bytes
+        required: true
+        type: string
+      expected_sha256:
+        description: SHA-256 esperado del APK original
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ensamblar-release-${{ inputs.release_id }}
+  cancel-in-progress: false
+
+jobs:
+  ensamblar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          sparse-checkout: scripts
+      - name: Verificar, ensamblar y adjuntar el APK
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          RELEASE_ID: ${{ inputs.release_id }}
+          ASSET_NAME: ${{ inputs.asset_name }}
+          EXPECTED_SIZE: ${{ inputs.expected_size }}
+          EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+        run: python3 scripts/ensamblar_apk_release.py

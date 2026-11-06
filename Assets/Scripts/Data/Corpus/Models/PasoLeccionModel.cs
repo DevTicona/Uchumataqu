@@ -9,6 +9,8 @@ namespace Assets.Scripts.Data.Corpus
         public string tipo;
         public string objetivo_id;
         public string oracion_id;
+        public string forma_id;
+        public string raiz_id;
 
         public PasoLeccionModel CrearPaso()
         {
@@ -17,11 +19,13 @@ namespace Assets.Scripts.Data.Corpus
                 tipo = tipo,
                 objetivo_id = objetivo_id,
                 oracion_id = oracion_id,
+                forma_id = forma_id,
+                raiz_id = raiz_id,
                 seccion = "refuerzo"
             };
 
             if (tipo == "audio_a_forma" || tipo == "es_a_forma")
-                paso.forma_id = objetivo_id;
+                paso.forma_id = string.IsNullOrWhiteSpace(forma_id) ? objetivo_id : forma_id;
             else if (tipo == "ordenar_oracion" || tipo == "dictado_word_bank")
                 paso.oracion_id = string.IsNullOrWhiteSpace(oracion_id) ? objetivo_id : oracion_id;
 

@@ -10,6 +10,8 @@ namespace Assets.Scripts.PLN
     /// </summary>
     public static class NormalizadorTexto
     {
+        // CB01/CB02 prueban el retorno vacío y la transformación. NFC unifica representaciones Unicode
+        // equivalentes; conserva diacríticos y puntuación para evaluar la ortografía de la respuesta.
         public static string NormalizarEscritura(string texto)
         {
             if (string.IsNullOrWhiteSpace(texto)) return string.Empty;
@@ -24,9 +26,15 @@ namespace Assets.Scripts.PLN
         }
 
         public static string Normalizar(string texto)
+            => PrepararTokens(texto, conservarMayusculas: false);
+
+        // La búsqueda/tokenización elimina puntuación común; la evaluación escrita usa NormalizarEscritura.
+        public static string PrepararTokens(string texto, bool conservarMayusculas)
         {
             if (string.IsNullOrWhiteSpace(texto)) return string.Empty;
-            texto = texto.Trim().ToLowerInvariant();
+            texto = texto.Normalize(NormalizationForm.FormC).Trim()
+                .Replace('’', '\'').Replace('ʼ', '\'');
+            if (!conservarMayusculas) texto = texto.ToLowerInvariant();
             // Remover signos de puntuación comunes preservando caracteres de palabras y espacios
             texto = Regex.Replace(texto, @"[¡!¿?,.;:()""«»\-—]", " ");
             texto = Regex.Replace(texto, @"\s+", " ");

@@ -33,8 +33,12 @@ namespace Assets.Scripts.Core
         [Range(0f, 1f)]
         public float defaultWordVolume = 1.0f;
 
+        [Tooltip("Ganancia de las voces del corpus, cuyos picos están normalizados a -3 dB.")]
+        [Range(1f, 1.4f)]
+        public float defaultVoiceGain = 1.35f;
+
         [Range(0f, 1f)]
-        public float defaultSFXVolume = 0.8f;
+        public float defaultSFXVolume = 1f;
 
         [Range(0f, 1f)]
         public float defaultMusicVolume = 0.5f;
@@ -60,8 +64,11 @@ namespace Assets.Scripts.Core
 
         [Header("Gameplay")]
 
-        [Tooltip("Si está activo, desbloquea lecciones progresivamente")]
-        public bool enableProgressiveUnlock = false;
+        [Tooltip("Desactivar para acceso libre en Editor y Development Build. La versión final siempre usa progreso.")]
+        public bool enableProgressiveUnlock = true;
+
+        public bool AccesoLibrePruebas => !enableProgressiveUnlock &&
+            (Application.isEditor || Debug.isDebugBuild);
 
         // -------------------------------------------------------
         // AR SETTINGS

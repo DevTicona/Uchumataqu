@@ -1,5 +1,6 @@
 using Assets.Scripts.Data.Persistencia.Validation;
 using Assets.Scripts.Data.Persistencia;
+using Assets.Scripts.Util;
 
 namespace Assets.Scripts.Persistencia
 {
@@ -21,7 +22,7 @@ namespace Assets.Scripts.Persistencia
             if (!PerfilValidator.ValidarPerfilCompleto(nombre, avatarId).Valido) return false;
             var perfil = new PerfilUsuarioModel
             {
-                nombre = nombre.Trim(),
+                nombre = FormatoTexto.ConInicialMayuscula(nombre.Trim()),
                 avatar_id = avatarId,
                 onboarding_completado = onboardingCompletado
             };

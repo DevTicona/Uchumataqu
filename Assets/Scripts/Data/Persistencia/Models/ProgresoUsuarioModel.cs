@@ -7,7 +7,8 @@ namespace Assets.Scripts.Data.Persistencia
     [Serializable]
     public class ProgresoUsuarioModel
     {
-        public int version = 1;
+        public const int VersionActual = 2;
+        public int version = VersionActual;
         public string ultima_leccion_id = "";
         public List<ProgresoLeccionModel> lecciones = new List<ProgresoLeccionModel>();
         public List<ProgresoEscenarioRAModel> escenarios_ra = new List<ProgresoEscenarioRAModel>();

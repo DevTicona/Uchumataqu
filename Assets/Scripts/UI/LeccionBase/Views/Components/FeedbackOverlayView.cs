@@ -1,14 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.Core.UI.Components;
 using Assets.Scripts.Core.UI.Theme;
+using Assets.Scripts.Core.Assets;
 
 namespace Assets.Scripts.UI.LeccionBase.Componentes
 {
     /// <summary>
     /// Componente de feedback inferior para resultados inmediatos tras cada respuesta.
-    /// Especificación: Docs/UI/04-escena-leccion-base.md §10 y §11
+    /// Especificación: Docs/Specifications/04-flujo-leccion-app.md.
     /// </summary>
     public class FeedbackOverlayView : MonoBehaviour
     {
@@ -22,6 +23,12 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
         [SerializeField] private Sprite iconoInformacion;
         [SerializeField] private TMP_Text txtTitulo;
         [SerializeField] private TMP_Text txtMensajeDetalle;
+        [SerializeField] private DiagnosticoMorfologicoView diagnosticoMorfologico;
+
+        [Header("Sonidos de respuesta")]
+        [SerializeField] private AudioClip sonidoCorrecto;
+        [SerializeField] private AudioClip sonidoCasi;
+        [SerializeField] private AudioClip sonidoIncorrecto;
 
         [Header("Paleta de Feedback")]
         [SerializeField] private Color colorCorrecto = new Color(0.24f, 0.65f, 0.35f, 0.95f);   // Verde #3DA559
@@ -51,11 +58,43 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
             return completa;
         }
 
+        public void MostrarRespuesta(FeedbackRespuesta respuesta)
+        {
+            switch (respuesta.Semaforo)
+            {
+                case "verde": MostrarCorrecto(respuesta.Texto); break;
+                case "amarillo": MostrarCasi(respuesta.Texto); break;
+                case "rojo": MostrarIncorrecto(respuesta.Texto); break;
+                default: MostrarInformacion(respuesta.Texto); break;
+            }
+            if (txtTitulo != null) txtTitulo.text = respuesta.Titulo;
+            MostrarDiagnosticoMorfologico(respuesta.DiagnosticoMorfologico);
+        }
+
+        public void MostrarDiagnosticoMorfologico(string diagnostico)
+        {
+            if (diagnosticoMorfologico != null) diagnosticoMorfologico.Mostrar(diagnostico);
+        }
+
         public void MostrarCorrecto(string detalle = null)
         {
             ConfigurarVisual(ThemedGraphicView.RolColor.Exito, colorCorrecto, iconoCorrecto,
                 "¡Correcto!", detalle ?? "Resolviste la actividad. Continúa con el siguiente paso.");
             gameObject.SetActive(true);
+        }
+
+        public AudioClip ObtenerSonidoRespuesta(string semaforo) => semaforo switch
+        {
+            "verde" => sonidoCorrecto,
+            "amarillo" => sonidoCasi,
+            "rojo" => sonidoIncorrecto,
+            _ => null
+        };
+
+        public void ReproducirSonidoRespuesta(string semaforo)
+        {
+            var clip = ObtenerSonidoRespuesta(semaforo);
+            if (Application.isPlaying && clip != null) AudioService.Instance.ReproducirEfecto(clip);
         }
 
         public void MostrarCasi(string detalle = null, double similitud = 0)
@@ -90,12 +129,14 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
 
         public void Ocultar()
         {
+            MostrarDiagnosticoMorfologico(null);
             gameObject.SetActive(false);
         }
 
         private void ConfigurarVisual(ThemedGraphicView.RolColor rol, Color colorRespaldo,
             Sprite icono, string titulo, string detalle)
         {
+            MostrarDiagnosticoMorfologico(null);
             rolActivo = rol;
             colorRespaldoActivo = colorRespaldo;
             tieneEstadoActivo = true;
@@ -111,6 +152,8 @@ namespace Assets.Scripts.UI.LeccionBase.Componentes
             }
             if (txtMensajeDetalle != null)
             {
+                txtMensajeDetalle.richText = true;
+                txtMensajeDetalle.overrideColorTags = false;
                 txtMensajeDetalle.text = detalle;
             }
 

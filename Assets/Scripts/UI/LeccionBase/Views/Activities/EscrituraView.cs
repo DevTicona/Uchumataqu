@@ -12,23 +12,28 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
     {
         [SerializeField] private TMP_Text txtTituloEscritura;
         [SerializeField] private TMP_Text txtInstruccion;
+        [SerializeField] private GameObject panelEstimulo;
         [SerializeField] private TMP_InputField inputRespuesta;
         [SerializeField] private ThemedGraphicView bordeInputRespuesta;
         [SerializeField] private GameObject panelRespuestaCorrecta;
         [SerializeField] private TMP_Text txtRespuestaCorrecta;
         [SerializeField] private ThemedGraphicView bordeRespuestaCorrecta;
+        [SerializeField] private Button btnAudio;
 
         private bool _enviada;
         private TMP_Text _textoResultadoUsuario;
+        private EnfoqueEntradaMovilView _enfoqueEntrada;
 
         public bool PuedeEnviarRespuesta => !_enviada &&
             inputRespuesta != null && !string.IsNullOrWhiteSpace(inputRespuesta.text);
 
         public event Action OnRespuestaCambiada;
         public event Action<string> OnRespuestaEnviada;
+        public event Action OnAudioClicked;
 
         private void Awake()
         {
+            if (btnAudio != null) btnAudio.onClick.AddListener(NotificarAudio);
             OcultarRespuestaCorrecta();
             MobileInputFieldStyle.Aplicar(inputRespuesta);
             if (inputRespuesta != null && inputRespuesta.textComponent != null)
@@ -36,16 +41,28 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 TMP_Text textoOriginal = inputRespuesta.textComponent;
                 _textoResultadoUsuario = Instantiate(textoOriginal, textoOriginal.transform.parent, false);
                 _textoResultadoUsuario.name = "TextoResultadoUsuario";
+                _textoResultadoUsuario.raycastTarget = false;
+                _textoResultadoUsuario.overrideColorTags = false;
                 _textoResultadoUsuario.gameObject.SetActive(false);
             }
             if (inputRespuesta != null)
+            {
                 inputRespuesta.onValueChanged.AddListener(NotificarCambio);
+                inputRespuesta.onSelect.AddListener(PrepararEdicion);
+                _enfoqueEntrada = inputRespuesta.GetComponent<EnfoqueEntradaMovilView>();
+                if (_enfoqueEntrada != null) _enfoqueEntrada.EdicionSolicitada += MostrarTextoEditable;
+            }
         }
 
         private void OnDestroy()
         {
+            if (btnAudio != null) btnAudio.onClick.RemoveListener(NotificarAudio);
             if (inputRespuesta != null)
+            {
                 inputRespuesta.onValueChanged.RemoveListener(NotificarCambio);
+                inputRespuesta.onSelect.RemoveListener(PrepararEdicion);
+            }
+            if (_enfoqueEntrada != null) _enfoqueEntrada.EdicionSolicitada -= MostrarTextoEditable;
         }
 
         private void OnDisable()
@@ -54,11 +71,13 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 inputRespuesta.DeactivateInputField();
         }
 
-        public void Configurar(string tipo, string estimulo)
+        public void Configurar(string tipo, string estimulo, bool esAudio = false)
         {
             _enviada = false;
-            txtTituloEscritura.text = ObtenerTitulo(tipo);
+            txtTituloEscritura.text = esAudio ? "Escucha y escribe en uchumataqu:" : ObtenerTitulo(tipo);
             txtInstruccion.text = estimulo ?? string.Empty;
+            if (panelEstimulo != null) panelEstimulo.SetActive(!esAudio);
+            if (btnAudio != null) btnAudio.gameObject.SetActive(esAudio);
             if (inputRespuesta.textComponent != null)
                 inputRespuesta.textComponent.gameObject.SetActive(true);
             if (_textoResultadoUsuario != null)
@@ -89,6 +108,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
             if (!PuedeEnviarRespuesta) return;
             _enviada = true;
             inputRespuesta.interactable = false;
+            inputRespuesta.SetTextWithoutNotify(FormatoTexto.ConInicialMayuscula(inputRespuesta.text));
             OnRespuestaEnviada?.Invoke(inputRespuesta.text);
         }
 
@@ -118,23 +138,44 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
                 return;
             }
 
+            inputRespuesta.interactable = true;
+
             if (panelRespuestaCorrecta == null || txtRespuestaCorrecta == null) return;
             txtRespuestaCorrecta.richText = true;
             txtRespuestaCorrecta.text = diferencia.correcta;
             if (bordeRespuestaCorrecta != null)
                 bordeRespuestaCorrecta.Rol = ThemedGraphicView.RolColor.Exito;
-            panelRespuestaCorrecta.SetActive(true);
+            panelRespuestaCorrecta.SetActive(false);
             GetComponent<ActividadLayoutController>()?.SolicitarReconstruccion();
         }
 
         public void EnfocarEntrada()
         {
             if (inputRespuesta == null || !inputRespuesta.interactable) return;
+            MostrarTextoEditable();
             inputRespuesta.Select();
             inputRespuesta.ActivateInputField();
         }
 
-        private void NotificarCambio(string _) => OnRespuestaCambiada?.Invoke();
+        private void NotificarCambio(string _)
+        {
+            if (_enviada && inputRespuesta.interactable)
+            {
+                _enviada = false;
+                MostrarTextoEditable();
+            }
+            OnRespuestaCambiada?.Invoke();
+        }
+        private void PrepararEdicion(string _) => MostrarTextoEditable();
+
+        private void MostrarTextoEditable()
+        {
+            if (_textoResultadoUsuario != null) _textoResultadoUsuario.gameObject.SetActive(false);
+            if (inputRespuesta.textComponent != null) inputRespuesta.textComponent.gameObject.SetActive(true);
+            inputRespuesta.ForceLabelUpdate();
+        }
+
+        private void NotificarAudio() => OnAudioClicked?.Invoke();
         private void OcultarRespuestaCorrecta()
         {
             if (panelRespuestaCorrecta != null) panelRespuestaCorrecta.SetActive(false);

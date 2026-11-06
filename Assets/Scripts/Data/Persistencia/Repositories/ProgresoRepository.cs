@@ -29,7 +29,16 @@ namespace Assets.Scripts.Persistencia
         {
             try
             {
-                return JsonLocalService.Leer<ProgresoUsuarioModel>(NombreArchivo) ?? new ProgresoUsuarioModel();
+                var progreso = JsonLocalService.Leer<ProgresoUsuarioModel>(NombreArchivo) ?? new ProgresoUsuarioModel();
+                if (MigracionCurriculo26.Aplicar(progreso))
+                {
+                    try { JsonLocalService.Escribir(NombreArchivo, progreso); }
+                    catch (Exception ex)
+                    {
+                        Assets.Scripts.Utils.JsonUtilityHelper.LogError($"[ProgresoRepository] Error guardando migración: {ex.Message}");
+                    }
+                }
+                return progreso;
             }
             catch (Exception ex)
             {

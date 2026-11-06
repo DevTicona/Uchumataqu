@@ -8,6 +8,7 @@ namespace Assets.Scripts.Data.Corpus
     public class EscenariosRACorpusModel
     {
         public int version;
+        public ReglaAsrRAModel regla_asr;
         public List<EscenarioRAModel> escenarios = new List<EscenarioRAModel>();
     }
 }

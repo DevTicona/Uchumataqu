@@ -17,13 +17,15 @@ namespace Assets.Scripts.UI.Main.Paginas
     {
         private enum TipoSeccion { Obtenidos, EnProgreso, PorDescubrir }
 
-        private static readonly Vector2 TamanoLogroObtenido = new(400f, 350f);
-        private static readonly Vector2 SeparacionLogrosObtenidos = new(60f, 30f);
+        [Header("Galería de logros obtenidos")]
+        [SerializeField] private Vector2 tamanoLogroObtenido = new(420f, 350f);
+        [SerializeField] private Vector2 separacionLogrosObtenidos = new(20f, 30f);
         private const int ColumnasObtenidos = 2;
 
         [SerializeField] private Transform contenedorLogros;
         [SerializeField] private LogroItemView prefabLogroObtenido;
         [SerializeField] private LogroItemView prefabLogroHorizontal;
+        [SerializeField] private Slider barraProgresoGlobal;
 
         private readonly Dictionary<TipoSeccion, SeccionLogros> secciones = new();
 
@@ -67,7 +69,8 @@ namespace Assets.Scripts.UI.Main.Paginas
             if (card == null) return;
             int porcentaje = total > 0 ? Mathf.RoundToInt((float)obtenidos / total * 100f) : 0;
             AsignarTexto(card, "FilaSuperior/ColTexto/TxtDetalleResumen", $"{obtenidos} de {total} completados ({porcentaje}%)");
-            ConfigurarRelleno(card.Find("BarraProgreso/Relleno")?.GetComponent<Image>(), total > 0 ? (float)obtenidos / total : 0f);
+            if (barraProgresoGlobal != null)
+                barraProgresoGlobal.SetValueWithoutNotify(total > 0 ? (float)obtenidos / total : 0f);
             Transform pills = card.Find("FilaPills");
             string[] etiquetas = { $"{obtenidos} Obtenidos", $"{enProgreso} En curso", $"{bloqueados} Pendientes" };
             for (int i = 0; pills != null && i < Mathf.Min(pills.childCount, etiquetas.Length); i++)
@@ -177,12 +180,12 @@ namespace Assets.Scripts.UI.Main.Paginas
             return seccion;
         }
 
-        private static void ConfigurarGrillaObtenidos(GridLayoutGroup grilla)
+        private void ConfigurarGrillaObtenidos(GridLayoutGroup grilla)
         {
             grilla.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             grilla.constraintCount = ColumnasObtenidos;
-            grilla.cellSize = TamanoLogroObtenido;
-            grilla.spacing = SeparacionLogrosObtenidos;
+            grilla.cellSize = tamanoLogroObtenido;
+            grilla.spacing = separacionLogrosObtenidos;
             grilla.childAlignment = TextAnchor.UpperCenter;
         }
 
@@ -223,19 +226,6 @@ namespace Assets.Scripts.UI.Main.Paginas
             TMP_Text texto = padre?.Find(ruta)?.GetComponent<TMP_Text>();
             if (texto == null) return;
             texto.SetText(valor);
-        }
-
-        public static void ConfigurarRelleno(Image imagen, float ratio)
-        {
-            if (imagen == null) return;
-            imagen.type = Image.Type.Filled; imagen.fillMethod = Image.FillMethod.Horizontal;
-            imagen.fillOrigin = (int)Image.OriginHorizontal.Left; imagen.fillAmount = Mathf.Clamp01(ratio);
-            imagen.enabled = imagen.fillAmount > 0;
-            RectTransform rect = imagen.rectTransform;
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
         }
 
         public static ThemedTextView AsignarThemedText(TMP_Text texto, ThemedTextView.TipoTexto tipo, ThemedTextView.ColorTexto color)

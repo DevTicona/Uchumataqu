@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 478937c5de90e6b4abd15c39af4cd2e1, type: 3}
   m_Name: AppConfig
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.AppConfigModel
-  enableDebugLogs: 1
+  enableDebugLogs: 0
   enableVerboseLogs: 0
   defaultMasterVolume: 1
   defaultWordVolume: 1
-  defaultSFXVolume: 0.8
+  defaultVoiceGain: 1.35
+  defaultSFXVolume: 1
   defaultMusicVolume: 0.5
   fadeInDuration: 0.5
   cardAnimDuration: 0.3
   buttonScaleDuration: 0.2
-  minReviewsToMaster: 3
-  enableProgressiveUnlock: 0
-  enableARDebugPlane: 1
+  enableProgressiveUnlock: 1
+  enableARDebugPlane: 0
   arPlacementDistance: 1.5

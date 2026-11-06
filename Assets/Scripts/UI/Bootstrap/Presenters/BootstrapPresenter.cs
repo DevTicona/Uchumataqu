@@ -9,7 +9,7 @@ namespace Assets.Scripts.UI.Bootstrap
     /// <summary>
     /// Presenter para la escena técnica 00_Bootstrap.
     /// Inicializa servicios persistentes, carga el corpus y deriva a Onboarding o Main.
-    /// Especificado en Docs/UI/01-escena-bootstrap.md.
+    /// Especificado en Docs/Specifications/06-guia-arquitectura-proyecto.md.
     /// </summary>
     public class BootstrapPresenter : MonoBehaviour
     {
@@ -33,6 +33,12 @@ namespace Assets.Scripts.UI.Bootstrap
 
         private async void Start()
         {
+            view.MostrarProgreso(0f);
+            view.MostrarCarga("Preparando recursos locales...");
+            // Permite dibujar Bootstrap antes del trabajo de inicialización.
+            await Awaitable.NextFrameAsync();
+            if (this == null || !isActiveAndEnabled) return;
+            Debug.Log($"[ARRANQUE] Primer cuadro de Bootstrap: {Time.realtimeSinceStartup:F2}s.");
             await InicializarYNavegarAsync();
         }
 
@@ -52,6 +58,7 @@ namespace Assets.Scripts.UI.Bootstrap
 
             try
             {
+                float inicio = Time.realtimeSinceStartup;
                 await appInitializer.InicializarAsync();
                 view.MostrarProgreso(0.5f);
                 view.MostrarCarga("Cargando contenido educativo...");
@@ -65,6 +72,7 @@ namespace Assets.Scripts.UI.Bootstrap
 
                 view.MostrarProgreso(1f);
                 view.MostrarCarga("Todo listo");
+                Debug.Log($"[ARRANQUE] Servicios y corpus: {Time.realtimeSinceStartup - inicio:F2}s.");
                 if (this == null) return;
 
                 if (tienePerfil) NavigationService.IrAMain();

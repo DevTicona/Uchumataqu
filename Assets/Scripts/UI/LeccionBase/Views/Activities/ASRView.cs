@@ -8,7 +8,7 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
 {
     public sealed class ASRView : MonoBehaviour
     {
-        public enum Estado { Listo, Grabando, Procesando, Resultado, NoDisponible, Error }
+        public enum Estado { Listo, Grabando, Procesando, Resultado, NoDisponible, Error, Preparando }
 
         [SerializeField] private TMP_Text txtObjetivo;
         [SerializeField] private Button btnAudioReferencia;
@@ -34,6 +34,12 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         }
 
 
+        public void Preparar(string objetivo)
+        {
+            txtObjetivo.text = objetivo ?? string.Empty;
+            MostrarEstado(Estado.Preparando);
+        }
+
         public void Configurar(string objetivo, bool disponible, bool esOracion = false)
         {
             txtObjetivo.text = objetivo ?? string.Empty;
@@ -44,13 +50,16 @@ namespace Assets.Scripts.UI.LeccionBase.Actividades
         {
             bool grabando = estado == Estado.Grabando;
             bool procesando = estado == Estado.Procesando;
+            bool preparando = estado == Estado.Preparando;
             bool disponible = estado != Estado.NoDisponible;
 
-            btnAudioReferencia.interactable = !grabando && !procesando;
-            btnPracticar.interactable = disponible && !grabando && !procesando;
+            btnAudioReferencia.interactable = !grabando && !procesando && !preparando;
+            btnPracticar.interactable = disponible && !grabando && !procesando && !preparando;
             btnAudioReferencia.GetComponent<ThemedButtonView>()?.AplicarTema();
             btnPracticar.GetComponent<ThemedButtonView>()?.AplicarTema();
         }
+
+        public void PermitirReintento(bool permitido) => btnPracticar.interactable = permitido;
 
         private void NotificarAudio() => OnAudioClicked?.Invoke();
         private void NotificarPractica() => OnPracticarClicked?.Invoke();

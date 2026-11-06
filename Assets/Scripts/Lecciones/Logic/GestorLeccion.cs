@@ -9,8 +9,8 @@ namespace Assets.Scripts.Lecciones
 {
     /// <summary>
     /// Orquestador del flujo de ejecución de una lección basada en pasos compilados.
-    /// Consume lecciones_compiladas.json y no genera currículo en runtime.
-    /// Especificado en Docs/Specifications/04-flujo-leccion-app.md y Docs/UI/04-escena-leccion-base.md.
+    /// Consume el currículo activo y no genera actividades en runtime.
+    /// Especificado en Docs/Specifications/04-flujo-leccion-app.md.
     /// </summary>
     public class GestorLeccion
     {
@@ -19,6 +19,7 @@ namespace Assets.Scripts.Lecciones
         public int Aciertos { get; private set; }
         public int Errores { get; private set; }
         public bool UltimoGuardadoExitoso { get; private set; } = true;
+        private bool _finalizacionGuardada;
         public int TotalPasos => LeccionActual?.pasos?.Count ?? 0;
         public int TotalPasosObligatorios => LeccionActual?.pasos?.Count(TipoPasoLeccion.EsObligatorio) ?? 0;
         public int PasoObligatorioActual => LeccionActual?.pasos?
@@ -57,11 +58,16 @@ namespace Assets.Scripts.Lecciones
             IndicePasoActual = 0;
             Aciertos = 0;
             Errores = 0;
+            _finalizacionGuardada = false;
+            UltimoGuardadoExitoso = true;
             var progreso = ProgresoRepository.ObtenerProgreso();
-            var previo = progreso.lecciones?.Find(l => l.leccion_id == leccionId && l.estado == "en_progreso");
-            if (previo != null)
+            var previo = progreso.lecciones?.Find(l => l.leccion_id == leccionId &&
+                (l.estado == "en_progreso" || l.sesion_en_progreso));
+            // Los índices de otro currículo no identifican la misma actividad. Solo se reinicia la lección pendiente.
+            if (previo != null && !string.IsNullOrEmpty(LeccionActual.RevisionContenido) &&
+                previo.revision_contenido == LeccionActual.RevisionContenido)
             {
-                IndicePasoActual = Mathf.Clamp(previo.paso_actual, 0, TotalPasos - 1);
+                IndicePasoActual = Mathf.Clamp(previo.paso_actual, 0, TotalPasos);
                 Aciertos = Mathf.Max(0, previo.aciertos);
                 Errores = Mathf.Max(0, previo.errores);
             }
@@ -79,28 +85,36 @@ namespace Assets.Scripts.Lecciones
 
         public bool AvanzarSiguientePaso()
         {
+            if (LeccionActual == null || IndicePasoActual >= TotalPasos) return false;
             IndicePasoActual++;
             GuardarEstadoActual();
             return IndicePasoActual < TotalPasos;
         }
 
-        public bool GuardarEstadoActual()
+        /// <summary>
+        /// Persiste la próxima posición reanudable. Un paso resuelto puede guardarse antes de
+        /// avanzar la vista, para no repetir la respuesta al salir durante el feedback.
+        /// </summary>
+        public bool GuardarEstadoActual(bool pasoResuelto = false)
         {
             if (LeccionActual == null) return false;
-            if (IndicePasoActual >= TotalPasos) return true;
+            if (_finalizacionGuardada) return true;
             return UltimoGuardadoExitoso = GestorProgreso.GuardarLeccionEnProgreso(
                 LeccionActual.id,
-                IndicePasoActual,
+                Mathf.Min(IndicePasoActual + (pasoResuelto ? 1 : 0), TotalPasos),
                 Aciertos,
-                Errores);
+                Errores,
+                LeccionActual.RevisionContenido);
         }
 
         public bool FinalizarYGuardar()
         {
-            if (LeccionActual == null || IndicePasoActual < TotalPasos - 1) return false;
+            if (LeccionActual == null || IndicePasoActual < TotalPasos) return false;
+            if (_finalizacionGuardada) return true;
             int totalEvaluables = Aciertos + Errores;
-            return UltimoGuardadoExitoso = GestorProgreso.CompletarLeccion(
+            _finalizacionGuardada = UltimoGuardadoExitoso = GestorProgreso.CompletarLeccion(
                 LeccionActual.id, Aciertos, Errores, totalEvaluables > 0 ? totalEvaluables : TotalPasos);
+            return _finalizacionGuardada;
         }
     }
 }

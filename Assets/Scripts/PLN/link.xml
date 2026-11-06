@@ -1,0 +1,6 @@
+<linker>
+  <assembly fullname="Assembly-CSharp">
+    <!-- Los análisis HFST se deserializan por reflexión con Newtonsoft.Json. -->
+    <type fullname="Assets.Scripts.PLN.AnalisisMorfologicoModel" preserve="all" />
+  </assembly>
+</linker>

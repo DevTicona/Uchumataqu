@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Core.UI;
 using Assets.Scripts.Core.UI.Components;
+using Assets.Scripts.Core.UI.Ayuda;
 using Assets.Scripts.UI.Avatares;
 using TMPro;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Assets.Scripts.UI.Onboarding
         [SerializeField] private GameObject pasoBienvenida;
         [SerializeField] private GameObject pasoPerfil;
         [SerializeField] private GameObject pasoAvatar;
+        [SerializeField] private AyudaBrevePantalla ayuda;
 
         [Header("Perfil")]
         [SerializeField] private TMP_InputField inputNombre;
@@ -31,6 +33,9 @@ namespace Assets.Scripts.UI.Onboarding
         [Header("Acción")]
         [SerializeField] private Button botonContinuar;
         [SerializeField] private TextMeshProUGUI textoBotonContinuar;
+        [SerializeField] private Image iconoAccion;
+        [SerializeField] private Sprite iconoComenzar;
+        [SerializeField] private Sprite iconoContinuar;
 
         public event Action OnComenzarClick;
         public event Action OnContinuarBienvenida;
@@ -60,6 +65,7 @@ namespace Assets.Scripts.UI.Onboarding
 
         private void Awake()
         {
+            if (ayuda == null) ayuda = AyudaBrevePantalla.BuscarEnEscena(gameObject.scene);
             ConfigurarCampoNombre();
 
             // Un único listener fijo que despacha según el paso actual.
@@ -93,6 +99,7 @@ namespace Assets.Scripts.UI.Onboarding
             if (pasoAvatar != null) pasoAvatar.SetActive(false);
             if (botonContinuar != null) botonContinuar.gameObject.SetActive(true);
             if (textoBotonContinuar != null) textoBotonContinuar.text = "CONTINUAR";
+            if (iconoAccion != null) iconoAccion.sprite = iconoContinuar;
 
             RestablecerTemaBoton();
 
@@ -111,8 +118,13 @@ namespace Assets.Scripts.UI.Onboarding
             if (pasoAvatar != null) pasoAvatar.SetActive(true);
             if (botonContinuar != null) botonContinuar.gameObject.SetActive(true);
             if (textoBotonContinuar != null) textoBotonContinuar.text = "COMENZAR";
+            if (iconoAccion != null) iconoAccion.sprite = iconoComenzar;
 
             RestablecerTemaBoton();
+
+            ayuda?.MostrarPrimeraVez("onboarding:perfil:v1", "Tu perfil",
+                new PasoGuia("Escribe tu nombre", "Toca el campo del nombre y escribe entre 2 y 30 caracteres."),
+                new PasoGuia("Elige tu avatar", "Toca el avatar que prefieras y pulsa COMENZAR. El perfil y tu progreso se guardan en este teléfono."));
 
             if (pasoPerfil == null) return;
             if (_animacionPaso != null) StopCoroutine(_animacionPaso);

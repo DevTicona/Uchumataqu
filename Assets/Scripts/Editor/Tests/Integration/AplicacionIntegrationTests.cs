@@ -29,7 +29,7 @@ namespace Assets.Scripts.Editor.Tests
         {
             var tiposEncontrados = new HashSet<string>();
 
-            foreach (var leccion in CorpusRepository.ObtenerTodasLecciones())
+            foreach (var leccion in CorpusRepository.ObtenerTodasLasLecciones())
             {
                 Assert.IsNotEmpty(leccion.pasos, leccion.id);
                 foreach (var paso in leccion.pasos)
@@ -71,8 +71,8 @@ namespace Assets.Scripts.Editor.Tests
             InicioModel inicio = MainModelFactory.CrearInicio(
                 new PerfilUsuarioModel { nombre = "Ana", avatar_id = "avatar_02" },
                 progreso,
-                CorpusRepository.ObtenerTodasLecciones(),
-                CorpusRepository.ObtenerTodosEscenariosRa());
+                CorpusRepository.ObtenerTodasLasLecciones(),
+                CorpusRepository.ObtenerTodosLosEscenariosRA());
 
             Assert.AreEqual("L05", inicio.LeccionId);
             Assert.IsTrue(inicio.EsContinuacion);

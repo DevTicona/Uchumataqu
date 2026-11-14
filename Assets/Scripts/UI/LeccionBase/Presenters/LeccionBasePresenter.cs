@@ -12,6 +12,7 @@ using Assets.Scripts.Persistencia;
 using Assets.Scripts.ASR;
 using Assets.Scripts.UI.LeccionBase.Actividades;
 using System.Collections;
+using System.Threading.Tasks;
 
 namespace Assets.Scripts.UI.LeccionBase
 {
@@ -57,6 +58,10 @@ namespace Assets.Scripts.UI.LeccionBase
                 return;
             }
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+            _ = PrecargarReconocedorVozEnSegundoPlanoAsync();
+#endif
+
             try
             {
                 await appInitializer.InicializarAsync();
@@ -64,6 +69,7 @@ namespace Assets.Scripts.UI.LeccionBase
             catch (Exception exception)
             {
                 Debug.LogError($"[LeccionBasePresenter] No se pudo inicializar la aplicacion: {exception.Message}");
+                _reconocedorVoz.Dispose();
                 enabled = false;
                 return;
             }
@@ -75,6 +81,7 @@ namespace Assets.Scripts.UI.LeccionBase
             if (!corpusInicializado)
             {
                 Debug.LogError("[LeccionBasePresenter] No se pudo inicializar el corpus para iniciar la lección.");
+                _reconocedorVoz.Dispose();
                 enabled = false;
                 return;
             }
@@ -87,6 +94,19 @@ namespace Assets.Scripts.UI.LeccionBase
             view.OnCancelarSalidaClick += CancelarSalida;
 
             IniciarEjecucionLeccion();
+        }
+
+        private async Task PrecargarReconocedorVozEnSegundoPlanoAsync()
+        {
+            try
+            {
+                await _reconocedorVoz.PrepararAsync();
+            }
+            catch (Exception exception)
+            {
+                if (this != null)
+                    Debug.LogWarning($"[LeccionBasePresenter] No se pudo precargar el reconocedor de voz: {exception.Message}");
+            }
         }
 
         private void OnDestroy()

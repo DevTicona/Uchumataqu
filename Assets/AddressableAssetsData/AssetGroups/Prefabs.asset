@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 411293df7f1b1824789075fafe27cfcd
   m_SerializeEntries:
   - m_GUID: 005c2fd3f42ba504688069dc1e29d3ee
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_maderacorral.mat
+    m_Address: prefab/mat_maderacorral
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -27,47 +27,17 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0181dcda316ca004fa78f2d6dd4761a2
-    m_Address: ra/recurso/ra3/texturas/t_ra3_kuskuts_mochila_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 018aea597b6266744a238626de7de1c2
-    m_Address: ra/escenario/cocina_alimentos
+    m_Address: prefab/ra_cocina_alimentos
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 034cac1dffa43574aac8162fb931fc18
-    m_Address: ra/recurso/ra3/texturas/t_ra3_julsni_silla_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 03837fe2b1aa5b641b903bc09e729916
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_cardinalpiedra.mat
+    m_Address: prefab/mat_ra6_cardinalpiedra
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 03cf1d1be818ae545a5625522a66a3e8
-    m_Address: ra/recurso/ra5/texturas/t_ra5_paku_perro_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 049bf166c464e5349898373d31690f03
-    m_Address: ra/recurso/ra5/texturas/t_ra5_kurwina_trucha_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 051e22e5fdb7f8a428dcaa9b638a2c27
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qeri_pez_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 06d631c0ee57c8c408c89897c746226a
     m_Address: ra/recurso/ra2/texturas/originales/mama/color.jpg
@@ -76,52 +46,22 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 06fd65a326f20d64c827dbc22d34169b
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_cueva_roca_natural.mat
+    m_Address: prefab/mat_cueva_roca_natural
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 08621b1ff0d028f46b72908f55243898
-    m_Address: ra/recurso/ra5/texturas/t_ra5_iwisa_oveja_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 097a6faf70b6a8e4799d4249bc42f1f6
-    m_Address: ra/recurso/ra1/texturas/t_ra1_profesor_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 09888c29518087b4091711a1b808c7ea
-    m_Address: ra/recurso/ra3/texturas/t_ra3_kuskuts_mochila_azul_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 09d57b4756765464cba611206579f909
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/tripo_mat_fba3d7c2.001.mat
+    m_Address: prefab/tripo_mat_fba3d7c2.001
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0b1be5302c630eb4ab4345d6e8bc31da
-    m_Address: ra/modelo/mdl_ra5_pato_amarillo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0b5d6f5ca8875c045b88c0076a7c2f7c
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_paku_perro.mat
+    m_Address: prefab/mat_ra5_paku_perro
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0b8aa30cf094ffe439ddedddc177a4d0
-    m_Address: ra/modelo/mdl_ra4_leche
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0be0c57900ae6ed46ba793cba36591ee
     m_Address: prefab/logrohorizontal
@@ -130,31 +70,19 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c314ea4d4841c0429af9c8335ef5487
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_piedra.mat
+    m_Address: prefab/mat_piedra
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c7cd94131156324eadc21d2633905a1
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_sol_nuevo.mat
+    m_Address: prefab/mat_ra6_sol_nuevo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0d458a427117aa749a3bb4ba81bb4f5e
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chhikhits_lapiz_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0d7d831a73f7ed94b9a3072a64bdc1dd
-    m_Address: ra/recurso/ra5/texturas/t_ra5_maderacorral_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0e96bb4ef3bea0147a1bf5998e79ccf9
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_qetsi_zorro.mat
+    m_Address: prefab/mat_ra5_qetsi_zorro
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -165,14 +93,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0f4e84fa48410544991af87ff1da159d
-    m_Address: ra/recurso/ra5/texturas/t_ra5_phesqona_lagarto_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0f72cfdefd875ad4cb126d7300596184
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_cocina_hierro.mat
+    m_Address: prefab/ra4_cocina_hierro
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -184,46 +106,22 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 111f294a4a76b6c448165dc01a45b879
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_cocina_acero.mat
+    m_Address: prefab/ra4_cocina_acero
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 113e2df9ffc6e5046b655672058d7ddb
-    m_Address: ra/recurso/ra5/texturas/t_ra5_parina_flamenco_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 11402b6c9663295488ff1fa0118df9b3
-    m_Address: ra/recurso/ra3/texturas/t_ra3_rincon_abierto_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 125c3e1a2366682449bc7b6b650fa949
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_qala_gaviota.mat
+    m_Address: prefab/mat_ra5_qala_gaviota
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1412d20e198882d41b73036efb54ec52
-    m_Address: ra/recurso/ra6/texturas/t_ra6_sol_nuevo_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 147413238f54b3345886c3c2d4b9b51b
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra6_totoranueva_cabeza.mat
+    m_Address: prefab/mat_ra6_totoranueva_cabeza
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1512280203d925e49a5269449bd34b67
-    m_Address: ra/modelo/obj_balsa
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1567e347a6c3d3448a20ac93e8970292
     m_Address: ra/recurso/ra4/texturas/image_2_001.jpg
@@ -231,341 +129,149 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 15ef074c4a5b569459df307e69d40e73
-    m_Address: ra/recurso/ra5/texturas/t_ra5_kurwina_trucha_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 18569944d166e1242b6635516612e2cd
-    m_Address: ra/modelo/mdl_ra5_chaxana_pez_amarillo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1886e27259271154abdd666642173746
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_sana_puerta.mat
+    m_Address: prefab/m_ra3_sana_puerta
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 194c7a378e4e2224c932999ebfd0daca
-    m_Address: ra/recurso/ra5/texturas/t_ra5_xala_llama_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1a2e4981411fbc840ab7fb1f3dc1c496
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_soqna_pato.mat
+    m_Address: prefab/mat_ra5_soqna_pato
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1a533997bf348514bb96dd21c47599d2
-    m_Address: ra/recurso/ra5/texturas/t_ra5_tierra_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1a9ed3d80a9b1c14492187b12924f7d1
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qeri_pez_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1adecc931aa37c24cb285f335de7ee51
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chusi_cama_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1b2afb86ee2b8b84ca982638e6501245
-    m_Address: ra/modelo/obj_vela
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1b3ac60d1165be840bf141cfec3b9866
-    m_Address: ra/recurso/ra5/texturas/t_ra5_parina_flamenco_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1b8693dd744819f4a83630c04f9c8877
-    m_Address: ra/modelo/obj_canawa
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1c1100d1b0a5e3942911cd88c628d8d2
-    m_Address: ra/modelo/m3d_ra1_amigo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1c6e831fa259a2a4c883ae2bb8924a89
-    m_Address: ra/recurso/ra4/texturas/t_ra4_nino_emission_final.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1cb56b78362ec4e46a743852ef7eb0e0
-    m_Address: ra/modelo/mdl_ra4_plato
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1ce7f0d9e29de72428967cda6832d827
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_papa_original_0.mat
+    m_Address: prefab/mat_ra2_papa_original_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1dba83ad25b867041aac365ef3a2683c
-    m_Address: ra/recurso/ra3/texturas/t_ra3_rincon_abierto_cafe_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1e2edf9463dbb3148b1a8e17b4d1dd08
-    m_Address: ra/recurso/ra5/texturas/t_ra5_chaxana_pez_amarillo_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1ec5df6710c352d46b0dfae43a6e39b6
-    m_Address: ra/recurso/ra5/texturas/t_ra5_khuchhi_chancho_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1f2f752865854294997f659ef535dd28
-    m_Address: ra/modelo/m3d_ra1_entorno
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 226f6f6fb4d304849a31681254af62e4
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/m_ra3_chimay_mesa.mat
+    m_Address: prefab/m_ra3_chimay_mesa
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 22889929c73660846b53c50c4bd6480c
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chusi_cama_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 231d4b44ea0f0514e8d154f453733689
-    m_Address: ra/recurso/ra5/texturas/t_ra5_paku_perro_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2474b88edf46e81438cc65cf1463490c
-    m_Address: prefab/recurso/ra/produccion/plataformas/ra_naturaleza_orientacion_sm_terreno_orilla_lecho.asset
+    m_Address: prefab/ra_naturaleza_orientacion_sm_terreno_orilla_lecho
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2495cfc2fc447b44b9d94207cdcc9fa5
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_chusi_cama.mat
+    m_Address: prefab/m_ra3_chusi_cama
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2620b3bd9ae42574e84a0de92539ba6d
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_pantalon.mat
+    m_Address: prefab/mat_ra2_pantalon
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2690bb4615ef6a645b5d59f0a14435c0
-    m_Address: ra/modelo/mdl_ra5_parina_flamenco
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 26c3cdf6f6a883f48bd8ff1456a3233f
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/c8d1fec5_7b7e_4476_9d95_d4b90a35dc0b.mat
+    m_Address: prefab/c8d1fec5_7b7e_4476_9d95_d4b90a35dc0b
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 26f06d2ceb418924bae43402e2833159
-    m_Address: ra/modelo/mdl_ra4_batan
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 29c111d79f543744a92371e10f99c053
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_julsni_silla.mat
+    m_Address: prefab/m_ra3_julsni_silla
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 29e40d6a6ed7fb5468e9a45237988de2
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_madera.mat
+    m_Address: prefab/mat_ra6_madera
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2a3ca0c10ae25ef4e89b0dc84b435f68
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_rotulos_cardinales.mat
+    m_Address: prefab/mat_ra6_rotulos_cardinales
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2a9709544ce76214a9f67ef5aa676c46
-    m_Address: ra/modelo/ra6_entorno
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2ad013e6ecbe77647b0d1fb215dbe06b
-    m_Address: ra/modelo/m3d_hermano
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2b0670187fed8854e907a52349f1da75
-    m_Address: ra/modelo/ra4_nino_drink
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b2d483aaa427a8498ca2d0901289d46
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_suelo_tierra.mat
+    m_Address: prefab/ra4_suelo_tierra
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b5cd01e8af25e747bbdc7f0c11b87d9
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_vela_varilla_tono_3.mat
+    m_Address: prefab/mat_ra6_vela_varilla_tono_3
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b6413f4061f7f04591204e367c420b0
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_chimay_mesa.mat
+    m_Address: prefab/m_ra3_chimay_mesa
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2bc6c96ff1bfeb842b9877f29b4ad8d2
-    m_Address: ra/recurso/ra3/texturas/t_ra3_julsni_silla_cafe_medio_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2d047a38037f8094ba3eecc193d749c2
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_sombrero_original.mat
+    m_Address: prefab/mat_ra2_sombrero_original
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2dbb9ba280b0123489d71cd46f45e953
-    m_Address: ra/recurso/ra6/texturas/t_ra6_bote_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2e2f50ed1a9987f47b3b2afeb989a01c
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_tierra.mat
+    m_Address: prefab/mat_tierra
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2e7debf3921830e469ff129f20c95a4e
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.007.mat
+    m_Address: prefab/material_0.007
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2ef0e0c62de0cd84aad5b9631d9f399f
-    m_Address: ra/modelo/m3d_ra2_entorno
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 307f24a64ba80364aa672e87b32fb00f
-    m_Address: ra/escenario/encuentro_comunicacion
+    m_Address: prefab/ra_encuentro_comunicacion
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 30b02ac8d1bb87740bf3a349f9255fa6
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.001.mat
+    m_Address: prefab/material_0.001
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 312d2ef311826ce42a2099ea517f3edb
-    m_Address: ra/modelo/ra6_vegetacion_paisaje
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 31bbd9fd9d8fcf44f934e69b75bac074
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_lecholacustre.mat
+    m_Address: prefab/mat_lecholacustre
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32359e2d1e2f86e44af9c157c3cec62c
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_khuchhi_chancho.mat
+    m_Address: prefab/mat_ra5_khuchhi_chancho
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32c56bf3e65207c4cb72c7aef485f977
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_madera_cocina.mat
+    m_Address: prefab/ra4_madera_cocina
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 32c63dbc9b8a9104899366982ae9d6cf
-    m_Address: ra/recurso/ra5/texturas/t_ra5_khuchhi_chancho_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3480ef1add49dd249914a14c72529a0e
-    m_Address: ra/modelo/mdl_ra5_paku_perro
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34813b6c66f7c6b478156746fa90c907
-    m_Address: prefab/recurso/ra/produccion/plataformas/ra_cocina_alimentos_sm_suelo_cocina.asset
+    m_Address: prefab/ra_cocina_alimentos_sm_suelo_cocina
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3550c901baab64f478188be7d6186861
-    m_Address: ra/recurso/ra5/texturas/t_ra5_paku_perro_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 359f20cde7ddab749bc8b7ddd85e8579
-    m_Address: ra/recurso/ra6/texturas/t_ra6_vela_totora_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 36119e6797aeb9f40bbda0b6c633025f
-    m_Address: prefab/recurso/ra/produccion/ra2/texturas/mat_ra2_abarca_metallicsmoothness.png
+    m_Address: prefab/mat_ra2_abarca_metallicsmoothness
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3722d041e4be44f41ac5f0d4c24a0ca4
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wesla_chhoqha_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 385d6cb09554a494599a817541e5ea04
     m_Address: ra/recurso/ra4/texturas/image_0_003.jpg
@@ -573,26 +279,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 393ba7aa9f64ccd4fa2b46522e741b58
-    m_Address: ra/recurso/ra1/texturas/t_ra1_amigo_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3bb1125755c5e5d40948d69371b6a10b
-    m_Address: ra/recurso/ra5/texturas/t_ra5_maderacorral_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3d87955dd1adcae449315590dfa378be
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_poncho_corregido.mat
+    m_Address: prefab/mat_ra2_poncho_corregido
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3e68d02770fe23e45ac74133cf63526b
-    m_Address: prefab/recurso/ra/produccion/plataformas/ra_encuentro_comunicacion_sm_suelo_ar.asset
+    m_Address: prefab/ra_encuentro_comunicacion_sm_suelo_ar
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -603,59 +297,23 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3fb9bd53cb1b80d4eacbe1ff3cd77970
-    m_Address: ra/recurso/ra1/texturas/t_ra1_pueblo_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 407f7170a262cc3479bec57ceaf7cb6b
-    m_Address: ra/recurso/ra2/texturas/t_ra2_faja_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 412fb4fc84909e646b8b403bf2b9d93d
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_chiwqeri_pejerrey.mat
+    m_Address: prefab/mat_ra5_chiwqeri_pejerrey
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45b2da204588c8f48af4efd36edb3c0c
-    m_Address: prefab/recurso/ra/produccion/plataformas/ra_animales_ecosistema_sm_terreno_orilla_lecho.asset
+    m_Address: prefab/ra_animales_ecosistema_sm_terreno_orilla_lecho
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 46ad53f675310e54aa7504d3c25162af
-    m_Address: ra/modelo/mdl_ra5_entorno_acuatico
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4702275ed8a1cf2459f3e1cbdc607aa0
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.008.mat
+    m_Address: prefab/material_0.008
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 47233d518083cc944852d09249ae55e9
-    m_Address: ra/modelo/mdl_ra5_entorno_terrestre
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4759a05ed8441f04e998105aea7f75a7
-    m_Address: ra/modelo/mdl_ra4_pan
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 47818fb585d9afe458affc91aacffd81
-    m_Address: ra/modelo/mdl_ra4_cuchara
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 47a30e9aa6b69ca42b2dc40e1d2bc3df
     m_Address: ra/recurso/ra4/texturas/image_2_004.jpg
@@ -664,43 +322,19 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 47e303bb04c6e8e4db0d59a8363a03fb
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_pajaseca.mat
+    m_Address: prefab/mat_ra6_pajaseca
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4a2b0e152b7f36448b9638d35559e976
-    m_Address: ra/recurso/ra3/texturas/t_ra3_sana_puerta_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a4cf65bd705dea4ea13d412614ac3f2
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_phesqona_lagarto.mat
+    m_Address: prefab/mat_ra5_phesqona_lagarto
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4bc086288e7a5524693e8584cd80289e
-    m_Address: ra/modelo/m3d_pantalon
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4c1cd90d115ae864baa82447f85e8e64
-    m_Address: ra/recurso/ra3/texturas/t_ra3_kuwarerno_cuaderno_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4cede70f95bbb8b4194079d8ed3cf945
-    m_Address: ra/recurso/ra6/texturas/t_ra6_sol_nuevo_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4d41b5a4da099504fa92bbc68a42739a
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra6_totoranueva_tallo.mat
+    m_Address: prefab/mat_ra6_totoranueva_tallo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -712,16 +346,10 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4ea489ac8f812194f8bbe5511dfa6ef7
-    m_Address: prefab/recurso/ra/produccion/ra1/materiales/mat_ra1_suelo.mat
+    m_Address: prefab/mat_ra1_suelo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4f8678bbc35b4b74aa1074402c6c4a88
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chhiqha_escoba_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 509343746a4718540a1f89563a1ca67d
     m_Address: ra/recurso/ra4/texturas/image_2_007.jpg
@@ -729,101 +357,35 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 50c3a4c9255e68e4a86ca0ebb6b0ded4
-    m_Address: ra/recurso/ra5/texturas/t_ra5_piedra_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 52e0fba8b481dbb4684396de444b8f2f
-    m_Address: ra/modelo/m3d_abuela
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 538caec36ff576c498bc283d3bd54b9f
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_vela_ataduras.mat
+    m_Address: prefab/mat_ra6_vela_ataduras
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 53b3d340037c8ad49b664de7378d49ab
-    m_Address: ra/recurso/ra5/texturas/t_ra5_masota_gato_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 53c0f75fda8c39b4ba0e9164c202f9ae
-    m_Address: ra/modelo/obj_luna
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 55a63e5828dd1d44a9c8f9a353ed0a32
-    m_Address: ra/recurso/ra5/texturas/t_ra5_iwisa_oveja_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 55d70d10fe43ecc4e8a7d0145c8e531d
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_vela_varilla_tono_1.mat
+    m_Address: prefab/mat_ra6_vela_varilla_tono_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 569299499961d0048a433ed063919ab0
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chhikhits_lapiz_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 56f84c937b9fce24a894856c28b2804e
-    m_Address: ra/recurso/ra2/texturas/t_ra2_sombrero_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 574915c82b9e8b24fb2ef69d7c58e05b
-    m_Address: ra/modelo/m3d_abarca
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 57ad0ceee86860c42886d2bd10b5c23e
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_chaxana_pez_amarillo.mat
+    m_Address: prefab/mat_ra5_chaxana_pez_amarillo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 57f81268f44cc8c4aa500e4a81b617d0
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_liwi_original.mat
+    m_Address: prefab/mat_ra2_liwi_original
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 586f9c2861d6c2d4fa7e3ed051181b37
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_totoranueva_cabeza.mat
+    m_Address: prefab/mat_ra6_totoranueva_cabeza
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 589fa9b369a8a264ab36f472fc3a186e
-    m_Address: ra/modelo/soldecorativo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 58c30e36145fa3546b19630538608167
-    m_Address: ra/modelo/obj_sol
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 58c3294f66302694886002ebdaad0cab
-    m_Address: ra/recurso/ra5/texturas/t_ra5_pato_amarillo_image_0.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 591de2025ab91a84a9bac92a8d437fe2
     m_Address: prefab/logroobtenido
@@ -832,28 +394,10 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 59ff77072e61d4b45baf2e1c41e565ca
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_xala_llama.mat
+    m_Address: prefab/mat_ra5_xala_llama
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5a43e94649baaed4c926ff822b51a05e
-    m_Address: ra/modelo/m3d_ra1_profesor
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5a4c8aa750934024cbeacafa6cd07758
-    m_Address: ra/modelo/mdl_ra5_xalwari_vicuna
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5bffbd755f233314281a3b50a4b77f7d
-    m_Address: ra/modelo/m3d_papa
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5c22275e1ba69c1418296f3b0a410365
     m_Address: ra/recurso/ra2/texturas/originales/hermano/tripo_rgb_68f6df9f_e122_4cbd_8a85_29ecb6c35c39.jpg
@@ -861,101 +405,47 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5c7c3d0bbb2694443b653587e56bf708
-    m_Address: ra/recurso/ra6/texturas/t_ra6_bote_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5ef0e09829413034189b0b9b8c2b537c
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_parcela_sembradio.mat
+    m_Address: prefab/mat_ra6_parcela_sembradio
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5f05ed1a38de33340b9fff68fbde9a6a
-    m_Address: ra/recurso/ra4/texturas/t_ra3_chimay_mesa_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6055113465092de469aed916af1e8889
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_leche_superficie.mat
+    m_Address: prefab/ra4_leche_superficie
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 60acb25329294744d9fba48b8cc3daf5
-    m_Address: ra/modelo/mdl_ra5_wakha_vaca
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60fb5f9747222154989696f6cb612842
-    m_Address: ra/escenario/casa_objetos
+    m_Address: prefab/ra_casa_objetos
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6129083d39ff0b94982e310c0ee5261a
-    m_Address: ra/modelo/obj_paja
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 614e504c743f02c4095d766e875ab2d3
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_abarca.mat
+    m_Address: prefab/mat_ra2_abarca
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6168e54f829c9a7428bbcd0efdc83561
-    m_Address: ra/modelo/mdl_ra3_papa@acercarse_sentarse
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 620eadbc95bc85447970079b612fa50f
-    m_Address: ra/escenario/naturaleza_orientacion
+    m_Address: prefab/ra_naturaleza_orientacion
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63c6fd23ffefe254285494c6ea67c2fc
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_tierra.mat
+    m_Address: prefab/mat_ra2_tierra
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6490ea3db9f277a4894b1f258b1da0b7
-    m_Address: ra/recurso/ra5/texturas/t_ra5_masota_gato_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 64d09ff5238b3384ea7f9b352ac6473e
-    m_Address: ra/recurso/ra5/texturas/t_ra5_piedra_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 65050406746e88d4088b6d19291ebcba
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_hermana_original_0.mat
+    m_Address: prefab/mat_ra2_hermana_original_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 659a32544fb8951458853f54de544de0
-    m_Address: ra/modelo/marcador_oeste
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 66bb8530fb7631a47a1e668b1ce0a6be
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qala_gaviota_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 67451dc20a11b96469d48b3f32a03fab
     m_Address: ra/recurso/ra4/texturas/image_2_008.jpg
@@ -964,22 +454,10 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6758061865b07f8478ac262f64bd14cb
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_patoamarillo_material_0.mat
+    m_Address: prefab/mat_ra5_patoamarillo_material_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6887a2aa9d3b95641b4f7bf4e78766df
-    m_Address: ra/modelo/mdl_ra4_quinua
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 690af011c6bb96c4689475d84e18a34d
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chhiqha_escoba_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6932960b9a457184cbd27a9b2a34c916
     m_Address: ra/recurso/ra4/texturas/image_0_008.jpg
@@ -988,334 +466,148 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6a310282d3d8194429abeb7670bdd443
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_pajaverde.mat
+    m_Address: prefab/mat_ra6_pajaverde
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6bc76a5c8be160f4a894e4248932e7e8
-    m_Address: ra/recurso/ra6/texturas/t_ra6_sol_nuevo_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6c3d2d1728f725c4da6bb94ac71dd0aa
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_abuela_original_0.mat
+    m_Address: prefab/mat_ra2_abuela_original_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6eaba334dbb59fc4a9dfbea543327d7a
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chhikhits_lapiz_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6f49064ca0641b64c9d52f9966388433
-    m_Address: ra/recurso/ra2/texturas/t_ra2_liwi_original_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6fa332bb63cef9f4c9359fdcc8dcba59
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_viento.mat
+    m_Address: prefab/mat_ra6_viento
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7014aa2f28ec4a249a49db9fea71b7dd
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.mat
+    m_Address: prefab/material_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 70c6ee2704cf76c428b46bc13d8e114a
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_masota_gato.mat
+    m_Address: prefab/mat_ra5_masota_gato
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7122cd6da5e31534da4c56f3b102ad30
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_dirtpatch.mat
+    m_Address: prefab/m_ra3_dirtpatch
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 71586adb1bed509498264a00670c6fe8
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_chhikhits_lapiz.mat
+    m_Address: prefab/m_ra3_chhikhits_lapiz
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 717fec0c332d1b346a26f87cfd48bef1
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.004.mat
+    m_Address: prefab/material_0.004
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7193c4df15b38374bb24d3815d34d59c
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_parina_flamenco.mat
+    m_Address: prefab/mat_ra5_parina_flamenco
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 71962c9aeea7587439ae2d8d2091e7cc
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_luna_nuevo.mat
+    m_Address: prefab/mat_ra6_luna_nuevo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 720703e8f085e33419bee9d6779828ca
-    m_Address: ra/modelo/obj_totora
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 72594bb815a82db4180d2d70e6ad444e
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_chhiqha_escoba.mat
+    m_Address: prefab/m_ra3_chhiqha_escoba
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 733342a75e2f2364b8bc26210ab3b617
-    m_Address: ra/modelo/mdl_ra5_qeri_pez
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7497b425a494a254392f3007cfdbf83a
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_bote_fondo_azul.mat
+    m_Address: prefab/mat_ra6_bote_fondo_azul
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 74dbf89df02867b4da21e1c8f275feeb
-    m_Address: ra/modelo/vientofx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 75bae927bce7e1a4aafa236afa842fc3
-    m_Address: ra/modelo/pueblodecorativo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 766fe06e8db65fd4e947cc5914a3c7d5
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qala_gaviota_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 768e6361e09337c46a5b2523584fe289
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_nino_material_entrega.mat
+    m_Address: prefab/ra4_nino_material_entrega
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7734bc4de0ca7064880baaaea85787c2
-    m_Address: ra/recurso/ra5/texturas/t_ra5_pato_amarillo_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7782a8f4d0970944fa482c6aefb579c3
-    m_Address: ra/escenario/animales_ecosistema
+    m_Address: prefab/ra_animales_ecosistema
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 77ffb48e8bb468049b060393183b2691
-    m_Address: ra/recurso/ra5/texturas/t_ra5_phesqona_lagarto_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7859af8944c747949b23e581c6bec720
-    m_Address: ra/recurso/ra3/texturas/t_ra3_rincon_abierto_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78f1d22413347ce4ebc45a4b8ad04b4b
-    m_Address: prefab/recurso/ra/produccion/ra1/materiales/mat_ra1_profe2.mat
+    m_Address: prefab/mat_ra1_profe2
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7982cd1c4bee75649855100af9de19f6
-    m_Address: ra/recurso/ra6/texturas/t_ra6_canawa_nueva_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7b8467ae12508e446b2242820d9446b5
-    m_Address: ra/recurso/ra1/texturas/t_ra1_amigo_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7bf5bc8e9221b7c43adc956f3dff1d53
-    m_Address: ra/modelo/m3d_ra1_pueblo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7d90d5d5dc24a6143a6424b91668a5cd
-    m_Address: ra/modelo/ra6_rotulos_direcciones
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7df83453c508e3947916e06a62db6fb7
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_wesla_chhoqha.mat
+    m_Address: prefab/mat_ra5_wesla_chhoqha
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7e3ac8d78c93ab743a91716116685e9c
-    m_Address: ra/recurso/ra5/texturas/t_ra5_xala_llama_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7f276928606ed69429481fc007f0394b
-    m_Address: ra/recurso/ra5/texturas/t_ra5_soqna_pato_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7fb08ca20cd97284690b9a261872a88b
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_rincon_abierto.mat
+    m_Address: prefab/m_ra3_rincon_abierto
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7fc40258b70b1014c9775e77dc47235e
-    m_Address: ra/modelo/m3d_poncho
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8017b55ce20356f44a50848277e7f0c5
-    m_Address: ra/recurso/ra3/texturas/t_ra3_achasi_almohada_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8139caeb8c12c8c41b82d3820dd08e18
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.006.mat
+    m_Address: prefab/material_0.006
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8143565cef9e5b84485a30b081794767
-    m_Address: ra/modelo/m3d_sombrero
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 81b1c34d9b7a78649b29678a8f31ccd6
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.002.mat
+    m_Address: prefab/material_0.002
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 83dd64e8bd2be7b45817b743b109ca92
-    m_Address: prefab/recurso/ra/produccion/ra2/texturas/mat_ra2_mama_original_0_metallicsmoothness.png
+    m_Address: prefab/mat_ra2_mama_original_0_metallicsmoothness
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 84e4e32396d160e458f31ca45e9e1bc2
-    m_Address: ra/recurso/ra2/texturas/t_ra2_sombrero_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 85cabcc5bdab6e142be7c55a92bc6c42
-    m_Address: ra/recurso/ra4/texturas/t_ra4_arroz_cocido_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 860072a77e65ff04d845dc535499e0a7
-    m_Address: prefab/recurso/ra/soporte/ra_guia.mat
+    m_Address: prefab/ra_guia
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 867e6c4a7edb89a4db9033160146fd7c
-    m_Address: ra/modelo/mdl_ra5_kurwina_trucha
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 867f146cbb8f9784d9093db9b08b4918
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_cielonoche.mat
+    m_Address: prefab/mat_ra6_cielonoche
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8737f4b58b6674d4c93f97a9bdf97223
-    m_Address: ra/recurso/ra3/texturas/t_ra3_papa_albedo_mobile.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 87a02daebaf6dbe4fbfc48221e39ac57
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qetsi_zorro_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 880770110adb7c74fb34b3a6bee9caa5
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wallpa_gallina_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8815f3fc4feb45240929acfdb827e25c
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qala_gaviota_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 884eda17506c0334e9daeafe41286a94
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_pared_dintel.mat
+    m_Address: prefab/m_ra3_pared_dintel
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8932a7b7404ceee4396784796cb72e3e
-    m_Address: prefab/recurso/ra/produccion/ra2/texturas/mat_ra2_hermana_original_0_metallicsmoothness.png
+    m_Address: prefab/mat_ra2_hermana_original_0_metallicsmoothness
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 89a1de319452cd640b39bab2c1cef834
-    m_Address: ra/modelo/marcador_este
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8b1c1162eb53f8443972f1dcb3cb5566
-    m_Address: ra/recurso/ra6/texturas/t_ra6_luna_nuevo_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8b49d50d5b684e64c9112e629596bf6d
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qeri_pez_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8b6ac5bbf711fca4181f4dd110d5a31c
-    m_Address: ra/recurso/ra3/texturas/t_ra3_pheta_ventana_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b91892c3a58ae54883ac3fff5267ebb
     m_Address: ra/recurso/ra4/texturas/image_0.jpg
@@ -1324,34 +616,10 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c8cddafdcd01bb46996a093ca2d7108
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_qeri_pez.mat
+    m_Address: prefab/mat_ra5_qeri_pez
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8cf867e9764abf34c84ca56c44509da1
-    m_Address: ra/recurso/ra6/texturas/t_ra6_canawa_nueva_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 909143bbc7443b749ab56f2f3d10f4a5
-    m_Address: ra/recurso/ra2/texturas/t_ra2_faja_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 90b7c2285f990fa4c941cb0bf7435351
-    m_Address: ra/recurso/ra5/texturas/t_ra5_xalwari_vicuna_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 927de4bc1c79feb4ea90473a71b3305f
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wakha_vaca_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 940a0aa5a18b3fd438590f50164617e0
     m_Address: prefab/planodetectadora
@@ -1359,104 +627,38 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 95108e730e84ee04eadc7786340cda62
-    m_Address: ra/recurso/ra5/texturas/t_ra5_soqna_pato_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9668033dc33ccec448f4fba6182d2fa4
     m_Address: ra/recurso/ra4/texturas/image_2_002.jpg
     m_ReadOnly: 0
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 96b8b3987bf6d6348a2ae390096c64e1
-    m_Address: ra/modelo/mdl_ra5_iwisa_oveja
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 971d029960370f44bbf3d1f5580e1aa9
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chusi_cama_cafe_medio_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 97523d7dc3f08e74f8c44cf6d08589cf
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wesla_chhoqha_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 977a7cfc55cf30340b9f86f54d59f46d
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_madera.mat
+    m_Address: prefab/mat_ra2_madera
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 98b98e2cb6b3dbe4a97241d86e26a388
-    m_Address: ra/recurso/ra5/texturas/t_ra5_xala_llama_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 995241b2a89713d488bb332da42f657e
-    m_Address: ra/recurso/ra6/texturas/t_ra6_luna_nuevo_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 99b3df42e6837ca4dbbe07dbc537a8c6
-    m_Address: ra/recurso/ra2/texturas/t_ra2_liwi_original_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9ab2cf359205c654fa88f191f79d54b5
-    m_Address: ra/modelo/mdl_ra4_mesa
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9adc53a29e72ba94bb4b9377feb5aa9d
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_mochila_exterior.mat
+    m_Address: prefab/m_ra3_mochila_exterior
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9cbd37bb538a7ed4cb54e4dbb67d5e2c
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_pared_adobe.001.mat
+    m_Address: prefab/ra4_pared_adobe.001
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9cf694b9d1b08284b9f4f95a4e37a362
-    m_Address: ra/modelo/mdl_ra5_qala_gaviota
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9db2614fadd74f64fb4e9d8c7acccef8
-    m_Address: ra/modelo/mdl_ra4_arroz
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9eb642e8f4e5a4648a618f9ea46b3923
-    m_Address: ra/modelo/mdl_ra3_escena_casa_objetos
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9f21e853ee432fb41a18e687584b11c6
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_orilla_natural.mat
+    m_Address: prefab/mat_ra6_orilla_natural
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9f59e715529335b4db34e8702406bf7a
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_vestido.mat
+    m_Address: prefab/mat_ra2_vestido
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -1467,65 +669,23 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a08acc7d8d6e8674fa5cc3b87d22fd8a
-    m_Address: ra/recurso/ra6/texturas/woven+straw+boat+3d+model_basecolor.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a0fd3a0650633d14d9c556df90d8234e
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wakha_vaca_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1237eefa4e0ca84e8bbe162dabb1af0
-    m_Address: prefab/recurso/ra/produccion/ra1/materiales/mat_ra1_pueblorotulo.mat
+    m_Address: prefab/mat_ra1_pueblorotulo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1359b0cba694054e91d8188d8bb59a4
-    m_Address: prefab/recurso/ra/produccion/plataformas/ra_familia_vestimenta_sm_tierra.asset
+    m_Address: prefab/ra_familia_vestimenta_sm_tierra
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a2c69a5007141734fa10d1f1b4892885
-    m_Address: ra/recurso/ra6/texturas/t_ra6_luna_nuevo_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a2e48efb66a8cce4da288424b523429e
-    m_Address: ra/recurso/ra3/texturas/t_ra3_kuskuts_mochila_normal_mobile.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a3166d49846593544b2f9a088955731f
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_pueblo_1.mat
+    m_Address: prefab/mat_ra6_pueblo_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a358ba4c87277094e99a61144a726a3e
-    m_Address: ra/modelo/mdl_ra5_soqna_pato
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a3a8acdf9e7bc9243891cd59222d0548
-    m_Address: ra/modelo/m3d_faja
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a40550392473a7545bcf3d585bfc6c71
-    m_Address: ra/recurso/ra2/texturas/t_ra2_abarca_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a609d6056dabbff4d978a5253d27a08b
     m_Address: ra/recurso/ra2/texturas/originales/papa/tripo_rgb_720c856f_b3c6_497d_920c_ece5e93fc261.jpg
@@ -1533,77 +693,35 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a75a079875b8bf443abbb440ff8633f2
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wakha_vaca_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a8503b806e946e145a93ad2432d0b8c2
-    m_Address: ra/modelo/m3d_mama
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a88d38e728580634289ee9b7940d485c
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_pheta_ventana.mat
+    m_Address: prefab/m_ra3_pheta_ventana
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a8e976d2fb2d6a443a5ccd943462cfe2
-    m_Address: ra/modelo/mdl_ra4_cantaro
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a99bfc994496b9448a5bc832a80dc694
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_pasto_natural_continuo.mat
+    m_Address: prefab/mat_ra5_pasto_natural_continuo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a9dbe78302c91c849a794aaefc3d664f
-    m_Address: ra/recurso/ra5/texturas/t_ra5_chiwqeri_pejerrey_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ab5d8719d94d96c4db6fa9c0d2b471c3
-    m_Address: ra/modelo/m3d_hermana
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ab883cfa89897fe48b0159804648ffe6
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_aguamovil.mat
+    m_Address: prefab/mat_aguamovil
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: abc16313ecee65b499695ecb0f8736e0
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_canawa_nueva.mat
+    m_Address: prefab/mat_ra6_canawa_nueva
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: abd2d413f09415f4f97ab8f009eafb6a
-    m_Address: ra/recurso/ra5/texturas/t_ra5_phesqona_lagarto_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ac0055170c0c7c34c84742e85d601e6e
-    m_Address: prefab/recurso/ra/soporte/ra_provisional.mat
+    m_Address: prefab/ra_provisional
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ac51947daeb50a34f8df61a5253ad309
-    m_Address: ra/recurso/ra3/texturas/t_ra3_kuwarerno_cuaderno_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: acefdb9566518784387475a0dc910b5e
     m_Address: ra/recurso/ra4/texturas/image_0_007.jpg
@@ -1612,49 +730,31 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ad4913be92f920f4e9a923cb7a0e7b50
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_cocina_esmalte.mat
+    m_Address: prefab/ra4_cocina_esmalte
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ae37d845dd2ad6f479bdaf255c005ba2
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chimay_mesa_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aeb41e0d1d55f8146abd4128de5844bd
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_wakha_vaca.mat
+    m_Address: prefab/mat_ra5_wakha_vaca
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aeb8dae7343a9f247ab50566329869fd
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_pueblo_0.mat
+    m_Address: prefab/mat_ra6_pueblo_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: aedc66e5c2a94ee4294626c0588cd477
-    m_Address: ra/recurso/ra2/texturas/t_ra2_pantalon_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aff9134de71cfe744be1cd1d49a2fe56
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.003.mat
+    m_Address: prefab/material_0.003
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b0c667edcb52dcd43a78126647e93a2f
-    m_Address: ra/modelo/m3d_abuelo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b0f67b91f5327774fa78e30cdbb39a38
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_cielo_dianoche.mat
+    m_Address: prefab/mat_ra6_cielo_dianoche
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -1665,14 +765,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b11141e71127b7a4dae591e77ce330ec
-    m_Address: ra/recurso/ra2/texturas/originales/hermana/normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b174719567a0c054f98e9e6b1397c94e
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_pared_reparaciones.mat
+    m_Address: prefab/m_ra3_pared_reparaciones
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -1683,32 +777,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b1dc103cbc5b02e4999af702eddbe5f4
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qetsi_zorro_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b1f71d687aafb014cbadb747cd4a22df
     m_Address: ra/recurso/ra2/texturas/t_ra2_vestido_albedo.jpg
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b20da618f09c8ce4f9bd5737c8e27713
-    m_Address: ra/recurso/ra3/texturas/t_ra3_achasi_almohada_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b32e32de691d82a408d27934b9347171
-    m_Address: ra/modelo/mdl_ra5_masota_gato
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b3c7323f45513d046af85dbb21412e11
-    m_Address: ra/recurso/ra5/texturas/t_ra5_qetsi_zorro_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - ra
@@ -1725,72 +795,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b4d28100320f6ae46847c6172695b83b
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wesla_chhoqha_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b55087379d37153438fa22e67f150996
-    m_Address: ra/recurso/ra5/texturas/t_ra5_masota_gato_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b5ac0c14851d90f40b3edfb6651f53ed
-    m_Address: ra/recurso/ra6/texturas/t_ra6_final_mat_ra6_agua_ondas_naturales_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b652b0da743dafb4ab13f3d67d6585b5
-    m_Address: ra/recurso/ra6/texturas/t_ra6_totora_nueva_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b78a35f45d76411499085407ee950b28
-    m_Address: ra/recurso/ra6/texturas/t_ra6_bote_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b79b6881087e0a6448898b25b7f152f3
-    m_Address: ra/modelo/mdl_ra5_wesla_chhoqha
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b803eb5e7aa865d4891dca3b2500886f
-    m_Address: ra/recurso/ra6/texturas/t_ra6_final_mat_ra6_cielo_dianoche_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b90fad767f3e82c4cb0a934184a8280d
-    m_Address: ra/modelo/obj_bote
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b9b92c2d7f174ab4b9895a374779f7a3
-    m_Address: ra/modelo/m3d_liwi
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ba00f5be11c58de42bd46a146c3b6651
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chimay_mesa_cafe_medio_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bab2164e182f9d34dada8c5118340fe6
-    m_Address: ra/recurso/ra2/texturas/originales/hermano/extracted_normal_tripo_node_6ee0e9e8_d7b1_4021_a404_57c4e8931c80.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb074577b75e6b749815b71e2cd87fe5
     m_Address: ra/recurso/ra4/texturas/image_0_004.jpg
     m_ReadOnly: 0
@@ -1798,40 +802,22 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb0dcf77e816b8645acdc7843635ebfa
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_vela_varilla_tono_2.mat
+    m_Address: prefab/mat_ra6_vela_varilla_tono_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb1696bde991b79448fbc7bd99529943
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_wallpa_gallina.mat
+    m_Address: prefab/mat_ra5_wallpa_gallina
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bca37895c7c37eb429039236e8d0466a
-    m_Address: ra/recurso/ra6/texturas/t_ra6_canawa_nueva_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bcadb40359b9d374c94ff364eaa9d6b9
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_xalwari_vicuna.mat
+    m_Address: prefab/mat_ra5_xalwari_vicuna
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bdcc9d96b5bf4314cad15d94f1deabe7
-    m_Address: ra/recurso/ra5/texturas/t_ra5_chiwqeri_pejerrey_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: be2564936f9054742bd0a51f9991740b
-    m_Address: ra/recurso/ra5/texturas/t_ra5_tierra_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bf294c7b3f64a1b4dbe2af7ccf630218
     m_Address: prefab/ficha_wordbank
@@ -1839,56 +825,26 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bf37d7d090d24e14c9cd2f81681e60c3
-    m_Address: ra/recurso/ra5/texturas/t_ra5_iwisa_oveja_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bf50c0024179f1d4191d39842294394f
     m_Address: ra/recurso/ra4/texturas/image_2_006.jpg
     m_ReadOnly: 0
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bf9e40a54e5719a489001ddced63c5cb
-    m_Address: ra/recurso/ra5/texturas/t_ra5_chiwqeri_pejerrey_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c3ed47ab7bf625c43bf7a357fa0b52f5
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_bote_tablas_azuloscuro.mat
+    m_Address: prefab/mat_ra6_bote_tablas_azuloscuro
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c5074bf53a683054c8cce4f66e478b40
-    m_Address: ra/recurso/ra4/texturas/t_ra4_nino_albedo_final.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c63a12e55c263614d8c0f64db46703ff
-    m_Address: ra/modelo/marcador_norte
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c692412ab921c0c438b66690a89c70f0
-    m_Address: ra/modelo/mdl_ra5_wallpa_gallina
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c6f0d0cc6f41b964391a04e3152736ad
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_suciedad_olla.mat
+    m_Address: prefab/ra4_suciedad_olla
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c72f543bf70dff04880e516074ac1bb0
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_iwisa_oveja.mat
+    m_Address: prefab/mat_ra5_iwisa_oveja
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -1905,14 +861,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c9160f99e5069e9419ea01db07ff1f14
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wallpa_gallina_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c9e0e75c864c3c74a8d68c89809753be
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_mama_original_0.mat
+    m_Address: prefab/mat_ra2_mama_original_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -1923,18 +873,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cac0913436b65b74b9ef3e07ce86d19b
-    m_Address: ra/modelo/cielodecorativo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cb46bc15e3dd21445b27215d1192b76f
-    m_Address: ra/recurso/ra5/texturas/t_ra5_xalwari_vicuna_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cbec0d9c0077b8c47898450f10ec6dcf
     m_Address: prefab/fila_forma_familia
     m_ReadOnly: 0
@@ -1942,43 +880,13 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cbf243a1b857ea14eb8cc2272f563bcb
-    m_Address: ra/escenario/familia_vestimenta
+    m_Address: prefab/ra_familia_vestimenta
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cd925898df0c12f4fa3720bffe772ac7
-    m_Address: ra/recurso/ra5/texturas/t_ra5_kurwina_trucha_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cdb7a94d2473350468e12b46598ce496
-    m_Address: ra/recurso/ra5/texturas/t_ra5_khuchhi_chancho_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cdda9bfa9d6a7f74c8935151884f55d8
-    m_Address: ra/modelo/mdl_ra5_xala_llama
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ce669e65d327bdf4e8e49a9ddc3ecf0e
-    m_Address: ra/recurso/ra2/texturas/originales/mama/normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ce9d74cf91dee7442a94bbecd76664ff
-    m_Address: ra/recurso/ra5/texturas/t_ra5_soqna_pato_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cfc381563b007914db99a41e4b92a4fb
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_hermano_original_0.mat
+    m_Address: prefab/mat_ra2_hermano_original_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -1990,79 +898,37 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d190be63a7584fb4daced9fb7e1da703
-    m_Address: prefab/recurso/ra/produccion/ra2/texturas/mat_ra2_vestido_metallicsmoothness.png
+    m_Address: prefab/mat_ra2_vestido_metallicsmoothness
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d19809dfc372c2748a45aa3e0c9e7183
-    m_Address: ra/recurso/ra5/texturas/t_ra5_chaxana_pez_amarillo_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d1fd3e0bd13bf7c42b7e7f438e8a9840
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_jarra_leche_ceramica.mat
+    m_Address: prefab/ra4_jarra_leche_ceramica
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d22ee11d91e271c419effb1e63f59605
-    m_Address: ra/modelo/mdl_ra4_olla
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d2b0e65c8cefc2d42854c2e2e076c937
-    m_Address: ra/recurso/ra5/texturas/t_ra5_chaxana_pez_amarillo_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d2bb5dc24f4a015439f97ad8bd7174d3
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_totoranueva_tallo.mat
+    m_Address: prefab/mat_ra6_totoranueva_tallo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d356b4bb498350a48837414d20590da4
-    m_Address: ra/modelo/marcador_sur
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d3cb83fb5a48dfa4dabd4ab546ae7e17
-    m_Address: ra/modelo/mdl_ra4_entorno_cocina
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d3e99d7554926374baa4f289d6683862
-    m_Address: ra/recurso/ra5/texturas/t_ra5_wallpa_gallina_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d4bd52361dbb286468cfc6a99d4b4840
-    m_Address: prefab/recurso/ra/produccion/ra5/texturas/mat_ra5_patoamarillo_material_0_metallicsmoothness.png
+    m_Address: prefab/mat_ra5_patoamarillo_material_0_metallicsmoothness
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d4fbbf7bf07b2c943a205e5271b14bf7
-    m_Address: ra/recurso/ra6/texturas/t_ra6_bote_roughness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6a1e674d60235346816dd9c8c791143
-    m_Address: prefab/recurso/ra/produccion/plataformas/ra_casa_objetos_sm_rincon_abierto.asset
+    m_Address: prefab/ra_casa_objetos_sm_rincon_abierto
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d7319741cbae3174b89f3497bcdda081
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_luna.mat
+    m_Address: prefab/mat_ra6_luna
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -2074,16 +940,10 @@ MonoBehaviour:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d839b678e18ce2c46b58af35851f940c
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_achasi_almohada.mat
+    m_Address: prefab/m_ra3_achasi_almohada
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d841da07076a0a5469a9d54818d3cce9
-    m_Address: ra/recurso/ra3/texturas/t_ra3_pheta_ventana_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d8b568cbc32a22b498c1fe708f40725c
     m_Address: ra/recurso/ra4/texturas/image_0_002.jpg
@@ -2091,95 +951,53 @@ MonoBehaviour:
     m_SerializedLabels:
     - ra
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: da2c0c75c9d40d34093cf42e0adc89eb
-    m_Address: ra/modelo/mdl_ra5_chiwqeri_pejerrey
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: db1fb3c646bacf449b03e6dc9ef4f8ad
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chimay_mesa_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dc53459f787102a4bbc7d90856a81395
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/ra4_arroz_cocido.mat
+    m_Address: prefab/ra4_arroz_cocido
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dc8c562d93ab7ab43bec737a8e449b00
-    m_Address: ra/recurso/ra3/texturas/t_ra3_achasi_almohada_naranja_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd00b8be1c68f3441a15a18de84110cd
-    m_Address: prefab/recurso/ra/soporte/ra_plano.mat
+    m_Address: prefab/ra_plano
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: def27900490c80049b9629176c78d0f3
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_bote.mat
+    m_Address: prefab/mat_ra6_bote
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e04db63dcd60c3b45b3f377ff659cdfe
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_mochila_interior.mat
+    m_Address: prefab/m_ra3_mochila_interior
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e087f3bc19a2ac74e8e834c999824548
-    m_Address: prefab/recurso/ra/produccion/ra4/materiales/material_0.005.mat
+    m_Address: prefab/material_0.005
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e15e9c1a90152fd4c979d5cbd4e14445
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_vela_totora.mat
+    m_Address: prefab/mat_ra6_vela_totora
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e1e70237812f7eb4891a46f0b0fc8551
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_hierba.mat
+    m_Address: prefab/mat_hierba
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e2f91e1fff18628489f257f17b428fee
-    m_Address: ra/recurso/ra4/texturas/t_ra3_chimay_mesa_cafe_medio_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e3fdaaa2cdde10a46a1ce7c48d8025e0
-    m_Address: ra/recurso/ra2/texturas/t_ra2_faja_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4fc05485b4d9c94d9a5ec6bd97993f5
-    m_Address: prefab/recurso/ra/produccion/ra1/materiales/m_pueblo_madera_oscura.mat
+    m_Address: prefab/m_pueblo_madera_oscura
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e51a5632a6da49448a4cde441837059a
-    m_Address: ra/recurso/ra2/texturas/t_ra2_liwi_original_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e55eb254cda47144097bbfac794002ff
-    m_Address: ra/recurso/ra2/texturas/t_ra2_poncho_corregido_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e5e4fad910ad8564bad26403a52cae5d
     m_Address: prefab/tarjetaayuda
@@ -2187,125 +1005,35 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e7bb491898945e847b01d7540d418d89
-    m_Address: ra/recurso/ra3/texturas/t_ra3_julsni_silla_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: eac35491b4f5865428338a4607964b7b
-    m_Address: ra/modelo/mdl_ra5_phesqona_lagarto
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ec0c374011d5bc746bab550003c35153
-    m_Address: ra/modelo/mdl_ra5_khuchhi_chancho
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ed1cb6814d40a8a47abaff8c52b79bd3
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_bote_tablas_cafeclaro.mat
+    m_Address: prefab/mat_ra6_bote_tablas_cafeclaro
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ee19842cfeaee6e409e383a256afee00
-    m_Address: ra/recurso/ra5/texturas/t_ra5_totora_ra6_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ef50f12e0faa65f4ebb761cec1f87b55
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_abuelo_original_0.mat
+    m_Address: prefab/mat_ra2_abuelo_original_0
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ef7431e69a5b90c439e274bdf02c9c8c
-    m_Address: ra/modelo/m3d_vestido
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ef7ad3bbc9b363b42a911457fff027a4
-    m_Address: ra/recurso/ra3/texturas/t_ra3_chhiqha_escoba_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ef82919d8726d9343a0970a4681d57a6
-    m_Address: ra/recurso/ra5/texturas/t_ra5_parina_flamenco_metallicsmoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: efebce137ac7aea46a4cf33dca574b16
-    m_Address: prefab/recurso/ra/produccion/ra3/materiales/m_ra3_kuwarerno_cuaderno.mat
+    m_Address: prefab/m_ra3_kuwarerno_cuaderno
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f00af2fb77135a749908349e7714bc81
-    m_Address: prefab/recurso/ra/produccion/ra3/papageneric.asset
+    m_Address: prefab/papageneric
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f0515a79cdc295647b785b57082d8879
-    m_Address: prefab/recurso/ra/produccion/ra1/materiales/mat_ra1_amigo.mat
+    m_Address: prefab/mat_ra1_amigo
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f2bd945b7c024074eae8033e03ddc3b0
-    m_Address: ra/recurso/ra6/texturas/t_ra6_pueblo_0_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f3952bca0c4d9fd42bb962955f90d2d0
-    m_Address: ra/recurso/ra5/texturas/t_ra5_xalwari_vicuna_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f3c88627640eb8e4b87c54fd11e873b5
-    m_Address: ra/modelo/nightbackdrop
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f4fe53a6cf8e4fc45ac6596377a04475
-    m_Address: ra/recurso/ra2/texturas/t_ra2_vestido_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f68a0f3feb301b14e91759fd42086305
-    m_Address: ra/modelo/mdl_ra5_qetsi_zorro
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f6f8d2c51844ad24c9572086d5492abc
-    m_Address: ra/recurso/ra2/texturas/t_ra2_pantalon_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f77e508cb17899140b4675da16c8d5a6
-    m_Address: ra/recurso/ra3/texturas/t_ra3_pheta_ventana_metallic_smoothness.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f7e17ea8ad659e04b99260ac21493194
-    m_Address: ra/recurso/ra3/texturas/t_ra3_kuwarerno_cuaderno_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f7eae6970f2d9c8439c00e6932f505e4
     m_Address: prefab/tarjeta_memoria
@@ -2314,58 +1042,34 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f9bb7520d8ec8d840ac3a02082db4506
-    m_Address: prefab/recurso/ra/produccion/ra2/materiales/mat_ra2_faja.mat
+    m_Address: prefab/mat_ra2_faja
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fa0ef32601ae51541805a6264bac21ea
-    m_Address: prefab/recurso/ra/produccion/ra6/materiales/mat_ra6_agua_ondas_naturales.mat
+    m_Address: prefab/mat_ra6_agua_ondas_naturales
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb63e8a65cdb7854fa4d440801020d0a
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ra5_kurwina_trucha.mat
+    m_Address: prefab/mat_ra5_kurwina_trucha
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd0028b0d0317f54a955ee8fee8ae61d
-    m_Address: prefab/recurso/ra/produccion/plataformas/ra_animales_ecosistema_sm_terreno_terrestre.asset
+    m_Address: prefab/ra_animales_ecosistema_sm_terreno_terrestre
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd20b2a1fcacc8547a746afbeefd046c
-    m_Address: prefab/recurso/ra/produccion/ra5/materiales/mat_ventanaagua.mat
+    m_Address: prefab/mat_ventanaagua
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ff22ab8cec197a34f9c87ba410b3aa98
-    m_Address: ra/recurso/ra3/texturas/t_ra3_sana_puerta_verde_calido_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fff040975c97f344c86fd137caa3036f
-    m_Address: ra/recurso/ra3/texturas/t_ra3_sana_puerta_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fff0d165250717444b7e14c14fdf2812
-    m_Address: ra/recurso/ra2/texturas/t_ra2_pantalon_albedo.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fff9c41d94e9dfc4db2434c4db4f86b3
-    m_Address: ra/recurso/ra2/texturas/t_ra2_abarca_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ra
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 30c16aa3f6c5c784694e0dbfc06d3dec, type: 2}

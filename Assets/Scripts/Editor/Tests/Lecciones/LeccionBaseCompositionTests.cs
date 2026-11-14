@@ -589,7 +589,7 @@ namespace Assets.Scripts.Editor.Tests
         public static string ValidarPages(bool capturar)
         {
             Assert.IsTrue(CorpusRepository.Inicializar());
-            var pasos = CorpusRepository.ObtenerTodasLecciones().SelectMany(l => l.pasos).ToList();
+            var pasos = CorpusRepository.ObtenerTodasLasLecciones().SelectMany(l => l.pasos).ToList();
             Assert.AreEqual(23, pasos.Select(p => p.tipo).Distinct().Count());
             foreach (PasoLeccionModel paso in pasos)
             {

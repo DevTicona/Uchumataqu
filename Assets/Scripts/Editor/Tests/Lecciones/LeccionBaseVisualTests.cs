@@ -151,7 +151,7 @@ namespace Assets.Scripts.Editor.Tests
             var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
             var gestorField = typeof(LeccionBasePresenter).GetField("_gestorLeccion", flags);
             var leccionProperty = typeof(GestorLeccion).GetProperty("LeccionActual");
-            var muestras = CorpusRepository.ObtenerTodasLecciones().SelectMany(l => l.pasos)
+            var muestras = CorpusRepository.ObtenerTodasLasLecciones().SelectMany(l => l.pasos)
                 .GroupBy(p => p.tipo).Select(g => g.OrderByDescending(Peso).First()).ToArray();
             var principal = Referencia<Button>(view, "btnPrincipal");
             presenter.enabled = true;
@@ -296,7 +296,7 @@ namespace Assets.Scripts.Editor.Tests
             canvas.planeDistance = 1;
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
             scaler.scaleFactor = 1;
-            var pasos = CorpusRepository.ObtenerTodasLecciones().SelectMany(l => l.pasos).ToList();
+            var pasos = CorpusRepository.ObtenerTodasLasLecciones().SelectMany(l => l.pasos).ToList();
             var muestras = pasos.GroupBy(p => p.tipo).Select(g => g.OrderByDescending(Peso).First())
                 .Concat(pasos.Where(p => TipoPasoLeccion.EsWordBank(p.tipo))
                     .GroupBy(p => p.tipo + ":" + p.oracion_id).Select(g => g.First())).Distinct().ToArray();

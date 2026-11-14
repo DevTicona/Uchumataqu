@@ -35,8 +35,8 @@ namespace Assets.Scripts.Editor.Tests
         public void Mapa_Crea27LeccionesSeisHitosYSeisRegiones()
         {
             var mapa = MapaLeccionesModelFactory.Crear(
-                CorpusRepository.ObtenerTodasLecciones(),
-                CorpusRepository.ObtenerTodosEscenariosRa(),
+                CorpusRepository.ObtenerTodasLasLecciones(),
+                CorpusRepository.ObtenerTodosLosEscenariosRA(),
                 new ProgresoUsuarioModel());
 
             Assert.AreEqual(33, mapa.Count);
@@ -62,8 +62,8 @@ namespace Assets.Scripts.Editor.Tests
             }
 
             var mapa = MapaLeccionesModelFactory.Crear(
-                CorpusRepository.ObtenerTodasLecciones(),
-                CorpusRepository.ObtenerTodosEscenariosRa(),
+                CorpusRepository.ObtenerTodasLasLecciones(),
+                CorpusRepository.ObtenerTodosLosEscenariosRA(),
                 progreso);
 
             Assert.AreEqual(
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void L01AL05_ConstruyenTodosSusPasosEvaluables()
         {
-            foreach (var leccion in CorpusRepository.ObtenerTodasLecciones().Where(l => l.orden <= 5))
+            foreach (var leccion in CorpusRepository.ObtenerTodasLasLecciones().Where(l => l.orden <= 5))
             {
                 foreach (var paso in leccion.pasos)
                 {

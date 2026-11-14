@@ -72,7 +72,7 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void Contrato_CubreLos23TiposCompilados()
         {
-            var tiposCompilados = CorpusRepository.ObtenerTodasLecciones()
+            var tiposCompilados = CorpusRepository.ObtenerTodasLasLecciones()
                 .SelectMany(leccion => leccion.pasos)
                 .Select(paso => paso.tipo)
                 .Distinct()
@@ -86,7 +86,7 @@ namespace Assets.Scripts.Editor.Tests
         [Test]
         public void TodasLasLecciones_PuedenConstruirSusActividades()
         {
-            foreach (LeccionCompiladaModel leccion in CorpusRepository.ObtenerTodasLecciones())
+            foreach (LeccionCompiladaModel leccion in CorpusRepository.ObtenerTodasLasLecciones())
             {
                 foreach (PasoLeccionModel paso in leccion.pasos)
                 {

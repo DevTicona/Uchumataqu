@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Assets.Scripts.Core;
 using Assets.Scripts.Core.Assets;
 using Assets.Scripts.Core.Services;
@@ -73,6 +74,8 @@ namespace Assets.Scripts.UI.RealidadAumentada
                 return;
             }
 
+            IniciarPrecargaReconocedorVoz();
+
             backHandler.Configurar(SolicitarSalida);
             view.OnVolverClick += SolicitarSalida;
             view.OnConfirmarSalidaClick += VolverAlMapa;
@@ -97,12 +100,14 @@ namespace Assets.Scripts.UI.RealidadAumentada
             if (!corpusListo)
             {
                 view.MostrarError("No se pudo cargar el contenido. Vuelve a intentarlo.");
+                LiberarReconocedorVoz();
                 return;
             }
 
             if (!gestorRA.CargarEscenario(ContextoNavegacionModel.EscenarioRaId))
             {
                 view.MostrarError("No se pudo cargar este escenario.");
+                LiberarReconocedorVoz();
                 return;
             }
 
@@ -120,6 +125,33 @@ namespace Assets.Scripts.UI.RealidadAumentada
                 interaccion.ResolverDestinoArrastre = ResolverDestinoArrastreGuiado;
             }
             view.MostrarEscaneo(false);
+        }
+
+        private void LiberarReconocedorVoz()
+        {
+            reconocedorVoz?.Dispose();
+            reconocedorVoz = null;
+        }
+
+        private void IniciarPrecargaReconocedorVoz()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            reconocedorVoz ??= new SherpaOnnxReconocedorVoz();
+            _ = ObservarPreparacionReconocedorVozAsync(reconocedorVoz);
+#endif
+        }
+
+        private async Task ObservarPreparacionReconocedorVozAsync(SherpaOnnxReconocedorVoz reconocedor)
+        {
+            try
+            {
+                await reconocedor.PrepararAsync();
+            }
+            catch (Exception exception)
+            {
+                if (!destruido)
+                    Debug.LogWarning("[RA_VOZ] No se pudo precargar el reconocedor: " + exception.Message);
+            }
         }
 
         private void Update()
@@ -156,6 +188,7 @@ namespace Assets.Scripts.UI.RealidadAumentada
             DesconectarExperienciaRA1();
             DesconectarExperienciaGuiada();
             CancelarGrabacion();
+            LiberarReconocedorVoz();
 
             versionColocacion++;
             if (colocador != null)
@@ -643,7 +676,7 @@ namespace Assets.Scripts.UI.RealidadAumentada
                 return;
             }
             iniciandoMicrofono = true;
-            feedbackActividad = "Preparando el micrófono…";
+            feedbackActividad = "Preparando el reconocimiento de voz…";
             ActualizarMision();
             rutinaGrabacion = StartCoroutine(EsperarMicrofono(++versionVoz));
         }
@@ -757,8 +790,6 @@ namespace Assets.Scripts.UI.RealidadAumentada
             }
             finally
             {
-                if (ReferenceEquals(reconocedorVoz, reconocedor)) reconocedorVoz = null;
-                reconocedor?.Dispose();
                 if (version == versionVoz) procesandoVoz = false;
                 if (clip != null) Destroy(clip);
             }
@@ -799,8 +830,6 @@ namespace Assets.Scripts.UI.RealidadAumentada
             rutinaGrabacion = null;
             iniciandoMicrofono = false;
             grabacionVoz.Dispose();
-            reconocedorVoz?.Dispose();
-            reconocedorVoz = null;
             procesandoVoz = false;
         }
 

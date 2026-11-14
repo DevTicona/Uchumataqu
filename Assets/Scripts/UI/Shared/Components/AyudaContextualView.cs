@@ -27,7 +27,6 @@ namespace Assets.Scripts.Core.UI.Ayuda
         [SerializeField] private Button abrirAyuda;
         [SerializeField] private Button repetirGuia;
         [SerializeField] private Button verConceptos;
-        [SerializeField] private Toggle reducirMovimiento;
         [SerializeField] private GameObject opciones;
         [SerializeField] private Image iconoGuia;
         [SerializeField] private Sprite iconoInformacion;
@@ -61,7 +60,6 @@ namespace Assets.Scripts.Core.UI.Ayuda
             abrirAyuda.transform.SetAsLastSibling();
             repetirGuia.onClick.AddListener(RepetirGuia);
             verConceptos.onClick.AddListener(VerConceptos);
-            reducirMovimiento.onValueChanged.AddListener(CambiarMovimiento);
             panel.SetActive(false);
             abrirAyuda.gameObject.SetActive(false);
         }
@@ -74,7 +72,6 @@ namespace Assets.Scripts.Core.UI.Ayuda
             abrirAyuda.onClick.RemoveListener(AlternarMenu);
             repetirGuia.onClick.RemoveListener(RepetirGuia);
             verConceptos.onClick.RemoveListener(VerConceptos);
-            reducirMovimiento.onValueChanged.RemoveListener(CambiarMovimiento);
         }
 
         public void Preparar(GuiaPantalla origen)
@@ -134,7 +131,7 @@ namespace Assets.Scripts.Core.UI.Ayuda
             esMenu = true;
             esConcepto = false;
             pasos.Clear();
-            pasos.Add(new PasoGuia("Ayuda", "Repasa esta pantalla y ajusta el movimiento de la interfaz."));
+            pasos.Add(new PasoGuia("Ayuda", "Repasa esta pantalla y elige la ayuda que necesitas."));
             indice = 0;
             MostrarPaso();
         }
@@ -196,7 +193,6 @@ namespace Assets.Scripts.Core.UI.Ayuda
             opciones.SetActive(esMenu);
             verConceptos.gameObject.SetActive(esMenu && pantalla.Conceptos.Count > 0);
             if (iconoSiguiente != null) iconoSiguiente.sprite = esMenu || indice == pasos.Count - 1 ? iconoListo : iconoAvanzar;
-            reducirMovimiento.SetIsOnWithoutNotify(AyudaRepository.Obtener().reducir_movimiento);
             EnfocarObjetivo(paso.objetivo);
             AjustarTarjeta();
             tarjeta.GetComponent<MovimientoUI>()?.ReproducirEntrada();
@@ -252,12 +248,6 @@ namespace Assets.Scripts.Core.UI.Ayuda
             if (panel != null) panel.SetActive(false);
             if (tarjeta != null) tarjeta.GetComponent<AyudaCardLayout>()?.OrganizarMenu(false);
             if (abrirAyuda != null) abrirAyuda.gameObject.SetActive(pantalla != null);
-        }
-
-        private void CambiarMovimiento(bool valor)
-        {
-            if (!AyudaRepository.EstablecerMovimientoReducido(valor))
-                reducirMovimiento.SetIsOnWithoutNotify(!valor);
         }
 
         private static void EnfocarObjetivo(RectTransform objetivo)

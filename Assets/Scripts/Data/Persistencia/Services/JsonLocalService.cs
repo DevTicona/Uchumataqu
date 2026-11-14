@@ -15,7 +15,7 @@ namespace Assets.Scripts.Persistencia
         private static readonly object Acceso = new object();
         private static readonly HashSet<string> DirectoriosPreparados = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         private static readonly UTF8Encoding Utf8 = new UTF8Encoding(false, true);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD || UCHUMATAQU_VALIDACION
+#if UNITY_EDITOR || DEVELOPMENT_BUILD || UCHUMATAQU_VALIDACION || UCHUMATAQU_DEMO_FULL_PROGRESS
 #if UNITY_EDITOR
         private const string DirectorioSesion = "Uchumataqu.Persistencia.DirectorioPruebas";
         private static string _directorioPruebas = LeerDirectorioSesion();
@@ -56,6 +56,11 @@ namespace Assets.Scripts.Persistencia
         public static IDisposable UsarDirectorioValidacionDispositivo() =>
             new DirectorioPruebasScope(Path.Combine(Application.persistentDataPath,
                 "ValidacionDispositivo", Guid.NewGuid().ToString("N")));
+#endif
+
+#if UNITY_ANDROID && UCHUMATAQU_DEMO_FULL_PROGRESS && !UNITY_EDITOR
+        public static IDisposable UsarDirectorioDemoCompleto() =>
+            new DirectorioPruebasScope(Path.Combine(Application.persistentDataPath, "DemoProgresoCompleto"));
 #endif
 
         private sealed class DirectorioPruebasScope : IDisposable
@@ -167,7 +172,7 @@ namespace Assets.Scripts.Persistencia
                 !nombreArchivo.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException("Se requiere un nombre de archivo local, sin ruta.", nameof(nombreArchivo));
             string directorio = Application.persistentDataPath;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD || UCHUMATAQU_VALIDACION
+#if UNITY_EDITOR || DEVELOPMENT_BUILD || UCHUMATAQU_VALIDACION || UCHUMATAQU_DEMO_FULL_PROGRESS
             directorio = _directorioPruebas ?? directorio;
 #endif
             return Path.Combine(directorio, nombreArchivo);

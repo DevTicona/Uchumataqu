@@ -66,6 +66,10 @@ namespace Assets.Scripts.UI.Bootstrap
                 if (!corpusOk)
                     throw new System.InvalidOperationException("El corpus local no pudo inicializarse.");
 
+#if UNITY_ANDROID && UCHUMATAQU_DEMO_FULL_PROGRESS && !UNITY_EDITOR
+                Assets.Scripts.Core.Diagnostics.DemoProgresoCompletoAndroid.Preparar();
+#endif
+
                 bool tienePerfil = GestorPerfil.ExistePerfil();
                 view.MostrarProgreso(0.9f);
                 ProgresoRepository.ObtenerProgreso();

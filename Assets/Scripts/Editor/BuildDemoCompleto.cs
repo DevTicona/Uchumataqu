@@ -13,17 +13,31 @@ namespace Assets.Scripts.Editor
     {
         private const string DefineDemo = "UCHUMATAQU_DEMO_FULL_PROGRESS";
         private const string IdentificadorDemo = "com.devticona.uchumataqu.demo";
+        private const string IdentificadorOficial = "com.devticona.uchumataqu";
+        private const string NombreProductoOficial = "Uchumataqu";
 
         [MenuItem("Uchumataqu/Build Demo Completo Android")]
         public static void CrearApkAndroid()
         {
+            Compilar(demo: true);
+        }
+
+        [MenuItem("Uchumataqu/Build APK Oficial Android")]
+        public static void CrearApkOficialAndroid()
+        {
+            Compilar(demo: false);
+        }
+
+        private static void Compilar(bool demo)
+        {
             string rutaProyecto = Directory.GetParent(Application.dataPath)?.FullName
                 ?? throw new InvalidOperationException("No se pudo resolver la raíz del proyecto.");
-            string directorioSalida = Path.Combine(rutaProyecto, "Builds", "DemoCompleto");
-            string rutaApk = Path.Combine(directorioSalida, "Uchumataqu-Demo-1.0.11.apk");
-            string identificadorOriginal = PlayerSettings.GetApplicationIdentifier(NamedBuildTarget.Android);
-            string nombreOriginal = PlayerSettings.productName;
-            bool usarKeystorePersonalizadoOriginal = PlayerSettings.Android.useCustomKeystore;
+            string nombreBuild = demo ? "DemoCompleto" : "Oficial";
+            string nombreProducto = demo ? "Uchumataqu Demo" : "Uchumataqu";
+            string identificador = demo ? IdentificadorDemo : IdentificadorOficial;
+            string directorioSalida = Path.Combine(rutaProyecto, "Builds", nombreBuild);
+            string nombreApk = demo ? "Uchumataqu-Demo-1.0.11.apk" : "Uchumataqu-1.0.11.apk";
+            string rutaApk = Path.Combine(directorioSalida, nombreApk);
             string[] escenas = EditorBuildSettings.scenes
                 .Where(escena => escena.enabled)
                 .Select(escena => escena.path)
@@ -35,10 +49,10 @@ namespace Assets.Scripts.Editor
             Directory.CreateDirectory(directorioSalida);
             try
             {
-                // La variante de demostración se firma con la clave de depuración local.
+                // Las APK locales usan la clave de depuración si no hay keystore configurado.
                 PlayerSettings.Android.useCustomKeystore = false;
-                PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, IdentificadorDemo);
-                PlayerSettings.productName = "Uchumataqu Demo";
+                PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, identificador);
+                PlayerSettings.productName = nombreProducto;
 
                 var opciones = new BuildPlayerOptions
                 {
@@ -46,7 +60,7 @@ namespace Assets.Scripts.Editor
                     locationPathName = rutaApk,
                     target = BuildTarget.Android,
                     options = BuildOptions.None,
-                    extraScriptingDefines = new[] { DefineDemo }
+                    extraScriptingDefines = demo ? new[] { DefineDemo } : Array.Empty<string>()
                 };
                 BuildReport reporte = BuildPipeline.BuildPlayer(opciones);
                 if (reporte.summary.result != BuildResult.Succeeded)
@@ -57,9 +71,9 @@ namespace Assets.Scripts.Editor
             }
             finally
             {
-                PlayerSettings.Android.useCustomKeystore = usarKeystorePersonalizadoOriginal;
-                PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, identificadorOriginal);
-                PlayerSettings.productName = nombreOriginal;
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, IdentificadorOficial);
+                PlayerSettings.productName = NombreProductoOficial;
             }
         }
     }

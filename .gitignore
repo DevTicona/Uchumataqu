@@ -60,8 +60,9 @@ __pycache__/
 *.py[cod]
 
 # Herramientas y escenas de revisión local.
-/Assets/Scenes/RevisionTemporalCodex.unity*
-/Assets/Scripts/Editor/RevisionTemporalCodex.cs*
+/.continue/
+/Assets/Scenes/RevisionTemporal*.unity*
+/Assets/Scripts/Editor/RevisionTemporal*.cs*
 /Assets/Scripts/Editor/CapturasManualEditor.cs*
 /Assets/Scripts/Editor/Assets/DistribucionEditor.cs*
 /Assets/Scripts/Editor/Assets/InformeSnapshotRendimiento.cs*

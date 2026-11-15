@@ -1,56 +1,70 @@
 # Uchumataqu
 
-Actualizado: 5 de noviembre de 2026 (America/La_Paz).
+**Aplicación educativa para aprender y practicar la lengua Uchumataqu**, hablada por la comunidad Irohito Urus. El proyecto se desarrolló con Unity y cuenta con el respaldo y la colaboración de **FUNPROEIB Andes**.
 
-Aplicación educativa Android en Unity 6000.5.9f1, con contenido local, práctica de escritura, reconocimiento de voz y seis experiencias de realidad aumentada.
+## Descargar la aplicación
 
-Está diseñada para el aprendizaje de la lengua indígena **Uchumataqu**. El proyecto cuenta con el respaldo y la colaboración de **FUNPROEIB Andes**.
+### Android — versión 1.0.11
 
-El corpus ejecutable contiene **26 lecciones, 879 pasos de lección, 11 tipos activos y 88 pasos RA**. Las cantidades se obtienen de los JSON actuales; no representan una nueva ejecución de toda la suite de pruebas.
+- [Descargar APK oficial](https://github.com/DevTicona/Uchumataqu/releases/download/v1.0.11/Uchumataqu-1.0.11.apk)
+- [Ver el release 1.0.11 y sus notas](https://github.com/DevTicona/Uchumataqu/releases/tag/v1.0.11)
+- [Ver todos los releases](https://github.com/DevTicona/Uchumataqu/releases)
 
-## Instalación en Android
+La APK está dirigida a dispositivos **Android 9 o posterior, ARM64**. Para instalarla, descarga el archivo, ábrelo desde el teléfono y permite la instalación desde esa fuente si Android lo solicita. La aplicación puede pedir acceso al micrófono para la práctica de pronunciación y a la cámara para Realidad Aumentada. Los escenarios RA requieren compatibilidad con ARCore y Google Play Services for AR.
 
-1. Descarga el [APK de producción](https://github.com/DevTicona/Uchumataqu/releases/download/v1.0.0/Uchumataqu-1.0.11-produccion.apk) desde el [release v1.0.0](https://github.com/DevTicona/Uchumataqu/releases/tag/v1.0.0).
-2. En un dispositivo Android 9 o superior, con arquitectura ARM64, abre el APK y autoriza la instalación desde la aplicación que utilizaste para descargarlo.
-3. Concede acceso al micrófono para practicar con voz y a la cámara para las actividades de realidad aumentada. Estas actividades requieren un dispositivo compatible con ARCore y Google Play Services for AR.
+> **Firma de esta versión:** la APK 1.0.11 publicada está firmada con una clave de depuración. Sirve para instalar y evaluar la aplicación; no es una firma de producción para Google Play ni permite actualizar encima de una instalación firmada con otra clave.
 
-El tag de distribución es `v1.0.0`; el APK precompilado conserva su versión interna `1.0.11` (código 12). El repositorio es privado: los enlaces requieren acceso autorizado a GitHub.
+## Qué incluye
 
-## Compilación
+- 26 lecciones con actividades de vocabulario, comprensión auditiva, escritura y pronunciación.
+- Reconocimiento de voz ejecutado localmente para apoyar la práctica oral.
+- Seis experiencias de Realidad Aumentada con vocabulario y elementos de la cultura uru.
+- Progreso y perfil guardados localmente en el dispositivo; no hay sincronización entre dispositivos.
 
-1. Clona el repositorio y abre su carpeta raíz desde Unity Hub con **Unity 6000.5.9f1**. Instala el módulo **Android Build Support**, incluidos Android SDK, NDK y OpenJDK.
-2. Espera a que Unity restaure los paquetes de `Packages/manifest.json` e importe los recursos.
-3. En **File > Build Profiles**, selecciona Android y activa ese perfil. Conserva las cinco escenas habilitadas de `ProjectSettings/EditorBuildSettings.asset`, empezando por `00_Bootstrap`.
-4. Compila los Addressables desde **Window > Asset Management > Addressables > Groups > Build > New Build > Default Build Script**.
-5. En el perfil Android, desactiva **Build App Bundle** y usa **Build** para generar un APK en `Builds/Android/`. Para distribuir actualizaciones instalables sobre la versión publicada, configura la misma clave de firma en **Player Settings > Publishing Settings**; las claves y sus contraseñas se gestionan fuera del repositorio.
+El contenido de la app se encuentra en `Assets/Content/Data`; el modelo ASR para Android está en `Assets/StreamingAssets/sherpa`.
 
-Los APK son artefactos de distribución: `*.apk` está excluido mediante `.gitignore` y los binarios se publican como assets de Releases.
+## Repositorio de corpus y herramientas lingüísticas
 
-### Distribución con conexión inestable
+El trabajo de organización y preparación del corpus y las lecciones, junto con las herramientas de **entrenamiento del ASR** y generación de recursos **HFST**, está en el repositorio complementario:
 
-El workflow manual **Ensamblar APK de Release** permite reunir en GitHub partes de un APK ya compilado. Las partes se adjuntan a un release en borrador con nombres consecutivos como `Uchumataqu-1.0.11-produccion.apk.part-001`, `.part-002`, etc. Los binarios y sus partes se mantienen fuera del código versionado.
+- [Uchumataqu Core — corpus, lecciones y herramientas lingüísticas](https://github.com/DevTicona/uchumataqu-core)
 
-En **Actions**, ejecuta el workflow indicando el identificador del borrador, el nombre del APK, su tamaño original en bytes y su SHA-256. El script `scripts/ensamblar_apk_release.py` comprueba la secuencia, el tamaño y las huellas antes de adjuntar el APK completo. Retira las partes temporales después de que GitHub confirme el digest del asset final. El release permanece en borrador para revisar el tag y publicar la distribución.
+Este repositorio contiene el cliente móvil Unity y sus recursos de ejecución. El repositorio `uchumataqu-core` reúne el trabajo de datos y procesamiento lingüístico relacionado.
 
-El script también admite `--local-parts` y `--output` para comprobar el ensamblado localmente; `--help` muestra sus parámetros. El workflow usa el token del repositorio y minutos de GitHub Actions.
+## Desarrollo y compilación
 
-## Documentación vigente
+### Requisitos
 
-- Manual de usuario: [MANUAL_USUARIO.md](MANUAL_USUARIO.md).
+- Unity **6000.5.9f1**.
+- Módulo **Android Build Support**, con Android SDK, NDK y OpenJDK.
+- Dispositivo ARM64 con Android 9 o posterior para instalar la APK.
 
-El material académico ampliado está en `Docs` dentro de este entorno de trabajo.
-Esa carpeta está excluida de Git y no forma parte de una copia nueva del repositorio.
+### Compilar la APK oficial
 
-## Proyecto
+1. Clona este repositorio y ábrelo desde Unity Hub.
+2. Espera a que Unity restaure los paquetes e importe los recursos.
+3. En el menú **Uchumataqu**, selecciona **Build APK Oficial Android**.
+4. La compilación genera `Builds/Oficial/Uchumataqu-1.0.11.apk` y conserva la versión `1.0.11`.
 
-Las escenas son `00_Bootstrap`, `01_Onboarding`, `02_Main`, `03_LeccionBase` y `04_RealidadAumentada`, bajo `Assets/Scenes`. Las lecciones comparten una escena y los escenarios RA se instancian como prefabs Addressables.
+Para crear una APK de distribución firmada, configura el keystore y las contraseñas de producción en **Project Settings > Player > Android > Publishing Settings**. No guardes claves ni contraseñas en el repositorio.
 
-`Assets/Content/Data` contiene los datos compilados; `Assets/Scripts` contiene la implementación. Las referencias fijas de interfaz están serializadas y los recursos dinámicos se cargan mediante Addressables. El modelo ASR local está en `Assets/StreamingAssets/sherpa`.
+Los artefactos de compilación y la carpeta `Builds/` están excluidos de Git. La APK oficial se distribuye como asset del release; las APK de demostración se mantienen fuera de la publicación.
 
-La presentación utiliza MVP; los gestores mantienen reglas de sesión, los repositorios acceden a datos y los motores implementan la evaluación. El progreso del usuario se guarda en `Application.persistentDataPath`.
+## Estructura del proyecto
 
-`Docs` y `Logs` son carpetas locales ignoradas por Git según la configuración existente. Los Word y el expediente académico se conservan en `Docs`; esta limpieza no modifica esos archivos.
+- `Assets/Scenes`: `00_Bootstrap`, `01_Onboarding`, `02_Main`, `03_LeccionBase` y `04_RealidadAumentada`.
+- `Assets/Content/Data`: contenido compilado que consume la aplicación.
+- `Assets/Scripts`: lógica de la app, organizada por capas y áreas funcionales.
+- `Assets/StreamingAssets/sherpa`: modelo y recursos ASR para Android.
+- `Packages/manifest.json`: paquetes de Unity del proyecto.
+- `ProjectSettings/EditorBuildSettings.asset`: escenas habilitadas para compilación.
+
+La aplicación utiliza una arquitectura MVP. Los datos y el progreso se almacenan en `Application.persistentDataPath`; los recursos dinámicos se gestionan con Addressables.
+
+## Documentación
+
+- [Manual de usuario](MANUAL_USUARIO.md): instalación, navegación, lecciones, pronunciación y RA.
 
 ## Licencia
 
-El código original del proyecto se distribuye bajo la [licencia MIT](LICENSE). Los paquetes, modelos, tipografías y demás recursos de terceros conservan sus propias licencias y atribuciones.
+El código original del proyecto se distribuye bajo la [licencia MIT](LICENSE). Los paquetes, modelos, tipografías y recursos de terceros conservan sus propias licencias y atribuciones.

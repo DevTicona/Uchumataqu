@@ -29,10 +29,10 @@ namespace Assets.Scripts.Core.Diagnostics
             bool yaPreparado = GestorPerfil.ExistePerfil() &&
                 progreso.TotalLeccionesCompletadas >= lecciones.Count &&
                 progreso.TotalEscenariosVisitados >= escenarios.Count;
-            if (yaPreparado) return;
-
-            if (!GestorPerfil.CrearOActualizar("Estudiante Demo", "avatar_01"))
+            if (!GestorPerfil.CrearOActualizar("Primo", "avatar_01"))
                 throw new InvalidOperationException("No se pudo preparar el perfil de demostración.");
+
+            if (yaPreparado) return;
 
             progreso.lecciones.Clear();
             progreso.escenarios_ra.Clear();

@@ -8,9 +8,16 @@ using UnityEngine;
 
 namespace Assets.Scripts.Editor
 {
-    /// <summary>Construye una APK separada con progreso completo para demostraciones.</summary>
+    /// <summary>Construye la APK oficial o una APK separada para demostraciones.</summary>
     public static class BuildDemoCompleto
     {
+        [Serializable]
+        private sealed class KeystoreCredentials
+        {
+            public string alias;
+            public string password;
+        }
+
         private const string DefineDemo = "UCHUMATAQU_DEMO_FULL_PROGRESS";
         private const string IdentificadorDemo = "com.devticona.uchumataqu.demo";
         private const string IdentificadorOficial = "com.devticona.uchumataqu";
@@ -32,8 +39,8 @@ namespace Assets.Scripts.Editor
         {
             string rutaProyecto = Directory.GetParent(Application.dataPath)?.FullName
                 ?? throw new InvalidOperationException("No se pudo resolver la raíz del proyecto.");
-            string nombreBuild = demo ? "DemoCompleto" : "Oficial";
-            string nombreProducto = demo ? "Uchumataqu Demo" : "Uchumataqu";
+            string nombreBuild = demo ? "DemoCompleto" : "Android";
+            string nombreProducto = demo ? "Uchumataqu Demo" : NombreProductoOficial;
             string identificador = demo ? IdentificadorDemo : IdentificadorOficial;
             string directorioSalida = Path.Combine(rutaProyecto, "Builds", nombreBuild);
             string nombreApk = demo ? "Uchumataqu-Demo-1.0.11.apk" : "Uchumataqu-1.0.11.apk";
@@ -46,11 +53,14 @@ namespace Assets.Scripts.Editor
             if (escenas.Length == 0 || escenas.Any(escena => !File.Exists(Path.Combine(rutaProyecto, escena))))
                 throw new InvalidOperationException("La lista de escenas de Android está vacía o contiene rutas inexistentes.");
 
+            bool usarKeystorePersonalizado = PlayerSettings.Android.useCustomKeystore;
+            string contrasenaKeystoreAnterior = PlayerSettings.Android.keystorePass;
+            string contrasenaClaveAnterior = PlayerSettings.Android.keyaliasPass;
             Directory.CreateDirectory(directorioSalida);
             try
             {
-                // Las APK locales usan la clave de depuración si no hay keystore configurado.
-                PlayerSettings.Android.useCustomKeystore = false;
+                if (demo) PlayerSettings.Android.useCustomKeystore = false;
+                else AplicarCredencialesFirma(rutaProyecto);
                 PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, identificador);
                 PlayerSettings.productName = nombreProducto;
 
@@ -65,16 +75,33 @@ namespace Assets.Scripts.Editor
                 BuildReport reporte = BuildPipeline.BuildPlayer(opciones);
                 if (reporte.summary.result != BuildResult.Succeeded)
                     throw new InvalidOperationException(
-                        $"La APK demo no se generó. Resultado: {reporte.summary.result}; errores: {reporte.summary.totalErrors}.");
+                        $"La APK {(demo ? "demo" : "oficial")} no se generó. Resultado: {reporte.summary.result}; errores: {reporte.summary.totalErrors}.");
 
                 Debug.Log($"[BuildDemoCompleto] APK lista: {rutaApk} ({reporte.summary.totalSize / (1024f * 1024f):F1} MiB).");
             }
             finally
             {
-                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.useCustomKeystore = usarKeystorePersonalizado;
+                PlayerSettings.Android.keystorePass = contrasenaKeystoreAnterior;
+                PlayerSettings.Android.keyaliasPass = contrasenaClaveAnterior;
                 PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, IdentificadorOficial);
                 PlayerSettings.productName = NombreProductoOficial;
             }
+        }
+
+        private static void AplicarCredencialesFirma(string rutaProyecto)
+        {
+            string rutaCredenciales = Path.Combine(rutaProyecto, "Builds", "Signing", "credentials.json");
+            if (!File.Exists(rutaCredenciales))
+                throw new FileNotFoundException("No se encontró el archivo local de credenciales del keystore.", rutaCredenciales);
+
+            KeystoreCredentials credenciales = JsonUtility.FromJson<KeystoreCredentials>(File.ReadAllText(rutaCredenciales));
+            if (credenciales == null || string.IsNullOrWhiteSpace(credenciales.alias) || string.IsNullOrEmpty(credenciales.password))
+                throw new InvalidDataException("El archivo local de credenciales del keystore no contiene los campos requeridos.");
+
+            PlayerSettings.Android.keyaliasName = credenciales.alias;
+            PlayerSettings.Android.keystorePass = credenciales.password;
+            PlayerSettings.Android.keyaliasPass = credenciales.password;
         }
     }
 }

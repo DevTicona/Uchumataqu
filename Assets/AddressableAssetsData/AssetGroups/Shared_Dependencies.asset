@@ -15,6 +15,24 @@ MonoBehaviour:
   m_GroupName: Shared_Dependencies
   m_GUID: c36bb0b9783e4f16afda737791e07f26
   m_SerializeEntries:
+  - m_GUID: 36e335017ad71d54fbb10842863188ae
+    m_Address: shared/srp_fallback
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - shared_dependency
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 933532a4fcc9baf4fa0491de14d08ed7
+    m_Address: shared/urp_lit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - shared_dependency
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6e9a19c3678ded42a3bc431ebef7dbd
+    m_Address: shared/urp_fallback_error
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - shared_dependency
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
     m_Address: shared/tmp_sdf_mobile
     m_ReadOnly: 0

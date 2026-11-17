@@ -29,6 +29,8 @@ namespace Assets.Scripts.RA
 
         public static float Giro(int indice) => Giros[indice % Giros.Length];
 
+        public bool EsZonaTerrestre(Transform espacio) => espacio == terrestre;
+
         public static Bounds Medir(Renderer[] mallas, Transform espacio)
         {
             bool iniciado = false;

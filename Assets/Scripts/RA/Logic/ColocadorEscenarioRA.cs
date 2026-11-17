@@ -90,52 +90,93 @@ namespace Assets.Scripts.RA
 
         // Colocación RA: exige una pose estable sobre un plano y confirma el seguimiento del anclaje
         // antes de permitir que el presentador sitúe el escenario en la superficie física.
-        public async Task<bool> IntentarColocarAsync()
+public async Task<bool> IntentarColocarAsync()
         {
-            if (EscenarioColocado || creandoAnclaje || !TienePoseValida || anchorManager == null ||
-                !anchorManager.isActiveAndEnabled || anchorManager.subsystem == null ||
-                !BuscarPoseCentral(out Pose pose, out ARPlane plano) || plano != planoCentral ||
-                Vector3.Distance(PoseActual.position, pose.position) > 0.04f) return false;
+            string rechazo = null;
+            Pose pose = default;
+            ARPlane plano = null;
+
+            if (EscenarioColocado) rechazo = "ya existe un escenario colocado";
+            else if (creandoAnclaje) rechazo = "ya hay una solicitud de anclaje en curso";
+            else if (!TienePoseValida) rechazo = $"la pose central no es válida (estado sesión={ARSession.state})";
+            else if (anchorManager == null) rechazo = "ARAnchorManager no está asignado";
+            else if (!anchorManager.isActiveAndEnabled) rechazo = "ARAnchorManager está desactivado";
+            else if (anchorManager.subsystem == null) rechazo = "el subsistema de anclajes no está disponible";
+            else if (!BuscarPoseCentral(out pose, out plano)) rechazo = "el raycast central ya no encuentra un plano válido";
+            else if (plano != planoCentral) rechazo = "el plano del toque cambió respecto al plano confirmado";
+            else if (Vector3.Distance(PoseActual.position, pose.position) > 0.04f)
+                rechazo = $"la pose se movió antes del toque ({Vector3.Distance(PoseActual.position, pose.position):F3} m)";
+
+            if (rechazo != null)
+            {
+                RegistrarDiagnostico(LogType.Warning, $"[RA_PLACEMENT] RECHAZADO: {rechazo}. sesión={ARSession.state}, poseValida={TienePoseValida}, anchorManager={(anchorManager != null ? anchorManager.isActiveAndEnabled.ToString() : "null")}");
+                return false;
+            }
+
             int version = ++versionAnclaje;
             creandoAnclaje = true;
             ARAnchor candidato = null;
             var altasConfirmadas = new HashSet<TrackableId>();
             UnityAction<ARTrackablesChangedEventArgs<ARAnchor>> confirmarAltas = cambios =>
             {
-                foreach (var alta in cambios.added) altasConfirmadas.Add(alta.trackableId);
+                foreach (var alta in cambios.added)
+                    if (alta != null) altasConfirmadas.Add(alta.trackableId);
             };
             anchorManager.trackablesChanged.AddListener(confirmarAltas);
+
             try
             {
-                if (anchorManager.subsystem.subsystemDescriptor.supportsTrackableAttachments)
+                bool admiteAdjuntos = anchorManager.subsystem.subsystemDescriptor.supportsTrackableAttachments;
+                RegistrarDiagnostico(LogType.Log, $"[RA_PLACEMENT] Creando anclaje. plano={plano.trackableId}, adjuntoSoportado={admiteAdjuntos}, pose={pose.position}");
+
+                if (admiteAdjuntos)
+                {
                     candidato = anchorManager.AttachAnchor(plano, pose);
+                    RegistrarDiagnostico(LogType.Log, $"[RA_PLACEMENT] AttachAnchor devolvió {(candidato != null ? candidato.trackableId.ToString() : "null")}.");
+                }
+
                 if (candidato == null)
                 {
                     var resultado = await anchorManager.TryAddAnchorAsync(pose);
+                    RegistrarDiagnostico(LogType.Log, $"[RA_PLACEMENT] TryAddAnchorAsync status={resultado.status}, success={resultado.status.IsSuccess()}, anchor={(resultado.value != null ? resultado.value.trackableId.ToString() : "null")}.");
                     if (resultado.status.IsSuccess()) candidato = resultado.value;
                 }
-                // El proveedor debe notificar el alta antes de usar o retirar el anclaje.
+
                 float limite = Time.realtimeSinceStartup + 5f;
-                while (candidato != null && (!altasConfirmadas.Contains(candidato.trackableId) || candidato.trackingState != TrackingState.Tracking) &&
-                    anchorManager != null && anchorManager.isActiveAndEnabled && Time.realtimeSinceStartup < limite)
+                while (candidato != null &&
+                    (!altasConfirmadas.Contains(candidato.trackableId) || candidato.trackingState != TrackingState.Tracking) &&
+                    anchorManager != null && anchorManager.isActiveAndEnabled &&
+                    Time.realtimeSinceStartup < limite)
                     await Awaitable.NextFrameAsync();
+
                 if (this == null || version != versionAnclaje || !isActiveAndEnabled || !TieneSeguimiento)
                 {
+                    RegistrarDiagnostico(LogType.Warning, $"[RA_PLACEMENT] Anclaje cancelado por cambio de estado. versión={version}/{versionAnclaje}, activo={(this != null && isActiveAndEnabled)}, seguimiento={TieneSeguimiento}.");
                     EliminarAnclaje(candidato);
                     return false;
                 }
-                if (candidato == null) return false;
-                if (!altasConfirmadas.Contains(candidato.trackableId) || candidato.trackingState != TrackingState.Tracking)
+
+                if (candidato == null)
                 {
+                    RegistrarDiagnostico(LogType.Error, "[RA_PLACEMENT] El proveedor no creó ni devolvió un ARAnchor.");
+                    return false;
+                }
+
+                bool altaConfirmada = altasConfirmadas.Contains(candidato.trackableId);
+                if (!altaConfirmada || candidato.trackingState != TrackingState.Tracking)
+                {
+                    RegistrarDiagnostico(LogType.Error, $"[RA_PLACEMENT] Anclaje sin seguimiento confirmado tras 5 s. altaNotificada={altaConfirmada}, tracking={candidato.trackingState}, id={candidato.trackableId}.");
                     EliminarAnclaje(candidato);
                     return false;
                 }
+
                 anclaje = candidato;
+                RegistrarDiagnostico(LogType.Log, $"[RA_PLACEMENT] Anclaje confirmado. id={anclaje.trackableId}, tracking={anclaje.trackingState}.");
             }
             catch (Exception ex)
             {
                 EliminarAnclaje(candidato);
-                Debug.LogWarning("[RA_ANCLAJE] No se pudo fijar el contenido: " + ex.Message);
+                RegistrarDiagnostico(LogType.Error, "[RA_PLACEMENT] Excepción creando anclaje: " + ex);
                 return false;
             }
             finally
@@ -143,13 +184,20 @@ namespace Assets.Scripts.RA
                 if (anchorManager != null) anchorManager.trackablesChanged.RemoveListener(confirmarAltas);
                 if (version == versionAnclaje) creandoAnclaje = false;
             }
+
             PoseActual = pose;
             SuperficieColocada = anclaje.transform;
             EscenarioColocado = true;
             TienePoseValida = false;
             if (guiaCentro != null) guiaCentro.SetActive(false);
             MostrarPlanos(false);
+            RegistrarDiagnostico(LogType.Log, $"[RA_PLACEMENT] Colocación confirmada en {pose.position}.");
             return true;
+        }
+
+        private static void RegistrarDiagnostico(LogType tipo, string mensaje)
+        {
+            Debug.unityLogger.logHandler.LogFormat(tipo, null, "{0}", mensaje);
         }
 
         public void Recolocar()

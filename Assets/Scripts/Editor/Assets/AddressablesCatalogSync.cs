@@ -62,6 +62,15 @@ namespace Assets.Scripts.Editor
                 "Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader",
                 "shared/tmp_sdf_mobile",
                 "shared_dependency");
+            cantidad += SincronizarArchivo(settings, compartidos,
+                "Packages/com.unity.render-pipelines.universal/Shaders/Lit.shader",
+                "shared/urp_lit", "shared_dependency");
+            cantidad += SincronizarArchivo(settings, compartidos,
+                "Packages/com.unity.render-pipelines.universal/Shaders/Utils/FallbackError.shader",
+                "shared/urp_fallback_error", "shared_dependency");
+            cantidad += SincronizarArchivo(settings, compartidos,
+                "Packages/com.unity.render-pipelines.core/Runtime/RenderPipelineResources/FallbackShader.shader",
+                "shared/srp_fallback", "shared_dependency");
 
             EliminarEntradasInexistentes(settings);
             EliminarUIFija(settings);
@@ -192,9 +201,13 @@ namespace Assets.Scripts.Editor
             return nombre == "lecciones_compiladas" ? "json_lecciones" : $"json_{nombre}";
         }
 
-        private static string CrearDireccionPrefab(string ruta)
+private static string CrearDireccionPrefab(string ruta)
         {
             string nombre = Normalizar(Path.GetFileNameWithoutExtension(ruta));
+            if (ruta.StartsWith("Assets/Content/Prefabs/RA/Escenarios/", StringComparison.OrdinalIgnoreCase) &&
+                nombre.StartsWith("ra_", StringComparison.Ordinal))
+                return $"ra/escenario/{nombre.Substring(3)}";
+
             return nombre switch
             {
                 "islaleccion" => "prefab_isla_leccion",

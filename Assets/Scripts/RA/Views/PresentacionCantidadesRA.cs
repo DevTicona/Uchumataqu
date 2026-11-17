@@ -138,7 +138,7 @@ namespace Assets.Scripts.RA
             var fauna = escenario.GetComponent<DistribucionFaunaRA>();
             if (fauna != null && fauna.ObtenerZona(grupo.Actor.transform, out var espacio, out var area))
             {
-                MostrarFauna(paso, grupo, visibles, espacio, area, cantidad);
+                MostrarFauna(paso, grupo, visibles, fauna, espacio, area, cantidad);
                 return;
             }
             var limites = LimitesEnEscenario(visibles[0].localBounds, visibles[0].transform);
@@ -242,7 +242,7 @@ namespace Assets.Scripts.RA
 
 
         private void MostrarFauna(PasoRAModel paso, Grupo grupo, Renderer[] visibles,
-            Transform espacio, Rect area, int cantidad)
+            DistribucionFaunaRA fauna, Transform espacio, Rect area, int cantidad)
         {
             Bounds original = DistribucionFaunaRA.Medir(visibles, espacio);
             var ocupados = new List<Rect>();
@@ -263,13 +263,20 @@ namespace Assets.Scripts.RA
                 huella.center -= espacio.InverseTransformPoint(copia.position);
                 int columnas = Mathf.CeilToInt(Mathf.Sqrt(cantidad * area.width / area.height));
                 int filas = Mathf.CeilToInt((float)cantidad / columnas);
+                float alturaApoyo = fauna.EsZonaTerrestre(espacio) ? 0.02f : original.min.y;
                 Vector3 preferido = new Vector3(
                     Mathf.Lerp(area.xMin, area.xMax, (i % columnas + 0.5f) / columnas),
-                    original.min.y,
+                    alturaApoyo,
                     Mathf.Lerp(area.yMin, area.yMax, (i / columnas + 0.5f) / filas));
-                if (paso.posiciones_cantidad?.Count == cantidad) preferido = paso.posiciones_cantidad[i];
+                if (paso.posiciones_cantidad?.Count == cantidad)
+                {
+                    preferido = paso.posiciones_cantidad[i];
+                    if (fauna.EsZonaTerrestre(espacio)) preferido.y = alturaApoyo;
+                }
                 Vector3 destino = DistribucionFaunaRA.BuscarApoyo(area, huella, preferido, ocupados);
                 copia.position = espacio.TransformPoint(destino);
+                Bounds colocado = DistribucionFaunaRA.Medir(mallas, espacio);
+                copia.position += espacio.TransformVector(Vector3.up * (destino.y - colocado.min.y));
                 const float separacion = 0.035f;
                 ocupados.Add(new Rect(destino.x + huella.min.x - separacion,
                     destino.z + huella.min.z - separacion,

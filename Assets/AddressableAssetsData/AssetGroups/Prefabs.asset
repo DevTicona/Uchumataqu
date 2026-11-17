@@ -28,7 +28,7 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 018aea597b6266744a238626de7de1c2
-    m_Address: prefab/ra_cocina_alimentos
+    m_Address: ra/escenario/cocina_alimentos
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -232,7 +232,7 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 307f24a64ba80364aa672e87b32fb00f
-    m_Address: prefab/ra_encuentro_comunicacion
+    m_Address: ra/escenario/encuentro_comunicacion
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -418,7 +418,7 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60fb5f9747222154989696f6cb612842
-    m_Address: prefab/ra_casa_objetos
+    m_Address: ra/escenario/casa_objetos
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -430,7 +430,7 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 620eadbc95bc85447970079b612fa50f
-    m_Address: prefab/ra_naturaleza_orientacion
+    m_Address: ra/escenario/naturaleza_orientacion
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -544,7 +544,7 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7782a8f4d0970944fa482c6aefb579c3
-    m_Address: prefab/ra_animales_ecosistema
+    m_Address: ra/escenario/animales_ecosistema
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
@@ -880,7 +880,7 @@ MonoBehaviour:
     - prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cbf243a1b857ea14eb8cc2272f563bcb
-    m_Address: prefab/ra_familia_vestimenta
+    m_Address: ra/escenario/familia_vestimenta
     m_ReadOnly: 0
     m_SerializedLabels:
     - prefab
